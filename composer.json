@@ -1,0 +1,20 @@
+{
+    "name": "ili/invest.legal",
+    "description": "Invest Legal",
+    "type": "project",
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^7.4",
+        "ext-redis": "*"
+    },
+    "require-dev": {},
+    "autoload": {
+        "psr-4": {
+            "classes\\": "private/classes"
+        },
+        "classmap": [
+            "private/MVC/Controller",
+            "private/MVC/Model"
+        ]
+    }
+}
