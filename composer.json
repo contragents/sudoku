@@ -1,10 +1,10 @@
 {
-    "name": "ili/invest.legal",
-    "description": "Invest Legal",
+    "name": "ili/sudoku",
+    "description": "Sudoku online with opponent",
     "type": "project",
     "minimum-stability": "stable",
     "require": {
-        "php": "^7.4",
+        "php": "^7.4||^8.0",
         "ext-redis": "*"
     },
     "require-dev": {},

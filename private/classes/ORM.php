@@ -7,6 +7,10 @@ class ORM
 {
     public $rawExpression;
 
+    const COUNT = 'COUNT';
+    const MAX = 'MAX';
+    const MIN = 'MIN';
+
     public function __construct($expression)
     {
         $this->rawExpression = $expression;
@@ -86,12 +90,18 @@ class ORM
         return "INSERT $ignore INTO `$tblName` ";
     }
 
-    public static function insertFields(array $fields)
+    public static function insertFieldsRawValues(array $fieldsVarsArr): string
     {
-        return " (`" . implode('`, `', $fields) . "`) ";
+        return self::insertFields(array_keys($fieldsVarsArr))
+            . self::rawValues($fieldsVarsArr);
     }
 
-    public static function rawValues(array $values)
+    public static function insertFields(array $fields): string
+    {
+        return " (" . implode(', ', $fields) . ") ";
+    }
+
+    public static function rawValues(array $values): string
     {
         return " VALUES (" . implode(", ", $values) . ") ";
     }
@@ -170,5 +180,24 @@ class ORM
     public static function whereIn($fieldName, array $values)
     {
         return " WHERE $fieldName IN (" . implode(',', $values) . ') ';
+    }
+
+    /**
+     * @param string $function
+     * @param string $field
+     * @param string $as
+     * @return string
+     */
+    public static function agg(string $function, string $field, string $as = ''): string
+    {
+        return ' '
+            . $function
+            . '('
+            . $field
+            . ') '
+            . ($as
+                ? ($as . ' ')
+                : ''
+            );
     }
 }

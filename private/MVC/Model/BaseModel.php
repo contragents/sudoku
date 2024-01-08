@@ -9,6 +9,7 @@ class BaseModel
     const TABLE_NAME = 'lots';
 
     const ID_FIELD = 'id';
+    const IS_DELETED_FIELD = 'deleted';
     const CREATED_FIELD = 'created_at';
     const RECORDS_IN_CHUNK = 1000;
 
@@ -165,8 +166,8 @@ static function findAllCustom($field, $value, $isRaw = false, array $fieldList =
 
 /**
  * Получаем все записи ИЗ БД по условию и обновляем КЭШ
- * @param string $field
- * @param string $condition
+ * @param $field
+ * @param $condition
  * @param $value
  * @param bool $isRaw
  * @param bool $noResult Признак ненужности результата - только обновить кэш моделей
@@ -265,6 +266,7 @@ static function getCustom(
     }
 
     //mp($query, 'QUERY', __METHOD__);
+    //print $query;
     return DB::queryArray($query) ?: [];
 }
 

@@ -113,7 +113,7 @@
 			
 <div class="process__card process-card">
 	<img src="img/home/icon-1.svg" alt="Не удалось загрузить изображение" class="process-card__icon">
-	<span class="process-card__title">Воспользуетесь нашим предварительным калькулятором</span>
+	<span class="process-card__title">Воспользуйтесь нашим предварительным калькулятором</span>
 
 	
 </div>
@@ -121,7 +121,7 @@
 			
 <div class="process__card process-card">
 	<img src="img/home/icon-2.svg" alt="Не удалось загрузить изображение" class="process-card__icon">
-	<span class="process-card__title">Связываетесь с нами удобным способом</span>
+	<span class="process-card__title">Свяжитесь с нами удобным способом</span>
 
 	
 	<ul class="process-card__social-list">
@@ -176,7 +176,7 @@
       <section id="contacts" class="contact">
 	<div class="contact__container">
 		<h2 class="contact__title">Остались вопросы?</h2>
-		<span class="contact__label">Cвязаться с нами</span>
+		<span class="contact__label">Cвяжитесь с нами</span>
 		<div class="contact__contacts">
 			<div class="contact__contact">
                 <a href="https://t.me/Ilya_Chesov" target="_blank">

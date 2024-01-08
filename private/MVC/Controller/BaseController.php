@@ -5,9 +5,8 @@ class BaseController
     public static $Request;
     public $Action;
 
-    const FIELDS_TO_LOWER = ['platform', 'device_type'];
-
     const VIEW_PATH = __DIR__ . '/../View/';
+    const DEFAULT_ACTION='index';
 
     public function __construct($action, array $request)
     {
