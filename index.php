@@ -3,10 +3,10 @@ use classes\Config;
 
 include_once __DIR__ . '/autoload.php';
 
-if (Config::isDev()) {
+//if (Config::isDev()) {
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
-}
+//}
 
 $path = parse_url($_SERVER['REQUEST_URI'])['path'];
 $pathParts = explode('/', $path);
