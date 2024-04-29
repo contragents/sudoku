@@ -5,6 +5,7 @@ use classes\StateMachine;
 
 class BaseController
 {
+
     public static $Request;
     public $Action;
     public static ?string $User = null;

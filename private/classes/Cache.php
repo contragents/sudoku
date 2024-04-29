@@ -4,7 +4,12 @@ namespace classes;
 
 class Cache
 {
+    const LOCKS_KEY = 'locks_';
+    const LOCK_RETRY_TIME = 10000;
+    const LOCK_TRIES = 200;
+
     public static $_instance = null;
+    private static array $locks = [];
 
     public $redis;
 
@@ -107,11 +112,22 @@ class Cache
     public static function __callStatic($name, $arguments)
     {
         self::checkInstance();
-        //Сериализуем все массивы в параметрах, кроме z-команд для упорядоченных множеств
+
+        if (is_array($arguments[count($arguments) - 1]) && isset($arguments[count($arguments) - 1]['lock'])) {
+            $lockKey = $arguments[count($arguments) - 1]['lock'];
+
+            if(!self::lock($lockKey)) {
+                return false;
+            }
+
+            unset($arguments[count($arguments) - 1]);
+        }
+
+        //Сериализуем все массивы и объекты в параметрах, кроме z-команд для упорядоченных множеств
         //т.к. они могут принимать массивы в качестве параметров
         if (substr($name, 0, 1) != 'z') {
             foreach ($arguments as $num => $value) {
-                if (is_array($value)) {
+                if (is_array($value) || is_object($value)) {
                     $arguments[$num] = serialize($value);
                 }
             }
@@ -119,25 +135,7 @@ class Cache
         $success = false;
         while (!$success) {
             try {
-                switch (count($arguments)) {
-                    case 1:
-                        $res = self::$_instance->redis->$name($arguments[0]);
-                        break;
-                    case 2:
-                        $res = self::$_instance->redis->$name($arguments[0], $arguments[1]);
-                        break;
-                    case 3:
-                        $res = self::$_instance->redis->$name($arguments[0], $arguments[1], $arguments[2]);
-                        break;
-                    case 4:
-                        $res = self::$_instance->redis->$name(
-                            $arguments[0],
-                            $arguments[1],
-                            $arguments[2],
-                            $arguments[3]
-                        );
-                        break;
-                }
+                $res = self::$_instance->redis->$name(...$arguments);
                 $success = true;
             } catch (\Exception $e) {
                 self::$_instance = new self;
@@ -164,13 +162,60 @@ class Cache
         }
     }
 
-    public static function getInstance()
+    public static function waitLock(string $lockKey): bool
     {
-        if (self::$_instance != null) {
-            return self::$_instance;
+        $lockTries = 0;
+
+        while($lockTries < self::LOCK_TRIES) {
+            if (self::lock($lockKey)) {
+                return true;
+            }
+
+            $lockTries++;
+            usleep(self::LOCK_RETRY_TIME);
         }
 
-        self::$_instance = new self;
-        return self::$_instance;
+        return false;
+    }
+
+    /**
+     * Делаем 1 попытку получить локи и возвращаем true, false;
+     * @param $lockKey
+     * @return bool
+     */
+    private static function lock($lockKey): bool
+    {
+        self::checkInstance();
+
+        if (self::$locks[$lockKey] ?? false) {
+            return true;
+        }
+
+        if (self::$_instance->redis->incr(self::LOCKS_KEY . $lockKey) == 1) {
+            self::$_instance->redis->setex(self::LOCKS_KEY . $lockKey, self::LOCK_RETRY_TIME * self::LOCK_TRIES, 1);
+            self::$locks[$lockKey] = true;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function waitMultiLock(array $lockKeys): bool
+    {
+        foreach ($lockKeys as $lockKey) {
+            if (!self::waitLock($lockKey)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function __destruct()
+    {
+        foreach(self::$locks as $lockKey => $nothing) {
+            self::$_instance->redis->del(self::LOCKS_KEY . $lockKey);
+        }
     }
 }

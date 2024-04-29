@@ -188,18 +188,6 @@ var gameStates = {
             radioButtons += '<div style="display:none;" class="form-check form-check-inline"><input class="form-check-input" type="radio" id="twomore" name="players_count" value="4"> <label class="form-check-label" for="twomore">До четырех игроков</label></div>';
 
             let wish = ''; //'<br /><br /><h6>Желательно:</h6>';
-            let colOchki = screenOrient === HOR ? "col-5" : "col-6";
-
-            let checked_200 = 'checked';
-            let checked_300 = '';
-
-            if ('prefs' in data && data['prefs'] !== false && 'ochki_num' in data['prefs']) {
-                checked_200 = (data['prefs']['ochki_num'] == 200) ? 'checked' : '';
-                checked_300 = (data['prefs']['ochki_num'] == 300) ? 'checked' : '';
-            }
-
-            let radioOchki = '<br /><div class="' + colOchki + ' form-check form-check-inline"><input class="form-check-input" type="radio" id="dvesti" name="ochki_num" value="200" ' + checked_200 + '> <label class="form-check-label" for="dvesti">Игра до 200 очков</label></div>';
-            radioOchki += '<div class="form-check form-check-inline"><input class="form-check-input" type="radio" id="trista" name="ochki_num" value="300" ' + checked_300 + '> <label class="form-check-label" for="trista">Игра до 300 очков</label></div>';
 
             let wishTime = '<br /><br />'; //'<br /><br />Время на ход:<br />';
             let wish_120 = 'checked';
@@ -214,7 +202,7 @@ var gameStates = {
             radioTime += '<div class="form-check form-check-inline"><input class="form-check-input" type="radio" id="odna" name="turn_time" value="60" ' + wish_60 + '> <label class="form-check-label" for="odna">1 минута на ход</label></div>';
 
             let formHead = '<h5>Параметры игры (будут учтены при подборе)</h5>';
-            let gameform = formHead + '<form onsubmit="return false" id="myGameForm">' + radioButtons + wish + radioOchki + wishTime + radioTime + onlinePlayers + '</form>';
+            let gameform = formHead + '<form onsubmit="return false" id="myGameForm">' + radioButtons + wish + wishTime + radioTime + onlinePlayers + '</form>';
 
             dialog = bootbox.dialog({
                 title: gameStates['chooseGame']['message'],

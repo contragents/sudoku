@@ -77,7 +77,7 @@ ORDER BY
                     'common_id' => $playerInfo['common_id'],
                     'user_id' => $playerInfo['user_id'],
                     'name' => $playerInfo['name'] ?: self::getPlayerName(
-                        ['ID' => 'someID', 'common_id' => $playerInfo['common_id'], 'userID' => $playerInfo['user_id']]
+                        ['ID' => 'someID', 'common_id' => $playerInfo['common_id']]
                     ),
                     'avatar_url' => $playerInfo['avatar_url'] ?: self::getAvatarUrl($playerInfo['common_id'])
                 ];
@@ -198,7 +198,7 @@ ORDER BY
 
     public
     static function getPlayerName(
-        array $user = ['ID' => 'cookie', 'common_id' => 15, 'userID' => 'user_ID']
+        array $user = ['ID' => 'cookie', 'common_id' => 15]
     ) {
         if (strpos($user['ID'], 'bot') !== false) {
             return Game::$configStatic['botNames'][substr($user['ID'], (strlen($user['ID']) == 7 ? -1 : -2))];
@@ -215,9 +215,7 @@ ORDER BY
             return $commonIDName;
         }
 
-        if (isset($user['userID'])) {
-            $idSource = $user['userID'];
-        } else {
+        {
             $idSource = $user['ID'];
         }
 
@@ -231,9 +229,7 @@ ORDER BY
         ) {
             return $res;
         } else {
-            $sintName = isset($user['userID'])
-                ? md5($user['userID'])
-                : $user['ID'];
+            $sintName = $user['ID'];
             $letterName = '';
 
             foreach (str_split($sintName) as $index => $lowByte) {

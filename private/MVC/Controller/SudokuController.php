@@ -1,5 +1,8 @@
 <?php
 
+use classes\Queue;
+use classes\Response;
+use classes\SudokuGame;
 use classes\StateMachine;
 
 class SudokuController extends BaseController
@@ -7,11 +10,10 @@ class SudokuController extends BaseController
     const VIEW_PATH = parent::VIEW_PATH . 'Sudoku/';
 
     const COOKIE_KEY = 'sudoku_player_id';
-    const GAME_NAME = 'sudoku';
 
     public function Run()
     {
-        new StateMachine(self::COOKIE_KEY, self::GAME_NAME);
+        new StateMachine(self::COOKIE_KEY, SudokuGame::GAME_NAME);
 
         return parent::Run();
     }
@@ -30,7 +32,11 @@ class SudokuController extends BaseController
     {
         $newPlayerStatus = StateMachine::setPlayerStatus(StateMachine::STATE_INIT_GAME);
 
-        return json_encode(['gameState' => $newPlayerStatus], JSON_UNESCAPED_UNICODE);
+        if ($newPlayerStatus == StateMachine::STATE_INIT_GAME) {
+            $res = (new Queue(BaseController::$User, new SudokuGame(), self::$Request))->doSomethingWithThisStuff();
+        }
+
+        return json_encode($res, JSON_UNESCAPED_UNICODE);
     }
 
     public function newGameAction()
@@ -39,7 +45,7 @@ class SudokuController extends BaseController
         // todo произвести очистку статуса, очередей, текущей игры
         $newPlayerStatus = StateMachine::setPlayerStatus(StateMachine::STATE_NO_GAME);
 
-        return json_encode(['gameState' => $newPlayerStatus], JSON_UNESCAPED_UNICODE);
+        return Response::jsonResp(['gameState' => $newPlayerStatus]);
     }
 
     public function statusCheckerAction()
@@ -50,6 +56,6 @@ class SudokuController extends BaseController
             $newStatus = StateMachine::setPlayerStatus(StateMachine::STATE_CHOOSE_GAME);
         }
 
-        return json_encode(['gameState' => $newStatus], JSON_UNESCAPED_UNICODE);
+        Response::jsonResp(['gameState' => $newStatus]);
     }
 }
