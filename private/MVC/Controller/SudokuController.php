@@ -13,7 +13,8 @@ class SudokuController extends BaseController
 
     public function Run()
     {
-        new StateMachine(self::COOKIE_KEY, SudokuGame::GAME_NAME);
+        $this->Game = new SudokuGame();
+        $this->SM = $this->Game->SM;
 
         return parent::Run();
     }
@@ -28,34 +29,27 @@ class SudokuController extends BaseController
         include self::VIEW_PATH . 'index.html';
     }
 
-    public function startGameAction()
+    public function initGameAction()
     {
-        $newPlayerStatus = StateMachine::setPlayerStatus(StateMachine::STATE_INIT_GAME);
+        $newPlayerStatus = $this->SM::setPlayerStatus($this->SM::STATE_INIT_GAME, null, true);
 
-        if ($newPlayerStatus == StateMachine::STATE_INIT_GAME) {
-            $res = (new Queue(BaseController::$User, new SudokuGame(), self::$Request))->doSomethingWithThisStuff();
-        }
+        if ($newPlayerStatus == $this->SM::STATE_INIT_GAME) {
+            $res = (new Queue(BaseController::$User, $this->Game, self::$Request, true))->doSomethingWithThisStuff();
+        } else {$res = Response::state($newPlayerStatus);}
 
-        return json_encode($res, JSON_UNESCAPED_UNICODE);
+        return Response::jsonResp($res);
     }
 
     public function newGameAction()
     {
         // Ставим статус NoGame, т.к. игра сама перезагрузится при запросе новой игры
         // todo произвести очистку статуса, очередей, текущей игры
-        $newPlayerStatus = StateMachine::setPlayerStatus(StateMachine::STATE_NO_GAME);
 
-        return Response::jsonResp(['gameState' => $newPlayerStatus]);
+        return Response::jsonResp($this->Game->newGame());
     }
 
     public function statusCheckerAction()
     {
-        $newStatus = StateMachine::getPlayerStatus();
-
-        if ((self::$Request['queryNumber'] ?? 0) == 1) {
-            $newStatus = StateMachine::setPlayerStatus(StateMachine::STATE_CHOOSE_GAME);
-        }
-
-        Response::jsonResp(['gameState' => $newStatus]);
+        return Response::jsonResp($this->Game->checkGameStatus());
     }
 }

@@ -83,15 +83,6 @@ class PlayerModel extends BaseModel
         return false;
     }
 
-    public static function getNameBySomeId(string $someId)
-    {
-        return DB::queryValue(
-            ORM::select(['name'], self::PLAYER_NAMES_TABLE_NAME)
-            . ORM::where('some_id', '=', self::hash_str_2_int($someId), true)
-            . ORM::limit(1)
-        );
-    }
-
     /**
      * Finds common_id by comparing user_id and cookies between different players
      * @param $cookie

@@ -6,12 +6,14 @@ use BaseController;
 
 class StateMachine
 {
-
+    private static ?string $gamePrefix = null;
     public static ?string $cookieKey = null;
-    protected static array $locks = [];
 
     const CACHE_TTL = 60 * 60;
     const LOCK_WAIT_TTL = 10;
+
+    const CHECK_STATUS_RESULTS_KEY = 'game_results_';
+    const CHECK_STATUS_RESULTS_KEY_TTL = 24 * 60 * 60;
 
     // Game states
     const GAME_STATE_START_GAME = 'startGame'; // Игра началась
@@ -29,7 +31,7 @@ class StateMachine
 
     const DEFAULT_STATUS = self::STATE_CHOOSE_GAME;
 
-    const IN_GAME_STATUSES = [
+    const IN_GAME_STATES = [
         self::STATE_MY_TURN,
         self::STATE_OTHER_TURN,
         self::STATE_PRE_MY_TURN,
@@ -48,6 +50,7 @@ class StateMachine
     ];
 
     const STATE_MACHINE = [
+        self::STATE_WAITING => '*',
         self::STATE_CHOOSE_GAME => [
             self::STATE_INIT_GAME => self::STATE_INIT_GAME,
             self::STATE_NEW_GAME => self::STATE_NEW_GAME,
@@ -88,7 +91,6 @@ class StateMachine
         ], // Пока просто перезагружаем игру, если прилетел статус NEW_GAME
     ];
 
-    private static ?string $gamePrefix = null;
     const PLAYER_STATUS_PREFIX = 'player_status_';
 
     public function __construct(string $cookieKey, string $gamePrefix)
@@ -104,8 +106,8 @@ class StateMachine
 
         $status = Cache::get(static::getKeyPrefix(self::PLAYER_STATUS_PREFIX) . $User) ?: self::DEFAULT_STATUS;
 
-        if (in_array($status, static::IN_GAME_STATUSES)) {
-            self::lockTry(self::getGameNum($User));
+        if (in_array($status, static::IN_GAME_STATES)) {
+            self::lockTry(static::getGameNum($User));
 
             // Получаем статус еще раз
             $status = Cache::get(static::getKeyPrefix(self::PLAYER_STATUS_PREFIX) . $User) ?: self::DEFAULT_STATUS;
@@ -114,42 +116,12 @@ class StateMachine
         return $status;
     }
 
-    public static function noGame()
-    {
-        return self::STATE_MACHINE[self::STATE_NO_GAME][self::STATE_CHOOSE_GAME];
-    }
-
-    public static function chooseGame()
-    {
-        return self::STATE_MACHINE[self::STATE_CHOOSE_GAME][self::STATE_INIT_GAME];
-    }
-
-    public static function initGame()
-    {
-        return self::STATE_MACHINE[self::STATE_INIT_GAME][self::STATE_MY_TURN];
-    }
-
-    public static function myTurn()
-    {
-        return self::STATE_MACHINE[self::STATE_MY_TURN][self::STATE_GAME_RESULTS];
-    }
-
-    public static function gameResults()
-    {
-        return self::STATE_MACHINE[self::STATE_GAME_RESULTS][self::STATE_NEW_GAME];
-    }
-
-    public static function newGame()
-    {
-        return self::STATE_NEW_GAME;
-    }
-
-    public static function setPlayerStatus(string $newStatus, string $User = null): string
+    public static function setPlayerStatus(string $newStatus, string $User = null, bool $force = false): string
     {
         $User = $User ?? BaseController::$User;
 
         $oldStatus = self::getPlayerStatus($User);
-        if (self::canChangeStatus($oldStatus, $newStatus)) {
+        if ($force || self::canChangeStatus($oldStatus, $newStatus)) {
             Cache::setex(self::getKeyPrefix(self::PLAYER_STATUS_PREFIX) . $User, self::CACHE_TTL, $newStatus);
 
             return $newStatus;
@@ -165,7 +137,9 @@ class StateMachine
 
     private static function canChangeStatus(string $oldStatus, string $newStatus): bool
     {
-        return in_array($newStatus, self::STATE_MACHINE[$oldStatus]);
+        return is_array(static::STATE_MACHINE[$oldStatus])
+            ? in_array($newStatus, static::STATE_MACHINE[$oldStatus])
+            : static::STATE_MACHINE[$oldStatus] === '*';
     }
 
     private static function lockTry(string $name): bool
@@ -173,8 +147,8 @@ class StateMachine
         return Cache::waitLock($name);
     }
 
-    protected static function getGameNum($User): int
+    protected static function getGameNum($user): int
     {
-
+        return SudokuGame::getUserGameNumber($user) ?: 0;
     }
 }

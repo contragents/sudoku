@@ -7,6 +7,7 @@ class Cache
     const LOCKS_KEY = 'locks_';
     const LOCK_RETRY_TIME = 10000;
     const LOCK_TRIES = 200;
+    const MAX_LOCK_RECURSIONS = 10;
 
     public static $_instance = null;
     private static array $locks = [];
@@ -162,7 +163,7 @@ class Cache
         }
     }
 
-    public static function waitLock(string $lockKey): bool
+    public static function waitLock(string $lockKey, bool $force = false, int $recursionLevel = 0): bool
     {
         $lockTries = 0;
 
@@ -173,6 +174,11 @@ class Cache
 
             $lockTries++;
             usleep(self::LOCK_RETRY_TIME);
+        }
+
+        if ($force && $recursionLevel <= self::MAX_LOCK_RECURSIONS) {
+            self::$_instance->redis->del(self::LOCKS_KEY . $lockKey);
+            return self::waitLock($lockKey, true, ++$recursionLevel);
         }
 
         return false;
@@ -201,10 +207,10 @@ class Cache
         return false;
     }
 
-    public static function waitMultiLock(array $lockKeys): bool
+    public static function waitMultiLock(array $lockKeys, bool $force = false): bool
     {
         foreach ($lockKeys as $lockKey) {
-            if (!self::waitLock($lockKey)) {
+            if (!self::waitLock($lockKey, $force)) {
                 return false;
             }
         }

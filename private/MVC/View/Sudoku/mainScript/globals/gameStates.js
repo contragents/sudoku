@@ -187,6 +187,7 @@ var gameStates = {
             let radioButtons = '<div style="display:none;" class="form-check form-check-inline"><input class="form-check-input" type="radio" id="twoonly" name="players_count" value="2" checked> <label class="form-check-label" for="twoonly">Только два игрока</label></div>';
             radioButtons += '<div style="display:none;" class="form-check form-check-inline"><input class="form-check-input" type="radio" id="twomore" name="players_count" value="4"> <label class="form-check-label" for="twomore">До четырех игроков</label></div>';
 
+            let colOchki = screenOrient === HOR ? "col-5" : "col-6";
             let wish = ''; //'<br /><br /><h6>Желательно:</h6>';
 
             let wishTime = '<br /><br />'; //'<br /><br />Время на ход:<br />';
@@ -313,7 +314,7 @@ var gameStates = {
                         callback: function () {
                             activateFullScreenForMobiles();
                             // gameState = 'noGame';
-                            fetchGlobal(START_GAME_SCRIPT, '', $(".bootbox-body #myGameForm").serialize())
+                            fetchGlobal(INIT_GAME_SCRIPT, '', $(".bootbox-body #myGameForm").serialize())
                                 .then((data) => {
                                     if (data == '')
                                         var responseText = 'Ошибка';
@@ -336,7 +337,7 @@ var gameStates = {
                             //<?php include('instruction_eng.js'); ?>
                             /** todo not working on yandex*/
                             asyncCSS('https://xn--d1aiwkc2d.club/css/choose_css.css');
-                            fetchGlobal(START_GAME_SCRIPT, '', $(".bootbox-body #myGameForm").serialize())
+                            fetchGlobal(INIT_GAME_SCRIPT, '', $(".bootbox-body #myGameForm").serialize())
                                 .then((data) => {
                                     if (data == '')
                                         var responseText = 'Ошибка';

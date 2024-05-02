@@ -1,10 +1,13 @@
 <?php
 
 use classes\Cookie;
+use classes\Game;
 use classes\StateMachine;
 
 class BaseController
 {
+    public Game $Game;
+    public StateMachine $SM;
 
     public static $Request;
     public $Action;

@@ -1,10 +1,7 @@
 <?php
 
 namespace classes;
-use AvatarModel;
-use Erudit\Game;
-use Lang\Ru;
-use ORM;
+use BaseModel;
 use PlayerModel;
 use UserModel;
 
@@ -26,24 +23,6 @@ class Players
 
     public static function getTopPlayer($numTop = 1): array
     {
-        // todo remove after ORM query tested
-        $topQuery = "SELECT
-	max( rating ) AS rating,
-	max( rating_changed_date ) AS updated_at,
-	common_id,
-	max( user_id ) AS user_id,
-    max( users.`name` ) AS name,
-	max( users.avatar_url ) AS avatar_url 
-FROM
-	( SELECT * FROM players WHERE common_id > 0 ORDER BY rating DESC LIMIT " . ($numTop * 10) . " ) AS p1
-	LEFT JOIN player_names ON some_id = user_id
-	LEFT JOIN users ON users.id = common_id 
-GROUP BY
-	common_id 
-ORDER BY
-	max( rating ) DESC 
-	LIMIT $numTop";
-
         $topQuery = ORM::select(
                 [
                     'max( rating ) AS rating',
@@ -67,7 +46,7 @@ ORDER BY
             . ORM::groupBy(['common_id'])
             . ORM::orderBy('max( rating )', false)
             . ORM::limit($numTop);
-        $res = DB::queryArray($topQuery);
+        $res = DB::queryArray($topQuery) ?? [];
 
         return array_map(
             function (array $playerInfo) {
@@ -76,9 +55,7 @@ ORDER BY
                     'updated_at' => $playerInfo['updated_at'],
                     'common_id' => $playerInfo['common_id'],
                     'user_id' => $playerInfo['user_id'],
-                    'name' => $playerInfo['name'] ?: self::getPlayerName(
-                        ['ID' => 'someID', 'common_id' => $playerInfo['common_id']]
-                    ),
+                    'name' => $playerInfo['name'] ?: self::getPlayerName($playerInfo['common_id']),
                     'avatar_url' => $playerInfo['avatar_url'] ?: self::getAvatarUrl($playerInfo['common_id'])
                 ];
             },
@@ -196,77 +173,49 @@ ORDER BY
         return DB::queryValue("SELECT concat(site,mini_url) FROM avatar_urls WHERE site_img_id >= $imgId LIMIT 1");
     }
 
-    public
-    static function getPlayerName(
-        array $user = ['ID' => 'cookie', 'common_id' => 15]
-    ) {
-        if (strpos($user['ID'], 'bot') !== false) {
-            return Game::$configStatic['botNames'][substr($user['ID'], (strlen($user['ID']) == 7 ? -1 : -2))];
+    public static function getPlayerName(int $commonId, string $userCookie = 'someID')
+    {
+        if ($commonIdName = UserModel::getOne($commonId)['name'] ?? false) {
+            return $commonIdName;
         }
 
-        $commonId = $user['common_id'];
-        if (
-        $commonIDName = DB::queryValue(
-            "SELECT name 
-                    FROM users 
-                    WHERE id=$commonId 
-                    LIMIT 1"
-        )) {
-            return $commonIDName;
-        }
+        $sintName = $userCookie;
+        $letterName = '';
 
-        {
-            $idSource = $user['ID'];
-        }
+        foreach (str_split($sintName) as $index => $lowByte) {
+            $letterNumber = base_convert("0x" . $lowByte, 16, 10)
+                + base_convert("0x" . substr($sintName, $index < 5 ? $index : 0, 1), 16, 10);
 
-        if (
-        $res = DB::queryValue(
-            "SELECT name FROM player_names 
-            WHERE
-            some_id=" . Game::hash_str_2_int($idSource)
-            . " LIMIT 1"
-        )
-        ) {
-            return $res;
-        } else {
-            $sintName = $user['ID'];
-            $letterName = '';
-
-            foreach (str_split($sintName) as $index => $lowByte) {
-                $letterNumber = base_convert("0x" . $lowByte, 16, 10)
-                    + base_convert("0x" . substr($sintName, $index < 5 ? $index : 0, 1), 16, 10);
-
-                if (!isset(Ru::$bukvy[$letterNumber])) {
-                    //Английская версия
-                    $letterNumber = number_format(round(34 + $letterNumber * (59 - 34 + 1) / 30, 0), 0);
-                }
-
-                if (Ru::$bukvy[$letterNumber][3] == false) { // нет ошибки - класс неизвестен
-                    $letterNumber = 31;//меняем плохую букву на букву Я
-                }
-
-                if ($letterName == '') {
-                    if ($letterNumber == 28) {
-                        continue;//Не ставим Ь в начало ника
-                    }
-                    $letterName = Ru::$bukvy[$letterNumber][0];
-                    $soglas = Ru::$bukvy[$letterNumber][3];
-                    continue;
-                }
-
-                if (mb_strlen($letterName) >= 6) {
-                    break;
-                }
-
-                if (Ru::$bukvy[$letterNumber][3] <> $soglas) {
-                    $letterName .= Ru::$bukvy[$letterNumber][0];
-                    $soglas = Ru::$bukvy[$letterNumber][3];
-                    continue;
-                }
+            if (!isset(Ru::$bukvy[$letterNumber])) {
+                //Английская версия
+                $letterNumber = number_format(round(34 + $letterNumber * (59 - 34 + 1) / 30, 0), 0);
             }
 
-            return mb_strtoupper(mb_substr($letterName, 0, 1)) . mb_substr($letterName, 1);
+            if (Ru::$bukvy[$letterNumber][3] == false) { // нет ошибки - класс неизвестен
+                $letterNumber = 31;//меняем плохую букву на букву Я
+            }
+
+            if ($letterName == '') {
+                if ($letterNumber == 28) {
+                    continue;//Не ставим Ь в начало ника
+                }
+                $letterName = Ru::$bukvy[$letterNumber][0];
+                $soglas = Ru::$bukvy[$letterNumber][3];
+                continue;
+            }
+
+            if (mb_strlen($letterName) >= 6) {
+                break;
+            }
+
+            if (Ru::$bukvy[$letterNumber][3] <> $soglas) {
+                $letterName .= Ru::$bukvy[$letterNumber][0];
+                $soglas = Ru::$bukvy[$letterNumber][3];
+                continue;
+            }
         }
+
+        return mb_strtoupper(mb_substr($letterName, 0, 1)) . mb_substr($letterName, 1);
     }
 
     public

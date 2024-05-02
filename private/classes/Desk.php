@@ -6,7 +6,7 @@ namespace classes;
 
 class Desk
 {
-    private array $desk = [];
+    public array $desk = [];
     const NUM_COLS = 9;
     const NUM_ROWS = 9;
     public function __construct()

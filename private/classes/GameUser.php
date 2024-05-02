@@ -3,6 +3,7 @@
 
 namespace classes;
 
+/** @property string $ID */
 
 class GameUser
 {
@@ -15,8 +16,8 @@ class GameUser
     public int $wishTurnTime = 0;
     public int $lastRequestNum = 0;
     public int $lastActiveTime = 0;
-    public int $inactiveTurn = 0;
-    public int $lostTurns =0;
+    public int $inactiveTurn = 1000;
+    public int $lostTurns = 0;
     public int $rating = 0;
     public int $common_id;
     public array $logStack = [];

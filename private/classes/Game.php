@@ -3,8 +3,9 @@
 
 namespace classes;
 
-
 use GameDataModel;
+
+/** @property GameStatus $gameStatus */
 
 class Game
 {
@@ -25,14 +26,20 @@ class Game
     protected int $numUser;
     protected Queue $Queue;
 
-    public ?GameStatus $gameStatus = null;
+    public GameStatus $gameStatus;
+    public StateMachine $SM;
 
-    public array $currentGameUsers;
+    public array $currentGameUsers = [];
     public int $currentGame;
-    public int $gameWaitLimit;
+    public int $gameWaitLimit = 60;
+    public int $ratingGameWaitLimit = 360;
 
     public static function getCacheKey(string $lastKeyPart): string {
         return static::GAME_NAME . $lastKeyPart;
+    }
+
+    public function __construct()
+    {
     }
 
     public static function getNewGameId(): int
@@ -47,7 +54,6 @@ class Game
 
     public function makeGame(string $User, string $numPlayers, array $Request = [])
     {
-
     }
 
     public function newDesk()
@@ -57,7 +63,7 @@ class Game
 
     public function onlinePlayers()
     {
-        return 10; // todo добавить реальное колво игроков онлайн
+        return []; // todo добавить реальное колво игроков онлайн
     }
 
     public function saveGameUsers(int $currentGame, array $currentGameUsers)
@@ -85,9 +91,16 @@ class Game
         return Cache::get(self::getCacheKey(self::GAME_USERS_KEY . $this->currentGame)) ?: [];
     }
 
-    protected function getGameStatus(): ?object
+    protected function clearGameUsers(): array
     {
-        return Cache::get(self::getCacheKey(self::GAME_DATA_KEY . $this->currentGame)) ?: null;
+        Cache::del(self::getCacheKey(self::GAME_USERS_KEY . $this->currentGame));
+
+        return [];
+    }
+
+    protected function getGameStatus(): ?GameStatus
+    {
+        return Cache::get(self::getCacheKey(self::GAME_DATA_KEY . $this->currentGame)) ?: new GameStatus();
     }
 
     public function storeGameStatus(bool $updating = true)
@@ -99,7 +112,7 @@ class Game
         );
     }
 
-    protected function destruct()
+    public function __destruct()
     {
         if ($this->currentGame) {
             if (isset($this->gameStatus->results['winner']) && !$this->gameStatus->isGameEndedSaved) {
@@ -116,13 +129,45 @@ class Game
        $this->saveUserLastActivity($this->User);
     }
 
-    protected function getCurrentGame()
+    protected function getCurrentGameNumber()
     {
         return Cache::get(self::getCacheKey(self::GET_GAME_KEY . $this->User));
     }
 
-    public function setUserGame(string $User, int $gameNumber)
+    public static function getUserGameNumber(string $user): ?int
+    {
+        return Cache::get(self::getCacheKey(self::GET_GAME_KEY . $user));
+    }
+
+    public function setUserGameNumber(string $User, int $gameNumber)
     {
         Cache::setex(self::getCacheKey(self::GET_GAME_KEY . $User), self::CACHE_TIMEOUT, $gameNumber);
+    }
+
+    public function clearUserGameNumber(string $User)
+    {
+        Cache::del(self::getCacheKey(self::GET_GAME_KEY . $User));
+    }
+
+    public function newGame(): array
+    {
+        return [];
+    }
+
+    public function checkGameStatus(): array
+    {
+        return [];
+    }
+
+    public function updateUserStatus($newStatus, $user = false, bool $force = false): bool
+    {
+        $user = $user ?: $this->User;
+        $validStatus = $this->SM::setPlayerStatus($newStatus, $user, $force);
+
+        if ($validStatus == $this->SM::STATE_MY_TURN) {
+            $this->gameStatus->activeUser = (int)$this->gameStatus->$user;
+        }
+
+        return $validStatus === $newStatus;
     }
 }

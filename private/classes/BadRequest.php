@@ -3,14 +3,13 @@
 
 namespace classes;
 
-
 use Exception;
 
 class BadRequest extends Exception
 {
     const HTTP_BAD_REQUEST_CODE = 400;
-    const ERRORS_KEY = Game::BOT_ERRORS_KEY;
-    const LOG_ERRORS_KEY = Game::LOG_BOT_ERRORS_KEY;
+    const ERRORS_KEY = 'errors';
+    const LOG_ERRORS_KEY = 'log_errors';
     const MAX_ERRORS = 100;
 
     public static $eMessage = '';
@@ -19,7 +18,7 @@ class BadRequest extends Exception
     {
         ob_clean();
         http_response_code(self::HTTP_BAD_REQUEST_CODE);
-        print json_encode(
+        print Response::jsonResp(
             [
                 'result' => 'error',
                 'message' => self::$eMessage ?: ($params['message'] ?? 'No message'),
