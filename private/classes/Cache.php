@@ -2,6 +2,8 @@
 
 namespace classes;
 
+use BaseController;
+
 class Cache
 {
     const LOCKS_KEY = 'locks_';
@@ -177,7 +179,7 @@ class Cache
         }
 
         if ($force && $recursionLevel <= self::MAX_LOCK_RECURSIONS) {
-            self::$_instance->redis->del(self::LOCKS_KEY . $lockKey);
+            self::$_instance->redis->del(BaseController::$SM::$gamePrefix . self::LOCKS_KEY . $lockKey);
             return self::waitLock($lockKey, true, ++$recursionLevel);
         }
 
@@ -197,8 +199,8 @@ class Cache
             return true;
         }
 
-        if (self::$_instance->redis->incr(self::LOCKS_KEY . $lockKey) == 1) {
-            self::$_instance->redis->setex(self::LOCKS_KEY . $lockKey, self::LOCK_RETRY_TIME * self::LOCK_TRIES, 1);
+        if (self::$_instance->redis->incr(BaseController::$SM::$gamePrefix . self::LOCKS_KEY . $lockKey) == 1) {
+            self::$_instance->redis->setex(BaseController::$SM::$gamePrefix . self::LOCKS_KEY . $lockKey, self::LOCK_RETRY_TIME * self::LOCK_TRIES, 1);
             self::$locks[$lockKey] = true;
 
             return true;
@@ -221,7 +223,7 @@ class Cache
     public function __destruct()
     {
         foreach(self::$locks as $lockKey => $nothing) {
-            self::$_instance->redis->del(self::LOCKS_KEY . $lockKey);
+            self::$_instance->redis->del(BaseController::$SM::$gamePrefix . self::LOCKS_KEY . $lockKey);
         }
     }
 }

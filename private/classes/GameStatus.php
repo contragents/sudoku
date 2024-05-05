@@ -9,7 +9,7 @@ namespace classes;
 class GameStatus
 {
     public array $users; // GameUser[]
-    public ?object $desk = null; // игровая доска, объект
+    public ?Desk $desk = null; // игровая доска, объект
     public ?int $gameNumber = null;
     public int $activeUser;
     public int $gameBeginTime;

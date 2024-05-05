@@ -1,8 +1,17 @@
+<?php
+/**
+ * @var $title
+ * @var $url
+ * @var $siteName
+ * @var $description
+ * @var $fb_img_url
+ */
+?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="utf-8">
-    <title>Эрудит.club - онлайн сообщество любителей игры</title>
+    <title><?= $title ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="js/bootstrap_4.5.2/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/choose_css.css">
@@ -10,14 +19,13 @@
 
     <meta property="og:locale" content="ru_RU">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Эрудит.club - онлайн тусовка любителей игры">
-    <meta property="og:site_name" content="Эрудит.Club">
-    <meta property="og:url" content="https://xn--d1aiwkc2d.club/">
-    <meta property="og:description"
-          content="Эрудит — настольная игра со словами, в которую могут играть от 2 до 4 человек, выкладывая слова из имеющихся у них букв в поле размером 15x15 квадратов.">
-    <meta property="og:image" content="https://xn--d1aiwkc2d.club/img/share/hor_640_360.png">
+    <meta property="og:title" content="<?= $title ?>">
+    <meta property="og:site_name" content="<?= $siteName ?>">
+    <meta property="og:url" content="<?= $url ?>">
+    <meta property="og:description" content="<?= $description ?>">
+    <meta property="og:image" content="<?= $fb_img_url ?>">
 
-    <meta name="description" content="Эрудит — настольная игра со словами, в которую могут играть от 2 до 4 человек, выкладывая слова из имеющихся у них букв в поле размером 15x15 квадратов" />
+    <meta name="description" content="<?= $description ?>" />
     
     <script src="js/phaser_35/phaser.min.js"></script>
 
@@ -34,7 +42,7 @@
 </head>
 
 <body>
-<div id="phaser-example"></div>
+<div id="game_block"></div>
 <script>
     var loader = loader || {}
     loader.importJS = function (uri) {
@@ -49,9 +57,6 @@
 </script>
 <div id="ss" style="display:none;"></div>
 
-<div style="position:absolute; left:-9999px;">
-<a style="position:absolute; left:-9999px;" href="/dict/" target="_blank" title="Перейти в словарь">Словарь Эрудита</a>
-</div>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function (m, e, t, r, i, k, a) {

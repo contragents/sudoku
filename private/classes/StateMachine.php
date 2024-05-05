@@ -6,7 +6,7 @@ use BaseController;
 
 class StateMachine
 {
-    private static ?string $gamePrefix = null;
+    public static ?string $gamePrefix = null;
     public static ?string $cookieKey = null;
 
     const CACHE_TTL = 60 * 60;
@@ -91,7 +91,7 @@ class StateMachine
         ], // Пока просто перезагружаем игру, если прилетел статус NEW_GAME
     ];
 
-    const PLAYER_STATUS_PREFIX = 'player_status_';
+    const PLAYER_STATUS_PREFIX = '.player_status_';
 
     public function __construct(string $cookieKey, string $gamePrefix)
     {

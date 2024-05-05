@@ -43,7 +43,7 @@ class BaseModel
                 array_map(
                     fn($value) => $value instanceof ORM
                         ? $value->rawExpression
-                        : ("'" . DB::escapeString($value) . "'"),
+                        : DB::escapeString($value),
                     $fieldsVals
                 )
             );

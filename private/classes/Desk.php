@@ -7,8 +7,10 @@ namespace classes;
 class Desk
 {
     public array $desk = [];
+
     const NUM_COLS = 9;
     const NUM_ROWS = 9;
+
     public function __construct()
     {
         for ($i = 0; $i < static::NUM_COLS; $i++) {

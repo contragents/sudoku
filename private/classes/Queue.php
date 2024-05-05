@@ -7,21 +7,20 @@ use PlayerModel;
 class Queue
 {
     const QUEUES = [
-        'rating_waiters' => 'rating_waiters',
-        '2players_waiters' => '2players_waiters',
-        '4players_waiters' => '4players_waiters',
-        'inviteplayers_waiters' => 'inviteplayers_waiters',
+        'rating_waiters' => '.rating_waiters',
+        '2players_waiters' => '.2players_waiters',
+        'inviteplayers_waiters' => '.inviteplayers_waiters',
     ];
 
     const QUEUE_NUMS = [
         'invite' => 'invite',
     ];
 
-    const SEMAPHORE_KEY = 'semaphore_waiting';
+    const SEMAPHORE_KEY = '.semaphore_waiting';
 
     const MAX_INVITE_WAIT_TIME = 60;
     const PREFERENCES_TTL = 30 * 24 * 60 * 60;
-    const PREFS_KEY = 'user_preference_';
+    const PREFS_KEY = '.user_preference_';
     const RATING_QUEUE = 'ratingQueue';
     const TURN_TIME_PARAM_NAME = 'turn_time';
 
@@ -29,7 +28,7 @@ class Queue
     protected $userTime;
 
     protected bool $userInInitStatus = false;
-    const USER_STATUS_PREFIX = 'user_status_';
+    const USER_QUEUE_STATUS_PREFIX = '.user_queue_status_';
 
     protected Game $caller;
     protected array $POST;
@@ -45,6 +44,11 @@ class Queue
         $this->saveUserPrefs();
     }
 
+    public function init()
+    {
+        $this->userInInitStatus = $this->checkPlayerInitStatus(true);
+    }
+
     protected function checkPlayerInitStatus(bool $initGame): bool
     {
         $initGame = $initGame || self::isUserInQueue($this->User);
@@ -55,7 +59,7 @@ class Queue
             return true;
         }
 
-        if(Cache::get(static::USER_STATUS_PREFIX . $this->User)) {
+        if(Cache::get(static::USER_QUEUE_STATUS_PREFIX . $this->User)) {
             return true;
         }
 
@@ -64,7 +68,7 @@ class Queue
 
     public static function setPlayerInitStatus($User): void
     {
-        Cache::setex(static::USER_STATUS_PREFIX . $User, 60, StateMachine::STATE_INIT_GAME);
+        Cache::setex(static::USER_QUEUE_STATUS_PREFIX . $User, 60, StateMachine::STATE_INIT_GAME);
     }
 
     public static function isUserInInviteQueue(string $user)
@@ -105,7 +109,9 @@ class Queue
 
     protected function chooseGame(): array
     {
-        $chooseGameParams = Response::state($this->caller->SM::STATE_CHOOSE_GAME, $this->User, true)
+        $this->caller->updateUserStatus($this->caller->SM::STATE_CHOOSE_GAME, $this->User, true);
+
+        $chooseGameParams = Response::state($this->caller->SM::STATE_CHOOSE_GAME)
             + [
                 'gameSubState' => 'choosing',
                 'players' => $this->caller->onlinePlayers(),
@@ -421,9 +427,6 @@ class Queue
 
         $this->caller->gameStatus = new GameStatus();
 
-        $this->caller->gameStatus->desk = $this->caller->newDesk();
-        //Создали состояние доски
-
         $game_users = [];
         $this->caller->currentGameUsers = [];
 
@@ -578,4 +581,3 @@ class Queue
         );
     }
 }
-

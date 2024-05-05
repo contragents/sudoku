@@ -3,15 +3,16 @@
 namespace classes;
 
 use BaseController;
-use PlayerModel;
 
-class SudokuGame extends Game
+class GomokuGame extends Game
 {
+    public const GAME_NAME = 'gomoku';
+
     public function __construct()
     {
         $this->SM = BaseController::$SM;
 
-        parent::__construct(QueueSudoku::class);
+        parent::__construct(QueueGomoku::class);
     }
 
     public function gameStarted($statusUpdateNeeded = false): array
@@ -27,7 +28,7 @@ class SudokuGame extends Game
 
     public function newDesk(): Desk
     {
-        return new DeskSudoku;
+        return new DeskGomoku;
     }
 }
 

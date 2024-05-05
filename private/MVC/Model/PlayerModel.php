@@ -36,6 +36,22 @@ class PlayerModel extends BaseModel
             return $commonID;
         }
 
+        if (!count(self::getOneCustom(self::COOKIE_FIELD, $cookie)) && $createIfNotExist) {
+            self::add([self::COOKIE_FIELD => $cookie]);
+            self::setParamMass(
+                self::COMMON_ID_FIELD,
+                new ORM('id'),
+                [
+                    'field_name' => self::COOKIE_FIELD,
+                    'condition' => '=',
+                    'value' => $cookie,
+                    'raw' => false
+                ]
+            );
+
+            return self::getOneCustom(self::COOKIE_FIELD, $cookie)[self::COMMON_ID_FIELD] ?? 0;
+        }
+
         // Пробуем найти связанный common_id у другого плеера по user_id
         $userIDArr = self::getCrossingCommonIdByCookie($cookie);
         // Если связь есть
