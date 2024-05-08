@@ -461,7 +461,7 @@ function placeFishki(fishki) {
     for (let i = 0; i < fishki.length; i++) {
         let lotokXY = lotokFindSlotXY();
 
-        container.push(getFishkaGlobal(fishki[i], lotokGetX(lotokXY[0], lotokXY[1]), lotokGetY(lotokXY[0], lotokXY[1]), this.game.scene.scenes[gameScene], true, userFishkaSet).setData('lotokX', lotokXY[0]).setData('lotokY', lotokXY[1]));
+        container.push(getFishkaGlobal(fishki[i], lotokGetX(lotokXY[0], lotokXY[1]), lotokGetY(lotokXY[0], lotokXY[1]), this.game.scene.scenes[gameScene], true).setData('lotokX', lotokXY[0]).setData('lotokY', lotokXY[1]));
         //console.log(container[i].getData('lotokX'));
     }
 }

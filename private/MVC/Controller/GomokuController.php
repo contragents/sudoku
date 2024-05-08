@@ -1,5 +1,7 @@
 <?php
 
+use classes\FrontResource;
+use classes\FrontResourceGomoku;
 use classes\StateMachine;
 use classes\GomokuGame;
 
@@ -18,6 +20,7 @@ class GomokuController extends BaseController
     public function __construct($action, array $request)
     {
         BaseController::$SM = new StateMachine(self::COOKIE_KEY, GomokuGame::GAME_NAME);
+        BaseController::$FR = new FrontResourceGomoku();
 
         parent::__construct($action, $request);
 

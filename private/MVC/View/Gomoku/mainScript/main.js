@@ -8,7 +8,7 @@ var UIScene = new Phaser.Class({
     ,
 
     preload: 
-    //<?php include('preloadFunction.js')?>
+    //<?php include(ROOT_DIR . '/js/common_functions/preloadFunction.js.php')?>
     ,
 
     create: 

@@ -1,6 +1,7 @@
 <?php
 
 use classes\Cookie;
+use classes\FrontResource;
 use classes\Game;
 use classes\Response;
 use classes\StateMachine;
@@ -15,6 +16,7 @@ class BaseController
 
     public Game $Game;
     public static StateMachine $SM;
+    public static FrontResource $FR;
 
     public static $Request;
     public $Action;
