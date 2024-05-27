@@ -405,7 +405,6 @@ function disableButtons() {
 }
 
 function enableButtons() {
-    //if (bootBoxIsOpenedGlobal()) return;
     for (let k in buttons)
         if ('enabled' in buttons[k]) {
             if (gameState in buttons[k]['enabled']) {
@@ -432,7 +431,6 @@ function enableButtons() {
         }
 }
 
-
 function placeFishki(fishki) {
     var maxI = 0;
     for (var i in container) {
@@ -451,28 +449,26 @@ function placeFishki(fishki) {
         }
 
         container[i].destroy();
-        //container.splice(i,1);
     }
 
     for (let i = maxI; i >= 0; i--)
         if (i in container)
             container.splice(i, 1);
 
-    for (let i = 0; i < fishki.length; i++) {
+    for (let i = 0; i <= 8; i++) {
         let lotokXY = lotokFindSlotXY();
 
-        container.push(getFishkaGlobal(fishki[i], lotokGetX(lotokXY[0], lotokXY[1]), lotokGetY(lotokXY[0], lotokXY[1]), this.game.scene.scenes[gameScene], true).setData('lotokX', lotokXY[0]).setData('lotokY', lotokXY[1]));
-        //console.log(container[i].getData('lotokX'));
+        container.push(getFishkaGlobal(i, lotokGetX(lotokXY[0], lotokXY[1]), lotokGetY(lotokXY[0], lotokXY[1]), this.game.scene.scenes[gameScene], true).setData('lotokX', lotokXY[0]).setData('lotokY', lotokXY[1]));
     }
 }
 
 //<?php include('globals/getFishkaGlobalFunction.js')?>
-//<?php include('globals/ajaxGetGlobalFunction.js')?>
+//<?php include(ROOT_DIR . '/js/common_functions/ajaxGetGlobalFunction.js.php')?>
 //<?php include('globals/parseDeskGlobalFunction.js')?>
 //<?php include('globals/initCellsGlobalFunction.js')?>
 //<?php include('globals/findPlaceGlobalFunction.js')?>
 //<?php include('globals/changeFishkiGlobalFunction.js')?>
-//<?php include('globals/bootBoxIsOpenedGlobalFunction.js')?>
+//<?php include(ROOT_DIR . '/js/common_functions/bootBoxIsOpenedGlobalFunction.js.php')?>
 //<?php include('globals/openWindowGlobalFunction.js')?>
 //<?php include('globals/buttonGlobalFunctions.js')?>
-//<?php include('globals/gagetTypeFunctions.js')?>
+//<?php include(ROOT_DIR . '/js/common_functions/gadgetTypeFunctions.js.php')?>

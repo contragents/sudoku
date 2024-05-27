@@ -131,12 +131,17 @@ window.onbeforeunload = function () {
 document.addEventListener("visibilitychange", function () {
     pageActive = document.visibilityState;
 
-    if (gameState == 'myTurn'
-        || gameState == 'preMyTurn'
-        || gameState == 'otherTurn'
-        || gameState == 'initGame'
-        || gameState == 'initRatingGame') {
-        if (pageActive == 'hidden') {
+    if (gameState === 'myTurn'
+        || gameState === 'preMyTurn'
+        || gameState === 'otherTurn'
+        || gameState === 'initGame'
+        || gameState === 'initRatingGame') {
+        if (pageActive === 'hidden') {
+            fetchGlobal(STATUS_HIDDEN_CHECKER_SCRIPT, 'g', '0')
+                .then((data) => {
+                    commonCallback(data);
+                });
+        } else {
             fetchGlobal(STATUS_CHECKER_SCRIPT, 'g', '0')
                 .then((data) => {
                     commonCallback(data);
@@ -279,14 +284,12 @@ function savePlayerAvatar(url, commonID) {
             + AVATAR_UPLOAD_SCRIPT
             + '&queryNumber='
             + (queryNumber++)
-            + '&lang=' + lang
             + (pageActive === 'hidden' ? '&page_hidden=true' : '')
         )
         : (
             '//xn--d1aiwkc2d.club/php/'
             + AVATAR_UPLOAD_SCRIPT
             + '?queryNumber=' + (queryNumber++)
-            + '&lang=' + lang
             + (pageActive === 'hidden' ? '&page_hidden=true' : '')
         );
 
@@ -433,12 +436,14 @@ function enableButtons() {
 }
 
 
-function placeFishki(fishki) {
-    var maxI = 0;
+function placeFishki() {
+    let maxI = 0;
+    let n = 9;
+
     for (var i in container) {
         if (i > maxI)
             maxI = i;
-        console.log('!!!!!!' + i);
+
         if (container[i].getData('cellX')) {
             cells[container[i].getData('cellX')][container[i].getData('cellY')][0] = false;
             cells[container[i].getData('cellX')][container[i].getData('cellY')][1] = false;
@@ -451,28 +456,26 @@ function placeFishki(fishki) {
         }
 
         container[i].destroy();
-        //container.splice(i,1);
     }
 
     for (let i = maxI; i >= 0; i--)
         if (i in container)
             container.splice(i, 1);
 
-    for (let i = 0; i < fishki.length; i++) {
+    for (let i = 1; i <= n; i++) {
         let lotokXY = lotokFindSlotXY();
 
-        container.push(getFishkaGlobal(fishki[i], lotokGetX(lotokXY[0], lotokXY[1]), lotokGetY(lotokXY[0], lotokXY[1]), this.game.scene.scenes[gameScene], true).setData('lotokX', lotokXY[0]).setData('lotokY', lotokXY[1]));
-        //console.log(container[i].getData('lotokX'));
+        container.push(getFishkaGlobal(i, lotokGetX(lotokXY[0], lotokXY[1]), lotokGetY(lotokXY[0], lotokXY[1]), this.game.scene.scenes[gameScene], true).setData('lotokX', lotokXY[0]).setData('lotokY', lotokXY[1]));
     }
 }
 
 //<?php include('globals/getFishkaGlobalFunction.js')?>
-//<?php include('globals/ajaxGetGlobalFunction.js')?>
+//<?php include(ROOT_DIR . '/js/common_functions/ajaxGetGlobalFunction.js.php')?>
 //<?php include('globals/parseDeskGlobalFunction.js')?>
 //<?php include('globals/initCellsGlobalFunction.js')?>
 //<?php include('globals/findPlaceGlobalFunction.js')?>
 //<?php include('globals/changeFishkiGlobalFunction.js')?>
-//<?php include('globals/bootBoxIsOpenedGlobalFunction.js')?>
+//<?php include(ROOT_DIR . '/js/common_functions/bootBoxIsOpenedGlobalFunction.js.php')?>
 //<?php include('globals/openWindowGlobalFunction.js')?>
 //<?php include('globals/buttonGlobalFunctions.js')?>
-//<?php include('globals/gagetTypeFunctions.js')?>
+//<?php include(ROOT_DIR . '/js/common_functions/gadgetTypeFunctions.js.php')?>

@@ -390,12 +390,10 @@ var gameStates = {
             gameStates['myTurn']['from_noGame'](data);
         },
         from_noGame: function (data) {
-            if ('fishki' in data)
-                placeFishki(data['fishki']);
+                placeFishki();
         },
         from_desync: function (data) {
-            if ('fishki' in data)
-                placeFishki(data['fishki']);
+                placeFishki();
         },
         from_gameResults: function () {
             gameStates['startGame']['from_initGame']();
@@ -420,8 +418,7 @@ var gameStates = {
             buttons['submitButton']['svgObject'].bringToTop(buttons['submitButton']['svgObject'].getByName('submitButton' + 'Inactive'));
         },
         from_desync: function (data) {
-            if ('fishki' in data)
-                placeFishki(data['fishki']);
+            placeFishki();
         },
         from_initRatingGame: function (data) {
             gameStates['startGame']['from_initGame']();
@@ -456,8 +453,7 @@ var gameStates = {
 
         },
         from_desync: function (data) {
-            if ('fishki' in data)
-                placeFishki(data['fishki']);
+            placeFishki();
         },
         from_initRatingGame: function (data) {
             gameStates['startGame']['from_initGame']();

@@ -4,7 +4,7 @@
  * @var $url
  * @var $siteName
  * @var $description
- * @var $fb_img_url
+ * @var $fbImgUrl
  */
 ?>
 <!DOCTYPE html>
@@ -23,7 +23,7 @@
     <meta property="og:site_name" content="<?= $siteName ?>">
     <meta property="og:url" content="<?= $url ?>">
     <meta property="og:description" content="<?= $description ?>">
-    <meta property="og:image" content="<?= $fb_img_url ?>">
+    <meta property="og:image" content="<?= $fbImgUrl ?>">
 
     <meta name="description" content="<?= $description ?>" />
     

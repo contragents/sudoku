@@ -12,7 +12,7 @@ class DeskSudoku extends Desk
         parent::__construct();
 
         $sudoku = new SudokuGenerator;
-        $sudoku->sudoku(1);
+        $sudoku->sudoku(9);
         $this->desk = $sudoku->generate();
     }
 

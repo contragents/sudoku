@@ -16,7 +16,7 @@ class Queue
         'invite' => 'invite',
     ];
 
-    const SEMAPHORE_KEY = '.semaphore_waiting';
+    const SEMAPHORE_KEY = 'semaphore_waiting';
 
     const MAX_INVITE_WAIT_TIME = 60;
     const PREFERENCES_TTL = 30 * 24 * 60 * 60;
@@ -109,13 +109,14 @@ class Queue
 
     protected function chooseGame(): array
     {
-        $this->caller->updateUserStatus($this->caller->SM::STATE_CHOOSE_GAME, $this->User, true);
+        $newStatus = $this->caller->updateUserStatus($this->caller->SM::STATE_CHOOSE_GAME, $this->User, true);
 
-        $chooseGameParams = Response::state($this->caller->SM::STATE_CHOOSE_GAME)
+        $chooseGameParams = Response::state($newStatus)
             + [
                 'gameSubState' => 'choosing',
                 'players' => $this->caller->onlinePlayers(),
-                'prefs' => $this->getUserPrefs()
+                'prefs' => $this->getUserPrefs(),
+                'reason' => 'Queue error'
             ];
 
         return $chooseGameParams;
@@ -129,14 +130,14 @@ class Queue
 
         if ($this->checkInviteQueue()) {
             if ($this->inviteQueueFull()) {
-                if (Cache::waitLock(static::SEMAPHORE_KEY, true)) {
+                if (Cache::lock(self::SEMAPHORE_KEY)) {
                     return $this->makeGame(static::QUEUE_NUMS['invite'], 4);
                 }
             }
 
-            $this->caller->updateUserStatus($this->caller->SM::STATE_INIT_GAME, $this->User, true);
+            $newStatus = $this->caller->updateUserStatus($this->caller->SM::STATE_INIT_GAME, $this->User, true);
 
-            return Response::state($this->caller->SM::STATE_INIT_GAME)
+            return Response::state($newStatus)
                 + [
                     'gameSubState' => Cache::hlen(static::QUEUES["inviteplayers_waiters"]),
                     'gameWaitLimit' => $this->caller->gameWaitLimit
@@ -146,8 +147,8 @@ class Queue
         if ($ratingWanted = $this->waitRatingPlayer($this->User)) // Сразу помещает в спецочередь
         {
             if ($ratingPlayer = $this->findRatingPlayer($ratingWanted)) {
-                if (Cache::waitLock(static::SEMAPHORE_KEY, true)) {
-                    return $this->makeRatingGame($ratingPlayer) ?: $this->stillWaitRatingPlayer();
+                if (Cache::lock(self::SEMAPHORE_KEY)) {
+                    return $this->makeRatingGame($ratingPlayer);
                 }
             }
 
@@ -160,14 +161,16 @@ class Queue
 
         $curPlayerRating = PlayerModel::getRatingByCookie($this->User);
         if ($curPlayerRating > 1900 && ($ratingPlayer = $this->findWaitingRaitingPlayer($curPlayerRating))) {
-            if (Cache::waitLock(static::SEMAPHORE_KEY, true)) {
-                return $this->makeReverseRatingGame($ratingPlayer) ?: $this->storeTo2Players($this->User);
+            if (Cache::lock(self::SEMAPHORE_KEY)) {
+                return $this->makeReverseRatingGame($ratingPlayer);
             }
         }
 
         if ($this->players2Waiting($this->User)) {
-            if (Cache::waitLock(static::SEMAPHORE_KEY, true)) {
+            if (Cache::lock(self::SEMAPHORE_KEY)) {
                 return $this->makeGame('2');
+            } else {
+                return $this->caller->desync() + ['reason' => 'Semaphore lock failed'];
             }
         }
 
@@ -222,7 +225,7 @@ class Queue
             return false;
         }
 
-        if (($this->POST['from_rating'] ?? 0) > 0) {
+        if (($this->POST['from_rating'] ?? 0) > 0 && Cache::lock($User)) {
             $options = $this->getUserPrefs();
 
             $this->userTime = date('U');
@@ -322,19 +325,19 @@ class Queue
         $thisUserOptions = $this->gatherUserData();
 
         if (
+            // Удалили ожидающего рейтинг игрока из очереди рейтинга
             self::cleanUp($ratingPlayer['cookie'])
-            //Удалили ожидающего рейтинг игрока из очереди рейтинга
+            &&
+            self::cleanUp($this->User)
             &&
             self::addToQueue("2players_waiters", $ratingPlayer['cookie'], $ratingPlayer['options'])
             //Поместили ожидающего рейтинг игрока в очередь текущего игрока
-            &&
-            self::cleanUp($this->User)
             &&
             self::addToQueue("2players_waiters", $this->User, $thisUserOptions)
         ) {
             return $this->makeGame('2', 2, $ratingPlayer['rating']);
         } else {
-            return self::chooseGame();
+            return $this->chooseGame();
         }
     }
 
@@ -350,7 +353,7 @@ class Queue
                 &&
                 self::addToQueue("2players_waiters", $ratingPlayer['cookie'], $playerData['options'])
             )) {
-                return self::chooseGame();
+                return $this->chooseGame();
             }
         }
 
@@ -385,7 +388,7 @@ class Queue
     {
         $waiterData = Cache::hget(static::QUEUES["rating_waiters"], $User) ?: [];
         if (self::cleanUp($User)) {
-            return $this->storeTo2Players($User, $waiterData['options'] ?? []) ?: $this->chooseGame();
+            return $this->storeTo2Players($User, $waiterData['options'] ?? []);
         }
 
         return false;
@@ -393,9 +396,9 @@ class Queue
 
     protected function stillWaitRatingPlayer(): array
     {
-        $this->caller->SM::setPlayerStatus($this->caller->SM::STATE_INIT_GAME, $this->User, true);
+        $newStatus = $this->caller->updateUserStatus($this->caller->SM::STATE_INIT_GAME, $this->User, true);
 
-        return Response::state($this->caller->SM::STATE_INIT_GAME)
+        return Response::state($newStatus)
             + [
                 'gameSubState' => 0,
                 'timeWaiting' => date('U') - $this->userTime,
@@ -411,6 +414,10 @@ class Queue
      */
     public static function cleanUp($User): bool
     {
+        if (!Cache::lock($User)) {
+            return false;
+        }
+
         foreach (static::QUEUES as $eachQueue) {
             if (Cache::hdel($eachQueue, $User, ['lock' => $User]) === false) {
                 return false;
@@ -457,6 +464,10 @@ class Queue
                 continue;
             }
 
+            if (!Cache::lock($player)) {
+                continue;
+            }
+
             $prefs = $this->getUserPrefs($player);
             $data = unserialize($data);
 
@@ -480,7 +491,7 @@ class Queue
 
         if (count($game_users) < 2) {
             // игра не собралась - отменяем, помещаем игрока обратно в очередь 2
-            return $this->storeTo2Players($this->User, $game_users[0]['options'] ?? []) ?: $this->chooseGame();
+            return $this->storeTo2Players($this->User, $game_users[0]['options'] ?? []);
         }
 
         foreach ($game_users as $num => $user) {
@@ -520,24 +531,22 @@ class Queue
             self::addToQueue("inviteplayers_waiters", $User, $options);
         }
 
-        $this->caller->updateUserStatus($this->caller->SM::STATE_INIT_GAME, $User, true);
+        $newStatus = $this->caller->updateUserStatus($this->caller->SM::STATE_INIT_GAME, $User, true);
 
-        return Response::state($this->caller->SM::STATE_INIT_GAME)
+        return Response::state($newStatus)
             + [
                 'gameSubState' => Cache::hlen(static::QUEUES["inviteplayers_waiters"]),
                 'gameWaitLimit' => $this->caller->gameWaitLimit
             ];
     }
 
-    protected function players2Waiting($User)
+    protected function players2Waiting($User): bool
     {
         if ($cnt = Cache::hlen(static::QUEUES["2players_waiters"])) {
             if (!Cache::hget(static::QUEUES["2players_waiters"], $User)) {
                 return true;
-            } else {
-                if ($cnt > 1) {
-                    return true;
-                }
+            } elseif ($cnt > 1) {
+                return true;
             }
         }
 
@@ -552,13 +561,13 @@ class Queue
 
         if (!Cache::hget(static::QUEUES["2players_waiters"], $User)) {
             if(!self::addToQueue("2players_waiters", $User, $options)) {
-                return self::chooseGame();
+                return $this->chooseGame();
             }
         }
 
-        $this->caller->updateUserStatus($this->caller->SM::STATE_INIT_GAME, $User, true);
+        $newStatus = $this->caller->updateUserStatus($this->caller->SM::STATE_INIT_GAME, $User, true);
 
-        return Response::state($this->caller->SM::STATE_INIT_GAME)
+        return Response::state($newStatus)
             + [
             'gameSubState' => Cache::hlen(static::QUEUES["2players_waiters"]),
             'gameWaitLimit' => $this->caller->gameWaitLimit,
@@ -567,17 +576,14 @@ class Queue
 
     protected function addToQueue(string $queue, string $user, $options, array $params = []): bool
     {
-        return (bool)Cache::hset(
-            static::QUEUES[$queue],
-            $user,
-            array_merge(
-                [
-                    'time' => date('U'),
-                    'options' => $options
-                ],
-                $params
-            ),
-            ['lock' => $user]
-        );
+         if(Cache::lock($user)) {
+             return (bool)Cache::hset(
+                 static::QUEUES[$queue],
+                 $user,
+                 array_merge(['time' => date('U'), 'options' => $options], $params)
+             );
+         }
+
+         return false;
     }
 }

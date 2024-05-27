@@ -13,27 +13,7 @@ function (time, delta) {
 
     if (gameState == 'chooseGame' && (queryNumber > 1))
         return;
-    if (newCells.constructor === Array && Array.isArray(newCells[15])) {
 
-        for (k = 100; k >= 0; k--)
-            if (k in container) {
-                if (container[k].getData('lotokX') !== false)
-                    lotokFreeXY(container[k].getData('lotokX'), container[k].getData('lotokY'));
-                container[k].destroy();
-                container.splice(k, 1);
-            }
-
-        if (newCells[15].length > 0) {
-            for (var $fishkaNum = 0; $fishkaNum < newCells[15].length; $fishkaNum++)
-                if (newCells[15][$fishkaNum] !== undefined) {
-                    let lotokXY = lotokFindSlotXY();
-                    container.push(getFishkaGlobal(newCells[15][$fishkaNum], lotokGetX(lotokXY[0], lotokXY[1]), lotokGetY(lotokXY[0], lotokXY[1]), this, true).setData('lotokX', lotokXY[0]).setData('lotokY', lotokXY[1]));
-                }
-
-
-        }
-        newCells.splice(15, 1);
-    }
     var flor = Math.floor(time / 1000);
     //if ( (Math.random() > (1-(1/gameStates[gameState]['refresh']/60))) || (queryNumber == 1) ) {
     if (

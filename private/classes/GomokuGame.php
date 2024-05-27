@@ -2,16 +2,12 @@
 
 namespace classes;
 
-use BaseController;
-
 class GomokuGame extends Game
 {
     public const GAME_NAME = 'gomoku';
 
     public function __construct()
     {
-        $this->SM = BaseController::$SM;
-
         parent::__construct(QueueGomoku::class);
     }
 

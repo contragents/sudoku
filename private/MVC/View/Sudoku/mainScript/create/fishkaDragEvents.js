@@ -3,11 +3,10 @@ this.input.on('dragstart', function (pointer, gameObject) {
     gameObject.depth = 100;
     let cellX = Math.round((gameObject.x - stepX - correctionX) / yacheikaWidth) - 1;
     let cellY = Math.round((gameObject.y - stepY - correctionY) / yacheikaWidth) - 1;
-    if ((cellX <= 14) && (cellX >= 0) && (cellY <= 14) && (cellY >= 0)) {
+    if ((cellX <= 8) && (cellX >= 0) && (cellY <= 8) && (cellY >= 0)) {
         cells[cellX][cellY][0] = false;
         cells[cellX][cellY][1] = false;
         cells[cellX][cellY][2] = false;
-        cells[cellX][cellY][3] = DEFAULT_FISHKA_SET;
 
         gameObject.setData('cellX', false);
         gameObject.setData('cellY', false);

@@ -14,23 +14,19 @@ class BadRequest extends Exception
 
     public static $eMessage = '';
 
-    public static function sendBadRequest(array $params = [], $isBot = false)
+    public static function sendBadRequest(array $params = [], $isBot = false): array
     {
-        ob_clean();
+        // ob_clean();
+        //Cache::hset(self::ERRORS_KEY, time() % self::MAX_ERRORS, ['date' => date('Y-m-d H:i:s'), 'error' => $params]);
+
         http_response_code(self::HTTP_BAD_REQUEST_CODE);
-        print Response::jsonResp(
+
+        return
             [
                 'result' => 'error',
                 'message' => self::$eMessage ?: ($params['message'] ?? 'No message'),
                 'ext_data' => $params
-            ]
-        );
-
-        Cache::hset(self::ERRORS_KEY, time() % self::MAX_ERRORS, ['date' => date('Y-m-d H:i:s'), 'error' => $params]);
-
-        if (!$isBot) {
-            exit;
-        }
+            ];
     }
 
     public static function logBadRequest(array $params = [])

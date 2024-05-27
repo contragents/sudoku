@@ -3,22 +3,23 @@
 namespace classes;
 
 use BaseController;
+use Redis;
 
 class Cache
 {
-    const LOCKS_KEY = 'locks_';
+    const LOCKS_KEY = '.locks_';
     const LOCK_RETRY_TIME = 10000;
     const LOCK_TRIES = 200;
     const MAX_LOCK_RECURSIONS = 10;
 
-    public static $_instance = null;
+    public static ?Cache $_instance = null;
     private static array $locks = [];
 
     public $redis;
 
     public function __construct()
     {
-        $this->redis = new \Redis;
+        $this->redis = new Redis;
         try {
             $this->redis->pconnect(Config::$config['cache']['HOST'], Config::$config['cache']['PORT'], 10);
         } catch (\Exception $e) {
@@ -180,6 +181,7 @@ class Cache
 
         if ($force && $recursionLevel <= self::MAX_LOCK_RECURSIONS) {
             self::$_instance->redis->del(BaseController::$SM::$gamePrefix . self::LOCKS_KEY . $lockKey);
+
             return self::waitLock($lockKey, true, ++$recursionLevel);
         }
 
@@ -191,7 +193,7 @@ class Cache
      * @param $lockKey
      * @return bool
      */
-    private static function lock($lockKey): bool
+    public static function lock($lockKey): bool
     {
         self::checkInstance();
 
@@ -200,19 +202,40 @@ class Cache
         }
 
         if (self::$_instance->redis->incr(BaseController::$SM::$gamePrefix . self::LOCKS_KEY . $lockKey) == 1) {
-            self::$_instance->redis->setex(BaseController::$SM::$gamePrefix . self::LOCKS_KEY . $lockKey, self::LOCK_RETRY_TIME * self::LOCK_TRIES, 1);
+            self::$_instance->redis->setex(BaseController::$SM::$gamePrefix . self::LOCKS_KEY . $lockKey, floor(self::LOCK_RETRY_TIME / 1000000 * self::LOCK_TRIES), 1);
             self::$locks[$lockKey] = true;
 
             return true;
         }
 
+        $lockTries = 0;
+
+        while($lockTries < self::LOCK_TRIES / 5) {
+            if (self::$_instance->redis->incr(BaseController::$SM::$gamePrefix . self::LOCKS_KEY . $lockKey) == 1) {
+                self::$_instance->redis->setex(BaseController::$SM::$gamePrefix . self::LOCKS_KEY . $lockKey, self::LOCK_RETRY_TIME * self::LOCK_TRIES, 1);
+                self::$locks[$lockKey] = true;
+
+                return true;
+            }
+
+            $lockTries++;
+            usleep(self::LOCK_RETRY_TIME);
+        }
+
+        // Снять лок, если он "завис" - много попыток incr
+        if (self::$_instance->redis->incr(BaseController::$SM::$gamePrefix . self::LOCKS_KEY . $lockKey) > self::LOCK_TRIES) {
+            self::unlock($lockKey);
+
+            return self::lock($lockKey);
+        }
+
         return false;
     }
 
-    public static function waitMultiLock(array $lockKeys, bool $force = false): bool
+    public static function multyLock(array $lockKeys): bool
     {
         foreach ($lockKeys as $lockKey) {
-            if (!self::waitLock($lockKey, $force)) {
+            if (!self::lock($lockKey)) {
                 return false;
             }
         }
@@ -220,10 +243,21 @@ class Cache
         return true;
     }
 
+    public static function unlockAll()
+    {
+        self::checkInstance();
+        self::$_instance->__destruct();
+    }
+
     public function __destruct()
     {
         foreach(self::$locks as $lockKey => $nothing) {
             self::$_instance->redis->del(BaseController::$SM::$gamePrefix . self::LOCKS_KEY . $lockKey);
         }
+    }
+
+    private static function unlock($lockKey)
+    {
+        self::$_instance->redis->del(BaseController::$SM::$gamePrefix . self::LOCKS_KEY . $lockKey);
     }
 }

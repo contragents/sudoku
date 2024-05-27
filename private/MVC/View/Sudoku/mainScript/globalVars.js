@@ -1,25 +1,8 @@
-/*
-<?php
-if (isset($_GET['lang']) && $_GET['lang'] == 'EN') {
-$lang='EN';
-?>
-//*/
-var lang = 'EN';
-
-/*
-<?php
-} else {
-$lang='RU';
-?>
-//*/
-var lang = 'RU';
-/*
-<?php
-}
-?>
-*/
-
 //<?php include(ROOT_DIR . '/js/common_functions/globalVarsCommon.js.php'); ?>
+
+yacheikaWidth = 32 * 2 * 15 / 9 * 0.96;
+correctionX = 4;
+correctionY = -7 * 2;
 
 //<?php include('globals/instruction.js'); ?>
 

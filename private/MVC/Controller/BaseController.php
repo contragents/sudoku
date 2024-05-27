@@ -5,6 +5,7 @@ use classes\FrontResource;
 use classes\Game;
 use classes\Response;
 use classes\StateMachine;
+use classes\ViewHelper;
 
 class BaseController
 {
@@ -13,7 +14,13 @@ class BaseController
     const SITE_NAME = "5-5.su/game";
     const DESCRIPTION = 'In Game, the objective is to WIN!';
     const FB_IMG_URL = "https://xn--d1aiwkc2d.club/img/share/hor_640_360.png";
+    const FORCE_ACTIONS = [
+        'gameState' . 'Action',
+        'mainScript' . 'Action',
+        'index' . 'Action',
+    ];
 
+    public static ?BaseController $instance = null;
     public Game $Game;
     public static StateMachine $SM;
     public static FrontResource $FR;
@@ -29,8 +36,14 @@ class BaseController
     {
         static::$Request = $request;
         self::$User = $this->checkCookie();
+        self::$instance = $this;
 
         $this->Action = $action . 'Action';
+    }
+
+    public static function saveGameStatus()
+    {
+        self::$instance->Game->storeGameStatus();
     }
 
     public function Run()
@@ -38,6 +51,10 @@ class BaseController
         if (self::$User === null) {
             // todo переделать на json-ответ
             return $this->forbiddenAction();
+        }
+
+        if ($this->Game->Response !== null && !in_array($this->Action, static::FORCE_ACTIONS)) {
+            return Response::jsonResp($this->Game->Response);
         }
 
         if (is_callable([$this, $this->Action])) {
@@ -99,14 +116,14 @@ class BaseController
         $url = static::URL;
         $siteName = static::SITE_NAME;
         $description = static::DESCRIPTION;
-        $fb_img_url = static::FB_IMG_URL;
+        $fbImgUrl = static::FB_IMG_URL;
 
         include self::VIEW_PATH . 'index.html.php';
     }
 
     public function initGameAction(): string
     {
-        $newPlayerStatus = BaseController::$SM::setPlayerStatus(self::$SM::STATE_INIT_GAME, null, false);
+        $newPlayerStatus = BaseController::$SM::setPlayerStatus(self::$SM::STATE_INIT_GAME);
 
         if ($newPlayerStatus == BaseController::$SM::STATE_INIT_GAME) {
             $this->Game->Queue::cleanUp($this->Game->User);
@@ -122,7 +139,14 @@ class BaseController
 
     public function newGameAction(): string
     {
-        return Response::jsonResp($this->Game->newGame());
+        return Response::jsonResp($this->Game->newGame(), $this->Game);
+    }
+
+    public function statusHiddenCheckerAction(): string
+    {
+        sleep(10);
+
+        return $this->statusCheckerAction();
     }
 
     public function statusCheckerAction(): string
@@ -133,5 +157,25 @@ class BaseController
     public function turnSubmitterAction(): string
     {
         return Response::jsonResp($this->Game->submitTurn(), $this->Game);
+    }
+
+    public function gameStateAction(): string
+    {
+        $gameStatus = $this->Game->getGameStatus(self::$Request['game_id'] ?? null);
+
+        if ($gameStatus->gameNumber === null) {
+            return 'Game not found';
+        }
+
+        $res = [];
+        foreach($gameStatus->users as $user) {
+            $res['users'][$user->ID]['state'] = BaseController::$SM::getPlayerStatus($user->ID);
+        }
+
+        return ViewHelper::tag(
+            'pre',
+            Response::jsonResp($res)
+            . Response::jsonObjectResp($gameStatus),
+        );
     }
 }

@@ -2,15 +2,12 @@
 
 namespace classes;
 
-use BaseController;
-use PlayerModel;
-
 class SudokuGame extends Game
 {
+    public const GAME_NAME = 'sudoku';
+
     public function __construct()
     {
-        $this->SM = BaseController::$SM;
-
         parent::__construct(QueueSudoku::class);
     }
 

@@ -62,6 +62,8 @@ var gameStates = {
 
             gameStates['myTurn']['from_noGame'](data);
             gameStates['gameResults']['action'](data);
+
+            placeFishki();
         },
         from_initGame: function () {
             while (fixedContainer.length)
@@ -86,7 +88,7 @@ var gameStates = {
             let title = '';
             let onlinePlayers = '';
             let chooseDisabled = '';
-            if (('players' in data) && (lang != 'EN')) {
+            if ('players' in data) {
                 if (('thisUserRating' in data['players']) && (data['players']['thisUserRating'] < 1800)) {
                     chooseDisabled = "disabled";
                     title = under1800;
@@ -332,7 +334,6 @@ var gameStates = {
                         callback: function () {
                             activateFullScreenForMobiles();
                             gameState = 'noGame';
-                            lang = 'EN';
                             //for avoiding errors in IDE
                             //<?php include('instruction_eng.js'); ?>
                             /** todo not working on yandex*/
@@ -380,6 +381,7 @@ var gameStates = {
             gameStates['gameResults']['action'](data);
             buttons['submitButton']['svgObject'].setInteractive();
             buttons['submitButton']['svgObject'].bringToTop(buttons['submitButton']['svgObject'].getByName('submitButton' + 'Otjat'));
+            placeFishki();
         },
         from_initRatingGame: function (data) {
             gameStates['startGame']['from_initGame']();
@@ -390,12 +392,13 @@ var gameStates = {
             gameStates['myTurn']['from_noGame'](data);
         },
         from_noGame: function (data) {
-            if ('fishki' in data)
-                placeFishki(data['fishki']);
+            //placeFishki();
+        },
+        from_chooseGame: function (data) {
+            //placeFishki();
         },
         from_desync: function (data) {
-            if ('fishki' in data)
-                placeFishki(data['fishki']);
+            //placeFishki();
         },
         from_gameResults: function () {
             gameStates['startGame']['from_initGame']();
@@ -418,10 +421,10 @@ var gameStates = {
 
             buttons['submitButton']['svgObject'].disableInteractive();
             buttons['submitButton']['svgObject'].bringToTop(buttons['submitButton']['svgObject'].getByName('submitButton' + 'Inactive'));
+            placeFishki();
         },
         from_desync: function (data) {
-            if ('fishki' in data)
-                placeFishki(data['fishki']);
+            //placeFishki();
         },
         from_initRatingGame: function (data) {
             gameStates['startGame']['from_initGame']();
@@ -454,10 +457,10 @@ var gameStates = {
             buttons['submitButton']['svgObject'].disableInteractive();
             buttons['submitButton']['svgObject'].bringToTop(buttons['submitButton']['svgObject'].getByName('submitButton' + 'Inactive'));
 
+            placeFishki();
         },
         from_desync: function (data) {
-            if ('fishki' in data)
-                placeFishki(data['fishki']);
+            //placeFishki();
         },
         from_initRatingGame: function (data) {
             gameStates['startGame']['from_initGame']();
@@ -669,16 +672,6 @@ function commonCallback(data) {
         } else if (!soundPlayed) {
             snd.play();
             soundPlayed = true;
-        }
-    }
-
-    if ('lang' in data && data['lang'] != lang) {
-        lang = data['lang'];
-        if (lang == 'EN') {
-            // ToDo not working under Yandex
-            asyncCSS('https://xn--d1aiwkc2d.club/css/choose_css.css');
-            //for avoiding errors in IDE
-            //<?php include('instruction_eng.js'); ?>
         }
     }
 
@@ -894,7 +887,7 @@ function commonCallback(data) {
     responseData = data;
 
     if (pageActive == 'hidden' && gameState != 'chooseGame') {
-        fetchGlobal(STATUS_CHECKER_SCRIPT, 'g', '0')
+        fetchGlobal(STATUS_HIDDEN_CHECKER_SCRIPT, 'g', '0')
             .then((data) => {
                 commonCallback(data);
             });

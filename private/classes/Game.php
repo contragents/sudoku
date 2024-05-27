@@ -7,8 +7,6 @@ use BaseController;
 use GameDataModel;
 use PlayerModel;
 
-/** @property GameStatus $gameStatus */
-
 class Game
 {
     const CACHE_TIMEOUT = 30000;
@@ -25,22 +23,26 @@ class Game
 
     const RESPONSE_PARAMS = [
         'desk' => ['gameStatus' => ['desk' => 'desk']],
-        'game_number' => ['gameStatus' => 'gameNumber'],
-        'current_game' => 'currentGame',
+        'game_number' => ['gameStatus' => 'gameNumber'], // todo зачем 2 одинаковых параметра в ответе?
+        'current_game' => 'currentGame', // current_game = game_number
         'common_id' => 'getCurrentPlayerCommonId'
     ];
 
     public ?string $User;
-    protected int $numUser;
+    protected ?int $numUser = null;
     public Queue $Queue;
 
     public ?GameStatus $gameStatus = null;
     public StateMachine $SM;
 
+    public ?array $Response = null;
+
     public array $currentGameUsers = [];
-    public int $currentGame;
+    public ?int $currentGame = null;
     public int $gameWaitLimit = 60;
     public int $ratingGameWaitLimit = 360;
+
+    protected bool $doSaveGameState = false;
 
     public function __get($attribute)
     {
@@ -53,7 +55,7 @@ class Game
 
     public function getCurrentPlayerCommonId(): ?int
     {
-        return $this->gameStatus !== null
+        return $this->gameStatus !== null && $this->numUser !== null
             ? ($this->gameStatus->users[$this->numUser]->common_id ?? null)
             : null;
     }
@@ -64,34 +66,38 @@ class Game
 
     public function __construct(string $queueClass)
     {
+        $this->SM = BaseController::$SM;
+
         $this->User = BaseController::$User;
 
         $this->Queue = new $queueClass($this->User, $this, BaseController::$Request);
 
-        // Если не удалось дождаться лока по текущему игроку, то посылаем ошибку и выходим
-        if(!Cache::waitLock($this->User, true)) {
-            BadRequest::sendBadRequest(
-                ['err_msg' => 'lock error'],
-                $this->isBot()
-            );
+        // Если не удалось дождаться лока по текущему игроку, то посылаем desync и выходим
+        if(!Cache::lock($this->User)) {
+            $this->Response = $this->desync() + ['reason' => 'User lock failed'];
+
+            return $this;
         }
 
         $this->currentGame = $this->getCurrentGameNumber();
 
         if (!$this->currentGame) {
-            $this->currentGame = false;
-
             return $this;
         } else {
             $this->currentGameUsers = $this->getGameUsers();
 
-            if (!Cache::waitMultiLock(['game' => $this->currentGame] + $this->currentGameUsers, true)) {
-                //Вышли с Десинком, если не смогли получить Лок
-                return $this->desync();
+            if (!Cache::lock($this->currentGame)) {
+                //Вышли с Десинком, если не смогли получить Лок игры
+                $this->Response = $this->desync() + ['reason' => 'Game lock failed'];
+
+                return $this;
             }
 
-            $this->gameStatus = $this->getGameStatus();
+            $this->doSaveGameState = true;
+
             //Забрали статус игры из кэша
+            $this->gameStatus = $this->getGameStatus();
+
 
             // Проверим, правильно ли загрузилась игра
             if ($this->gameStatus->gameNumber !== $this->currentGame) {
@@ -104,9 +110,9 @@ class Game
 
             try {
                 if ($this->gameStatus->{$this->User} === null) {
-                    print Response::jsonResp($this->newGame(), $this->gameStatus);
+                    $this->Response = $this->newGame();
 
-                    exit();
+                    return $this;
                 }
 
                 //Номер пользователя по порядку
@@ -119,15 +125,16 @@ class Game
                     }
                 }
             } catch (BadRequest $e) {
-                BadRequest::sendBadRequest(
+                $this->Response = BadRequest::sendBadRequest(
                     [
                         'err_msg' => $e->getMessage(),
-                        'err_file' => $e->getFile(),
-                        'err_line' => $e->getLine(),
-                        'err_context' => $e->getTrace(),
-                    ],
-                    $this->isBot()
+                        // 'err_file' => $e->getFile(),
+                        // 'err_line' => $e->getLine(),
+                        // 'err_context' => $e->getTrace(),
+                    ]
                 );
+
+                return $this;
             }
 
             $this->gameStatus->users[$this->numUser]->lastRequestNum
@@ -249,9 +256,9 @@ class Game
         return [];
     }
 
-    protected function getGameStatus(): GameStatus
+    public function getGameStatus(int $gameNumber = null): GameStatus
     {
-        return Cache::get(self::getCacheKey(self::GAME_DATA_KEY . $this->currentGame)) ?: new GameStatus();
+        return Cache::get(self::getCacheKey(self::GAME_DATA_KEY . ($gameNumber ?: $this->currentGame))) ?: new GameStatus();
     }
 
     public function storeGameStatus(bool $updating = true)
@@ -265,7 +272,7 @@ class Game
 
     public function __destruct()
     {
-        if ($this->currentGame) {
+        if ($this->currentGame && $this->doSaveGameState) {
             if (isset($this->gameStatus->results['winner']) && !$this->gameStatus->isGameEndedSaved) {
                 Cache::rpush(static::GAMES_ENDED_KEY, $this->gameStatus);
                 //Сохраняем результаты игры в список завершенных
@@ -280,14 +287,14 @@ class Game
        $this->saveUserLastActivity($this->User);
     }
 
-    protected function getCurrentGameNumber()
+    protected function getCurrentGameNumber(): ?int
     {
-        return Cache::get(self::getCacheKey(self::GET_GAME_KEY . $this->User));
+        return Cache::get(self::getCacheKey(self::GET_GAME_KEY . $this->User)) ?: null;
     }
 
     public static function getUserGameNumber(string $user): ?int
     {
-        return Cache::get(self::getCacheKey(self::GET_GAME_KEY . $user));
+        return Cache::get(self::getCacheKey(self::GET_GAME_KEY . $user)) ?: null;
     }
 
     public function setUserGameNumber(string $User, int $gameNumber)
@@ -314,20 +321,22 @@ class Game
         // Удалили указатель на текущую игру для пользователя
         $this->clearUserGameNumber($this->User);
 
-        if ($this->currentGame && ($this->numUser ?? false)) {
+        if ($this->currentGame && ($this->numUser ?? false) !== false) {
             $this->gameStatus->users[$this->numUser]->isActive = false;
             //Игрок стал неактивен
-            $this->addToLog("покинул игру", $this->numUser);
+            $this->addToLog("has left the game", $this->numUser);
+            $left = true;
         }
 
         $this->SM::setPlayerStatus($this->SM::STATE_NEW_GAME);
         $this->SM::setPlayerStatus($this->SM::STATE_NO_GAME);
 
         return Response::state($this->SM::setPlayerStatus($this->SM::STATE_CHOOSE_GAME))
-            + ['gameSubState' => 'choosing'];
+            + ['gameSubState' => 'choosing']
+            + ['left' => $left ?? false];
     }
 
-    public function updateUserStatus($newStatus, $user = false, bool $force = false): bool
+    public function updateUserStatus($newStatus, $user = false, bool $force = false): string
     {
         $user = $user ?: $this->User;
         $validStatus = $this->SM::setPlayerStatus($newStatus, $user, $force);
@@ -336,14 +345,12 @@ class Game
             $this->gameStatus->activeUser = (int)$this->gameStatus->$user;
         }
 
-        return $validStatus === $newStatus;
+        return $validStatus;
     }
 
-    protected function desync($queryNumber = false): array
+    public function desync($queryNumber = false): array
     {
-        $this->updateUserStatus($this->SM::STATE_WAITING, $this->User, true);
-
-        $arr = Response::state($this->SM::STATE_WAITING);
+        $arr = Response::state($this->SM::STATE_DESYNC);
         $arr['noDialog'] = true;
 
         if ($queryNumber) {
@@ -509,7 +516,8 @@ class Game
                 + [
                     'gameSubState' => 'choosing',
                     'players' => $this->onlinePlayers(),
-                    'prefs' => $this->Queue->getUserPrefs($this->User)
+                    'prefs' => $this->Queue->getUserPrefs($this->User),
+                    'reason' => 'No currentGame'
                 ];
 
             return $chooseGameParams;

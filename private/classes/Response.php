@@ -1,14 +1,25 @@
 <?php
 
-
 namespace classes;
 
+use BaseController;
 
 class Response
 {
-    public static function jsonResp(array $response, Game $game = null): string
+    public static function jsonResp(array $response, Game $game = null, bool $forceUnlock = false): string
     {
-        return json_encode($response + ($game === null ? [] : self::enrichResponse($game)), JSON_UNESCAPED_UNICODE);
+        // __destruct() отрабатывает - пока force не нужен
+        if ($forceUnlock) {
+            //BaseController::saveGameStatus();
+            //Cache::unlockAll();
+        }
+
+        return json_encode($response + ($game === null ? [] : self::enrichResponse($game)), JSON_UNESCAPED_UNICODE + JSON_PRETTY_PRINT);
+    }
+
+    public static function jsonObjectResp(object $response): string
+    {
+        return json_encode($response, JSON_UNESCAPED_UNICODE + JSON_PRETTY_PRINT);
     }
 
     public static function state(string $playerStatus): array
@@ -21,12 +32,15 @@ class Response
         $res = [];
         /*+ ($gameStatus->desk !== null ? ['desk' => $gameStatus->desk->desk] : [])
         + ['game_number' => $gameStatus->gameNumber];*/
-
-        foreach($game::RESPONSE_PARAMS as $param => $path) {
-            $paramValue = self::getParamValue($game, $path);
-            $res += $paramValue !== null
-                ? [$param => $paramValue]
-                : [];
+        try {
+            foreach ($game::RESPONSE_PARAMS as $param => $path) {
+                $paramValue = self::getParamValue($game, $path);
+                $res += $paramValue !== null
+                    ? [$param => $paramValue]
+                    : [];
+            }
+        } catch(\Throwable $e) {
+            $res['error'] = $e->__toString();
         }
 
         return $res;

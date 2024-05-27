@@ -16,7 +16,7 @@ class StateMachine
     const CHECK_STATUS_RESULTS_KEY_TTL = 24 * 60 * 60;
 
     // Game states
-    const GAME_STATE_START_GAME = 'startGame'; // Игра началась
+
 
     // Player states
     const STATE_WAITING = 'waiting'; // Статус ни о чем - клиент должен переотправить запрос checkStatus
@@ -28,6 +28,8 @@ class StateMachine
     const STATE_MY_TURN = 'myTurn'; // Мой ход
     const STATE_OTHER_TURN = 'otherTurn'; // Ход не мой и мой ход не следующий
     const STATE_GAME_RESULTS = 'gameResults'; // Игра закончена, смортим результаты
+    const STATE_DESYNC = 'desync'; // Рассинхрон / ошибка лока
+    const GAME_STATE_START_GAME = 'startGame'; // Игра началась
 
     const DEFAULT_STATUS = self::STATE_CHOOSE_GAME;
 
@@ -36,6 +38,7 @@ class StateMachine
         self::STATE_OTHER_TURN,
         self::STATE_PRE_MY_TURN,
         self::STATE_GAME_RESULTS,
+        self::GAME_STATE_START_GAME,
     ];
 
     const STATE_REFRESH_DELAY = [
@@ -47,6 +50,7 @@ class StateMachine
         self::STATE_GAME_RESULTS => 10,
         self::STATE_NO_GAME => 10,
         self::STATE_NEW_GAME => 10,
+        self::STATE_DESYNC => 5,
     ];
 
     const STATE_MACHINE = [
@@ -61,6 +65,7 @@ class StateMachine
             self::STATE_OTHER_TURN => self::STATE_OTHER_TURN,
             self::STATE_NEW_GAME => self::STATE_NEW_GAME,
             self::STATE_NO_GAME => self::STATE_NO_GAME,
+            self::GAME_STATE_START_GAME => self::GAME_STATE_START_GAME,
         ],
         self::STATE_MY_TURN => [
             self::STATE_PRE_MY_TURN => self::STATE_PRE_MY_TURN,
@@ -75,6 +80,12 @@ class StateMachine
             self::STATE_GAME_RESULTS => self::STATE_GAME_RESULTS,
         ],
         self::STATE_OTHER_TURN => [
+            self::STATE_MY_TURN => self::STATE_MY_TURN,
+            self::STATE_PRE_MY_TURN => self::STATE_PRE_MY_TURN,
+            self::STATE_NEW_GAME => self::STATE_NEW_GAME,
+            self::STATE_GAME_RESULTS => self::STATE_GAME_RESULTS,
+        ],
+        self::GAME_STATE_START_GAME => [
             self::STATE_MY_TURN => self::STATE_MY_TURN,
             self::STATE_PRE_MY_TURN => self::STATE_PRE_MY_TURN,
             self::STATE_NEW_GAME => self::STATE_NEW_GAME,
@@ -99,19 +110,11 @@ class StateMachine
         static::$gamePrefix = $gamePrefix;
     }
 
-    public static function getPlayerStatus($User = null)
+    public static function getPlayerStatus($User = null): string
     {
         $User = $User ?? BaseController::$User;
-        self::lockTry($User);
 
         $status = Cache::get(static::getKeyPrefix(self::PLAYER_STATUS_PREFIX) . $User) ?: self::DEFAULT_STATUS;
-
-        if (in_array($status, static::IN_GAME_STATES)) {
-            self::lockTry(static::getGameNum($User));
-
-            // Получаем статус еще раз
-            $status = Cache::get(static::getKeyPrefix(self::PLAYER_STATUS_PREFIX) . $User) ?: self::DEFAULT_STATUS;
-        }
 
         return $status;
     }
@@ -119,8 +122,8 @@ class StateMachine
     public static function setPlayerStatus(string $newStatus, string $User = null, bool $force = false): string
     {
         $User = $User ?? BaseController::$User;
-
         $oldStatus = self::getPlayerStatus($User);
+
         if ($force || self::canChangeStatus($oldStatus, $newStatus)) {
             Cache::setex(self::getKeyPrefix(self::PLAYER_STATUS_PREFIX) . $User, self::CACHE_TTL, $newStatus);
 
@@ -137,18 +140,14 @@ class StateMachine
 
     private static function canChangeStatus(string $oldStatus, string $newStatus): bool
     {
-        return is_array(static::STATE_MACHINE[$oldStatus])
+        return static::STATE_MACHINE[$newStatus] ?? '' === '*'
+        || is_array(static::STATE_MACHINE[$oldStatus])
             ? in_array($newStatus, static::STATE_MACHINE[$oldStatus])
             : static::STATE_MACHINE[$oldStatus] === '*';
     }
 
-    private static function lockTry(string $name): bool
-    {
-        return Cache::waitLock($name);
-    }
-
     protected static function getGameNum($user): int
     {
-        return SudokuGame::getUserGameNumber($user) ?: 0;
+        return BaseController::$instance->Game::getUserGameNumber($user) ?: 0;
     }
 }
