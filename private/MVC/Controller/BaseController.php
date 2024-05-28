@@ -32,6 +32,8 @@ class BaseController
     const VIEW_PATH = __DIR__ . '/../View/';
     const DEFAULT_ACTION = 'index';
 
+    const SLEEP_ACTIONS = ['statusHiddenChecker' => 10];
+
     public function __construct($action, array $request)
     {
         static::$Request = $request;
@@ -39,6 +41,8 @@ class BaseController
         self::$instance = $this;
 
         $this->Action = $action . 'Action';
+
+        sleep(self::SLEEP_ACTIONS[$action] ?? 0);
     }
 
     public static function saveGameStatus()
@@ -62,28 +66,6 @@ class BaseController
         } else {
             return $this->forbiddenAction();
         }
-    }
-
-    /**
-     * @param string $viewName = 'Index'
-     * @return string
-     */
-    protected function render($viewName = 'Index'): string
-    {
-        $res = self::include(static::VIEW_PATH . $viewName . 'View.php');
-        return nl2br($res);
-    }
-
-    private function include($filename)
-    {
-        if (is_file($filename)) {
-            ob_start();
-            include $filename;
-
-            return ob_get_clean();
-        }
-
-        return '';
     }
 
     private function forbiddenAction(): string

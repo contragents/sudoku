@@ -196,6 +196,8 @@ class Game
             );
         }
 
+        $this->doSaveGameState = true;
+
         return Response::state($this->SM::getPlayerStatus($this->User));
     }
 
