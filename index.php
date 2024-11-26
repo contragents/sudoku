@@ -15,7 +15,7 @@ $pathParts = explode('/', $path);
 if (strpos($pathParts[1], 'ndex.php')) {
     header('HTTP/1.0 403 Forbidden');
 
-    echo 'Доступ запрещен';
+    echo 'Access denied';
     exit();
 }
 
@@ -24,14 +24,16 @@ if (count($pathParts) >= 2) {
     $action = $pathParts[2] ?: $controller::DEFAULT_ACTION;
 
     if (is_callable([$controller, $action . 'Action'])) {
-        print (new $controller($action, $_REQUEST))->Run();
+        $res = (new $controller($action, $_REQUEST))->Run();
+
+        print is_array($res) ? json_encode($res,JSON_UNESCAPED_UNICODE) : $res;
     } else {
         header('HTTP/1.0 403 Forbidden');
-        echo 'Доступ запрещен';
+        echo 'Access denied';
     }
 } else {
     header('HTTP/1.0 403 Forbidden');
-    echo 'Доступ запрещен';
+    echo 'Access denied';
 }
 
 exit();

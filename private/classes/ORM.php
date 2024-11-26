@@ -5,11 +5,10 @@ namespace classes;
 /** Класс ORM для работы с MariaDB */
 class ORM
 {
-    public $rawExpression;
-
     const COUNT = 'COUNT';
     const MAX = 'MAX';
     const MIN = 'MIN';
+    public $rawExpression;
 
     public function __construct($expression)
     {
@@ -32,7 +31,7 @@ class ORM
      */
     public static function set(array $fieldsvals)
     {
-        if (!isset($fieldsvals[0])) {
+        if (!isset($fieldsvals[0]) && isset($fieldsvals['field']) && isset($fieldsvals['value'])) {
             return " SET {$fieldsvals['field']} = "
                 . (
                 $fieldsvals['value'] instanceof ORM
@@ -44,30 +43,48 @@ class ORM
                 . ' ';
         }
 
-        $fields = [];
-        foreach ($fieldsvals as $fv) {
-            $fields[] = " {$fv['field']} = "
-                . (
-                $fv['value'] instanceof ORM
-                    ? $fv['value']->rawExpression
-                    : ($fv['raw'] ?? false
-                        ? $fv['value']
-                        : "'{$fv['value']}'")
-                )
-                . ' ';
+        if (isset($fieldsvals[0]['field']) && isset($fieldsvals[0]['value'])) {
+            $fields = [];
+            foreach ($fieldsvals as $fv) {
+                $fields[] = " {$fv['field']} = "
+                    . (
+                    $fv['value'] instanceof ORM
+                        ? $fv['value']->rawExpression
+                        : ($fv['raw'] ?? false
+                            ? $fv['value']
+                            : "'{$fv['value']}'")
+                    )
+                    . ' ';
+            }
+
+            return ' SET ' . implode(',', $fields);
         }
 
-        return ' SET ' . implode(',', $fields);
+        return ' SET ' . implode(',', array_map(fn($field, $value) => " $field = '$value' ", array_keys($fieldsvals), $fieldsvals));
+    }
+
+    public static function whereIn(string $fieldName, array $values): string
+    {
+        return " WHERE $fieldName IN (" . implode(', ', $values) . ') ';
+    }
+
+    public static function andWhereIn(string $fieldName, array $values): string
+    {
+        return " AND $fieldName IN (" . implode(',', $values) . ') ';
     }
 
     public static function where($fieldName, $cond, $value, $isRaw = false)
     {
-        return " WHERE ($fieldName $cond " . ($value instanceof ORM ? $value->rawExpression : ($isRaw ? $value : "'$value'")) . ') ';
+        return ' WHERE ' . self::getWhereCondition($fieldName, $cond, $value, $isRaw);
     }
 
     public static function andWhere($fieldName, $cond, $value, $isRaw = false)
     {
-        return " AND ($fieldName $cond " . ($value instanceof ORM ? $value->rawExpression : ($isRaw ? $value : "'$value'")) . ') ';
+        return ' AND ' . self::getWhereCondition($fieldName, $cond, $value, $isRaw);
+    }
+
+    public static function getWhereCondition($fieldName, $cond, $value, $isRaw = false): string {
+        return " ($fieldName $cond " . ($value instanceof ORM ? $value->rawExpression : ($isRaw ? $value : "'$value'")) . ') ';
     }
 
     public static function orBegin($odin = '')
@@ -90,18 +107,12 @@ class ORM
         return "INSERT $ignore INTO `$tblName` ";
     }
 
-    public static function insertFieldsRawValues(array $fieldsVarsArr): string
+    public static function insertFields(array $fields)
     {
-        return self::insertFields(array_keys($fieldsVarsArr))
-            . self::rawValues($fieldsVarsArr);
+        return " (`" . implode('`, `', $fields) . "`) ";
     }
 
-    public static function insertFields(array $fields): string
-    {
-        return " (" . implode(', ', $fields) . ") ";
-    }
-
-    public static function rawValues(array $values): string
+    public static function rawValues(array $values)
     {
         return " VALUES (" . implode(", ", $values) . ") ";
     }
@@ -134,6 +145,10 @@ class ORM
 
     public static function select(array $fieldArr, string $tableName): string
     {
+        if ($fieldArr == []) {
+            $fieldArr = ['*'];
+        }
+
         return " SELECT " . implode(',', $fieldArr) . " FROM $tableName ";
     }
 
@@ -172,14 +187,9 @@ class ORM
         return ' GROUP BY ' . implode(', ', $conditions) . ' ';
     }
 
-    public static function andWhereIn(string $fieldName, array $values)
+    public static function orWhere(string $field, string $condition, $value, bool $isRaw = false): string
     {
-        return " AND $fieldName IN (" . implode(',', $values) . ') ';
-    }
-
-    public static function whereIn($fieldName, array $values)
-    {
-        return " WHERE $fieldName IN (" . implode(',', $values) . ') ';
+        return " OR $field $condition " . ($isRaw ? $value : "'$value'") . ' ';
     }
 
     /**
@@ -199,5 +209,15 @@ class ORM
                 ? ($as . ' ')
                 : ''
             );
+    }
+
+    public static function andNot($fieldName, $cond, $value, $isRaw = false): string
+    {
+        return ' AND NOT ' . self::getWhereCondition($fieldName, $cond, $value, $isRaw);
+    }
+
+    public static function skobki(string $expression): string
+    {
+        return ' ( ' . $expression . ' ) ';
     }
 }

@@ -5,6 +5,7 @@ use classes\FrontResource;
 use classes\Game;
 use classes\Response;
 use classes\StateMachine;
+use classes\T;
 use classes\ViewHelper;
 
 class BaseController
@@ -52,6 +53,8 @@ class BaseController
 
     public function Run()
     {
+        T::$lang = self::setLanguage();
+
         if (self::$User === null) {
             // todo переделать на json-ответ
             return $this->forbiddenAction();
@@ -85,6 +88,11 @@ class BaseController
         }
 
         return $_COOKIE[self::$SM::$cookieKey] ?? null;
+    }
+
+    public function lanAction(): string
+    {
+        return T::$lang;
     }
 
     public function mainScriptAction()
@@ -159,5 +167,12 @@ class BaseController
             Response::jsonResp($res)
             . Response::jsonObjectResp($gameStatus),
         );
+    }
+
+    private static function setLanguage(): string
+    {
+        return (stripos($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '', 'ru') !== false)
+            ? T::RU_LANG
+            : T::EN_LANG;
     }
 }
