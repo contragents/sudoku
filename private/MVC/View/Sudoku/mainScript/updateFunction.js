@@ -2,20 +2,24 @@
 function (time, delta) {
 
     if (requestSended && ((new Date()).getTime() - requestTimestamp > normalRequestTimeout)) {
-        noNetworkImg.visible = true;
-        noNetworkImg.alpha = ((new Date()).getTime() - requestTimestamp) < (normalRequestTimeout * 2)
-            ? ((new Date()).getTime() - requestTimestamp - normalRequestTimeout) / 1000
-            : 1;
-        console.log('No Network');
+        if (noNetworkImg !== false) {
+            noNetworkImg.visible = true;
+            noNetworkImg.alpha = ((new Date()).getTime() - requestTimestamp) < (normalRequestTimeout * 2)
+                ? ((new Date()).getTime() - requestTimestamp - normalRequestTimeout) / 1000
+                : 1;
+        }
     } else {
-        noNetworkImg.visible = false;
+        if (noNetworkImg !== false) {
+            noNetworkImg.visible = false;
+        }
     }
 
-    if (gameState == 'chooseGame' && (queryNumber > 1))
+    if (gameState == 'chooseGame' && (queryNumber > 1)) {
         return;
+    }
 
     var flor = Math.floor(time / 1000);
-    //if ( (Math.random() > (1-(1/gameStates[gameState]['refresh']/60))) || (queryNumber == 1) ) {
+
     if (
         (
             (flor > lastQueryTime)
@@ -25,32 +29,14 @@ function (time, delta) {
     ) {
         if (requestToServerEnabled) {
             lastQueryTime = flor;
-            fetchGlobal(STATUS_CHECKER_SCRIPT, 'g', '0')
+            fetchGlobal(STATUS_CHECKER_SCRIPT)
                 .then((data) => {
                     commonCallback(data);
                 });
         }
     }
 
-    if (ochki_arr !== false)
-        if ('activeUser' in responseData)
-            for (k in ochki_arr)
-                if ((k == responseData['activeUser']) && (responseData['userNames'][k] !== '')) {
-                    let x = ochki_arr[k].x;
-                    if (((flor % 2) === 0) && (flor > lastflor)) {
-                        ochki_arr[k].visible = false;
-                        //ochki_arr[k].setFontSize(vremiaFontSizeDefault + 3);
-                        //ochki_arr[k].x = ochki_arr[k].x-13;
-                    } else if (flor > lastflor) {
-                        ochki_arr[k].visible = true;
-                        //ochki_arr[k].setFontSize(vremiaFontSizeDefault);
-                        //ochki_arr[k].x = ochki_arr[k].x+13;
-                    }
-                    lastflor = flor;
-                } else if (responseData['userNames'][k] === '')
-                    ochki_arr[k].visible = false;
-
-    if (gameState == 'myTurn' || gameState == 'preMyTurn' || gameState == 'otherTurn' || gameState == 'startGame')
+    if (gameState == 'myTurn' || gameState == 'preMyTurn' || gameState == 'otherTurn' || gameState == 'startGame') {
         if (flor > lastTimeCorrection) {
             lastTimeCorrection = flor;
             if ((vremiaMinutes > 0) || (vremiaSeconds > 0)) {
@@ -59,63 +45,48 @@ function (time, delta) {
                     vremiaMinutes--;
                     vremiaSeconds = 59;
                 }
-                if (vremiaSeconds < 10)
-                    vremia.text = vremia.text.substr(0, vremia.text.length - 4) + vremiaMinutes + ':' + '0' + vremiaSeconds;
-                else
-                    vremia.text = vremia.text.substr(0, vremia.text.length - 4) + vremiaMinutes + ':' + vremiaSeconds;
-                if ((vremiaMinutes === 0) && (vremiaSeconds < 20)) {
-                    if (vremiaSeconds > 10)
-                        vremia.setColor('yellow');
-                    else {
-                        vremia.setColor('red');
-                        if ((flor % 2) === 0)
-                            vremiaFontSize = vremiaFontSizeDefault + vremiaFontSizeDelta;
-                        else
-                            vremiaFontSize = vremiaFontSizeDefault;
-                    }
-                } else {
-                    vremia.setColor('black');
-                    vremiaFontSize = vremiaFontSizeDefault;
-                }
 
-            } else if ((vremiaMinutes === 0) && (vremiaSeconds === 0)) {
-                if ((flor % 2) === 0)
-                    vremiaFontSize = vremiaFontSizeDefault + vremiaFontSizeDelta;
-                else
-                    vremiaFontSize = vremiaFontSizeDefault;
+                displayTimeGlobal(+vremiaMinutes * 100 + +vremiaSeconds);
             }
-            vremia.setFontSize(vremiaFontSize);
         }
+    }
 
-    if (gameState == 'myTurn')
-        if ((vremiaMinutes === 0) && (vremiaSeconds <= 10) && buttons['submitButton']['svgObject'].input.enabled)
+    if (gameState == MY_TURN_STATE) {
+        if ((vremiaMinutes === 0) && (vremiaSeconds <= 10) && buttons['submitButton']['svgObject'].input.enabled) {
             if ((flor % 2) === 0) {
-
                 buttons['submitButton']['svgObject']
                     .bringToTop(buttons['submitButton']['svgObject']
-                        .getByName('submitButton' + 'Alarm'));
+                        .getByName('submitButton' + ALARM_MODE));
             } else {
-
                 buttons['submitButton']['svgObject']
                     .bringToTop(buttons['submitButton']['svgObject']
-                        .getByName('submitButton' + 'Otjat'));
+                        .getByName('submitButton' + OTJAT_MODE));
             }
-
-
-    if (gameState == 'gameResults')
-        if ((flor % 2) === 0) {
-
-            buttons['newGameButton']['svgObject']
-                .bringToTop(buttons['newGameButton']['svgObject']
-                    .getByName('newGameButton' + 'Alarm'));
-        } else {
-
-            buttons['newGameButton']['svgObject']
-                .bringToTop(buttons['newGameButton']['svgObject']
-                    .getByName('newGameButton' + 'Otjat'));
         }
+    }
 
+    if (gameState == MY_TURN_STATE || gameState == PRE_MY_TURN_STATE || gameState == OTHER_TURN_STATE) {
+        let activeUserBlockName = (gameState == MY_TURN_STATE) ? 'youBlock' : ('player' + (+activeUser + 1) + 'Block');
+        let timerContainer = players.timerBlock.svgObject;
 
-    return;
+        if ((flor % 2) === 0) {
+            buttonSetModeGlobal(players, activeUserBlockName, ALARM_MODE);
+            timerContainer.getByName(timerState.mode + '_' + 'dvoetoch').setVisible(true);
+        } else {
+            buttonSetModeGlobal(players, activeUserBlockName, OTJAT_MODE);
+            timerContainer.getByName(timerState.mode + '_' + 'dvoetoch').setVisible(false);
+        }
+    }
 
+    if (gameState == 'gameResults') {
+        if ((flor % 2) === 0) {
+            buttons['newGameButton']['svgObject']
+                .bringToTop(buttons['newGameButton']['svgObject']
+                    .getByName('newGameButton' + ALARM_MODE));
+        } else {
+            buttons['newGameButton']['svgObject']
+                .bringToTop(buttons['newGameButton']['svgObject']
+                    .getByName('newGameButton' + OTJAT_MODE));
+        }
+    }
 }

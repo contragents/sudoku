@@ -2,12 +2,11 @@
 function getSVGButton(X, Y, buttonName, _this) {
     var elements = [];
     var elementNumber = 0;
-
     if ('modes' in buttons[buttonName]) {
         for (let mode in buttons[buttonName]['modes']) {
             elements[elementNumber] = _this.add.image(0, 0, buttonName + buttons[buttonName]['modes'][mode])
                 .setName(buttonName + buttons[buttonName]['modes'][mode])
-                .setScale(buttonHeightKoef, buttonHeightKoef);
+                .setScale(1, buttonHeightKoef);
             elementNumber++;
         }
     } else {
