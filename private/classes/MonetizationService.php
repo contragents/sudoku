@@ -1,9 +1,8 @@
 <?php
 
+
 namespace classes;
 
-
-use AchievesModel;
 
 class MonetizationService
 {

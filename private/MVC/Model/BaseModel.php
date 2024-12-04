@@ -1,7 +1,10 @@
 <?php
 
+use classes\Cache;
 use classes\DB;
+use classes\GomokuGame;
 use classes\ORM;
+use classes\SudokuGame;
 
 
 /**
@@ -30,12 +33,14 @@ class BaseModel
     const TYPE_STRING = 'string';
     const TYPE_DATE = 'timestamp';
     const TEASERS_IN_CHUNK = 1000;
+    const ERUDIT = 'erudit';
+    const SCRABBLE = 'scrabble';
 
     const GAME_IDS = [
-        Game::ERUDIT => 1,
-        Game::SCRABBLE => 2,
-        Game::SUDOKU => 3,
-        Game::GOMOKU => 4,
+        self::ERUDIT => 1,
+        self::SCRABBLE => 2,
+        SudokuGame::GAME_NAME => 3,
+        GomokuGame::GAME_NAME => 4,
     ];
 
     public ?int $_id = null;
@@ -663,7 +668,7 @@ class BaseModel
         if (DB::queryInsert($updateQuery)) {
             return true;
         } else {
-            Cache::rpush(Game::STATS_FAILED, ['query' => $updateQuery]);
+            //Cache::rpush('stats_failed', ['query' => $updateQuery]);
 
             return false;
         }

@@ -4,7 +4,7 @@
 namespace classes;
 
 use BaseController;
-use GameDataModel;
+use GamesModel;
 use PlayerModel;
 
 class Game
@@ -17,6 +17,8 @@ class Game
     public const GAME_DATA_KEY = '.current_game_';
     public const GET_GAME_KEY = '.get_game_';
     public const GAME_USERS_KEY = '.game_users_';
+
+    const GAMES_COUNTER = 'erudit.num_games';
 
     const GAMES_ENDED_KEY = '.games_ended';
     const RATING_INIT_TIMEOUT = 360;
@@ -182,7 +184,7 @@ class Game
                 // Прописали рейтинг и common_id игрока в статусе игры - только для games_statistic.php
                 $userRating = PlayerModel::getRatingByCookie($user->ID);
                 $this->gameStatus->users[$num]->rating = $userRating ?: 0;
-                $this->gameStatus->users[$num]->common_id = PlayerModel::getPlayerCommonId($user->ID, true);
+                $this->gameStatus->users[$num]->common_id = (int)PlayerModel::getPlayerCommonId($user->ID, true);
             }
 
             // Создали состояние доски
@@ -208,9 +210,11 @@ class Game
 
     public static function getNewGameId(): int
     {
-        $gameId = Cache::incr(self::getCacheKey(self::GAME_ID_KEY));
+        $gameId = Cache::incr(self::getCacheKey(self::GAMES_COUNTER));
+
         if ($gameId == 1) {
-            $gameId = GameDataModel::getLastGameId(static::GAME_NAME) + 1;
+            $gameId = GamesModel::getLastId() + 1;
+            Cache::set(static::GAMES_COUNTER, $gameId);
         }
 
         return $gameId;
@@ -222,6 +226,11 @@ class Game
     }
 
     public function onlinePlayers()
+    {
+        return []; // todo добавить реальное колво игроков онлайн
+    }
+
+    public function onlineCoinPlayers()
     {
         return []; // todo добавить реальное колво игроков онлайн
     }
@@ -518,6 +527,7 @@ class Game
                 + [
                     'gameSubState' => 'choosing',
                     'players' => $this->onlinePlayers(),
+                    'coin_players' => $this->onlineCoinPlayers(),
                     'prefs' => $this->Queue->getUserPrefs($this->User),
                     'reason' => 'No currentGame'
                 ];
@@ -593,5 +603,11 @@ class Game
         $this->nextTurn();
 
         return Response::state($this->SM::getPlayerStatus($this->User));
+    }
+
+    public static function hash_str_2_int($str, $len = 16)
+    {
+        $hash_int = base_convert("0x" . substr(md5($str), 0, $len), 16, 10);
+        return $hash_int;
     }
 }

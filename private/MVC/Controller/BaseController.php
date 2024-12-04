@@ -8,8 +8,14 @@ use classes\StateMachine;
 use classes\T;
 use classes\ViewHelper;
 
+/**
+ * @property string $gameName // Название текущей игры
+ */
+
 class BaseController
 {
+    const COMMON_URL = 'mvc/';
+
     const TITLE = "Game";
     const URL = "https://xn--d1aiwkc2d.club/game/";
     const SITE_NAME = "5-5.su/game";
@@ -20,6 +26,7 @@ class BaseController
         'mainScript' . 'Action',
         'index' . 'Action',
     ];
+    const MAX_UPLOAD_SIZE = 2 * 1024 * 1024;
 
     public static ?BaseController $instance = null;
     public Game $Game;
@@ -51,7 +58,7 @@ class BaseController
         self::$instance->Game->storeGameStatus();
     }
 
-    public function Run()
+    public function Run(): string
     {
         T::$lang = self::setLanguage();
 
@@ -60,12 +67,16 @@ class BaseController
             return $this->forbiddenAction();
         }
 
+        // Response получен в процессе Game->__construct() - выводим сразу без Action
         if ($this->Game->Response !== null && !in_array($this->Action, static::FORCE_ACTIONS)) {
             return Response::jsonResp($this->Game->Response);
         }
 
         if (is_callable([$this, $this->Action])) {
-            return $this->{$this->Action}();
+            $res = $this->{$this->Action}();
+            return  is_array($res) ? Response::jsonResp($this->Game->submitTurn(), $this->Game) : (string)$res;
+
+            //return $this->{$this->Action}();
         } else {
             return $this->forbiddenAction();
         }
@@ -74,8 +85,8 @@ class BaseController
     private function forbiddenAction(): string
     {
         header('HTTP/1.0 403 Forbidden');
-
         echo 'Доступ запрещен';
+
         exit();
     }
 
@@ -88,11 +99,6 @@ class BaseController
         }
 
         return $_COOKIE[self::$SM::$cookieKey] ?? null;
-    }
-
-    public function lanAction(): string
-    {
-        return T::$lang;
     }
 
     public function mainScriptAction()
@@ -139,6 +145,11 @@ class BaseController
         return $this->statusCheckerAction();
     }
 
+    public function playerCabinetAction(): string
+    {
+        return Response::jsonResp($this->Game->checkGameStatus(), $this->Game);
+    }
+
     public function statusCheckerAction(): string
     {
         return Response::jsonResp($this->Game->checkGameStatus(), $this->Game);
@@ -174,5 +185,45 @@ class BaseController
         return (stripos($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '', 'ru') !== false)
             ? T::RU_LANG
             : T::EN_LANG;
+    }
+
+    public function __get($attr) {
+        if (is_callable([$this, $attr])) {
+            return $this->{$attr}();
+        }
+
+        return null;
+    }
+
+    public static function gameName(): ?string
+    {
+        return self::$instance
+            ? self::$instance->Game::GAME_NAME
+            : null;
+    }
+
+    public static function isAjaxRequest(): bool
+    {
+        return (!empty($_SERVER['HTTP_X_REQUESTED_WITH'])
+            && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
+    }
+
+    public static function getUrl(string $action, array $params = [], array $excludedParams = [])
+    {
+        return static::COMMON_URL
+            . $action . '/'
+            . (!empty($params)
+                ? ('?' . implode(
+                        '&',
+                        array_filter(
+                            array_map(
+                                fn($param, $value) => !in_array($param, $excludedParams) ? "$param=$value" : null,
+                                array_keys($params),
+                                $params
+                            )
+                        )
+                    )
+                )
+                : '');
     }
 }

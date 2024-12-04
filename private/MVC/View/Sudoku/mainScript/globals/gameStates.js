@@ -57,8 +57,7 @@ var gameStates = {
         message: 'Игра начата!',
         refresh: 10,
         action: function (data) {
-            buttons['submitButton']['svgObject'].disableInteractive();
-            buttons['submitButton']['svgObject'].bringToTop(buttons['submitButton']['svgObject'].getByName('submitButton' + 'Inactive'));
+            buttons.submitButton.setDisabled();
 
             gameStates['myTurn']['from_noGame'](data);
             gameStates['gameResults']['action'](data);
@@ -357,8 +356,7 @@ var gameStates = {
     initGame: {
         1: 'waiting', 2: 'done',
         action: function (data) {
-            buttons['submitButton']['svgObject'].disableInteractive();
-            buttons['submitButton']['svgObject'].bringToTop(buttons['submitButton']['svgObject'].getByName('submitButton' + 'Inactive'));
+            buttons.submitButton.setDisabled();
         },
         message: 'Подбор игры - ожидайте',
         refresh: 10
@@ -366,8 +364,7 @@ var gameStates = {
     initRatingGame: {
         1: 'waiting', 2: 'done',
         action: function (data) {
-            buttons['submitButton']['svgObject'].disableInteractive();
-            buttons['submitButton']['svgObject'].bringToTop(buttons['submitButton']['svgObject'].getByName('submitButton' + 'Inactive'));
+            buttons.submitButton.setDisabled();
         },
         message: 'Подбор игры - ожидайте',
         refresh: 10
@@ -379,8 +376,7 @@ var gameStates = {
         refresh: 15,
         action: function (data) {
             gameStates['gameResults']['action'](data);
-            buttons['submitButton']['svgObject'].setInteractive();
-            buttons['submitButton']['svgObject'].bringToTop(buttons['submitButton']['svgObject'].getByName('submitButton' + 'Otjat'));
+            setSubmitButtonState();
             placeFishki();
         },
         from_initRatingGame: function (data) {
@@ -418,9 +414,7 @@ var gameStates = {
         refresh: 5,
         action: function (data) {
             gameStates['gameResults']['action'](data);
-
-            buttons['submitButton']['svgObject'].disableInteractive();
-            buttons['submitButton']['svgObject'].bringToTop(buttons['submitButton']['svgObject'].getByName('submitButton' + 'Inactive'));
+            buttons.submitButton.setDisabled();
             placeFishki();
         },
         from_desync: function (data) {
@@ -454,9 +448,7 @@ var gameStates = {
             gameStates['gameResults']['action'](data);
 
             gameStates['myTurn']['from_noGame'](data);
-            buttons['submitButton']['svgObject'].disableInteractive();
-            buttons['submitButton']['svgObject'].bringToTop(buttons['submitButton']['svgObject'].getByName('submitButton' + 'Inactive'));
-
+            buttons.submitButton.setDisabled();
             placeFishki();
         },
         from_desync: function (data) {

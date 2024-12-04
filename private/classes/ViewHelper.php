@@ -6,6 +6,11 @@ class ViewHelper
 {
     const MAX_PAGE_LINKS = 16;
 
+    public static function __callStatic($tag, $arguments)
+    {
+        return self::tag($tag, ...$arguments);
+    }
+
     public static function renderGridFromQueryResult(array $queryResult, string $title = '', array $attributeLabels = []): string {
         $grid = $title ? self::tag('h5', $title) : '';
         $grid .= self::tagOpen('table', '', ['class' => 'table table-sm', 'style' => 'word-wrap: break-word;']);
@@ -51,14 +56,59 @@ class ViewHelper
             . $content;
     }
 
-    private static function tagClose(string $tag)
+    public static function tagClose(string $tag)
     {
         return "</$tag>";
     }
 
+    public static function paginationArr(int $curentPage, int $pageQuantity, string $baseUrl): array
+    {
+        $res = [];
+        for ($i = 1; $i <= $pageQuantity && $i <= self::MAX_PAGE_LINKS; $i++) {
+            $res[$i] = ['is_link' => $i != $curentPage, 'value' => $i != $curentPage ? "$baseUrl&page=$i" : $i];
+        }
+
+        return $res;
+    }
+
+
+    /**
+     * @param int $curentPage
+     * @param int $pageQuantity
+     * @param string $baseUrl
+     * @return string
+     */
+    public static function pagination(int $curentPage, int $pageQuantity, string $baseUrl): string
+    {
+        $res = self::tagOpen('span','', ['style' => 'word-wrap: break-word;']);
+        for ($i = 1; $i <= $pageQuantity && $i <= self::MAX_PAGE_LINKS; $i++) {
+            $res .= '&nbsp; &nbsp;' . self::tag(
+                $i != $curentPage ? 'a' : 'span',
+                $i,
+                [
+                    $i != $curentPage ? 'onClick' : 'none' => ViewHelper::onClick(
+                        'refreshId',
+                        AchievesModel::ACHIEVES_ELEMENT_ID,
+                        "$baseUrl&page=$i"
+                    ),
+                    'href' => "$baseUrl&page=$i",
+                    'class' => "link-underline-primary",
+                ]
+            );
+        }
+
+        if ($i == 2) {
+            return '';
+        }
+
+        $res .= self::tagClose('span');
+
+        return $res;
+    }
+
     public static function onClick(string $function, string $elementId, string $url): string
     {
-        return "$function('$elementId', '$url')";
+        return "$function('$elementId', '$url'); return false;";
     }
 
     public static function br(): string
@@ -73,6 +123,6 @@ class ViewHelper
 
     public static function img(array $options): string
     {
-        return self::tagOpen('img','', $options);
+        return self::tagOpen('img','',$options);
     }
 }

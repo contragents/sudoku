@@ -1,5 +1,11 @@
 <?php
 
+use classes\DB;
+use classes\ORM;
+use classes\T;
+use classes\ViewHelper;
+use BaseController as BC;
+
 class AchievesModel extends BaseModel
 {
     const TABLE_NAME = 'achieves';
@@ -51,32 +57,6 @@ class AchievesModel extends BaseModel
 
     public const TOP_TYPE = 'top';
 
-    public const PRIZE_TITLES = [
-        'game_price-year' => 'Очки за ИГРУ - Рекорд Года!',
-        'game_price-month' => 'Очки за ИГРУ - Рекорд Месяца!',
-        'game_price-week' => 'Очки за ИГРУ - Рекорд Недели!',
-        'game_price-day' => 'Очки за ИГРУ - Рекорд Дня!',
-
-        'turn_price-year' => 'Очки за ХОД - Рекорд Года!',
-        'turn_price-month' => 'Очки за ХОД - Рекорд Месяца!',
-        'turn_price-week' => 'Очки за ХОД - Рекорд Недели!',
-        'turn_price-day' => 'Очки за ХОД - Рекорд Дня!',
-
-        'word_price-year' => 'Очки за СЛОВО - Рекорд Года!',
-        'word_price-month' => 'Очки за СЛОВО - Рекорд Месяца!',
-        'word_price-week' => 'Очки за СЛОВО - Рекорд Недели!',
-        'word_price-day' => 'Очки за СЛОВО - Рекорд Дня!',
-
-        'word_len-year' => 'Самое длинное СЛОВО - Рекорд Года!',
-        'word_len-month' => 'Самое длинное СЛОВО - Рекорд Месяца!',
-        'word_len-week' => 'Самое длинное СЛОВО - Рекорд Недели!',
-        'word_len-day' => 'Самое длинное СЛОВО - Рекорд Дня!',
-
-        'games_played-year' => 'Сыграно ПАРТИЙ - Рекорд Года!',
-        'games_played-month' => 'Сыграно ПАРТИЙ - Рекорд Месяца!',
-        'games_played-week' => 'Сыграно ПАРТИЙ - Рекорд Недели!',
-        'games_played-day' => 'Сыграно ПАРТИЙ - Рекорд Дня!',
-    ];
     public const PRIZE_LINKS = [
         'top-year' => 'img/prizes/top_1.svg',
         'top-month' => 'img/prizes/top_2.svg',
@@ -125,14 +105,13 @@ class AchievesModel extends BaseModel
     const YOUR_RATING_PROGRESS = 'your_progress';
     public const ACHIEVES_ELEMENT_ID = 'achieves_table';
 
-    //private static ?Game $instance = null;
 
     public static function getDescription(string $eventType, string $eventPeriod, string $gameName = ''): string
     {
         $res = '';
 
-        if ($eventType === AchievesModel::TOP_TYPE) {
-            $res = T::S('rank position') . ' ' . T::S(AchievesModel::TOP_TYPE . '_' . $eventPeriod);
+        if ($eventType === self::TOP_TYPE) {
+            $res = T::S('rank position') . ' ' . T::S(self::TOP_TYPE . '_' . $eventPeriod);
         } else {
             $res = T::S('record of the ' . $eventPeriod) . ' - ' . T::S($eventType);
         }
@@ -157,7 +136,7 @@ class AchievesModel extends BaseModel
             )
             . ORM::where(self::COMMON_ID_FIELD, '=', $commonId, true)
             . ORM::andWhere(self::IS_ACTIVE_FIELD, '=', 0, true)
-            . ORM::andWhere(self::GAME_NAME_ID_FIELD, '=', RatingHistoryModel::GAME_IDS[Game::$gameName], true)
+            . ORM::andWhere(self::GAME_NAME_ID_FIELD, '=', RatingHistoryModel::GAME_IDS[BC::gameName()], true)
             . ORM::orderBy(self::ID_FIELD, false)
             . ORM::limit(30);
 
@@ -179,7 +158,7 @@ class AchievesModel extends BaseModel
             )
             . ORM::where(self::COMMON_ID_FIELD, '=', $commonId, true)
             . ORM::andWhere(self::IS_ACTIVE_FIELD, '=', 1, true)
-            . ORM::andWhere(self::GAME_NAME_ID_FIELD, '=', RatingHistoryModel::GAME_IDS[Game::$gameName], true)
+            . ORM::andWhere(self::GAME_NAME_ID_FIELD, '=', RatingHistoryModel::GAME_IDS[BC::gameName()], true)
             . ORM::orderBy(self::ID_FIELD, false);
 
         $res = DB::queryArray($query) ?: [];
@@ -198,7 +177,7 @@ class AchievesModel extends BaseModel
                 self::TABLE_NAME
             )
             . ORM::where(self::COMMON_ID_FIELD, '=', $commonId, true)
-            . ORM::andWhere(self::GAME_NAME_ID_FIELD, '=', RatingHistoryModel::GAME_IDS[Game::$gameName], true)
+            . ORM::andWhere(self::GAME_NAME_ID_FIELD, '=', RatingHistoryModel::GAME_IDS[BC::gameName()], true)
             . ($filters[StatsController::NO_STONE_PARAM] ?? false ? ORM::andWhere(self::EVENT_PERIOD_FIELD, '!=', self::DAY_PERIOD) : '')
             . ($filters[StatsController::NO_BRONZE_PARAM] ?? false ? ORM::andWhere(self::EVENT_PERIOD_FIELD, '!=', self::WEEK_PERIOD) : '')
             . ($filters[StatsController::NO_SILVER_PARAM] ?? false ? ORM::andWhere(self::EVENT_PERIOD_FIELD, '!=', self::MONTH_PERIOD) : '')
@@ -227,7 +206,7 @@ class AchievesModel extends BaseModel
         return DB::queryValue(
             ORM::select(['count(1)'], self::TABLE_NAME)
             . ORM::where(self::COMMON_ID_FIELD,'=', $commonId, true)
-            . ORM::andWhere(self::GAME_NAME_ID_FIELD, '=', RatingHistoryModel::GAME_IDS[Game::$gameName], true)
+            . ORM::andWhere(self::GAME_NAME_ID_FIELD, '=', RatingHistoryModel::GAME_IDS[BC::gameName()], true)
             . ($filters[StatsController::NO_STONE_PARAM] ?? false ? ORM::andWhere(self::EVENT_PERIOD_FIELD, '!=', self::DAY_PERIOD) : '')
             . ($filters[StatsController::NO_BRONZE_PARAM] ?? false ? ORM::andWhere(self::EVENT_PERIOD_FIELD, '!=', self::WEEK_PERIOD) : '')
             . ($filters[StatsController::NO_SILVER_PARAM] ?? false ? ORM::andWhere(self::EVENT_PERIOD_FIELD, '!=', self::MONTH_PERIOD) : '')
@@ -252,7 +231,7 @@ class AchievesModel extends BaseModel
             )
             // Пока строим статистику только для игр на 2 игрока
             . ORM::where(self::PLAYERS_NUMBER_FIELD, '=', 2, true)
-            . ORM::andWhere(self::GAME_NAME_ID_FIELD, '=', RatingHistoryModel::GAME_IDS[Game::$gameName], true)
+            . ORM::andWhere(self::GAME_NAME_ID_FIELD, '=', RatingHistoryModel::GAME_IDS[BC::gameName()], true)
             . ' AND ( '
             . ORM::getWhereCondition('1_player_id', '=', $commonId, true)
             . ORM::orWhere('2_player_id', '=', $commonId, true)
@@ -267,7 +246,6 @@ class AchievesModel extends BaseModel
             )
             .ORM::orderBy(self::GAME_ID_FIELD, false)
             .ORM::limit($limit, ($page - 1) * $limit);
-Cache::hset('games_stats_xxx', $commonId, $query);
         $res = DB::queryArray($query);
 
         $gameStats = [];
@@ -337,7 +315,7 @@ Cache::hset('games_stats_xxx', $commonId, $query);
             )
             // Пока строим статистику только для игр на 2 игрока
             . ORM::where(self::PLAYERS_NUMBER_FIELD, '=', 2, true)
-            . ORM::andWhere(self::GAME_NAME_ID_FIELD, '=', RatingHistoryModel::GAME_IDS[Game::$gameName], true)
+            . ORM::andWhere(self::GAME_NAME_ID_FIELD, '=', RatingHistoryModel::GAME_IDS[BC::gameName()], true)
             . ' AND ( '
             . ORM::getWhereCondition('1_player_id', '=', $commonId, true)
             . ORM::orWhere('2_player_id', '=', $commonId, true)
@@ -357,9 +335,6 @@ Cache::hset('games_stats_xxx', $commonId, $query);
 
         $gameStats = [];
 
-        // todo сделать подгрузку классов централизованно
-        include_once(__DIR__ . '/../../../autoload_helper.php');
-
         foreach($res as $row) {
             $opponentCommonId = $row[self::PLAYER1_ID_FIELD] != $commonId ? $row[self::PLAYER1_ID_FIELD] : $row[self::PLAYER2_ID_FIELD];
 
@@ -368,7 +343,7 @@ Cache::hset('games_stats_xxx', $commonId, $query);
                     ViewHelper::tag('span', date('Y-m-d', $row[self::GAME_DATE_FIELD]),[
                         'style' => 'white-space: nowrap;'
                     ])
-                . (BaseController::isAjaxRequest()
+                . (BC::isAjaxRequest()
                         ? ''
                         : ViewHelper::tag(
                             'a',
@@ -386,7 +361,7 @@ Cache::hset('games_stats_xxx', $commonId, $query);
                     ? ((string)($row[self::RATING_OLD_1_FIELD] + $row[self::RATING_DELTA_1_FIELD]) . ' ('. ($row[self::RATING_DELTA_1_FIELD] > 0 ? '+' : '') . $row[self::RATING_DELTA_1_FIELD] .')')
                     : ((string)($row[self::RATING_OLD_2_FIELD] + $row[self::RATING_DELTA_2_FIELD]) . ' ('. ($row[self::RATING_DELTA_2_FIELD] > 0 ? '+' : '') . $row[self::RATING_DELTA_2_FIELD] .')'),
                 self::OPPONENT_COMMON_ID =>
-                    (BaseController::isAjaxRequest()
+                    (BC::isAjaxRequest()
                         ? ''
                         : ViewHelper::tagOpen(
                             'a',
@@ -410,12 +385,12 @@ Cache::hset('games_stats_xxx', $commonId, $query);
                             'max-width' => '100px',
                         ]
                     )
-                    . (BaseController::isAjaxRequest()
+                    . (BC::isAjaxRequest()
                         ? ''
                         : ViewHelper::tagClose('a'))
                     . ViewHelper::tagOpen('br')
                     . ViewHelper::tag(
-                        BaseController::isAjaxRequest() ? 'button' : 'a',
+                        BC::isAjaxRequest() ? 'button' : 'a',
                         self::getPlayerNameByCommonId($opponentCommonId),
                         [
                             'class' => 'btn btn-sm ' . (StatsController::$Request[StatsController::FILTER_PLAYER_PARAM] ?? 0) == $opponentCommonId
@@ -426,7 +401,7 @@ Cache::hset('games_stats_xxx', $commonId, $query);
                                     : T::S('Filter by player'),
                             'onClick' => ViewHelper::onClick(
                                 'refreshId',
-                                AchievesModel::ACHIEVES_ELEMENT_ID,
+                                self::ACHIEVES_ELEMENT_ID,
                                 StatsController::getUrl(
                                     'games',
                                     [
@@ -438,7 +413,7 @@ Cache::hset('games_stats_xxx', $commonId, $query);
                                         => $opponentCommonId,
                                     ]
                                 )),
-                            (BaseController::isAjaxRequest() ? 'nothing' : 'href') => '/' . StatsController::getUrl(
+                            (BC::isAjaxRequest() ? 'nothing' : 'href') => '/' . StatsController::getUrl(
                                 'games',
                                 [
                                     'common_id' => StatsController::$Request['common_id'] ?? '',
@@ -473,7 +448,7 @@ Cache::hset('games_stats_xxx', $commonId, $query);
             ORM::select(['count(1)'], self::GAMES_STATS_TABLE)
             // Пока строим статистику только для игр на 2 игрока
             . ORM::where(self::PLAYERS_NUMBER_FIELD, '=', 2, true)
-            . ORM::andWhere(self::GAME_NAME_ID_FIELD, '=', RatingHistoryModel::GAME_IDS[Game::$gameName], true)
+            . ORM::andWhere(self::GAME_NAME_ID_FIELD, '=', RatingHistoryModel::GAME_IDS[BC::gameName()], true)
             . ' AND ( '
             . ORM::getWhereCondition('1_player_id', '=', $commonId, true)
             . ORM::orWhere('2_player_id', '=', $commonId, true)
@@ -501,7 +476,7 @@ Cache::hset('games_stats_xxx', $commonId, $query);
             )
             // Пока строим статистику только для игр на 2 игрока
             . ORM::where(self::PLAYERS_NUMBER_FIELD, '=', 2, true)
-            . ORM::andWhere(self::GAME_NAME_ID_FIELD, '=', RatingHistoryModel::GAME_IDS[Game::$gameName], true)
+            . ORM::andWhere(self::GAME_NAME_ID_FIELD, '=', RatingHistoryModel::GAME_IDS[BC::gameName()], true)
             . ' AND ( '
             . ORM::getWhereCondition('1_player_id', '=', $commonId, true)
             . ORM::orWhere('2_player_id', '=', $commonId, true)
@@ -543,4 +518,5 @@ Cache::hset('games_stats_xxx', $commonId, $query);
             . ($period ? ORM::andWhere(self::EVENT_PERIOD_FIELD, '=', $period) : '')
         ) ?: [];
     }
+
 }

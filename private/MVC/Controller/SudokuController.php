@@ -27,7 +27,7 @@ class SudokuController extends BaseController
         $this->Game = new SudokuGame();
     }
 
-    public function Run()
+    public function Run(): string
     {
         return parent::Run();
     }

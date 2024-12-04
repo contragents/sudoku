@@ -1,4 +1,6 @@
 //
+//<?php include(ROOT_DIR . '/js/common_functions/tg.js')?>
+
 var UIScene = new Phaser.Class({
    
     Extends: Phaser.Scene,
@@ -23,7 +25,7 @@ var UIScene = new Phaser.Class({
 
 //<?php include(ROOT_DIR . '/js/common_functions/config.js')?>
 
-//<?php include('globalFunctions.js')?>
+//<?php include('globalFunctions.js.php')?>
 
 var game = new Phaser.Game(config);
 

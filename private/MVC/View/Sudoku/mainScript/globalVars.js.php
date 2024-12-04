@@ -19,10 +19,18 @@ var preloaderObject = false;
 const GROUND_FILE = '<?= T::PHRASES['ground_file'][T::$lang] ?>';
 
 const SUDOKU_PRICE = <?= MonetizationService::SUDOKU_PRICE ?>;
-const SUBMIT_SCRIPT = 'turn_submitter.php';
+//const SUBMIT_SCRIPT = 'turn_submitter.php';
+//const WORD_CHECKER_SCRIPT = 'word_checker.php';
+//const STATUS_CHECKER_SCRIPT = 'status_checker.php';
+//const INIT_GAME_SCRIPT = 'init_game.php';
+
+const SUBMIT_SCRIPT = 'turnSubmitter';
 const WORD_CHECKER_SCRIPT = 'word_checker.php';
-const STATUS_CHECKER_SCRIPT = 'status_checker.php';
-const INIT_GAME_SCRIPT = 'init_game.php';
+const STATUS_CHECKER_SCRIPT = 'statusChecker';
+const STATUS_HIDDEN_CHECKER_SCRIPT = 'statusHiddenChecker';
+const INIT_GAME_SCRIPT = 'initGame';
+const CABINET_SCRIPT = 'playerCabinet.php';
+
 const CHAT_SCRIPT = 'send_chat_message.php';
 const COMPLAIN_SCRIPT = 'complain.php';
 const SET_INACTIVE_SCRIPT = 'set_inactive.php';
@@ -30,11 +38,11 @@ const MERGE_IDS_SCRIPT = 'merge_the_ids.php';
 const SET_PLAYER_NAME_SCRIPT = 'set_player_name.php';
 const DELETE_BAN_URL = 'mvc/ban/remove?common_id=';
 const STATS_URL = 'mvc/stats/viewV2/?common_id='
-const NEW_GAME_SCRIPT = 'new_game.php';
+const NEW_GAME_SCRIPT = 'newGame';
 const PLAYER_RATING_SCRIPT = 'mvc/players/info/';
 const CHANGE_FISHKI_SCRIPT = 'change_fishki.php';
 const COOKIE_CHECKER_SCRIPT = 'cookie_checker.php';
-const CABINET_SCRIPT = 'player_cabinet.php';
+// const CABINET_SCRIPT = 'player_cabinet.php';
 const INVITE_SCRIPT = 'invite_to_new_game.php';
 const AVATAR_UPLOAD_SCRIPT = 'avatar_upload.php';
 const SET_AVATAR_SCRIPT = 'set_player_avatar_url.php';
@@ -256,14 +264,13 @@ var useLocalStorage = !!localStorage.erudit_user_session_ID;
 var soundPlayed = false;
 var instruction = `<?= T::S('faq_rules') ?>`;
 
-//<?php /*if (T::$lang === T::EN_LANG) include('globals/instruction_eng.js'); else include('globals/instruction.js'); */?>
-
 //<?php include('globals/tgGlobalFunction.js')?>
 //<?php include('globals/buttonSettingsGlobal.js')?>
 //<?php include('globals/gameStates_1.js.php')?>
 //<?php include('globals/letterPrices.js')?>
 //<?php include('globals/rusLetters.js')?>
 //<?php include('globals/wav.js')?>
+
 yacheikaWidth = 32 * 2 * 15 / 9 * 0.96;
 correctionX = 4;
 correctionY = -7 * 2;

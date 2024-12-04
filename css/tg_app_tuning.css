@@ -1,0 +1,16 @@
+.modal-body {
+    /*max-height: calc(var(--tg-viewport-height) - 250px);*/
+    max-height: 70vh; /* Fallback for browsers that do not support Custom Properties */
+    max-height: calc(var(--vh, 1vh) * 70);
+    overflow-y: scroll;
+}
+
+.modal-body::-webkit-scrollbar {
+    width: 5px;
+    height: 8px;
+    background-color: #aaa; /* or add it to the track */
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background: #000;
+}

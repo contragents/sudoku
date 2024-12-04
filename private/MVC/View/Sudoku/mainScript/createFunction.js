@@ -83,8 +83,7 @@ function () {
     }
 
     if (buttons['submitButton']['svgObject'] !== false) {
-        buttons['submitButton']['svgObject'].disableInteractive();
-        buttons['submitButton']['svgObject'].bringToTop(buttons['submitButton']['svgObject'].getByName('submitButton' + 'Inactive'));
+        buttons.submitButton.setDisabled();
     }
 
     for (let k in players) {

@@ -6,7 +6,7 @@ use BaseController;
 
 class Response
 {
-    public static function jsonResp(array $response, Game $game = null, bool $forceUnlock = false): string
+    public static function jsonResp(array $response, ?Game $game = null, bool $forceUnlock = false): string
     {
         // __destruct() отрабатывает - пока force не нужен
         if ($forceUnlock) {

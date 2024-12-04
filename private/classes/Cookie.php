@@ -1,13 +1,15 @@
 <?php
 
+
 namespace classes;
+
 
 class Cookie
 {
     // Проблема со сроком жизни Куки - не более 400 дней по правилам Хрома - перезаписываем куки игроку каждые 50 запросов
-    const DEFAULT_COOKIE_KEY = 'erudit_user_session_ID';
+    const COOKIE_NAME = 'erudit_user_session_ID';
     const TTL = 2 * 1000 * 1000 * 1000;
-
+    const DEFAULT_COOKIE_KEY = 'erudit_user_session_ID';
     /**
      * A better alternative (RFC 2109 compatible) to the php setcookie() function
      *
@@ -70,7 +72,7 @@ class Cookie
         return true;
     }
 
-    public static function setGetCook(string $cook = null, string $cookieKey = null): array
+    public static function setGetCook(?string $cook = null, ?string $cookieKey = null): array
     {
         if (!$cook) {
             $cook = md5(microtime(true) . mt_rand(1, 100000));

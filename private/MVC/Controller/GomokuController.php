@@ -27,7 +27,7 @@ class GomokuController extends BaseController
         $this->Game = new GomokuGame();
     }
 
-    public function Run()
+    public function Run(): string
     {
         return parent::Run();
     }

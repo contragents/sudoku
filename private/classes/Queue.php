@@ -115,6 +115,7 @@ class Queue
             + [
                 'gameSubState' => 'choosing',
                 'players' => $this->caller->onlinePlayers(),
+                'coin_players' => $this->onlineCoinPlayers(),
                 'prefs' => $this->getUserPrefs(),
                 'reason' => 'Queue error'
             ];

@@ -12,11 +12,12 @@ function parseDeskGlobal(newDesc) {
         }
     }
 
-    for (var k = 400; k >= 0; k--)
+    for (var k = 400; k >= 0; k--) {
         if (k in fixedContainer) {
             fixedContainer[k].destroy();
             fixedContainer.splice(k, 1);
         }
+    }
 
     for (var i = 0; i <= 8; i++)
         for (var j = 0; j <= 8; j++)

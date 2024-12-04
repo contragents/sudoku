@@ -25,7 +25,7 @@ class FrontResourceSudoku extends FrontResource
             + [
                 'ground' => [
                     'type' => 'svg',
-                    'url' => 'img/sudoku/field_source.svg',
+                    'url' => 'img/sudoku/field_source6.svg',
                     'options' => "{'width': 513 * 2, 'height': 500 * 2}"
                 ],
             ]

@@ -69,9 +69,8 @@ function () {
         });
     }
 
-    if (buttons['submitButton']['svgObject'] !== false) {
-        buttons['submitButton']['svgObject'].disableInteractive();
-        buttons['submitButton']['svgObject'].bringToTop(buttons['submitButton']['svgObject'].getByName('submitButton' + 'Inactive'));
+    if (buttons.submitButton.svgObject !== false) {
+        buttons.submitButton.setDisabled();
     }
 
 //    <?php include('create/fishkaDragEvents.js')?>

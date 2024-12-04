@@ -1,9 +1,18 @@
 <?php
 
+/**
+ * @property int $_id
+ * @property string $_cookie
+ * @property int $_common_id
+ **/
+
 use classes\Cache;
 use classes\DB;
 use classes\Game;
+use classes\MonetizationService;
 use classes\ORM;
+use classes\Ru;
+use classes\T;
 
 class PlayerModel extends BaseModel
 {
@@ -22,7 +31,19 @@ class PlayerModel extends BaseModel
 
     const TOP_10 = 10;
     const MIN_TOP_RATING = 2100; // Рейтинг, ниже которого ТОП не рассчитывается в некоторых запросах
+    const TOP_PLAYERS_CACHE_TTL = 3600;
+    private static array $cache = [];
 
+    public ?string $_cookie = null;
+    public ?int $_common_id = null;
+
+    public static function validateCommonIdByCookie(int $commonId, string $cookie): bool {
+        return true; // todo CLUB-397 убрать после тестирования задачи
+
+        $player = self::getOneCustomO(self::COOKIE_FIELD, $cookie);
+
+        return $player && ($player->_common_id === $commonId);
+    }
 
     /**
      * Определяет common_id по сложной схеме через связанные куки и ID от яндекса
@@ -32,33 +53,26 @@ class PlayerModel extends BaseModel
      */
     public static function getPlayerCommonId(string $cookie, bool $createIfNotExist = false)
     {
-        if ($commonID = self::getCommonID($cookie)) {
-            return $commonID;
+        if (self::$cache[$cookie]['common_id'] ?? false) {
+            return self::$cache[$cookie]['common_id'];
         }
 
-        if (!count(self::getOneCustom(self::COOKIE_FIELD, $cookie)) && $createIfNotExist) {
-            self::add([self::COOKIE_FIELD => $cookie]);
-            self::setParamMass(
-                self::COMMON_ID_FIELD,
-                new ORM('id'),
-                [
-                    'field_name' => self::COOKIE_FIELD,
-                    'condition' => '=',
-                    'value' => $cookie,
-                    'raw' => false
-                ]
-            );
+        if ($commonId = self::getCommonID($cookie)) {
+            self::$cache[$cookie]['common_id'] = $commonId;
 
-            return self::getOneCustom(self::COOKIE_FIELD, $cookie)[self::COMMON_ID_FIELD] ?? 0;
+            return $commonId;
         }
+
 
         // Пробуем найти связанный common_id у другого плеера по user_id
-        $userIDArr = self::getCrossingCommonIdByCookie($cookie);
+        $commonIdCrossing = self::getCrossingCommonIdByCookie($cookie);
         // Если связь есть
-        if ($userIDArr !== self::COOKIE_NOT_LINKED_STATUS) {
+        if ($commonIdCrossing !== self::COOKIE_NOT_LINKED_STATUS) {
             // .. и если common_id установлен - возвращаем
-            if ($userIDArr) {
-                return $userIDArr;
+            if ($commonIdCrossing) {
+                self::$cache[$cookie]['common_id'] = $commonIdCrossing;
+
+                return $commonIdCrossing;
             }
 
             // ..а если common_id не установлен - создаем
@@ -92,7 +106,23 @@ class PlayerModel extends BaseModel
             if (self::add(
                 ['cookie' => $cookie, 'user_id' => new ORM("conv(substring(md5('$cookie'),1,16),16,10)")]
             )) {
-                return self::getPlayerCommonId($cookie, false);
+                $id = self::getIdByCookie($cookie);
+                if ($id) {
+                    self::update($id, ['field' => self::COMMON_ID_FIELD, 'value' => $id, 'raw' => true]);
+                }
+
+                self::$cache[$cookie]['common_id'] = $id;
+
+                /*
+                // Начисляем приветственный бонус
+                BalanceModel::changeBalance(
+                    $id,
+                    MonetizationService::REWARD[AchievesModel::DAY_PERIOD],
+                    BalanceHistoryModel::GREETING_DEPOSIT_TYPE,
+                    BalanceHistoryModel::TYPE_IDS[BalanceHistoryModel::GREETING_DEPOSIT_TYPE]
+                );
+*/
+                return $id;
             }
         }
 
@@ -102,7 +132,7 @@ class PlayerModel extends BaseModel
     /**
      * Finds common_id by comparing user_id and cookies between different players
      * @param $cookie
-     * @return array|false
+     * @return int|false|string
      */
     public static function getCrossingCommonIdByCookie($cookie)
     {
@@ -161,7 +191,12 @@ class PlayerModel extends BaseModel
 
     public static function getRatingByCookie(string $cookie): int
     {
-        return self::getOneCustom(self::COOKIE_FIELD, $cookie)[self::RATING_FIELD] ?? 0;
+        $player = self::getOneCustom(self::COOKIE_FIELD, $cookie);
+        if (empty($player)) {
+            return 0;
+        }
+
+        return CommonIdRatingModel::getRating($player[self::COMMON_ID_FIELD], BaseController::gameName()) ?: ($player[self::RATING_FIELD] ?? CommonIdRatingModel::INITIAL_RATING);
     }
 
     public static function getRating($commonID = false, $cookie = false, $userID = false)
@@ -216,6 +251,129 @@ class PlayerModel extends BaseModel
             . ORM::where('false', '', '', true);
     }
 
+    public static function getTopPlayersCached(int $top, ?int $topMax = null): array
+    {
+        $cacheKey = self::RATING_CACHE_PREFIX . "_top_{$top}_" . ($topMax ??  self::TOP_10);
+
+        if ($topRatings = Cache::get($cacheKey)) {
+            return $topRatings;
+        }
+
+        $topRatings = self::getTopPlayers($top, $topMax);
+        self::enrichTopRatings($topRatings);
+
+        Cache::setex($cacheKey, self::TOP_PLAYERS_CACHE_TTL, $topRatings);
+
+        return $topRatings;
+    }
+
+    public static function getAvatarUrl(int $commonID, bool $defaultOnly = false): string
+    {
+        $avatarUrl = $defaultOnly
+            ? false
+            : (UserModel::getOne($commonID)['avatar_url'] ?? false);
+
+        if (!empty($avatarUrl)) {
+            return $avatarUrl;
+        } else {
+            return AvatarModel::getDefaultAvatar($commonID);
+        }
+    }
+
+    public
+    static function getPlayerName(
+        array $user = ['ID' => 'cookie', 'common_id' => 15, 'userID' => 'user_ID']
+    ) {
+        if (strpos($user['ID'], 'bot') !== false) {
+            $config = include(__DIR__ . '/../../../configs/conf.php');
+
+            return T::translit(
+                $config['botNames'][str_replace('botV3#', '', $user['ID'])] ?? 'John Doe',
+                T::$lang === T::EN_LANG
+            );
+        }
+
+        $commonId = $user['common_id'];
+        if (
+        $commonIDName = DB::queryValue(
+            "SELECT name 
+                    FROM users 
+                    WHERE id=$commonId 
+                    LIMIT 1"
+        )) {
+            return $commonIDName;
+        }
+
+        if (isset($user['userID'])) {
+            $idSource = $user['userID'];
+        } else {
+            $idSource = $user['ID'];
+        }
+
+        if (
+        $res = DB::queryValue(
+            "SELECT name FROM player_names 
+            WHERE
+            some_id=" . Game::hash_str_2_int($idSource)
+            . " LIMIT 1"
+        )
+        ) {
+            return $res;
+        } else {
+            $sintName = isset($user['userID'])
+                ? md5($user['userID'])
+                : $user['ID'];
+            $letterName = '';
+
+            foreach (str_split($sintName) as $index => $lowByte) {
+                $letterNumber = base_convert("0x" . $lowByte, 16, 10)
+                    + base_convert("0x" . substr($sintName, $index < 5 ? $index : 0, 1), 16, 10);
+
+                if (!isset(Ru::$bukvy[$letterNumber])) {
+                    //Английская версия
+                    $letterNumber = number_format(round(34 + $letterNumber * (59 - 34 + 1) / 30, 0), 0);
+                }
+
+                if (Ru::$bukvy[$letterNumber][3] == false) { // нет ошибки - класс неизвестен
+                    $letterNumber = 31; // меняем плохую букву на букву Я
+                }
+
+                if ($letterName == '') {
+                    if ($letterNumber == 28) {
+                        continue; // Не ставим Ь в начало ника
+                    }
+                    $letterName = Ru::$bukvy[$letterNumber][0];
+                    $soglas = Ru::$bukvy[$letterNumber][3];
+                    continue;
+                }
+
+                if (mb_strlen($letterName) >= 6) {
+                    break;
+                }
+
+                if (Ru::$bukvy[$letterNumber][3] <> $soglas) {
+                    $letterName .= Ru::$bukvy[$letterNumber][0];
+                    $soglas = Ru::$bukvy[$letterNumber][3];
+                    continue;
+                }
+            }
+
+            return mb_strtoupper(mb_substr($letterName, 0, 1)) . mb_substr($letterName, 1);
+        }
+    }
+
+    private static function enrichTopRatings(array $topRatings)
+    {
+        foreach ($topRatings as $num => &$playerArr) {
+            foreach ($playerArr as $numPlayer => &$player) {
+                $player['avatar_url'] = self::getAvatarUrl($player[self::COMMON_ID_FIELD]);
+                $player['name'] = self::getPlayerName(['common_id' => $player[self::COMMON_ID_FIELD]]);
+            }
+        }
+
+        return $topRatings;
+    }
+
     /**
      * @param int $top Номер в рейтинге - 1,2,3 ...
      * @param int $topMax Максимальный номер в рейтинге (для поиска ТОП10 задать 4,10)
@@ -228,10 +386,10 @@ class PlayerModel extends BaseModel
         }
 
         $topRatingsQuery = self::select([self::RATING_FIELD])
-            .ORM::where(self::RATING_FIELD,'>',self::MIN_TOP_RATING,true)
-            .ORM::groupBy([self::RATING_FIELD])
-            .ORM::orderBy(self::RATING_FIELD, false)
-            .ORM::limit($topMax ? $topMax - $top + 1 : 1, $top - 1);
+            . ORM::where(self::RATING_FIELD, '>', self::MIN_TOP_RATING, true)
+            . ORM::groupBy([self::RATING_FIELD])
+            . ORM::orderBy(self::RATING_FIELD, false)
+            . ORM::limit($topMax ? $topMax - $top + 1 : 1, $top - 1);
 
         $topRatings = DB::queryArray($topRatingsQuery) ?: [];
 
@@ -274,40 +432,29 @@ class PlayerModel extends BaseModel
         foreach ($idArray as $value) {
             Cache::setex(
                 'erudit.rating_cache_' . $value,
-                round(Game::CACHE_TIMEOUT / 15),
+                round((Game::CACHE_TIMEOUT) / 15),
                 $ratingInfo
             );
         }
     }
 
-    private static function cacheDeltaRating(string $cookie = null, $userID, array $deltaArr)
+    private static function cacheDeltaRating(string $commonId, array $deltaArr)
     {
-        if ($cookie) {
-            Cache::setex(self::DELTA_RATING_KEY_PREFIX . $cookie, self::RATING_CACHE_TTL, $deltaArr);
-        }
-
-
-        if (($userID ?? 0 > 0)) {
-            Cache::setex(self::DELTA_RATING_KEY_PREFIX . $userID, self::RATING_CACHE_TTL, $deltaArr);
-        }
+        Cache::setex(self::DELTA_RATING_KEY_PREFIX . $commonId, self::RATING_CACHE_TTL, $deltaArr);
     }
 
-    public static function getDeltaRating($key1, $key2)
+    /**
+     * Получает какойто массив изменений рейтинга их кеша или false
+     * @param $commonId
+     * @return array|false
+     */
+    public static function getDeltaRating($commonId)
     {
-        if ($key1) {
-            $key = self::hash_str_2_int($key1);
-            if ($delta = Cache::get(PlayerModel::DELTA_RATING_KEY_PREFIX . $key)) {
-                return $delta;
-            }
-        }
-
-        $key = $key2;
-
-        if ($delta = Cache::get(PlayerModel::DELTA_RATING_KEY_PREFIX . $key)) {
+        if ($delta = Cache::get(PlayerModel::DELTA_RATING_KEY_PREFIX . $commonId)) {
             return $delta;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     public
@@ -319,22 +466,22 @@ class PlayerModel extends BaseModel
             [24 * 60 * 60, 2300],
             true,
             false,
-            ['user_id', 'cookie']
+            ['common_id']
         );
 
         foreach ($notPlayedPlayers as $player) {
             $ratingDecreaseQuery = ORM::update(self::TABLE_NAME)
                 . ORM::set(['field' => 'rating', 'value' => 'rating-1', 'raw' => true])
-                . ORM::where('cookie', '=', $player['cookie'])
-                . (
-                    $player['user_id'] ?? 0 > 0
-                        ? ORM::orWhere('user_id', '=', $player['user_id'], true)
-                        : ''
-                );
+                . ORM::where('common_id', '=', $player['common_id'], true);
 
             if (DB::queryInsert($ratingDecreaseQuery)) {
-                self::cacheDeltaRating($player['cookie'], $player['user_id'], ['delta' => -1,]);
+                self::cacheDeltaRating($player['common_id'], ['delta' => -1,]);
             }
         }
+    }
+
+    private static function getIdByCookie(string $cookie): ?int
+    {
+        return self::getOneCustom(self::COOKIE_FIELD, $cookie)['id'] ?? null;
     }
 }

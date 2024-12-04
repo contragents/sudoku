@@ -1,8 +1,8 @@
 <?php
 
-
 namespace classes;
 
+use AchievesModel;
 
 class Macros
 {
@@ -24,54 +24,71 @@ class Macros
 
     const SUDOKU_IMG_URL = '<img src="/images/coin.png" alt="SUDOKU coin image" width="30%">';
 
-    public static function sudokuIcon(): string {
+    public static function sudokuIcon(): string
+    {
         return self::SUDOKU_IMG_URL;
     }
 
-    public static function sudokuIcon15(): string {
+    public static function sudokuIcon15(): string
+    {
         return str_replace('30%', '15%', self::SUDOKU_IMG_URL);
     }
 
-    public static function sudokuIcon20(): string {
+    public static function sudokuIcon20(): string
+    {
         return str_replace('30%', '20%', self::SUDOKU_IMG_URL);
     }
 
-    public static function goldReward(): string {
+    public static function goldReward(): string
+    {
         return MonetizationService::REWARD[AchievesModel::YEAR_PERIOD];
     }
 
-    public static function silverReward(): string {
+    public static function silverReward(): string
+    {
         return MonetizationService::REWARD[AchievesModel::MONTH_PERIOD];
     }
 
-    public static function bronzeReward(): string {
+    public static function bronzeReward(): string
+    {
         return MonetizationService::REWARD[AchievesModel::WEEK_PERIOD];
     }
 
-    public static function stoneReward(): string {
+    public static function stoneReward(): string
+    {
         return MonetizationService::REWARD[AchievesModel::DAY_PERIOD];
     }
 
-    public static function goldIncome(): string {
+    public static function goldIncome(): string
+    {
         return MonetizationService::INCOME[AchievesModel::YEAR_PERIOD];
     }
 
-    public static function silverIncome(): string {
+    public static function silverIncome(): string
+    {
         return MonetizationService::INCOME[AchievesModel::MONTH_PERIOD];
     }
 
-    public static function bronzeIncome(): string {
+    public static function bronzeIncome(): string
+    {
         return MonetizationService::INCOME[AchievesModel::WEEK_PERIOD];
     }
 
-    public static function stoneIncome(): string {
+    public static function stoneIncome(): string
+    {
         return MonetizationService::INCOME[AchievesModel::DAY_PERIOD];
     }
 
-    public static function applyMacros($res): string
+    public static function applyMacros(string $res): string
     {
-        foreach (self::MACROSES as $method => $macros) {
-            $res = str_replace($macros, call_user_func([Macros::class, $method]), $res);
+        try {
+            foreach (self::MACROSES as $method => $macros) {
+                if (strpos($res, $macros) !== false) {
+                    $res = str_replace($macros, call_user_func([Macros::class, $method]), $res);
+                }
+            }
+        } catch (\Throwable $e) {
+            $res = $e->__toString();
         }
 
         return $res;

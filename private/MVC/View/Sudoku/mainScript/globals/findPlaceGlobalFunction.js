@@ -67,6 +67,30 @@ function containerFishkaPresent(i, j) {
     return false;
 }
 
+function canSubmitTurn() {
+    if(gameState !== MY_TURN_STATE) {
+        return false;
+    }
+
+    let numFieldFishki = 0;
+    for (let k in container) {
+        if ((container[k].getData('cellX') !== false)) {
+            numFieldFishki++;
+        }
+    }
+
+    return numFieldFishki === 1;
+}
+
+function setSubmitButtonState() {
+    if(canSubmitTurn()) {
+        buttons.submitButton.setEnabled();
+    } else {
+        buttons.submitButton.setDisabled();
+    }
+}
+
+
 function correctCellNumber(n, cellNumber) {
     if (cellNumber < 0) {
         cellNumber = 0;

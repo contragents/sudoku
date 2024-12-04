@@ -1,15 +1,14 @@
 //
 function submitButtonFunction() {
 
-    buttons['submitButton']['svgObject'].disableInteractive();
-    buttons['submitButton']['svgObject'].bringToTop(buttons['submitButton']['svgObject'].getByName('submitButton' + 'Inactive'));
+    buttons.submitButton.setDisabled();
 
     setTimeout(function () {
         fetchGlobal(SUBMIT_SCRIPT, 'cells', cells)
             .then((data) => {
                 if ('http_status' in data && (data['http_status'] === BAD_REQUEST || data['http_status'] === PAGE_NOT_FOUND)) {
-                    buttons['submitButton']['svgObject'].setInteractive();
-                    buttons['submitButton']['svgObject'].bringToTop(buttons['submitButton']['svgObject'].getByName('submitButton' + 'Otjat'));
+                    setSubmitButtonState();
+
                     dialog = bootbox.alert({
                         message: ('message' in data && data['message'] !== '')
                             ? (data['message'] + '<br /> Попробуйте отправить заново')
