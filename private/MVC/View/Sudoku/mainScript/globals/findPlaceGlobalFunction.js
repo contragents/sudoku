@@ -52,6 +52,33 @@ function findPlaceGlobal(gameObject, oldX, oldY, cellX, cellY) {
     cells[cellX][cellY][1] = gameObject.getData('letter');
 }
 
+function placeErrorSudokuGlobal(gameObject, cellX, cellY, errorNumber) {
+    let objectRow = errorNumber <= 3
+        ? 3
+        : (errorNumber <= 6
+                ? 2
+                : 1
+        );
+    let objectCol = sudokuSet1Column.has(errorNumber)
+        ? 1
+        : (sudokuSet2Column.has(errorNumber)
+            ? 2
+            : 3);
+
+    gameObject.x = stepX + (cellX + 1) * yacheikaWidth + correctionX;
+    gameObject.y = stepY + (cellY + 1) * yacheikaWidth + correctionY;
+
+    gameObject.displayWidth = gameObject.displayWidth / 1.3;
+    gameObject.displayHeight = gameObject.displayHeight / 1.3;
+
+    gameObject.x += (objectCol - 2) * yacheikaWidth / 3;
+    gameObject.y += (objectRow - 2) * yacheikaWidth / 3 + (sudoku1RowCorrectionLower.has(cellY) && errorNumber >= 7 ? 2 : 0);
+
+    gameObject.setData('cellX', cellX);
+    gameObject.setData('cellY', cellY);
+    gameObject.setData('errorNumber', errorNumber);
+}
+
 function placeGlobal(gameObject, cellX, cellY) {
     gameObject.x = stepX + (cellX + 1) * yacheikaWidth + correctionX;
     gameObject.y = stepY + (cellY + 1) * yacheikaWidth + correctionY;

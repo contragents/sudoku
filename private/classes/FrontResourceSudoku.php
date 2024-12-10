@@ -11,8 +11,8 @@ class FrontResourceSudoku extends FrontResource
     public static function getImgsPreload(): array
     {
         $imgArr = [];
-        for ($i=1; $i<=9; $i++) {
-            foreach(self::NUMBER_TYPES as $type) {
+        for ($i = 1; $i <= 9; $i++) {
+            foreach (self::NUMBER_TYPES as $type) {
                 $imgArr["{$type}_{$i}"] = [
                     'type' => 'image',
                     'url' => "img/sudoku/number_icons/{$i}_$type.png",
@@ -27,6 +27,10 @@ class FrontResourceSudoku extends FrontResource
                     'type' => 'svg',
                     'url' => 'img/sudoku/field_source6.svg',
                     'options' => "{'width': 513 * 2, 'height': 500 * 2}"
+                ],
+                'black_0' => [
+                    'type' => 'image',
+                    'url' => 'img/sudoku/number_icons/0_black.png',
                 ],
             ]
             + parent::getImgsPreload();

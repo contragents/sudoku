@@ -14,9 +14,6 @@ class SudokuController extends BaseController
 
     const VIEW_PATH = parent::VIEW_PATH . 'Sudoku/';
 
-    // todo сделать cookie один на все игры
-    const COOKIE_KEY = 'sudoku_player_id';
-
     public function __construct($action, array $request)
     {
         BaseController::$SM = new StateMachine(self::COOKIE_KEY, SudokuGame::GAME_NAME);

@@ -474,8 +474,6 @@ var gameStates = {
         action: function (data) {
             if ("desk" in data)
                 parseDeskGlobal(data['desk']);
-            if ("score" in data)
-                ochki.text = data['score'];
             userScores(data);
         },
         results: function (data) {

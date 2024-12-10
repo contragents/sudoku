@@ -6,6 +6,8 @@ use classes\Game;
 use classes\Response;
 use classes\StateMachine;
 use classes\T;
+use classes\Tg;
+use classes\UserProfile;
 use classes\ViewHelper;
 
 /**
@@ -34,18 +36,29 @@ class BaseController
     public static FrontResource $FR;
 
     public static $Request;
+    const CELLS_PARAM = 'cells';
+    const JSON_DECODE_PARAMS = [self::CELLS_PARAM => true];
+
     public $Action;
+
     public static ?string $User = null;
+    public static ?int $commonId = null;
 
     const VIEW_PATH = __DIR__ . '/../View/';
     const DEFAULT_ACTION = 'index';
 
     const SLEEP_ACTIONS = ['statusHiddenChecker' => 10];
 
+    const COOKIE_KEY = 'erudit_user_session_ID'; // один cookie на все игры
+
     public function __construct($action, array $request)
     {
         static::$Request = $request;
         self::$User = $this->checkCookie();
+
+        self::$commonId = Tg::$commonId // авторизован через Телеграм или...
+            ?? PlayerModel::getPlayerCommonId(self::$User, true);
+
         self::$instance = $this;
 
         $this->Action = $action . 'Action';
@@ -60,6 +73,14 @@ class BaseController
 
     public function Run(): string
     {
+        foreach(self::$Request as $param => $value) {
+            if(isset(self::JSON_DECODE_PARAMS[$param])) {
+                //print self::$Request[$param];
+                self::$Request[$param] = json_decode($value, true);
+                //print_r(self::$Request[$param]);
+            }
+        }
+
         T::$lang = self::setLanguage();
 
         if (self::$User === null) {
@@ -92,6 +113,12 @@ class BaseController
 
     private function checkCookie(): ?string
     {
+        if (Tg::authorize()) {
+            if (Tg::$tgUser) {
+                return Tg::$tgUser['user']['id'];
+            }
+        }
+
         if (!isset($_COOKIE[self::$SM::$cookieKey])) {
             $_COOKIE = Cookie::setGetCook(null, self::$SM::$cookieKey);
         } elseif (rand(1, 100) <= 2) {
@@ -147,7 +174,7 @@ class BaseController
 
     public function playerCabinetAction(): string
     {
-        return Response::jsonResp($this->Game->checkGameStatus(), $this->Game);
+        return Response::jsonResp(UserProfile::playerCabinetInfo($this->Game), $this->Game);
     }
 
     public function statusCheckerAction(): string

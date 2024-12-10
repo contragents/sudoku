@@ -15,8 +15,6 @@ class GomokuController extends BaseController
 
     const VIEW_PATH = parent::VIEW_PATH . 'Gomoku/';
 
-    const COOKIE_KEY = 'gomoku_player_id';
-
     public function __construct($action, array $request)
     {
         BaseController::$SM = new StateMachine(self::COOKIE_KEY, GomokuGame::GAME_NAME);

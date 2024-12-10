@@ -876,7 +876,7 @@ var gameStates = {
             if ("desk" in data && data.desk.length > 0) {
                 parseDeskGlobal(data['desk']);
             }
-            if ("score" in data) {
+            if ("score_arr" in data) {
                 userScores(data);
             }
             if ('activeUser' in data) {
@@ -1290,6 +1290,10 @@ function commonCallback(data) {
 
         if ('action' in gameStates[gameState])
             gameStates[gameState]['action'](data);
+
+        if ('mistakes' in data) {
+            processMistakesSudokuGlobal(data.mistakes);
+        }
     }
 
     if ('timeLeft' in data) {

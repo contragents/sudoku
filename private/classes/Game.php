@@ -4,12 +4,14 @@
 namespace classes;
 
 use BaseController;
+use CommonIdRatingModel;
 use GamesModel;
 use PlayerModel;
+use UserModel;
 
 class Game
 {
-    const CACHE_TIMEOUT = 30000;
+    const CACHE_TIMEOUT = StateMachine::CACHE_TTL;
     const TURN_DELTA_TIME = 10; // Разрешенное превышение длительности хода
 
     public const GAME_NAME = 'sudoku';
@@ -25,13 +27,30 @@ class Game
 
     const RESPONSE_PARAMS = [
         'desk' => ['gameStatus' => ['desk' => 'desk']],
+        'mistakes' => ['gameStatus' => ['desk' => 'mistakes']],
         'game_number' => ['gameStatus' => 'gameNumber'], // todo зачем 2 одинаковых параметра в ответе?
         'current_game' => 'currentGame', // current_game = game_number
-        'common_id' => 'getCurrentPlayerCommonId'
+        'common_id' => 'getCurrentPlayerCommonId',
+        'timeLeft' => 'getTimeLeft',
+        'secondsLeft' => 'getTurnSecondsLeft',
+        'minutesLeft' => 'getTurnMinutesLeft',
+        'yourUserNum' => 'numUser',
+        'comments' => 'getLastUserComment',
+        'activeUser' => ['gameStatus' => 'activeUser'],
+        self::SPECIAL_PARAMS => [
+            StateMachine::STATE_CHOOSE_GAME => [
+                'players_test' => 'onlinePlayers',
+                'coin_players_test' => 'onlineCoinPlayers',
+            ],
+        ],
+        'score_arr' => 'getPlayerScores',
+        'log' => 'getLog',
     ];
+    const SPECIAL_PARAMS = 'special';
 
     public ?string $User;
-    protected ?int $numUser = null;
+    public ?int $numUser = null;
+    public int $commonId;
     public Queue $Queue;
 
     public ?GameStatus $gameStatus = null;
@@ -48,11 +67,138 @@ class Game
 
     public function __get($attribute)
     {
-        if(is_callable([$this, $attribute])) {
+        if (is_callable([$this, $attribute])) {
             return $this->$attribute();
         } else {
             return null;
         }
+    }
+
+    public function getLastUserComment(): ?string
+    {
+        if ($this->gameStatus->users ?? null) {
+            return $this->gameStatus->users[$this->numUser]->getLastComment();
+        } else {
+            return null;
+        }
+    }
+
+    public function genKeyForCommonID($id)
+    {
+        $messageToEncrypt = $id;
+        $secretKey = Config::$envConfig['SALT'];
+        $method = 'AES-128-CBC';
+        $iv = base64_decode(Config::$envConfig['IV'] . '==');
+        $encrypted_message = openssl_encrypt($messageToEncrypt, $method, $secretKey, 0, $iv);
+
+        return $encrypted_message;
+    }
+
+    public function mergeTheIDs($encryptedMessage, $commonID, $secretKey = '')
+    {
+        $secretKey = $secretKey ?: Config::$envConfig['SALT'];
+        $method = 'AES-128-CBC';
+        $iv = base64_decode(Config::$envConfig['IV'] . '==');
+        $decrypted_message = openssl_decrypt($encryptedMessage, $method, $secretKey, 0, $iv);
+
+        if (!is_numeric($decrypted_message)) {
+            return json_encode(
+                [
+                    'result' => 'error_decryption' . ' ' . $decrypted_message,
+                    'message' => T::S('Key transcription error')
+                ],
+                JSON_UNESCAPED_UNICODE
+            );
+        }
+
+        $oldCommonID = UserModel::getCustom(
+                'id',
+                '=',
+                $decrypted_message,
+                false,
+                false,
+                ['id']
+            )[0]['id'] ?? false;
+
+        if ($oldCommonID === false) {
+            return json_encode(
+                [
+                    'result' => 'error_query_oldID',
+                    'message' => T::S("Player's ID NOT found by key")
+                ],
+                JSON_UNESCAPED_UNICODE
+            );
+        }
+
+        if (PlayerModel::setParamMass(
+            'common_id',
+            $oldCommonID,
+            [
+                'field_name' => 'common_id',
+                'condition' => '=',
+                'value' => $commonID,
+                'raw' => true
+            ]
+        )
+        ) {
+            return json_encode(
+                [
+                    'result' => 'save',
+                    'message' => T::S('Accounts linked')
+                ],
+                JSON_UNESCAPED_UNICODE
+            );
+        } else {
+            return json_encode(
+                [
+                    'result' => 'error_update ' . $oldCommonID . '->' . $commonID,
+                    'message' => T::S('Accounts are already linked')
+                ],
+                JSON_UNESCAPED_UNICODE
+            );
+        }
+    }
+
+    public function getPlayerScores(): ?array
+    {
+        $score_arr = [];
+        $countUsers = count($this->gameStatus->users ?? []);
+
+        if (!$countUsers) {
+            return null;
+        }
+
+        $score_arr[$this->numUser] = $this->gameStatus->users[$this->numUser]->score;
+        for ($i = 1; $i < $countUsers; $i++) {
+            $nextUserNum = ($this->numUser + $i) % $countUsers;
+            $score_arr[$nextUserNum] = $this->gameStatus->users[$nextUserNum]->score;
+        }
+
+        return $score_arr ?: null;
+    }
+
+    public function getTurnSecondsLeft(): int
+    {
+        return $this->getTimeLeft() % 60;
+    }
+
+    public function getTurnMinutesLeft(): int
+    {
+        return floor($this->getTimeLeft() / 60);
+    }
+
+    public function getTimeLeft(): int
+    {
+        if (@($this->gameStatus->aquiringTimes[$this->gameStatus->turnNumber] > 0)) {
+            @($turnTimeLeft = ($this->gameStatus->aquiringTimes[$this->gameStatus->turnNumber] + $this->gameStatus->turnTime) - date(
+                    'U'
+                ));
+        } else {
+            @$turnTimeLeft = $this->gameStatus->turnBeginTime + $this->gameStatus->turnTime - date('U');
+        }
+
+        $res = $turnTimeLeft ?? 0;
+        return $res >= 0 ? $res : 0;
     }
 
     public function getCurrentPlayerCommonId(): ?int
@@ -62,7 +208,8 @@ class Game
             : null;
     }
 
-    public static function getCacheKey(string $lastKeyPart): string {
+    public static function getCacheKey(string $lastKeyPart): string
+    {
         return static::GAME_NAME . $lastKeyPart;
     }
 
@@ -75,7 +222,7 @@ class Game
         $this->Queue = new $queueClass($this->User, $this, BaseController::$Request);
 
         // Если не удалось дождаться лока по текущему игроку, то посылаем desync и выходим
-        if(!Cache::lock($this->User)) {
+        if (!Cache::lock($this->User)) {
             $this->Response = $this->desync() + ['reason' => 'User lock failed'];
 
             return $this;
@@ -181,10 +328,12 @@ class Game
                 // Заполнили массив нормеров игроков
                 $this->gameStatus->{$user->ID} = $num;
 
-                // Прописали рейтинг и common_id игрока в статусе игры - только для games_statistic.php
-                $userRating = PlayerModel::getRatingByCookie($user->ID);
-                $this->gameStatus->users[$num]->rating = $userRating ?: 0;
                 $this->gameStatus->users[$num]->common_id = (int)PlayerModel::getPlayerCommonId($user->ID, true);
+                $userRating = CommonIdRatingModel::getRating(
+                    $this->gameStatus->users[$num]->common_id,
+                    static::GAME_NAME
+                );
+                $this->gameStatus->users[$num]->rating = $userRating ?: 0;
             }
 
             // Создали состояние доски
@@ -192,10 +341,6 @@ class Game
 
             //Номер пользователя по порядку
             $this->numUser = $this->gameStatus->{$this->User};
-
-            $this->addToLog(
-                'Новая игра начата! <br />Набери <strong>как можно больше</strong> очков'
-            );
         }
 
         $this->doSaveGameState = true;
@@ -220,6 +365,11 @@ class Game
         return $gameId;
     }
 
+    /**
+     * Возвращает новую игровую доску
+     * См. метод наследника под конкретную игру
+     * @return Desk
+     */
     public function newDesk(): Desk
     {
         return new Desk;
@@ -269,7 +419,9 @@ class Game
 
     public function getGameStatus(int $gameNumber = null): GameStatus
     {
-        return Cache::get(self::getCacheKey(self::GAME_DATA_KEY . ($gameNumber ?: $this->currentGame))) ?: new GameStatus();
+        return Cache::get(
+            self::getCacheKey(self::GAME_DATA_KEY . ($gameNumber ?: $this->currentGame))
+        ) ?: new GameStatus();
     }
 
     public function storeGameStatus(bool $updating = true)
@@ -295,7 +447,7 @@ class Game
             $this->storeGameStatus();
         }
 
-       $this->saveUserLastActivity($this->User);
+        $this->saveUserLastActivity($this->User);
     }
 
     protected function getCurrentGameNumber(): ?int
@@ -369,6 +521,28 @@ class Game
         }
 
         return $arr;
+    }
+
+    public function getLog(): ?array
+    {
+        if(!$this->gameStatus) {
+            return null;
+        }
+
+        $log = [];
+
+        while ($logRecord = array_shift($this->gameStatus->users[$this->numUser]->logStack)) {
+            $log[] = trim(
+                (
+                $logRecord[0] !== false
+                    ? $this->gameStatus['users'][$logRecord[0]]['username']
+                    : ''
+                )
+                . ' ' . $logRecord[1]
+            );
+        }
+
+        return $log ?: null;
     }
 
     protected function addToLog($message, $numUser = false)
@@ -480,15 +654,22 @@ class Game
         $this->gameStatus->aquiringTimes[$this->gameStatus->turnNumber] = false;
     }
 
-    protected function storeGameResults($winnerUser)
+    /**
+     * @param string $winnerUser user->ID
+     */
+    protected function storeGameResults(string $winnerUser)
     {
         $results = [];
 
-        foreach ($this->gameStatus->users as $user) {
+        foreach ($this->gameStatus->users as $numUser => $user) {
             if ($user->ID == $winnerUser) {
                 $results['winner'] = $winnerUser;
+                $user->addComment('Вы выиграли!');
+
+                $this->addToLog('Игрок' . ($numUser + 1) . ' выиграл!');
             } else {
                 $results['lostUsers'][] = $user->ID;
+                $user->addComment('Вы проиграли!');
             }
         }
 
@@ -600,8 +781,6 @@ class Game
 
     public function submitTurn(): array
     {
-        $this->nextTurn();
-
         return Response::state($this->SM::getPlayerStatus($this->User));
     }
 

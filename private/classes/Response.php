@@ -30,10 +30,24 @@ class Response
     private static function enrichResponse(Game $game): array
     {
         $res = [];
-        /*+ ($gameStatus->desk !== null ? ['desk' => $gameStatus->desk->desk] : [])
-        + ['game_number' => $gameStatus->gameNumber];*/
+
         try {
             foreach ($game::RESPONSE_PARAMS as $param => $path) {
+                if($param === $game::SPECIAL_PARAMS) {
+                    $playerStatus = $game->SM::getPlayerStatus($game->User);
+                    foreach($path as $status => $statusParams) {
+                        if ($status === $playerStatus) {
+                            foreach ($statusParams as $param => $path) {
+                                $paramValue = self::getParamValue($game, $path);
+                                $res += $paramValue !== null
+                                    ? [$param => $paramValue]
+                                    : [];
+                            }
+                        }
+                    }
+
+                    continue;
+                }
                 $paramValue = self::getParamValue($game, $path);
                 $res += $paramValue !== null
                     ? [$param => $paramValue]
@@ -46,6 +60,11 @@ class Response
         return $res;
     }
 
+    /**
+     * @param object $someObject
+     * @param $path
+     * @return string|int|array|null
+     */
     private static function getParamValue(object $someObject, $path)
     {
         if (is_array($path)) {
@@ -55,6 +74,8 @@ class Response
             return $someObject->$subObject !== null
                 ? self::getParamValue($someObject->$subObject, $subPath)
                 : null;
+        } elseif (is_callable([$someObject, $path])) {
+            return $someObject->$path();
         } else {
             return $someObject->$path;
         }

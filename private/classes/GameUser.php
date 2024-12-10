@@ -3,6 +3,9 @@
 
 namespace classes;
 
+
+use classes\ViewHelper as VH;
+
 /** @property string $ID */
 
 class GameUser
@@ -21,8 +24,9 @@ class GameUser
     public int $rating = 0;
     public int $common_id;
     public array $logStack = [];
+    protected array $comments = [];
 
-    private array $data = [];
+    protected array $data = [];
 
     public function __construct(array $params) {
         foreach($params as $attribute => $value) {
@@ -38,5 +42,18 @@ class GameUser
     public function __set($attribute, $value)
     {
         return $this->data[$attribute] = $value;
+    }
+
+    public function getLastComment(): ?string
+    {
+        $res = implode(VH::br(), $this->comments) ?: null;
+        $this->comments = [];
+
+        return $res;
+    }
+
+    public function addComment(string $comment)
+    {
+        $this->comments[] = $comment;
     }
 }

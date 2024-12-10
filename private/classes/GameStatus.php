@@ -21,6 +21,7 @@ class GameStatus
     public array $results = [];
     public bool $isGameEndedSaved = false;
     public array $gameLog = [];
+    public int $gameGoal = 0; // Число очков для победы
 
     private array $data = [];
 

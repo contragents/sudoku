@@ -8,6 +8,10 @@ class Desk
 {
     public array $desk = [];
 
+    protected ?int $newEntity = null;
+    protected ?int $newEntityI = null;
+    protected ?int $newEntityJ = null;
+
     const NUM_COLS = 9;
     const NUM_ROWS = 9;
 
@@ -19,4 +23,11 @@ class Desk
             }
         }
     }
+
+    // нужно переделать под каждую игру
+    protected function equivalentCells($cellNew, $cellOld)
+    {
+        return $cellNew[1] == $cellOld;
+    }
+
 }

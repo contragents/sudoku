@@ -16,20 +16,26 @@ const errorServerMessage = '<?= T::S('Server connecting error. Please try again'
 
 var preloaderObject = false;
 
+// SUDOKU VARS
+
+const sudokuSet1Column = new Set([1,4,7]);
+const sudokuSet2Column = new Set([2,5,8]);
+const sudokuSet3Column = new Set([3,6,9]);
+const sudoku1RowCorrectionLower = new Set([3,4,5,6,7]);
+var sudokuMistakesContainer = [];
+
+// SUDOKU VARS END
+
 const GROUND_FILE = '<?= T::PHRASES['ground_file'][T::$lang] ?>';
 
 const SUDOKU_PRICE = <?= MonetizationService::SUDOKU_PRICE ?>;
-//const SUBMIT_SCRIPT = 'turn_submitter.php';
-//const WORD_CHECKER_SCRIPT = 'word_checker.php';
-//const STATUS_CHECKER_SCRIPT = 'status_checker.php';
-//const INIT_GAME_SCRIPT = 'init_game.php';
 
 const SUBMIT_SCRIPT = 'turnSubmitter';
 const WORD_CHECKER_SCRIPT = 'word_checker.php';
 const STATUS_CHECKER_SCRIPT = 'statusChecker';
 const STATUS_HIDDEN_CHECKER_SCRIPT = 'statusHiddenChecker';
 const INIT_GAME_SCRIPT = 'initGame';
-const CABINET_SCRIPT = 'playerCabinet.php';
+const CABINET_SCRIPT = 'playerCabinet';
 
 const CHAT_SCRIPT = 'send_chat_message.php';
 const COMPLAIN_SCRIPT = 'complain.php';
