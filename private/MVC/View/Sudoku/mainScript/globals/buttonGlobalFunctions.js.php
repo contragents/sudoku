@@ -42,6 +42,10 @@ function submitButtonFunction() {
                     if ('gameState' in data) {
                         commonCallback(data);
                     }
+
+                    if ('comments' in data) {
+                        lastComment = data.comments;
+                    }
                 }
             });
     }, 100);

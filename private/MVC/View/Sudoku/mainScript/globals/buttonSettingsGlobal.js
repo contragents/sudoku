@@ -79,7 +79,6 @@ var buttons = {
         caption: 'send',
         width: buttonWidth,
         object: false, svgObject: false,
-        enabled: {myTurn: 1},
         pointerupFunction: function () {
             submitButtonFunction();
         },

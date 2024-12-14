@@ -28,7 +28,7 @@ class Game
     const RESPONSE_PARAMS = [
         'desk' => ['gameStatus' => ['desk' => 'desk']],
         'mistakes' => ['gameStatus' => ['desk' => 'mistakes']],
-        'game_number' => ['gameStatus' => 'gameNumber'], // todo зачем 2 одинаковых параметра в ответе?
+        'gameNumber' => ['gameStatus' => 'gameNumber'], // todo зачем 2 одинаковых параметра в ответе?
         'current_game' => 'currentGame', // current_game = game_number
         'common_id' => 'getCurrentPlayerCommonId',
         'timeLeft' => 'getTimeLeft',
@@ -745,7 +745,10 @@ class Game
             }
         }
 
-        if ((date('U') - $this->gameStatus->turnBeginTime) > ($this->gameStatus->turnTime + static::TURN_DELTA_TIME)) {
+        if($this->isActivePlayerBot() && date('U') - $this->gameStatus->turnBeginTime > 20) {
+                $this->makeBotTurn($this->gameStatus->activeUser);
+                //$this->nextTurn();
+        } elseif ((date('U') - $this->gameStatus->turnBeginTime) > ($this->gameStatus->turnTime + static::TURN_DELTA_TIME)) {
             $this->addToLog('Время хода истекло', $this->gameStatus->activeUser);
 
             $this->gameStatus->users[$this->gameStatus->activeUser]->lostTurns++;
@@ -788,5 +791,15 @@ class Game
     {
         $hash_int = base_convert("0x" . substr(md5($str), 0, $len), 16, 10);
         return $hash_int;
+    }
+
+    private function isActivePlayerBot(): bool
+    {
+        return stripos($this->gameStatus->users[$this->gameStatus->activeUser]->ID, 'botV3') !== false;
+    }
+
+    protected function makeBotTurn(int $botUserNum)
+    {
+        // return Response::state($this->SM::getPlayerStatus($this->User));
     }
 }

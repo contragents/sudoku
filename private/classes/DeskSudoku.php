@@ -43,6 +43,45 @@ class DeskSudoku extends Desk
         }
     }
 
+    public static function getVertCellValues(int $i, array $desk): array
+    {
+        $res = [];
+        foreach ($desk[$i] as $value) {
+            if ($value > 0) {
+                $res[$value % 10] = $value % 10;
+            }
+        }
+
+        return $res;
+    }
+
+    public static function getHorCellValues(int $j, array $desk): array
+    {
+        $res = [];
+        foreach ($desk as $i => $column) {
+            if ($column[$j] > 0) {
+                $res[$column[$j] % 10] = $column[$j] % 10;
+            }
+        }
+
+        return $res;
+    }
+
+    public static function getSquareCellValues(int $i, int $j, array $desk): array
+    {
+        $res = [];
+
+        $cells = self::getSquareCells($i, $j);
+
+        foreach ($cells as $cell) {
+            if ($desk[$cell['i']][$cell['j']] > 0) {
+                $res[$desk[$cell['i']][$cell['j']] % 10] = $desk[$cell['i']][$cell['j']] % 10;
+            }
+        }
+
+        return $res;
+    }
+
     public function getKeyCount(): int
     {
         $keyNum = 0;
@@ -72,7 +111,7 @@ class DeskSudoku extends Desk
     }
 
     /**
-     * Открывает ячейки, которые ояевидны - 8 из 9 в ряд или в квадрате 3х3
+     * Открывает ячейки, которые очевидны - 8 из 9 в ряд или в квадрате 3х3
      */
     private function openCellsCascades(int &$numCellsSolved)
     {
@@ -268,6 +307,21 @@ class DeskSudoku extends Desk
         return true;
     }
 
+    public function unopenedCellsCount(): int
+    {
+        $res = 0;
+
+        foreach ($this->desk as $row) {
+            foreach ($row as $cell) {
+                if ($cell === false) {
+                    $res++;
+                }
+            }
+        }
+
+        return $res;
+    }
+
     public function hasUnopenedCells(): bool
     {
         foreach ($this->desk as $row) {
@@ -384,7 +438,7 @@ class DeskSudoku extends Desk
      * @param $j
      * @return array
      */
-    private static function getSquareCells($i, $j): array
+    public static function getSquareCells($i, $j): array
     {
         $iSquare = floor($i / 3);
         $jSquare = floor($j / 3);

@@ -51,8 +51,6 @@ const standardVerticalHeight = 800 * 2;
 const standardHorizontalWidth = 960 * 2;
 const standardHorizontalHeight = standardVerticalWidth;
 
-const donateLink = 'https://pay.cloudtips.ru/p/9844e694';
-
 var gameNumber = false;
 var graphics;
 var letterMin = 0;

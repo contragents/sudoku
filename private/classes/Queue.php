@@ -115,7 +115,7 @@ class Queue
             + [
                 'gameSubState' => 'choosing',
                 'players' => $this->caller->onlinePlayers(),
-                'coin_players' => $this->onlineCoinPlayers(),
+                'coin_players' => $this->caller->onlineCoinPlayers(),
                 'prefs' => $this->getUserPrefs(),
                 'reason' => 'Queue error'
             ];
@@ -173,6 +173,12 @@ class Queue
             } else {
                 return $this->caller->desync() + ['reason' => 'Semaphore lock failed'];
             }
+        }
+
+        if($this->playerWaitTooLong()) {
+            $bot = $this->getBotPlayer();
+            $this->storeTo2Players($bot);
+            return $this->makeGame('2');
         }
 
         return $this->storeTo2Players($this->User);
@@ -586,5 +592,21 @@ class Queue
          }
 
          return false;
+    }
+
+    private function playerWaitTooLong(): bool
+    {
+        $userInQueueRecord = Cache::hget(static::QUEUES['2players_waiters'], $this->User);
+
+        if(!$userInQueueRecord) {
+            return false;
+        }
+
+        return (date('U') - $userInQueueRecord['time'] > 60);
+    }
+
+    private function getBotPlayer(): string
+    {
+        return 'botV3#9';
     }
 }

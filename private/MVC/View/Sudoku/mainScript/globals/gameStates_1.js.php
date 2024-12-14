@@ -808,7 +808,7 @@ var gameStates = {
         message: '<?= T::S('Get ready - your turn is next!') ?>',
         refresh: 5,
         action: function (data) {
-            gameStates['gameResults']['action'](data);
+            gameStates['gameResults']['action'](data, false);
 
             buttons.submitButton.setDisabled();
         },
@@ -872,8 +872,8 @@ var gameStates = {
             return mes;
         },
         refresh: 10,
-        action: function (data) {
-            if ("desk" in data && data.desk.length > 0) {
+        action: function (data, parseDesk = true) {
+            if (parseDesk && "desk" in data && data.desk.length > 0) {
                 parseDeskGlobal(data['desk']);
             }
             if ("score_arr" in data) {
@@ -1084,10 +1084,10 @@ function commonCallback(data) {
 
     if ('lang' in data && data['lang'] != lang) {
         lang = data['lang'];
-        if (lang === 'EN') {
+        /*if (lang === 'EN') {
             // ToDo not working under Yandex
             asyncCSS('/css/choose_css.css');
-        }
+        }*/
     }
 
     if ('common_id' in data && !commonId) {
@@ -1216,7 +1216,24 @@ function commonCallback(data) {
                         var message = '';
                         var cancelLabel = '<?= T::S('Close in 5 seconds') ?>';
 
-                        if ('comments' in data && (data['comments'] !== null)) {
+                        let comments = ('comments' in data && (data.comments !== null))
+                            ? data.comments// + ('message' in gameStates[gameState] ? ('<br>' + gameStates[gameState]['message']) : '')
+                            : lastComment;// ? (lastComment + ('message' in gameStates[gameState] ? ('<br>' + gameStates[gameState]['message']) : '')) : false;
+                        if (comments) {
+                            lastComment = false;
+                            comments += ('message' in gameStates[gameState] ? ('<br>' + gameStates[gameState]['message']) : '');
+                            message = 'messageFunction' in gameStates[gameState]
+                                ? gameStates[gameState]['messageFunction'](comments)
+                                : comments;
+                        } else {
+                            message = 'message' in gameStates[gameState]
+                                ? gameStates[gameState]['message']
+                                : '&nbsp;';
+                        }
+
+                        // todo add hint if present in data
+
+                        /*if ('comments' in data && (data['comments'] !== null)) {
 
                             if ('messageFunction' in gameStates[gameState]) {
                                 message = gameStates[gameState]['messageFunction'](data['comments']);
@@ -1225,7 +1242,7 @@ function commonCallback(data) {
                             }
                         } else if ('message' in gameStates[gameState]) {
                             message = gameStates[gameState]['message'];
-                        }
+                        }*/
 
                         if (turnAutocloseDialog) {
                             if (timeToCloseDilog == 5) {
@@ -1255,11 +1272,11 @@ function commonCallback(data) {
 
                                     if (!timeToCloseDilog) {
                                         timeToCloseDilog = 5;
-                                    } else if (!automaticDialogClosed) {
+                                    } else //if (!automaticDialogClosed) {
                                         timeToCloseDilog = 1.5;
-                                    }
+                                    //}
 
-                                    automaticDialogClosed = false;
+                                    automaticDialogClosed = false; //xz
                                 }
                                 activateFullScreenForMobiles();
                             }

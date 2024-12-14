@@ -91,46 +91,4 @@ function () {
             color: 'black',
             font: 'bold ' + vremiaFontSize + 'px' + ' Courier',
         });
-
-    var donate = this.add.image(ochki.x, ochki.y + ochki.height + 15 + 20, 'donate');
-
-    donate.setCrop(32, 32, donate.height - 60, donate.height - 60);
-
-    let scale = (gameHeight - donate.y) / donate.height;
-
-    if (scale > 0.07) {
-        donate.setOrigin(0, 0);
-        donate.x = ochki.x - 32 * scale;
-        donate.y = ochki.y + ochki.height + 15 + 40 + 20 * scale;
-        donate.setScale((gameHeight - donate.y) / donate.height);
-    } else {
-        donate.setScale(64 / (donate.height));
-        donate.x = buttons['razdvButton'].x - buttons['razdvButton'].width * 1.2;
-        donate.y = buttons['razdvButton'].y;
-        //donate.y = ochki.y + ochki.height + 15 + 40 + 20 * scale;
-    }
-
-    if (isYandexAppGlobal()) {
-        donate.visible = false;
-    } else {
-
-        donate.setInteractive();
-        donate.on('pointerup', function () {
-            donate.disableInteractive();
-            copyDonateLinkDialog = bootbox.alert(
-                {
-                    message: 'Ссылка на страницу донатов скопирована в буфер <br /><input size="36" type="text" name="donate" id="donate_id" value="' + donateLink + '" />',
-                }
-            );
-
-            setTimeout(
-                function () {
-                    copyDonateKey();
-                    copyDonateLinkDialog.find(".bootbox-close-button").trigger("click");
-                    donate.setInteractive();
-                }
-                , 2000
-            );
-        });
-    }
 }

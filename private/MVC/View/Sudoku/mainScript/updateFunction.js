@@ -72,9 +72,11 @@ function (time, delta) {
         if ((flor % 2) === 0) {
             buttonSetModeGlobal(players, activeUserBlockName, ALARM_MODE);
             timerContainer.getByName(timerState.mode + '_' + 'dvoetoch').setVisible(true);
+            blinkRightGlobal();
         } else {
             buttonSetModeGlobal(players, activeUserBlockName, OTJAT_MODE);
             timerContainer.getByName(timerState.mode + '_' + 'dvoetoch').setVisible(false);
+            blinkLeftGlobal();
         }
     }
 

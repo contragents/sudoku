@@ -14,7 +14,16 @@ const GAME_BOT_URL = '<?= T::PHRASES['game_bot_url'][T::$lang] ?>';
 const LOADING_TEXT = '<?= T::PHRASES['loading_text'][T::$lang] ?>';
 const errorServerMessage = '<?= T::S('Server connecting error. Please try again')?>';
 
+const BLINK_COUNT = 3000;
+var dontBlink = true;
 var preloaderObject = false;
+var lastComment = false;
+var prevErrors = {};
+var errorsToBlink = [];
+var blinkErrorsCounter = 0;
+var prevCellsOpened = {};
+var cellsToBlink = [];
+var blinkCellsCounter = 0;
 
 // SUDOKU VARS
 
@@ -36,6 +45,7 @@ const STATUS_CHECKER_SCRIPT = 'statusChecker';
 const STATUS_HIDDEN_CHECKER_SCRIPT = 'statusHiddenChecker';
 const INIT_GAME_SCRIPT = 'initGame';
 const CABINET_SCRIPT = 'playerCabinet';
+const PLAYER_RATING_SCRIPT = 'mvc/players/info/'; // todo ...
 
 const CHAT_SCRIPT = 'send_chat_message.php';
 const COMPLAIN_SCRIPT = 'complain.php';
@@ -45,7 +55,7 @@ const SET_PLAYER_NAME_SCRIPT = 'set_player_name.php';
 const DELETE_BAN_URL = 'mvc/ban/remove?common_id=';
 const STATS_URL = 'mvc/stats/viewV2/?common_id='
 const NEW_GAME_SCRIPT = 'newGame';
-const PLAYER_RATING_SCRIPT = 'mvc/players/info/';
+
 const CHANGE_FISHKI_SCRIPT = 'change_fishki.php';
 const COOKIE_CHECKER_SCRIPT = 'cookie_checker.php';
 // const CABINET_SCRIPT = 'player_cabinet.php';
@@ -95,7 +105,7 @@ var timerState = {
 var dialogTurn = false;
 
 var turnAutocloseDialog = false;
-var timeToCloseDilog = false;
+var timeToCloseDilog = 0;
 var automaticDialogClosed = false;
 
 var requestToServerEnabled = true;

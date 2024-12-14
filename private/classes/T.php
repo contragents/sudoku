@@ -8,6 +8,7 @@ class T
 {
     const RU_LANG = 'RU';
     const EN_LANG = 'EN';
+    const PLURAL_PATTERN = '[[';
 
     public static string $lang = self::EN_LANG;
 
@@ -29,12 +30,16 @@ class T
         self::$lang = $lang;
     }
 
-    public static function S($keyPhrase): string
+    public static function S($keyPhrase, ?array $params = null): string
     {
         $res = self::PHRASES[$keyPhrase][self::$lang] ?? $keyPhrase;
 
         if (strpos($res, Macros::PATTERN) !== false) {
             return Macros::applyMacros($res);
+        }
+
+        if (strpos($res, self::PLURAL_PATTERN) !== false && $params) {
+            return self::applyPlurals($res, $params);
         }
 
         return self::PHRASES[$keyPhrase][self::$lang] ?? $keyPhrase;
@@ -1004,6 +1009,30 @@ class T
             self::EN_LANG => Faq::COINS[self::EN_LANG],
             self::RU_LANG => Faq::COINS[self::RU_LANG],
         ],
+        '[[Player]] opened [[number]] [[cell]]' => [
+            self::RU_LANG => '[[Player]] открыл [[number]] [[cell]]'
+        ],
+        ' (including [[number]] [[key]])' => [
+            self::RU_LANG => ' (включая [[number]] [[key]])'
+        ],
+        '[[Player]] made a mistake' => [
+            self::RU_LANG => '[[Player]] ошибся'
+        ],
+        'You made a mistake!' => [
+            self::RU_LANG => 'Вы допустили ошибку!'
+        ],
+        'Your opponent made a mistake' => [
+            self::RU_LANG => 'Ваш оппонент допустил ошибку'
+        ],
+        '[[Player]] gets [[number]] [[point]]' => [
+            self::RU_LANG => '[[Player]] получает [[number]] [[point]]'
+        ],
+        'You got [[number]] [[point]]' => [
+            self::RU_LANG => 'Вы заработали [[number]] [[point]]!'
+        ],
+        'Your opponent got [[number]] [[point]]' => [
+            self::RU_LANG => 'Ваш противник заработал [[number]] [[point]]'
+        ],
     ];
 
     public static function translit(string $text, bool $fromRU = true)
@@ -1149,5 +1178,85 @@ class T
         }
 
         return $text;
+    }
+
+    /*
+        public static function cellPlural(int $num): string
+        {
+            if (self::$lang === self::RU_LANG) {
+                return $num === 1
+                    ? 'клетку'
+                    : (($num <= 4 && $num > 0) ? 'клетки' : 'клеток');
+            } else {
+                return $num === 1
+                    ? 'cell'
+                    : 'cells';
+            }
+        }
+
+        public static function pointPlural(int $num): string
+        {
+            if (self::$lang === self::RU_LANG) {
+                return $num === 1
+                    ? 'очко'
+                    : (($num <= 4 && $num > 0) ? 'очка' : 'очков');
+            } else {
+                return $num === 1
+                    ? 'point'
+                    : 'points';
+            }
+        }
+    */
+    const PLURALS = [
+        'point' => [
+            self::EN_LANG => [0 => 'points', 1 => 'point', 2 => 'points'],
+            self::RU_LANG => [0 => 'очков', 1 => 'очко', 2 => 'очка', 5 => 'очков']
+        ],
+        'cell' => [
+            self::EN_LANG => [0 => 'cells', 1 => 'cell', 2 => 'cells'],
+            self::RU_LANG => [0 => 'клеток', 1 => 'клетку', 2 => 'клетки', 5 => 'клеток']
+        ],
+        'key' => [
+            self::EN_LANG => [0 => 'keys', 1 => 'key', 2 => 'keys'],
+            self::RU_LANG => [0 => 'ключей', 1 => 'ключ', 2 => 'ключа', 5 => 'ключей']
+        ],
+        'Player' => [
+            self::EN_LANG => [1 => 'Player1', 2 => 'Player2', 3 => 'Player3', 4 => 'Player4'],
+            self::RU_LANG => [1 => 'Игрок1', 2 => 'Игрок2', 3 => 'Игрок3', 4 => 'Игрок4']
+        ],
+    ];
+
+    private static function applyPlurals(string $res, array $params): string
+    {
+        preg_match_all('/\[\[([a-zA-Z]+)]]/', $res, $matches);
+
+        try {
+            foreach ($matches[1] as $num => $value) {
+                if (is_callable([self::class, $value . 'Plural'])) {
+                    $wordReplace = call_user_func([self::class, $value . 'Plural'], $params[$num]);
+                } else {
+                    // Для разных языков и количества делаем отдельную поправку на расчетное количество
+                    $numPlural = (self::$lang === self::RU_LANG && $params[$num] < 20) ? ($params[$num] % 20) : ($params[$num] % 10);
+                    for ($i = $numPlural; $i >= 0; $i--) {
+                        if (isset(self::PLURALS[$value][self::$lang][$i])) {
+                            $wordReplace = self::PLURALS[$value][self::$lang][$i];
+
+                            break;
+                        }
+                    }
+                }
+
+                $res = str_replace("[[$value]]", $wordReplace ?? $value, $res);
+            }
+        } catch (\Throwable $e) {
+            $res = $e->__toString();
+        }
+
+        return $res;
+    }
+
+    protected static function numberPlural(int $number): string
+    {
+        return (string)$number;
     }
 }

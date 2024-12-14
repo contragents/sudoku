@@ -216,12 +216,6 @@ function copyKeyForID(key, commonID = '') {
     document.execCommand("copy");
 }
 
-function copyDonateKey() {
-    $('#donate_id').select();
-    document.execCommand("copy");
-    console.log($('#donate_id').val());
-}
-
 function deleteBan(commonID) {
     fetchGlobalMVC(DELETE_BAN_URL + commonID, '', 'commonID=' + commonID)
         .then((resp) => {
