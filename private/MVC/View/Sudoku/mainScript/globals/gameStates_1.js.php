@@ -873,7 +873,7 @@ var gameStates = {
         },
         refresh: 10,
         action: function (data, parseDesk = true) {
-            if (parseDesk && "desk" in data && data.desk.length > 0) {
+            if (/*parseDesk && */"desk" in data && data.desk.length > 0) {
                 parseDeskGlobal(data['desk']);
             }
             if ("score_arr" in data) {

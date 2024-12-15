@@ -18,7 +18,7 @@ function submitButtonFunction() {
                     });
                 } else {
                     gameState = 'afterSubmit';
-                    parseDeskGlobal(data); // JSON data parsed by `response.json()` call
+                    //parseDeskGlobal(data); // JSON data parsed by `response.json()` call
                 }
             });
     }, 100);
