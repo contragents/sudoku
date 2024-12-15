@@ -28,17 +28,24 @@ function parseDeskGlobal(newDesc) {
                 fixFishka.setData('cellY', j);
                 fixedContainer.push(fixFishka);
 
-                if (true/*!(blinkCellsCounter > 0)*/) {
-                    if (!dontBlink && !(i in prevCellsOpened && j in prevCellsOpened[i])) {
-                        cellsToBlink.push(fixFishka);
-                    }
-
-                    if (!(i in prevCellsOpened)) {
-                        prevCellsOpened[i] = {};
-                    }
-
-                    prevCellsOpened[i][j] = true;
+                if (!dontBlink && !(i in prevCellsOpened && j in prevCellsOpened[i])) {
+                    fixFishka.setData('displayHeight', fixFishka.displayHeight);
+                    fixFishka.setData('displayWidth', fixFishka.displayWidth);
+                    cellsToBlink.push(fixFishka);
+                } else if (!dontBlink && i in prevCellsOpened && j in prevCellsOpened[i] && prevCellsOpened[i][j] === 0 && cells[i][j][1] > 10) {
+                    fixFishka.setData('displayHeight', fixFishka.displayHeight);
+                    fixFishka.setData('displayWidth', fixFishka.displayWidth);
+                    cellsToBlink.push(fixFishka);
                 }
+
+                //if(cells[i][j][1] !== 0) {
+                if (!(i in prevCellsOpened)) {
+                    prevCellsOpened[i] = {};
+                }
+
+                prevCellsOpened[i][j] = cells[i][j][1];
+                //}
+
             }
         }
     }
@@ -66,6 +73,8 @@ function processMistakesSudokuGlobal(mistakes) {
 
                     if (true /*!(blinkErrorsCounter > 0)*/) {
                         if (!(i in prevErrors && j in prevErrors[i] && number in prevErrors[i][j])) {
+                            errorNumberGameObject.setData('displayHeight', errorNumberGameObject.displayHeight);
+                            errorNumberGameObject.setData('displayWidth', errorNumberGameObject.displayWidth);
                             errorsToBlink.push(errorNumberGameObject);
                         }
 
@@ -88,32 +97,70 @@ function processMistakesSudokuGlobal(mistakes) {
 function blinkRightGlobal() {
     blinkErrorsCounter--;
 
-    if (blinkErrorsCounter > 0) {
-        for (let k in errorsToBlink) {
-            errorsToBlink[k].x += 0.05;
+    for (let k in errorsToBlink) {
+        if (blinkErrorsCounter > 0) {
+            //errorsToBlink[k].x += 0.05;
+            //errorsToBlink[k].alpha = 0.3;
+            errorsToBlink[k].scale += 0.01;
+            if (errorsToBlink[k].scale >= 1.5) {
+                errorsToBlink[k].scale = 1.5;
+            }
+        } else {
+            //errorsToBlink[k].alpha = 1;
+            errorsToBlink[k].scale = 1;
+            errorsToBlink[k].displayHeight = errorsToBlink[k].getData('displayHeight');
+            errorsToBlink[k].displayWidth = errorsToBlink[k].getData('displayWidth');
         }
     }
 
     blinkCellsCounter--;
-    if (blinkCellsCounter > 0) {
-        for (let k in cellsToBlink) {
-            cellsToBlink[k].x += 0.05;
+
+    for (let k in cellsToBlink) {
+        if (blinkCellsCounter > 0) {
+            //cellsToBlink[k].x += 0.05;
+            cellsToBlink[k].scale += 0.01;
+            if (cellsToBlink[k].scale >= 1.5) {
+                cellsToBlink[k].scale = 1.5;
+            }
+        } else {
+            cellsToBlink[k].scale = 1;
+            cellsToBlink[k].displayHeight = cellsToBlink[k].getData('displayHeight');
+            cellsToBlink[k].displayWidth = cellsToBlink[k].getData('displayWidth');
         }
     }
 }
 
+
 function blinkLeftGlobal() {
     blinkErrorsCounter--;
-    if (blinkErrorsCounter > 0) {
-        for (let k in errorsToBlink) {
-            errorsToBlink[k].x -= 0.05;
+    for (let k in errorsToBlink) {
+        if (blinkErrorsCounter > 0) {
+            //errorsToBlink[k].x -= 0.05;
+            //errorsToBlink[k].alpha = 0.3;
+            errorsToBlink[k].scale -= 0.01;
+            if (errorsToBlink[k].scale <= 0) {
+                errorsToBlink[k].scale = 0;
+            }
+        } else {
+            //errorsToBlink[k].alpha = 1;
+            errorsToBlink[k].scale = 1;
+            errorsToBlink[k].displayHeight = errorsToBlink[k].getData('displayHeight');
+            errorsToBlink[k].displayWidth = errorsToBlink[k].getData('displayWidth');
         }
     }
 
     blinkCellsCounter--;
-    if (blinkCellsCounter > 0) {
-        for (let k in cellsToBlink) {
-            cellsToBlink[k].x -= 0.05;
+    for (let k in cellsToBlink) {
+        if (blinkCellsCounter > 0) {
+            //cellsToBlink[k].x -= 0.05;
+            cellsToBlink[k].scale -= 0.01;
+            if (cellsToBlink[k].scale < 0) {
+                cellsToBlink[k].scale = 0;
+            }
+        } else {
+            cellsToBlink[k].scale = 1;
+            cellsToBlink[k].displayHeight = cellsToBlink[k].getData('displayHeight');
+            cellsToBlink[k].displayWidth = cellsToBlink[k].getData('displayWidth');
         }
     }
 }

@@ -26,7 +26,6 @@ var cellsToBlink = [];
 var blinkCellsCounter = 0;
 
 // SUDOKU VARS
-
 const sudokuSet1Column = new Set([1,4,7]);
 const sudokuSet2Column = new Set([2,5,8]);
 const sudokuSet3Column = new Set([3,6,9]);
