@@ -99,6 +99,11 @@ function canSubmitTurn() {
         return false;
     }
 
+    return numFieldFishki() === 1;
+}
+
+function numFieldFishki()
+{
     let numFieldFishki = 0;
     for (let k in container) {
         if ((container[k].getData('cellX') !== false)) {
@@ -106,7 +111,15 @@ function canSubmitTurn() {
         }
     }
 
-    return numFieldFishki === 1;
+    return numFieldFishki;
+}
+
+function setCheckButtonState() {
+    if(numFieldFishki() === 1) {
+        buttons.checkButton.setEnabled();
+    } else {
+        buttons.checkButton.setDisabled();
+    }
 }
 
 function setSubmitButtonState() {

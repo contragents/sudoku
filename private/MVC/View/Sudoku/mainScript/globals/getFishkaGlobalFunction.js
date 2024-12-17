@@ -1,8 +1,14 @@
 //
 // Sudoku special function
 function getFishkaGlobal(numLetter, X, Y, _this, draggable = true, color = 'black') {
+    let tint = 0xffffff;
+    if (color === 'green') {
+        tint = 0x00dd00;
+        color = 'white';
+    }
+
     let fishka = numLetter < 10
-    ? _this.add.image(0, 0, (draggable ? 'button_' : (color + '_')) + numLetter)
+    ? _this.add.image(0, 0, (draggable ? 'button_' : (color + '_')) + numLetter).setTint(tint)
     : _this.add.image(0, 0, (draggable ? 'button_' : ('key' + '_')) + (numLetter-10));
     fishka.displayWidth = 32 * 2;
     fishka.displayHeight = 32 * 2;

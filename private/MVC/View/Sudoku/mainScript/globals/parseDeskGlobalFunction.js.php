@@ -28,6 +28,12 @@ function parseDeskGlobal(newDesc) {
                 fixFishka.setData('cellY', j);
                 fixedContainer.push(fixFishka);
 
+                if(i in sudokuChecksContainer && j in sudokuChecksContainer[i]) {
+                    while(sudokuChecksContainer[i][j].length) {
+                        sudokuChecksContainer[i][j].pop().destroy();
+                    }
+                }
+
                 if (!dontBlink && !(i in prevCellsOpened && j in prevCellsOpened[i])) {
                     fixFishka.setData('displayHeight', fixFishka.displayHeight);
                     fixFishka.setData('displayWidth', fixFishka.displayWidth);
@@ -69,9 +75,29 @@ function processMistakesSudokuGlobal(mistakes) {
                 if (i in mistakes && j in mistakes[i] && number in mistakes[i][j] && cells[i][j][0] === false) {
                     let errorNumberGameObject = getFishkaGlobal(number, 1, 1, this.game.scene.scenes[gameScene], false, 'red').disableInteractive();
                     placeErrorSudokuGlobal(errorNumberGameObject, i, j, number);
+
                     sudokuMistakesContainer.push(errorNumberGameObject);
 
-                    if (true /*!(blinkErrorsCounter > 0)*/) {
+                    //check Begin
+
+                    if(i in sudokuChecksContainer && j in sudokuChecksContainer[i]) {
+                        let tmpArr = [];
+                        while (sudokuChecksContainer[i][j].length) {
+                            let checkGameObject = sudokuChecksContainer[i][j].pop();
+                            if (checkGameObject.getData('letter') == number) {
+                                checkGameObject.destroy();
+                            } else {
+                                tmpArr.push(checkGameObject);
+                            }
+                        }
+
+                        while (tmpArr.length) {
+                            sudokuChecksContainer[i][j].push(tmpArr.pop());
+                        }
+                    }
+
+                    //check End
+
                         if (!(i in prevErrors && j in prevErrors[i] && number in prevErrors[i][j])) {
                             errorNumberGameObject.setData('displayHeight', errorNumberGameObject.displayHeight);
                             errorNumberGameObject.setData('displayWidth', errorNumberGameObject.displayWidth);
@@ -85,7 +111,6 @@ function processMistakesSudokuGlobal(mistakes) {
                             prevErrors[i][j] = {};
                         }
                         prevErrors[i][j][number] = number;
-                    }
                 }
             }
         }

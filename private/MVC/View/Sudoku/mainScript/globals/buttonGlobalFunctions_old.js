@@ -8,6 +8,7 @@ function submitButtonFunction() {
             .then((data) => {
                 if ('http_status' in data && (data['http_status'] === BAD_REQUEST || data['http_status'] === PAGE_NOT_FOUND)) {
                     setSubmitButtonState();
+                    setCheckButtonState();
 
                     dialog = bootbox.alert({
                         message: ('message' in data && data['message'] !== '')

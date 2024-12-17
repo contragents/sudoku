@@ -20,6 +20,7 @@ function submitButtonFunction() {
             .then((data) => {
                 if ('http_status' in data && (data['http_status'] === BAD_REQUEST || data['http_status'] === PAGE_NOT_FOUND)) {
                     setSubmitButtonState();
+                    setCheckButtonState();
 
                     dialog = bootbox.alert({
                         message: ('message' in data && data['message'] !== '')
@@ -57,26 +58,59 @@ function checkButtonFunction() {
         return;
     }
 
-    buttons['checkButton']['svgObject'].disableInteractive();
-    buttons['checkButton']['svgObject'].bringToTop(buttons['checkButton']['svgObject'].getByName('checkButton' + 'Inactive'));
+    buttons.checkButton.setDisabled();
 
-    setTimeout(function () {
-        fetchGlobal(WORD_CHECKER_SCRIPT, 'cells', cells)
-            .then((data) => {
-                if (data == '')
-                    var responseText = '<?= T::S('You haven`t composed a single word!') ?>';
-                else
-                    var responseText = data;
-                dialog = bootbox.alert({
-                    message: responseText,
-                    size: 'small',
-                    className: 'modal-settings modal-profile text-white',
-                });
+    for (let k in container) {
+        if (container[k].getData('cellX') !== false && container[k].getData('cellY') !== false) {
+            let i = +container[k].getData('cellX');
+            let j = +container[k].getData('cellY');
+            let number = +container[k].getData('letter');
+            let addCheck = true;
 
-                buttons['checkButton']['svgObject'].setInteractive();
-                buttons['checkButton']['svgObject'].bringToTop(buttons['checkButton']['svgObject'].getByName('checkButton' + OTJAT_MODE));
-            });
-    }, 100);
+            if (i in sudokuChecksContainer && j in sudokuChecksContainer[i]) {
+                let tmpArr = [];
+                while (sudokuChecksContainer[i][j].length) {
+                    let gameObject = sudokuChecksContainer[i][j].pop();
+
+                    if (+(gameObject.getData('letter')) === number) {
+                        gameObject.destroy();
+                        addCheck = false;
+                    } else {
+                        tmpArr.push(gameObject);
+                    }
+                }
+
+                while (tmpArr.length) {
+                    sudokuChecksContainer[i][j].push(tmpArr.pop());
+                }
+            } else {
+                if (!(i in sudokuChecksContainer)) {
+                    sudokuChecksContainer[i] = [];
+                }
+
+                sudokuChecksContainer[i][j] = [];
+            }
+
+            if (addCheck) {
+                // todo проверить, нет ли mistake в данной клетке с данной цифрой
+                for (let k in sudokuMistakesContainer) {
+                    if (sudokuMistakesContainer[k].getData('cellX') == i
+                        && sudokuMistakesContainer[k].getData('cellY') == j
+                        && sudokuMistakesContainer[k].getData('letter') == number) {
+                        addCheck = false;
+                    }
+                }
+            }
+
+            if (addCheck) {
+                let checkNumberGameObject = getFishkaGlobal(number, 1, 1, this.game.scene.scenes[gameScene], false, 'green').disableInteractive();
+                placeErrorSudokuGlobal(checkNumberGameObject, i, j, number);
+                sudokuChecksContainer[i][j].push(checkNumberGameObject);
+            }
+        }
+    }
+
+    buttons.checkButton.setEnabled();
 }
 
 function newGameButtonFunction(ignoreDialog = false) {
@@ -191,8 +225,8 @@ function resetButtonFunction(ignoreBootBox = false) {
             }
 
             if (container[k].getData('isTemporary') === true) {
-                for (let i = 0; i <= 14; i++)
-                    for (let j = 0; j <= 14; j++)
+                for (let i = 0; i <= 8; i++)
+                    for (let j = 0; j <= 8; j++)
                         cells[i][j][2] = false;
                 container[k].destroy();
                 container.splice(k, 1);
@@ -201,6 +235,7 @@ function resetButtonFunction(ignoreBootBox = false) {
     }
 
     setSubmitButtonState();
+    setCheckButtonState();
 };
 
 function Letter(letterCode, oc = false) {

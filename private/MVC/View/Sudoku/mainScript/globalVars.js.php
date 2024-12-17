@@ -31,6 +31,7 @@ const sudokuSet2Column = new Set([2,5,8]);
 const sudokuSet3Column = new Set([3,6,9]);
 const sudoku1RowCorrectionLower = new Set([3,4,5,6,7]);
 var sudokuMistakesContainer = [];
+var sudokuChecksContainer = [];
 
 // SUDOKU VARS END
 
@@ -66,6 +67,7 @@ const VERT = 'vertical';
 
 const ALARM_MODE = 'Alarm';
 const OTJAT_MODE = 'Otjat';
+const INACTIVE_MODE = 'Inactive';
 
 const MY_TURN_STATE = 'myTurn';
 const PRE_MY_TURN_STATE = 'preMyTurn';

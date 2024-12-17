@@ -88,7 +88,7 @@ var buttons = {
             }
 
             this.svgObject.setInteractive();
-            this.svgObject.bringToTop(buttons['submitButton']['svgObject'].getByName('submitButton' + OTJAT_MODE));
+            this.svgObject.bringToTop(this.svgObject.getByName('submitButton' + OTJAT_MODE));
         },
         setDisabled: function() {
             if(this.svgObject === false) {
@@ -96,7 +96,7 @@ var buttons = {
             }
 
             this.svgObject.disableInteractive();
-            this.svgObject.bringToTop(buttons['submitButton']['svgObject'].getByName('submitButton' + 'Inactive'));
+            this.svgObject.bringToTop(this.svgObject.getByName('submitButton' + INACTIVE_MODE));
         }
     },
     resetButton: {
@@ -144,9 +144,25 @@ var buttons = {
         width: buttonWidth,
         object: false,
         svgObject: false,
-        enabled: {myTurn: 1, preMyTurn: 1, otherTurn: 1},
+        //enabled: {myTurn: 1, preMyTurn: 1, otherTurn: 1},
         pointerupFunction: function () {
             checkButtonFunction();
+        },
+        setEnabled: function() {
+            if(this.svgObject === false) {
+                return;
+            }
+
+            this.svgObject.setInteractive();
+            this.svgObject.bringToTop(this.svgObject.getByName('checkButton' + OTJAT_MODE));
+        },
+        setDisabled: function() {
+            if(this.svgObject === false) {
+                return;
+            }
+
+            this.svgObject.disableInteractive();
+            this.svgObject.bringToTop(this.svgObject.getByName('checkButton' + INACTIVE_MODE));
         }
     },
     chatButton: {

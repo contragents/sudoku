@@ -64,4 +64,5 @@ this.input.on('dragend', function (pointer, gameObject) {
     gameObject.depth = 1;
 
     setSubmitButtonState();
+    setCheckButtonState();
 });

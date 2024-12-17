@@ -772,6 +772,7 @@ var gameStates = {
         action: function (data) {
             gameStates['gameResults']['action'](data);
             setSubmitButtonState();
+            setCheckButtonState();
         },
         from_initRatingGame: function (data) {
             gameStates['startGame']['from_initGame']();
@@ -809,7 +810,7 @@ var gameStates = {
         refresh: 5,
         action: function (data) {
             gameStates['gameResults']['action'](data, false);
-
+            setCheckButtonState();
             buttons.submitButton.setDisabled();
         },
         from_desync: function (data) {
@@ -848,7 +849,7 @@ var gameStates = {
 
             gameStates['myTurn']['from_noGame'](data);
             buttons.submitButton.setDisabled();
-
+            setCheckButtonState();
         },
         from_desync: function (data) {
             placeFishki();

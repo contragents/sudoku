@@ -619,7 +619,7 @@ function getSVGBlockGlobal(X, Y, buttonName, _this, scalable, hasDigits = false)
 }
 
 //<?php include('globals/getFishkaGlobalFunction.js')?>
-//<?php include('globals/buttonGlobalFunctions.js.php')?>
+//<?php include('globals/buttonGlobalFunctions_2.js.php')?>
 
 //<?php include('globals/verstkaFunctions.js.php') ?>
 
