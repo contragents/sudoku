@@ -349,7 +349,7 @@ class AchievesModel extends BaseModel
                             'a',
                             ' ...',
                             [
-                                'href' => '/' . GameController::getUrl($row[self::GAME_ID_FIELD]),
+                                'href' => GameController::getUrl($row[self::GAME_ID_FIELD]),
                                 'title' => 'Перейти в игру'
                             ]
                         )
@@ -367,7 +367,7 @@ class AchievesModel extends BaseModel
                             'a',
                             '',
                             [
-                                'href' => '/' . StatsController::getUrl(
+                                'href' => StatsController::getUrl(
                                         'games',
                                         ['common_id' => $opponentCommonId,]
                                     ),
@@ -413,7 +413,7 @@ class AchievesModel extends BaseModel
                                         => $opponentCommonId,
                                     ]
                                 )),
-                            (BC::isAjaxRequest() ? 'nothing' : 'href') => '/' . StatsController::getUrl(
+                            (BC::isAjaxRequest() ? 'nothing' : 'href') => StatsController::getUrl(
                                 'games',
                                 [
                                     'common_id' => StatsController::$Request['common_id'] ?? '',

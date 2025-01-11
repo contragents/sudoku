@@ -64,7 +64,7 @@ class StatsAchievesView extends BaseView
                                             'refresh' => '1',
                                         ]
                                     )),
-                                'href' => '/' . StatsController::getUrl(
+                                'href' => StatsController::getUrl(
                                     'games',
                                     [
                                         'common_id' => StatsController::$Request['common_id'] ?? '',

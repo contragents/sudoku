@@ -16,11 +16,12 @@ use classes\ViewHelper;
 
 class BaseController
 {
-    const COMMON_URL = 'mvc/';
+    const COMMON_URL = 'sudoku/';
+    public const BASE_URL = 'https://5-5.su/';
 
     const TITLE = "Game";
-    const URL = "https://xn--d1aiwkc2d.club/game/";
-    const SITE_NAME = "5-5.su/game";
+    const URL = self::BASE_URL . "game/";
+    const SITE_NAME = self::URL;
     const DESCRIPTION = 'In Game, the objective is to WIN!';
     const FB_IMG_URL = "https://xn--d1aiwkc2d.club/img/share/hor_640_360.png";
     const FORCE_ACTIONS = [
@@ -36,6 +37,10 @@ class BaseController
     public static FrontResource $FR;
 
     public static $Request;
+    const SUB_ACTION_PARAM = 'sub_action';
+
+    const TG_ID_PARAM = 'tg_id';
+    const COMMON_ID_PARAM = 'common_id';
     const CELLS_PARAM = 'cells';
     const JSON_DECODE_PARAMS = [self::CELLS_PARAM => true];
 
@@ -73,6 +78,8 @@ class BaseController
 
     public function Run(): string
     {
+        self::cors();
+
         foreach(self::$Request as $param => $value) {
             if(isset(self::JSON_DECODE_PARAMS[$param])) {
                 //print self::$Request[$param];
@@ -103,12 +110,22 @@ class BaseController
         }
     }
 
+    private function playersAction()
+    {
+        return $this->callSubController('PlayersController', self::$Request[self::SUB_ACTION_PARAM] ?: PlayersController::DEFAULT_ACTION);
+    }
+
+    private function callSubController(string $controller, string $action): string
+    {
+        return (new $controller($action, $_REQUEST))->Run();
+    }
+
     private function forbiddenAction(): string
     {
         header('HTTP/1.0 403 Forbidden');
-        echo 'Доступ запрещен';
+        echo T::S('Доступ запрещен');
 
-        exit();
+        exit;
     }
 
     private function checkCookie(): ?string
@@ -118,6 +135,10 @@ class BaseController
                 return Tg::$tgUser['user']['id'];
             }
         }
+
+        /**
+         * @var string $cookieKey
+         */
 
         if (!isset($_COOKIE[self::$SM::$cookieKey])) {
             $_COOKIE = Cookie::setGetCook(null, self::$SM::$cookieKey);
@@ -135,7 +156,7 @@ class BaseController
 
     public function indexAction()
     {
-        $title = static::TITLE;
+        $title = T::S(static::TITLE);
         $url = static::URL;
         $siteName = static::SITE_NAME;
         $description = static::DESCRIPTION;
@@ -237,7 +258,7 @@ class BaseController
 
     public static function getUrl(string $action, array $params = [], array $excludedParams = [])
     {
-        return static::COMMON_URL
+        return static::URL . static::COMMON_URL
             . $action . '/'
             . (!empty($params)
                 ? ('?' . implode(
@@ -252,5 +273,13 @@ class BaseController
                     )
                 )
                 : '');
+    }
+
+    private static function cors()
+    {
+        if (isset($_SERVER['HTTP_ORIGIN']) && $_SERVER['HTTP_ORIGIN'] != '') {
+            header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
+            header('Access-Control-Allow-Credentials: true');
+        }
     }
 }

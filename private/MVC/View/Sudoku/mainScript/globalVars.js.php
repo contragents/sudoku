@@ -6,6 +6,8 @@ use classes\T;
 
 var lang = '<?= T::$lang ?>';
 
+const BASE_URL = '<?= SudokuController::URL ?>';
+
 const chooseFile = "'<?= T::S('Choose file') ?>'";
 document.documentElement.style.setProperty('--choose-file', chooseFile);
 
@@ -39,13 +41,15 @@ const GROUND_FILE = '<?= T::PHRASES['ground_file'][T::$lang] ?>';
 
 const SUDOKU_PRICE = <?= MonetizationService::SUDOKU_PRICE ?>;
 
+const PROFILE_TPL = 'tpl/common/' + (!isYandexAppGlobal() ? 'profile-modal-tpl_1.html' : 'profile-modal-tpl_yandex.html');
+
 const SUBMIT_SCRIPT = 'turnSubmitter';
 const WORD_CHECKER_SCRIPT = 'word_checker.php';
 const STATUS_CHECKER_SCRIPT = 'statusChecker';
 const STATUS_HIDDEN_CHECKER_SCRIPT = 'statusHiddenChecker';
 const INIT_GAME_SCRIPT = 'initGame';
 const CABINET_SCRIPT = 'playerCabinet';
-const PLAYER_RATING_SCRIPT = 'mvc/players/info/'; // todo ...
+const PLAYER_RATING_SCRIPT = 'players/info/'; // todo ...
 
 const CHAT_SCRIPT = 'send_chat_message.php';
 const COMPLAIN_SCRIPT = 'complain.php';

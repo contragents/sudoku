@@ -1,5 +1,8 @@
 <?php
 
+use classes\DB;
+use classes\ORM;
+
 class AvatarModel extends BaseModel
 {
     const TABLE_DEFAULT_URL = 'avatar_urls';

@@ -85,7 +85,8 @@ function commonParams() {
 }
 
 async function fetchGlobalNominal(script, param_name, param_data) {
-    const response = await fetch(''
+    const response = await fetch(BASE_URL
+        + ''
         + script
         + '?'
         + commonParams(),
@@ -112,6 +113,11 @@ async function fetchGlobalNominal(script, param_name, param_data) {
 
     if (!response.ok) {
         console.log(`An error has occured: ${response.status}`);
+
+        if (isYandexAppGlobal()) {
+            getLocalStorageValue('<?= Cookie::COOKIE_NAME ?>')
+        }
+
         return {message: errorServerMessage, status: "error"};
     }
 

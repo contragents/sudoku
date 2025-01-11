@@ -330,8 +330,8 @@ function refreshId(element_id, url) {
     });
 }
 
-function version() {
-    return '&ver=' + Math.floor(Date.now());
+function version(oneKey = false) {
+    return (oneKey ? '?' : '&') + 'ver=' + Math.floor(Date.now());
 }
 
 async function getStatPageGlobal(userId = commonId) {

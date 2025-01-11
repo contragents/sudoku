@@ -40,7 +40,6 @@ class UserProfile
             }
         }
             } catch(\Throwable $e) {
-            //print $e->__toString();
         }
 
         $transactions = PaymentModel::selectO(

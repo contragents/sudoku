@@ -22,9 +22,10 @@ if (strpos($pathParts[1], 'ndex.php')) {
 if (count($pathParts) >= 2) {
     $controller = ucfirst($pathParts[1]) . 'Controller';
     $action = $pathParts[2] ?: $controller::DEFAULT_ACTION;
+    $subAction = $pathParts[3] ?: '';
 
     if (is_callable([$controller, $action . 'Action'])) {
-        $res = (new $controller($action, $_REQUEST))->Run();
+        $res = (new $controller($action, $_REQUEST + ($subAction ? [BaseController::SUB_ACTION_PARAM => $subAction] : [])))->Run();
 
         print is_array($res) ? json_encode($res,JSON_UNESCAPED_UNICODE) : $res;
     } else {

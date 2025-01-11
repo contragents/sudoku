@@ -526,7 +526,7 @@ var gameStates = {
                                     }
 
                                     function getProfileModal(profileData) {
-                                        return fetch('/profile-modal-tpl_1.html' + '?ver=' + Math.floor(Date.now()))
+                                        return fetch(BASE_URL + PROFILE_TPL + version(true))
                                             .then((response) => response.text())
                                             .then((template) => {
                                                 let message = template
@@ -534,6 +534,7 @@ var gameStates = {
                                                     .replaceAll('{{Wallet}}', '<?= T::S('Wallet') ?>')
                                                     .replaceAll('{{Referrals}}', '<?= T::S('Referrals') ?>')
                                                     .replaceAll('{{Player ID}}', '<?= T::S('Player ID') ?>')
+                                                    .replaceAll("{{Player's ID}}", "<?= T::S("Player's ID") ?>")
                                                     .replaceAll('{{Save}}', '<?= T::S('Save') ?>')
                                                     .replaceAll('{{Input new nickname}}',
                                                         '<?= T::S('Input new nickname') ?>')
@@ -550,9 +551,11 @@ var gameStates = {
                                                         '<?= T::S('secret_prompt') ?>')
                                                     .replaceAll('{{Link}}', '<?= T::S('Link') ?>') // Привязать
                                                     .replaceAll('{{Bonuses accrued}}',
-                                                        '<?= T::S('Bonuses accrued') ?>') // Начислено бонусов
+                                                        '<?= T::S('Bonuses accrued') ?>')
                                                     .replaceAll('{{SUDOKU Balance}}',
                                                         '<?= T::S('SUDOKU Balance') ?>') // Баланс SUDOKU
+                                                    .replaceAll('{{COIN Balance}}',
+                                                        '<?= T::S('COIN Balance') ?>')
                                                     .replaceAll('{{Claim}}', '<?= T::S('Claim') ?>') // Забрать
                                                     .replaceAll('{{Name}}', '<?= T::S('Name') ?>')
                                                     .replaceAll('{{MAX_FILE_SIZE}}', profileData.MAX_FILE_SIZE)
@@ -570,7 +573,6 @@ var gameStates = {
                                                     .replaceAll('{{balance}}', profileData.balance)
                                                     .replaceAll('{{ratingByCoins}}', profileData.ratingByCoins)
                                                     .replaceAll('{{tgWallet}}', profileData.tgWallet)
-                                                    .replaceAll('{{bonusAccrual}}', profileData.bonusAccrual)
                                                     .replaceAll('{{bonusAccrual}}', profileData.bonusAccrual)
                                                     .replaceAll('{{balanceSudoku}}', profileData.balanceSudoku)
                                                     .replaceAll('{{referralList}}', referralList)
@@ -590,7 +592,7 @@ var gameStates = {
                                                 return message;
                                             })
                                             .catch((error) =>
-                                                console.error('Ошибка загрузки profile-modal:', error),
+                                                console.error('Error loading profile-modal:', error),
                                             );
                                     }
 
