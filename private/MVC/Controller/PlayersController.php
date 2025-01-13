@@ -125,7 +125,7 @@ class PlayersController extends BaseSubController
         $commonId = self::$Request[self::COMMON_ID_PARAM] ?? false;
         $res = [];
 
-        // SUD-15 todo переделать на классы GameStatus
+        // SUD-9 todo переделать на классы GameStatus
         if ($gameId && $gameId > 0 && $commonId) {
             $gameStatus = Cache::get(Game::GAME_STATUS_KEY . $gameId);
 
