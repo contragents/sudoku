@@ -420,22 +420,10 @@ class BaseModel
         // Обрабатываем массивы полей-условий-значений
         if (is_array($field) || is_array($condition) || is_array($value)) {
             if (!is_array($field) || !is_array($condition) || !is_array($value)) {
-                mp(
-                    ['field' => $field, 'condition' => $condition, 'value' => $value],
-                    'Error in types of field-condition-value',
-                    __METHOD__
-                );
-
                 return [];
             }
 
             if (count($field) != count($condition) || count($field) != count($value) || count($field) == 0) {
-                mp(
-                    ['field' => $field, 'condition' => $condition, 'value' => $value],
-                    'Error in count of field-condition-value',
-                    __METHOD__
-                );
-
                 return [];
             }
 
@@ -449,8 +437,6 @@ class BaseModel
                         ||
                         empty($value[$num])
                     ) {
-                        mp([$num => $value[$num]], "VALUE $num for IN is WRONG!!!", __METHOD__);
-
                         return [];
                     }
 
@@ -459,8 +445,6 @@ class BaseModel
                         : ORM::whereIn($fld, $value[$num]);
                 } else {
                     if (!in_array($condition[$num], self::CONDITIONS)) {
-                        mp($condition[$num], "CONDITION $num is WRONG!!!", __METHOD__);
-
                         return [];
                     }
 
@@ -480,16 +464,12 @@ class BaseModel
                     ||
                     empty($value)
                 ) {
-                    mp($value, 'VALUE is WRONG!!!', __METHOD__);
-
                     return [];
                 }
 
                 $query .= ORM::whereIn($field, $value);
             } else {
                 if (!in_array($condition, self::CONDITIONS)) {
-                    mp($condition, 'CONDITION is WRONG!!!', __METHOD__);
-
                     return [];
                 }
                 $query .= ORM::where($field, $condition, $value, $isRaw);
@@ -528,16 +508,12 @@ class BaseModel
                 ||
                 empty($value)
             ) {
-                mp($value, 'VALUE is WRONG!!!', __METHOD__);
-
                 return [];
             }
 
             $query .= ORM::whereIn($field, $value);
         } else {
             if (!in_array($condition, self::CONDITIONS)) {
-                mp($condition, 'CONDITION is WRONG!!!', __METHOD__);
-
                 return [];
             }
             $query .= ORM::where($field, $condition, $value, $isRaw);

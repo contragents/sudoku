@@ -52,7 +52,7 @@
         head.appendChild(script);
     }
 
-    loader.importJS('<?= BaseController::$instance::URL ?>mainScript?ver=' + Date.now());
+    loader.importJS('<?= BaseController::$instance::GAME_URL ?>mainScript?ver=' + Date.now());
 </script>
 <div id="ss" style="display:none;"></div>
 

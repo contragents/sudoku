@@ -207,17 +207,13 @@ function mergeTheIDs(oldKey, commonID) {
 
 function showCabinetActionResult(response) {
     if ('message' in response) {
-        let background = (response['result'].indexOf('error') + 1)
-            ? '#f99'
-            : '#9f9';
         cabinetAlert = bootbox.alert({
             message: response['message'],
+            className: 'modal-settings modal-profile text-white',
             locale: 'ru',
             size: 'small',
             closeButton: false,
             centerVertical: true
-        }).find('.modal-content').css({
-            'background-color': background
         });
     }
 }
@@ -234,15 +230,15 @@ function deleteBan(commonID) {
         });
 }
 
-function savePlayerName(name, commonIdParam = '') {
+function savePlayerName(name, commonID = '') {
     if (name.trim() == '') {
-        let resp = {result: 'error', message: 'Задано пустое значение'};
+        let resp = {result: 'error', message: '<?= T::S('Empty value is forbidden') ?>'};
         showCabinetActionResult(resp);
 
         return;
     }
 
-    fetchGlobal(SET_PLAYER_NAME_SCRIPT, '', 'name=' + encodeURIComponent(name) + '&commonID=' + (commonIdParam != '' ? commonIdParam : commonId))
+    fetchGlobal(SET_PLAYER_NAME_SCRIPT, '', 'name=' + encodeURIComponent(name) + (commonID != '' ? '&common_id=' + commonID : ''))
         .then((resp) => {
             if (resp['result'] == 'saved') {
                 $('#playersNikname').text(name);
@@ -629,7 +625,6 @@ function getSVGBlockGlobal(X, Y, buttonName, _this, scalable, hasDigits = false)
 //<?php include('globals/findPlaceGlobalFunction.js')?>
 //<?php include('globals/changeFishkiGlobalFunction.js')?>
 //<?php include(ROOT_DIR . '/js/common_functions/bootBoxIsOpenedGlobalFunction.js.php')?>
-//<?php include('globals/openWindowGlobalFunction.js')?>
 //<?php include(ROOT_DIR . '/js/common_functions/gadgetTypeFunctions.js.php')?>
 
 

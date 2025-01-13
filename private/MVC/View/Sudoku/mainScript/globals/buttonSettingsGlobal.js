@@ -122,7 +122,7 @@ var buttons = {
         svgObject: false,
         enabled: {myTurn: 1},
         pointerupFunction: function () {
-            changeButtonFunction();
+            return;
         }
     },
     playersButton: {

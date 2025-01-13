@@ -244,47 +244,6 @@ function Letter(letterCode, oc = false) {
 </div>`
 }
 
-function changeButtonFunction() {
-    if (bootBoxIsOpenedGlobal())
-        return;
-
-    canOpenDialog = false;
-    canCloseDialog = false;
-
-
-    let letterList = '';
-    for (let k in container) {
-        letterList += '<div><input type="checkbox" style="opacity:80%; transform: scale(2);" id="fishka_' + k + '_' + container[k].getData('letter') + '" name="fishka_' + k + '_' + container[k].getData('letter') + '"' + (container[k].getData('letter') < 999 ? 'checked' : '') + '><label for="fishka_' + k + '_' + container[k].getData('letter') + `">${Letter(container[k].getData('letter'))}</label></div>`;
-    }
-
-    letterList = `<div class="letter-list">${letterList}</div>`;
-
-
-    let message = `<div class="box d-flex align-items-center p-1 mb-2">
-        <div class="box-heading text-center mx-auto fs-4">${ lang === 'RU' ? 'Выберите фишки для замены' : 'Select chips to change'}</div>
-    </div>
-    <div class="box letter-box">
-        <form id="myForm">
-            ${letterList}
-        </form>
-    </div>
-    `;
-
-
-    dialog = bootbox.confirm({
-        message: message,
-        locale: lang === 'RU' ? 'ru' : 'en',
-        className: 'modal-settings modal-change-letter',
-        callback: function(result) {
-            canOpenDialog = true;
-            canCloseDialog = true;
-
-            if (result)
-                changeFishkiGlobal($(".bootbox-body #myForm").serialize());
-        }
-    });
-}
-
 function chatButtonFunction() {
     if (bootBoxIsOpenedGlobal())
         return;

@@ -11,7 +11,7 @@ class Tg
     public const TG_USER_INFO_ = 'tg_user_info_';
     public const TG_USER_CACHE_TTL = 7 * 24 * 60 * 60;
 
-    private const BOT_URL = 'https://xn--d1aiwkc2d.club/bot/send?';
+    private const BOT_URL = 'https://' . Config::ERUDIT_DOMAIN . '/bot/send?';
     private const GAME_PARAM = 'game';
     private const TEXT_PARAM = 'text';
     private const TG_ID_PARAM = 'tg_id';
@@ -19,8 +19,11 @@ class Tg
     public static ?array $tgUser = null;
     public static ?int $commonId = null;
 
-    public static function botSendMessage(string $textHtml, ?int $tgId = null, string $gameName = SudokuGame::GAME_NAME): bool
-    {
+    public static function botSendMessage(
+        string $textHtml,
+        ?int $tgId = null,
+        string $gameName = SudokuGame::GAME_NAME
+    ): bool {
         $params = [
                 self::TEXT_PARAM => urlencode($textHtml),
                 self::GAME_PARAM => $gameName,
@@ -30,7 +33,7 @@ class Tg
                 : []);
         $result = @file_get_contents(
             self::BOT_URL
-            . implode('&',array_map(fn($param, $value) => "$param=$value", array_keys($params), $params))
+            . implode('&', array_map(fn($param, $value) => "$param=$value", array_keys($params), $params))
         );
 
         $result = json_decode($result, true) ?? [];
@@ -75,7 +78,7 @@ class Tg
 
     public static function checkUserDataUnsafe($data): bool
     {
-        $botToken = Config::$envConfig[TgUserModel::BOT_TOKEN_CONFIG_KEY[T::$lang]];
+        $botToken = Config::$config[TgUserModel::BOT_TOKEN_CONFIG_KEY[T::$lang]];
         $hash = false;
         $newData = [];
 

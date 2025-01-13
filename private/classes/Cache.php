@@ -23,11 +23,6 @@ class Cache
         try {
             $this->redis->pconnect(Config::$config['cache']['HOST'], Config::$config['cache']['PORT'], 10);
         } catch (\Exception $e) {
-            mp(
-                Config::$config['cache']['HOST'] . ":" . Config::$config['cache']['PORT'],
-                "Couldn't reconnect to Master",
-                __METHOD__
-            );
             $this->redis->connect(Config::$config['cache']['HOST'], Config::$config['cache']['PORT'], 10);
         }
     }
@@ -179,6 +174,8 @@ class Cache
             usleep(self::LOCK_RETRY_TIME);
         }
 
+        /** @var string $gamePrefix */
+
         if ($force && $recursionLevel <= self::MAX_LOCK_RECURSIONS) {
             self::$_instance->redis->del(BaseController::$SM::$gamePrefix . self::LOCKS_KEY . $lockKey);
 
@@ -200,6 +197,8 @@ class Cache
         if (self::$locks[$lockKey] ?? false) {
             return true;
         }
+
+        /** @var string $gamePrefix */
 
         if (self::$_instance->redis->incr(BaseController::$SM::$gamePrefix . self::LOCKS_KEY . $lockKey) == 1) {
             self::$_instance->redis->setex(BaseController::$SM::$gamePrefix . self::LOCKS_KEY . $lockKey, floor(self::LOCK_RETRY_TIME / 1000000 * self::LOCK_TRIES), 1);
@@ -251,6 +250,8 @@ class Cache
 
     public function __destruct()
     {
+        /** @var string $gamePrefix */
+
         foreach(self::$locks as $lockKey => $nothing) {
             self::$_instance->redis->del(BaseController::$SM::$gamePrefix . self::LOCKS_KEY . $lockKey);
         }
@@ -258,6 +259,8 @@ class Cache
 
     private static function unlock($lockKey)
     {
+        /** @var string $gamePrefix */
+
         self::$_instance->redis->del(BaseController::$SM::$gamePrefix . self::LOCKS_KEY . $lockKey);
     }
 }

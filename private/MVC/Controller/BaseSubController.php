@@ -1,18 +1,8 @@
 <?php
 
-use classes\Cookie;
-use classes\FrontResource;
-use classes\Game;
 use classes\Response;
-use classes\StateMachine;
 use classes\T;
-use classes\Tg;
-use classes\UserProfile;
-use classes\ViewHelper;
-
-/**
- * @property string $gameName // Название текущей игры
- */
+use BaseController as BC;
 
 class BaseSubController
 {
@@ -37,15 +27,18 @@ class BaseSubController
             return  is_array($res) ? Response::jsonResp($res) : (string)$res;
 
         } else {
-            return $this->forbiddenAction();
+            return BC::$instance->forbiddenAction();
         }
     }
 
-    private function forbiddenAction(): string
+    protected static function unauthorized()
     {
-        header('HTTP/1.0 403 Forbidden');
-        echo T::S('Доступ запрещен');
-
-        exit;
+        return json_encode(
+            [
+                'result' => 'error',
+                'message' => T::S('Authorization error')
+            ],
+            JSON_UNESCAPED_UNICODE
+        );
     }
 }

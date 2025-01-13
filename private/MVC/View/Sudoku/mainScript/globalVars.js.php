@@ -6,7 +6,7 @@ use classes\T;
 
 var lang = '<?= T::$lang ?>';
 
-const BASE_URL = '<?= SudokuController::URL ?>';
+const BASE_URL = '<?= SudokuController::GAME_URL ?>';
 
 const chooseFile = "'<?= T::S('Choose file') ?>'";
 document.documentElement.style.setProperty('--choose-file', chooseFile);
@@ -40,8 +40,9 @@ var sudokuChecksContainer = [];
 const GROUND_FILE = '<?= T::PHRASES['ground_file'][T::$lang] ?>';
 
 const SUDOKU_PRICE = <?= MonetizationService::SUDOKU_PRICE ?>;
-
-const PROFILE_TPL = 'tpl/common/' + (!isYandexAppGlobal() ? 'profile-modal-tpl_1.html' : 'profile-modal-tpl_yandex.html');
+const COMMON_TPL_DIR = 'tpl/common/';
+const PROFILE_TPL =  BASE_URL + COMMON_TPL_DIR + (!isYandexAppGlobal() ? 'profile-modal-tpl_1.html' : 'profile-modal-tpl_yandex.html');
+const FAQ_TPL = BASE_URL + COMMON_TPL_DIR + 'faq-modal-tpl_' + lang + '.html'
 
 const SUBMIT_SCRIPT = 'turnSubmitter';
 const WORD_CHECKER_SCRIPT = 'word_checker.php';
@@ -55,7 +56,7 @@ const CHAT_SCRIPT = 'send_chat_message.php';
 const COMPLAIN_SCRIPT = 'complain.php';
 const SET_INACTIVE_SCRIPT = 'set_inactive.php';
 const MERGE_IDS_SCRIPT = 'merge_the_ids.php';
-const SET_PLAYER_NAME_SCRIPT = 'set_player_name.php';
+const SET_PLAYER_NAME_SCRIPT = 'players/saveUserName';
 const DELETE_BAN_URL = 'mvc/ban/remove?common_id=';
 const STATS_URL = 'mvc/stats/viewV2/?common_id='
 const NEW_GAME_SCRIPT = 'newGame';

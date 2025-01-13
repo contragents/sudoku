@@ -648,7 +648,7 @@ function onImagesLoaded(container, event) {
 }
 
 function getInstructions(lang) {
-    const url = 'https://эрудит.club/mvc/faq/getAll?lang=' + lang + version();
+    const url = BASE_URL + 'faq/getAll' + version(true);
 
     return fetch(url)
         .then(response => {
@@ -661,7 +661,7 @@ function getInstructions(lang) {
 }
 
 function getFAQModal() {
-    return fetch('/faq-modal-tpl_' + lang + '.html')
+    return fetch(FAQ_TPL + version(true))
         .then(response => response.text())
         .then(template => {
 
@@ -682,7 +682,7 @@ function getFAQModal() {
                 }).catch(error => reject(error));
             });
         })
-        .catch(error => console.error('Ошибка загрузки faq-modal:', error));
+        .catch(error => console.error('Error loading faq-modal:', error));
 }
 
 function PlayersPage(json) {

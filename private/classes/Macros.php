@@ -22,7 +22,7 @@ class Macros
         'sudokuIcon20' => '{{sudoku_icon_20}}',
     ];
 
-    const SUDOKU_IMG_URL = '<img src="/images/coin.png" alt="SUDOKU coin image" width="30%">';
+    const SUDOKU_IMG_URL = '<img src="images/coin.png" alt="SUDOKU coin image" width="30%">';
 
     public static function sudokuIcon(): string
     {

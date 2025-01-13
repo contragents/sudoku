@@ -7,16 +7,12 @@ use BaseController;
 class StateMachine
 {
     public static ?string $gamePrefix = null;
-    public static ?string $cookieKey = null;
 
     const CACHE_TTL = 60 * 60;
     const LOCK_WAIT_TTL = 10;
 
     const CHECK_STATUS_RESULTS_KEY = 'game_results_';
     const CHECK_STATUS_RESULTS_KEY_TTL = 24 * 60 * 60;
-
-    // Game states
-
 
     // Player states
     const STATE_WAITING = 'waiting'; // Статус ни о чем - клиент должен переотправить запрос checkStatus
@@ -104,9 +100,8 @@ class StateMachine
 
     const PLAYER_STATUS_PREFIX = '.player_status_';
 
-    public function __construct(string $cookieKey, string $gamePrefix)
+    public function __construct(string $gamePrefix)
     {
-        static::$cookieKey = $cookieKey;
         static::$gamePrefix = $gamePrefix;
     }
 

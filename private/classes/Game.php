@@ -86,9 +86,9 @@ class Game
     public function genKeyForCommonID($id)
     {
         $messageToEncrypt = $id;
-        $secretKey = Config::$envConfig['SALT'];
+        $secretKey = Config::$config['SALT'];
         $method = 'AES-128-CBC';
-        $iv = base64_decode(Config::$envConfig['IV'] . '==');
+        $iv = base64_decode(Config::$config['IV'] . '==');
         $encrypted_message = openssl_encrypt($messageToEncrypt, $method, $secretKey, 0, $iv);
 
         return $encrypted_message;
@@ -96,9 +96,9 @@ class Game
 
     public function mergeTheIDs($encryptedMessage, $commonID, $secretKey = '')
     {
-        $secretKey = $secretKey ?: Config::$envConfig['SALT'];
+        $secretKey = $secretKey ?: Config::$config['SALT'];
         $method = 'AES-128-CBC';
-        $iv = base64_decode(Config::$envConfig['IV'] . '==');
+        $iv = base64_decode(Config::$config['IV'] . '==');
         $decrypted_message = openssl_decrypt($encryptedMessage, $method, $secretKey, 0, $iv);
 
         if (!is_numeric($decrypted_message)) {
@@ -801,5 +801,14 @@ class Game
     protected function makeBotTurn(int $botUserNum)
     {
         // return Response::state($this->SM::getPlayerStatus($this->User));
+    }
+
+    public function checkCommonIdUnsafe(?int $commonId = null): bool
+    {
+        if (!$commonId) {
+            return false;
+        }
+
+        return $commonId === PlayerModel::getPlayerCommonId($this->User);
     }
 }

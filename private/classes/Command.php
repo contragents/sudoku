@@ -54,7 +54,7 @@ class Command
 
         foreach (static::PARAMS_LIST as $param) {
             if (empty($this->params[$param])) {
-                mp($param, 'Missed param in Command ' . $scriptName, __METHOD__);
+                print 'Missed param in Command ';
 
                 exit();
             }

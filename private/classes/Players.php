@@ -7,8 +7,8 @@ use UserModel;
 
 class Players
 {
-    const UPLOAD_DIR = '/img/upload/';
-    const BASE_UPLOAD_FILE_URL = 'https://xn--d1aiwkc2d.club/img/upload/';
+    const UPLOAD_DIR = 'img/upload/';
+    const BASE_UPLOAD_FILE_URL = Config::BASE_URL . self::UPLOAD_DIR;
     const ENABLE_UPLOAD_EXT = [
         'jpg' => 'jpg',
         'jpeg' => 'jpeg',
@@ -73,7 +73,7 @@ class Players
         if (isset(self::ENABLE_UPLOAD_EXT[$extension]) && $files['url']['size'] < self::MAX_UPLOAD_SIZE) {
             if (move_uploaded_file(
                 $files['url']['tmp_name'],
-                $_SERVER['DOCUMENT_ROOT'] . self::UPLOAD_DIR . $filename
+                $_SERVER['DOCUMENT_ROOT'] . '/' . self::UPLOAD_DIR . $filename
             )) {
                 $avatarAddRes = self::addUserAvatarUrl(
                     self::BASE_UPLOAD_FILE_URL . $filename,

@@ -2,7 +2,7 @@
 
 namespace classes;
 
-class DB
+class DBPostgre
 {
     public static $DBConnect = false;
 

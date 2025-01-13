@@ -526,7 +526,7 @@ var gameStates = {
                                     }
 
                                     function getProfileModal(profileData) {
-                                        return fetch(BASE_URL + PROFILE_TPL + version(true))
+                                        return fetch(PROFILE_TPL + version(true))
                                             .then((response) => response.text())
                                             .then((template) => {
                                                 let message = template

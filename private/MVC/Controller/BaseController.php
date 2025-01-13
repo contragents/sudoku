@@ -1,5 +1,6 @@
 <?php
 
+use classes\Config;
 use classes\Cookie;
 use classes\FrontResource;
 use classes\Game;
@@ -13,17 +14,15 @@ use classes\ViewHelper;
 /**
  * @property string $gameName // Название текущей игры
  */
-
 class BaseController
 {
-    const COMMON_URL = 'sudoku/';
-    public const BASE_URL = 'https://5-5.su/';
-
     const TITLE = "Game";
-    const URL = self::BASE_URL . "game/";
-    const SITE_NAME = self::URL;
+    const GAME_URL = Config::BASE_URL . "game_name/"; // Используются только константы наследников
+    const SITE_NAME = Config::DOMAIN;
+
+
     const DESCRIPTION = 'In Game, the objective is to WIN!';
-    const FB_IMG_URL = "https://xn--d1aiwkc2d.club/img/share/hor_640_360.png";
+    const FB_IMG_URL = 'https://' . Config::ERUDIT_DOMAIN . '/img/share/hor_640_360.png';
     const FORCE_ACTIONS = [
         'gameState' . 'Action',
         'mainScript' . 'Action',
@@ -80,8 +79,8 @@ class BaseController
     {
         self::cors();
 
-        foreach(self::$Request as $param => $value) {
-            if(isset(self::JSON_DECODE_PARAMS[$param])) {
+        foreach (self::$Request as $param => $value) {
+            if (isset(self::JSON_DECODE_PARAMS[$param])) {
                 //print self::$Request[$param];
                 self::$Request[$param] = json_decode($value, true);
                 //print_r(self::$Request[$param]);
@@ -102,17 +101,27 @@ class BaseController
 
         if (is_callable([$this, $this->Action])) {
             $res = $this->{$this->Action}();
-            return  is_array($res) ? Response::jsonResp($this->Game->submitTurn(), $this->Game) : (string)$res;
-
+            return is_array($res) ? Response::jsonResp($this->Game->submitTurn(), $this->Game) : (string)$res;
             //return $this->{$this->Action}();
         } else {
             return $this->forbiddenAction();
         }
     }
 
-    private function playersAction()
+    public function playersAction()
     {
-        return $this->callSubController('PlayersController', self::$Request[self::SUB_ACTION_PARAM] ?: PlayersController::DEFAULT_ACTION);
+        return $this->callSubController(
+            'PlayersController',
+            self::$Request[self::SUB_ACTION_PARAM] ?: PlayersController::DEFAULT_ACTION
+        );
+    }
+
+    public function faqAction()
+    {
+        return $this->callSubController(
+            'FaqController',
+            self::$Request[self::SUB_ACTION_PARAM] ?: FaqController::DEFAULT_ACTION
+        );
     }
 
     private function callSubController(string $controller, string $action): string
@@ -120,10 +129,10 @@ class BaseController
         return (new $controller($action, $_REQUEST))->Run();
     }
 
-    private function forbiddenAction(): string
+    public function forbiddenAction(): string
     {
         header('HTTP/1.0 403 Forbidden');
-        echo T::S('Доступ запрещен');
+        echo T::S('Forbidden');
 
         exit;
     }
@@ -140,13 +149,13 @@ class BaseController
          * @var string $cookieKey
          */
 
-        if (!isset($_COOKIE[self::$SM::$cookieKey])) {
-            $_COOKIE = Cookie::setGetCook(null, self::$SM::$cookieKey);
+        if (!isset($_COOKIE[Cookie::COOKIE_NAME])) {
+            $_COOKIE = Cookie::setGetCook(null, Cookie::COOKIE_NAME);
         } elseif (rand(1, 100) <= 2) {
-            $_COOKIE = Cookie::setGetCook($_COOKIE[self::$SM::$cookieKey], self::$SM::$cookieKey);
+            $_COOKIE = Cookie::setGetCook($_COOKIE[Cookie::COOKIE_NAME], Cookie::COOKIE_NAME);
         }
 
-        return $_COOKIE[self::$SM::$cookieKey] ?? null;
+        return $_COOKIE[Cookie::COOKIE_NAME] ?? null;
     }
 
     public function mainScriptAction()
@@ -157,7 +166,7 @@ class BaseController
     public function indexAction()
     {
         $title = T::S(static::TITLE);
-        $url = static::URL;
+        $url = static::GAME_URL;
         $siteName = static::SITE_NAME;
         $description = static::DESCRIPTION;
         $fbImgUrl = static::FB_IMG_URL;
@@ -217,7 +226,7 @@ class BaseController
         }
 
         $res = [];
-        foreach($gameStatus->users as $user) {
+        foreach ($gameStatus->users as $user) {
             $res['users'][$user->ID]['state'] = BaseController::$SM::getPlayerStatus($user->ID);
         }
 
@@ -235,7 +244,8 @@ class BaseController
             : T::EN_LANG;
     }
 
-    public function __get($attr) {
+    public function __get($attr)
+    {
         if (is_callable([$this, $attr])) {
             return $this->{$attr}();
         }
@@ -258,7 +268,7 @@ class BaseController
 
     public static function getUrl(string $action, array $params = [], array $excludedParams = [])
     {
-        return static::URL . static::COMMON_URL
+        return static::GAME_URL
             . $action . '/'
             . (!empty($params)
                 ? ('?' . implode(

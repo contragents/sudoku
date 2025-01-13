@@ -4,6 +4,8 @@
 namespace classes;
 
 
+use AchievesModel;
+
 class MonetizationService
 {
     const BIDS = [

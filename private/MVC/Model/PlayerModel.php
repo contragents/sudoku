@@ -21,7 +21,7 @@ class PlayerModel extends BaseModel
 
     const RATING_CACHE_PREFIX = 'erudit.rating_cache_';
 
-    const COOKIE_NOT_LINKED_STATUS = 'not_linked';
+    const COOKIE_NOT_LINKED_STATUS = 0;
     const DELTA_RATING_KEY_PREFIX = 'erudit.delta_rating_';
     const RATING_CACHE_TTL = 7 * 24 * 60 * 60;
 
@@ -49,9 +49,9 @@ class PlayerModel extends BaseModel
      * Определяет common_id по сложной схеме через связанные куки и ID от яндекса
      * @param string $cookie
      * @param bool $createIfNotExist
-     * @return array|false|string
+     * @return ?int
      */
-    public static function getPlayerCommonId(string $cookie, bool $createIfNotExist = false)
+    public static function getPlayerCommonId(string $cookie, bool $createIfNotExist = false): ?int
     {
         if (self::$cache[$cookie]['common_id'] ?? false) {
             return self::$cache[$cookie]['common_id'];
@@ -70,9 +70,9 @@ class PlayerModel extends BaseModel
         if ($commonIdCrossing !== self::COOKIE_NOT_LINKED_STATUS) {
             // .. и если common_id установлен - возвращаем
             if ($commonIdCrossing) {
-                self::$cache[$cookie]['common_id'] = $commonIdCrossing;
+                self::$cache[$cookie]['common_id'] = (int)$commonIdCrossing;
 
-                return $commonIdCrossing;
+                return (int)$commonIdCrossing;
             }
 
             // ..а если common_id не установлен - создаем
@@ -111,7 +111,7 @@ class PlayerModel extends BaseModel
                     self::update($id, ['field' => self::COMMON_ID_FIELD, 'value' => $id, 'raw' => true]);
                 }
 
-                self::$cache[$cookie]['common_id'] = $id;
+                self::$cache[$cookie]['common_id'] = (int)$id;
 
                 /*
                 // Начисляем приветственный бонус
@@ -122,19 +122,19 @@ class PlayerModel extends BaseModel
                     BalanceHistoryModel::TYPE_IDS[BalanceHistoryModel::GREETING_DEPOSIT_TYPE]
                 );
 */
-                return $id;
+                return (int)$id;
             }
         }
 
-        return false;
+        return null;
     }
 
     /**
      * Finds common_id by comparing user_id and cookies between different players
      * @param $cookie
-     * @return int|false|string
+     * @return ?int
      */
-    public static function getCrossingCommonIdByCookie($cookie)
+    public static function getCrossingCommonIdByCookie($cookie): ?int
     {
         $findIDQuery = ORM::select(['p1.common_id AS cid1', 'p2.common_id AS cid2'], PlayerModel::TABLE_NAME . ' p1')
             . ORM::leftJoin(PlayerModel::TABLE_NAME . ' p2')
@@ -145,13 +145,13 @@ class PlayerModel extends BaseModel
 
         $result = DB::queryArray($findIDQuery);
         if (isset($result[0])) {
-            return $result[0]['cid2'] ?: false;
+            return (int)$result[0]['cid2'] ?: null;
         } else {
             return self::COOKIE_NOT_LINKED_STATUS;
         }
     }
 
-    public static function getCommonID($cookie = false, $userID = false)
+    public static function getCommonID($cookie = false): ?int
     {
         if ($cookie) {
             $res = self::getCommonIdFromCookie($cookie);
@@ -160,33 +160,16 @@ class PlayerModel extends BaseModel
             }
         }
 
-        if ($userID) {
-            $res = self::getCommonIdFromUserId($userID);
-            if ($res) {
-                return $res;
-            }
-        }
-
-        return false;
+        return null;
     }
 
-    public static function getCommonIdFromCookie(string $cookie)
+    public static function getCommonIdFromCookie(string $cookie): ?int
     {
         $commonIDQuery = ORM::select(['common_id'], self::TABLE_NAME)
             . ORM::where('cookie', '=', $cookie)
             . ORM::limit(1);
 
-        return DB::queryValue($commonIDQuery);
-    }
-
-    public static function getCommonIdFromUserId($userId)
-    {
-        $commonIDQuery = ORM::select(['common_id'], self::TABLE_NAME)
-            . ORM::where('user_id', '=', $userId, true)
-            . ORM::andWhere('common_id', 'IS', 'NOT NULL', true)
-            . ORM::limit(1);
-
-        return DB::queryValue($commonIDQuery);
+        return (int)DB::queryValue($commonIDQuery) ?: null;
     }
 
     public static function getRatingByCookie(string $cookie): int

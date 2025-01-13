@@ -4,6 +4,7 @@ use classes\Cache;
 use classes\Config;
 use classes\Game;
 use classes\T;
+use BaseController as BC;
 
 class PlayersController extends BaseSubController
 {
@@ -14,15 +15,37 @@ class PlayersController extends BaseSubController
     const REF_TG_ID_PARAM = 'ref_tg_id';
     const ADD_REF_PARAMS_ORDER = [self::COMMON_ID_PARAM, self::REF_TG_ID_PARAM];
     const SECRET_PARAM = 'secret';
+    const NAME_PARAM = 'name';
 
     const PARAM_VALUES = [
         self::HIDE_PARAM => [self::HIDE, self::SHOW],
     ];
 
-    const COMMON_URL = 'players/';
     const HIDE = 'hide';
     const SHOW = 'show';
     const DEFAULT_ACTION = 'index';
+
+    public function saveUserNameAction()
+    {
+        $name = self::$Request[self::NAME_PARAM];
+        $commonId = self::$Request[self::COMMON_ID_PARAM] ?? null;
+
+        if (!BC::$instance->Game->checkCommonIdUnsafe($commonId)) {
+            return self::unauthorized();
+        }
+
+        $name = trim($name, "'\"");
+
+        $res = UserModel::updateNickname($commonId, $name);
+
+        return json_encode(
+            [
+                'result' => $res ? 'saved' : 'error',
+                'message' => $res ? T::S('Nickname updated') : T::S('Error saving Nick change')
+            ],
+            JSON_UNESCAPED_UNICODE
+        );
+    }
 
     public function mergeAction()
     {
@@ -36,7 +59,7 @@ class PlayersController extends BaseSubController
 
     public function addRefAction(): string
     {
-        $salt = Config::$envConfig['SALT'];
+        $salt = Config::$config['SALT'];
         $method = 'addRef';
 
         $sign = md5($salt . $method . implode('', array_map(fn($key) => $key . self::$Request[$key] ?? '', self::ADD_REF_PARAMS_ORDER)));
@@ -173,9 +196,9 @@ class PlayersController extends BaseSubController
 
     private function mergeTheIDs($encryptedMessage, $commonID, $secretKey = '')
     {
-        $secretKey = $secretKey ?: Config::$envConfig['SALT'];
+        $secretKey = $secretKey ?: Config::$config['SALT'];
         $method = 'AES-128-CBC';
-        $iv = base64_decode(Config::$envConfig['IV'] . '==');
+        $iv = base64_decode(Config::$config['IV'] . '==');
         $decrypted_message = openssl_decrypt($encryptedMessage, $method, $secretKey, 0, $iv);
 
         if (!is_numeric($decrypted_message)) {

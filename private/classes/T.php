@@ -42,7 +42,7 @@ class T
             return self::applyPlurals($res, $params);
         }
 
-        return self::PHRASES[$keyPhrase][self::$lang] ?? $keyPhrase;
+        return $res;
     }
 
     public static function SA(array $keyPhraseArr): array
@@ -62,8 +62,11 @@ class T
     }
 
     const PHRASES = [
-        'Доступ запрещен' => [
-            self::EN_LANG => 'Forbidden',
+        'Empty value is forbidden' => [
+            self::RU_LANG => 'Задано пустое значение',
+        ],
+        'Forbidden' => [
+            self::RU_LANG => 'Доступ запрещен',
         ],
         'Sudoku online' => [
             self::RU_LANG => 'Судоку с друзьями',

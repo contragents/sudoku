@@ -6,7 +6,7 @@ use classes\T;
 use classes\ViewHelper;
 use BaseController as BC;
 
-class AchievesModel extends BaseModel
+class Achieves2Model extends BaseModel
 {
     const TABLE_NAME = 'achieves';
 
@@ -49,11 +49,6 @@ class AchievesModel extends BaseModel
         'delta_rating' => 'Increase/loss in rating',
         'win_percent' => '% of wins',
     ];
-
-    public const DAY_PERIOD = 'day';
-    public const WEEK_PERIOD = 'week';
-    public const MONTH_PERIOD = 'month';
-    public const YEAR_PERIOD = 'year';
 
     public const TOP_TYPE = 'top';
 
