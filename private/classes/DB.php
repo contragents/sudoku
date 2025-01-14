@@ -41,7 +41,7 @@ class DB
     }
 
     public static function transactionRollback() {
-        self::transactionLog(__METHOD__);
+        // self::transactionLog(__METHOD__);
 
         self::$transactionNestLevel = 0; // Сбросили уровень вложенности
 
@@ -61,7 +61,7 @@ class DB
     }
 
     public static function transactionCommit() {
-        self::transactionLog(__METHOD__);
+        // self::transactionLog(__METHOD__);
 
         if (!self::$is_transaction_started) {
             // Попытка вызвать коммит на неначатой транзакции
@@ -87,7 +87,7 @@ class DB
 
     public static function transactionStart(): bool
     {
-        self::transactionLog(__METHOD__);
+        // self::transactionLog(__METHOD__);
 
         self::$transactionNestLevel++;
 

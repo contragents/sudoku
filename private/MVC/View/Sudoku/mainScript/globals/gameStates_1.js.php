@@ -1545,8 +1545,7 @@ function RobokassaPaymentGlobal(actionType) {
         };
         orderParams['quickpay-form'] = 'button';
 
-        // не работает. сделать отправку формы на сервере и возврат ссылки на оплату
-        fetch('/mvc/pay/pay', {
+        fetch(BASE_URL + 'pay/pay', {
             method: "POST",
             body: getFormData(orderParams),
         }).then(response => response.json())

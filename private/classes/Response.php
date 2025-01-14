@@ -48,6 +48,7 @@ class Response
 
                     continue;
                 }
+
                 $paramValue = self::getParamValue($game, $path);
                 $res += $paramValue !== null
                     ? [$param => $paramValue]

@@ -17,6 +17,8 @@ use UserModel;
 
 class UserProfile
 {
+    const SUDOKU_BALANCE = 'SUDOKU_BALANCE';
+
     public static function playerCabinetInfo(Game $game)
     {
         $message = [];
@@ -24,8 +26,8 @@ class UserProfile
         $message['info'] = [];
         $message['info']['rating'] = CommonIdRatingModel::getRating(BaseController::$commonId, $game::GAME_NAME);
         $message['info']['top'] = CommonIdRatingModel::getTopByRating($message['info']['rating'], $game::GAME_NAME);
-        $message['info']['SUDOKU_BALANCE'] = BalanceModel::getBalance(BaseController::$commonId);
-        $message['info']['SUDOKU_TOP'] = BalanceModel::getTopByBalance($message['info']['SUDOKU_BALANCE']);
+        $message['info'][self::SUDOKU_BALANCE] = BalanceModel::getBalance(BaseController::$commonId);
+        $message['info']['SUDOKU_TOP'] = BalanceModel::getTopByBalance($message['info'][self::SUDOKU_BALANCE]);
         $message['info']['rewards'] = IncomeModel::getIncome(BaseController::$commonId);
 
         $refs = RefModel::getCustomO(RefModel::COMMON_ID_FIELD, '=', BaseController::$commonId, true);

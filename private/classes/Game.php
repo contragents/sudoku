@@ -3,7 +3,7 @@
 
 namespace classes;
 
-use BaseController;
+use BaseController as BC;
 use CommonIdRatingModel;
 use GamesModel;
 use PlayerModel;
@@ -50,7 +50,6 @@ class Game
 
     public ?string $User;
     public ?int $numUser = null;
-    public int $commonId;
     public Queue $Queue;
 
     public ?GameStatus $gameStatus = null;
@@ -203,6 +202,8 @@ class Game
 
     public function getCurrentPlayerCommonId(): ?int
     {
+        return BC::$commonId;
+
         return $this->gameStatus !== null && $this->numUser !== null
             ? ($this->gameStatus->users[$this->numUser]->common_id ?? null)
             : null;
@@ -215,11 +216,11 @@ class Game
 
     public function __construct(string $queueClass)
     {
-        $this->SM = BaseController::$SM;
+        $this->SM = BC::$SM;
 
-        $this->User = BaseController::$User;
+        $this->User = BC::$User;
 
-        $this->Queue = new $queueClass($this->User, $this, BaseController::$Request);
+        $this->Queue = new $queueClass($this->User, $this, BC::$Request);
 
         // Если не удалось дождаться лока по текущему игроку, то посылаем desync и выходим
         if (!Cache::lock($this->User)) {

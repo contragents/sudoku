@@ -109,6 +109,14 @@ class BaseController
         }
     }
 
+    public function payAction()
+    {
+        return $this->callSubController(
+            'PayController',
+            self::$Request[self::SUB_ACTION_PARAM] ?: ''
+        );
+    }
+
     public function playersAction()
     {
         return $this->callSubController(
