@@ -3,6 +3,7 @@
 namespace classes;
 
 use PaymentModel;
+use BaseController as BC;
 
 class T
 {
@@ -32,7 +33,12 @@ class T
 
     public static function S($keyPhrase, ?array $params = null): string
     {
-        $res = self::PHRASES[$keyPhrase][self::$lang] ?? $keyPhrase;
+        if (BC::$instance->gameName && isset(self::PHRASES[$keyPhrase][BC::$instance->gameName])) {
+            $res = self::PHRASES[$keyPhrase][BC::$instance->gameName][self::$lang]
+                ?? (self::PHRASES[$keyPhrase][self::$lang] ?? $keyPhrase);
+        } else {
+            $res = self::PHRASES[$keyPhrase][self::$lang] ?? $keyPhrase;
+        }
 
         if (strpos($res, Macros::PATTERN) !== false) {
             return Macros::applyMacros($res);
@@ -72,8 +78,13 @@ class T
             self::RU_LANG => 'Судоку с друзьями',
         ],
         'secret_prompt' => [
-            self::EN_LANG => '&#42;Save this key for further account restoration in <a href="https://t.me/scrabble_online_bot">Telegram</a>',
-            self::RU_LANG => '&#42;Сохраните ключ для восстановления аккаунта в <a href="https://t.me/erudit_club_bot">Telegram</a>'
+            self::EN_LANG => '&#42;Save this key for further account restoration in Telegram</a>',
+            self::RU_LANG => '&#42;Сохраните ключ для восстановления аккаунта в Telegram</a>',
+
+            SudokuGame::GAME_NAME => [
+                self::EN_LANG => '&#42;Save this key for further account restoration in <a href="https://t.me/sudoku_app_bot">Telegram</a>',
+                self::RU_LANG => '&#42;Сохраните ключ для восстановления аккаунта в <a href="https://t.me/sudoku_app_bot">Telegram</a>'
+            ]
         ],
         PaymentModel::INIT_STATUS => [
             self::EN_LANG => 'Started',

@@ -92,4 +92,11 @@ class Cookie
             return [];
         }
     }
+
+    public static function getPersonalCookie(): string
+    {
+        return md5($_SERVER['REMOTE_ADDR']
+                   . $_SERVER['HTTP_ACCEPT']
+        );
+    }
 }

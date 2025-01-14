@@ -2,9 +2,11 @@
 
 use classes\Cache;
 use classes\Config;
+use classes\Cookie;
 use classes\Game;
 use classes\T;
 use BaseController as BC;
+use classes\Tg;
 
 class PlayersController extends BaseSubController
 {
@@ -24,6 +26,108 @@ class PlayersController extends BaseSubController
     const HIDE = 'hide';
     const SHOW = 'show';
     const DEFAULT_ACTION = 'index';
+
+    const MAX_UPLOAD_SIZE = 2 * 1024 * 1024;
+    const UPLOAD_DIR = '/img/upload/';
+    const ENABLE_UPLOAD_EXT = [
+        'jpg' => 'jpg',
+        'jpeg' => 'jpeg',
+        'png' => 'png',
+        'gif' => 'gif',
+        'svg' => 'svg',
+        'ico' => 'ico',
+        'bmp' => 'bmp'
+    ];
+
+    public static function avatarUploadAction(): string
+    {
+        try {
+            $files = $_FILES;
+            $cookie = Tg::$tgUser['user']['id'] ?? $_COOKIE[Cookie::COOKIE_NAME];
+
+            $status = 'error';
+
+            $parts = explode(".", $files['url']['name']);
+            $extension = strtolower(end($parts));
+            $filename = $cookie . '.' . $extension;
+            if (isset(self::ENABLE_UPLOAD_EXT[$extension]) && $files['url']['size'] < self::MAX_UPLOAD_SIZE) {
+                if (move_uploaded_file(
+                    $files['url']['tmp_name'],
+                    $_SERVER['DOCUMENT_ROOT'] . '/../erudit.club' . self::UPLOAD_DIR . $filename
+                )) {
+                    $avatarAddRes = self::addUserAvatarUrl(
+                        self::getBaseUploadFileURL() . $filename,
+                        BC::$commonId
+                    );
+
+                    return $avatarAddRes;
+                }
+            }
+
+            return json_encode(
+                [
+                    'result' => $status,
+                    'message' => '<strong>Ошибка загрузки файла!</strong><br /> Проверьте:<br /> <ul><li>размер файла (не более <strong>'
+                        . round(
+                            self::MAX_UPLOAD_SIZE / 1024 / 1024,
+                            1
+                        )
+                        . 'MB</strong>)</li><li>разрешение - <strong>'
+                        . implode('</strong> или <strong>', self::ENABLE_UPLOAD_EXT)
+                        . '</strong></li></ul>'
+                ]
+            );
+        } catch(Throwable $e) {
+            return json_encode(
+                [
+                    'result' => 'error',
+                    'message' => $e->__toString()
+                ],
+                JSON_UNESCAPED_UNICODE
+            );
+        }
+    }
+
+    public static function addUserAvatarUrl($url, $commonID): string
+    {
+        $url = trim($url);
+        $url = lcfirst($url);
+
+        if (!preg_match('/^https?:\/\//', $url)) {
+            return json_encode(
+                [
+                    'result' => 'error',
+                    'message' => 'Неверный формат URL! <br />Должно начинаться с <strong>http(s)://</strong>'
+                ]
+            );
+        }
+
+        $updateRes = UserModel::updateUrl($commonID, $url);
+
+        if ($updateRes) {
+            return json_encode(
+                [
+                    'result' => 'saved',
+                    'message' => 'Аватар обновлен',
+                    'url' => UserModel::getOne($commonID)[UserModel::AVATAR_URL_FIELD]
+                ],
+                JSON_UNESCAPED_UNICODE
+            );
+        } else {
+            return json_encode(
+                [
+                    'result' => 'error',
+                    'message' => 'Ошибка сохранения нового URL'
+                ],
+                JSON_UNESCAPED_UNICODE
+            );
+        }
+    }
+
+    public static function getBaseUploadFileURL()
+    {
+        return Config::BASE_URL . Game::GAME_NAME . '/img/upload/'; // один адрес для всех аватаров игр - sudoku
+    }
 
     public function saveUserNameAction()
     {

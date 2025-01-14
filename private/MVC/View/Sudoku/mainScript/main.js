@@ -31,4 +31,4 @@ var game = new Phaser.Game(config);
 
 document.body.style.backgroundColor = "#dddddd";
 
-
+//<?php include(ROOT_DIR . '/js/common_functions/ysdk.js')?>

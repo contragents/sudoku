@@ -12,8 +12,9 @@ use classes\UserProfile;
 use classes\ViewHelper;
 
 /**
- * @property string $gameName // Название текущей игры
+ * @property string $gameName // Название текущей игры __get()..
  */
+
 class BaseController
 {
     const TITLE = "Game";

@@ -247,14 +247,13 @@ function savePlayerName(name, commonID = '') {
         });
 }
 
-function savePlayerAvatar(url, commonIdParam) {
-    <?php $dir = '// todo Сделать метод сохранения аватара'?>
+function savePlayerAvatar(commonIdParam) {
     // складируем форму в ......форму))
     const checkElement = document.getElementById("player_avatar_file");
     if (!checkElement.checkValidity()) {
         showCabinetActionResult({
             result: 'error',
-            message: 'Ошибка! Выберите файл-картинку размером не более <?= round(BaseController::MAX_UPLOAD_SIZE / 1024 / 1024, 2); ?>MB'
+            message: 'Ошибка! Выберите файл-картинку размером не более <?= round(PlayersController::MAX_UPLOAD_SIZE / 1024 / 1024, 2); ?>MB'
         });
 
         return false;
@@ -267,22 +266,11 @@ function savePlayerAvatar(url, commonIdParam) {
         requestTimestamp = (new Date()).getTime();
     }
 
-    let URL = useLocalStorage
-        ? (
-            '/<?=$dir?>/php/yowser/index.php'
-            + '?cooki='
-            + localStorage.erudit_user_session_ID
-            + '&script='
-            + AVATAR_UPLOAD_SCRIPT
-            + '&'
-            + commonParams()
-        )
-        : (
-            '/<?=$dir?>/php/'
-            + AVATAR_UPLOAD_SCRIPT
-            + '?'
-            + commonParams()
-        );
+    // todo cooki url-parameters for yandex browser in yandex game
+    let URL = BASE_URL + AVATAR_UPLOAD_SCRIPT
+        + '?'
+        + commonParams()
+    ;
 
     $.ajax({
         url: URL,
@@ -293,10 +281,10 @@ function savePlayerAvatar(url, commonIdParam) {
         contentType: false,
         processData: false,
         success: function (returndata) {
+            console.log(returndata);
             resp = JSON.parse(returndata);
 
             if (resp['result'] === 'saved') {
-                //$('#playersAvatar').html('<img src="' + resp['url'] + '" width="100px" max-height = "100px"/>');
                 $('#playersAvatar').html('<img class="main-info-image" src="' + resp['url'] + '" alt="" />');
             }
 

@@ -1,4 +1,5 @@
 <?php
+use classes\Cookie;
 use classes\MonetizationService;
 use classes\T;
 ?>
@@ -26,6 +27,17 @@ var blinkErrorsCounter = 0;
 var prevCellsOpened = {};
 var cellsToBlink = [];
 var blinkCellsCounter = 0;
+
+const FALL_BACK_COOKIE = '<?= COOKIE::getPersonalCookie() ?>';
+var cookieStored = false;
+var useLocalStorage = false;
+if(localStorage != 'undefined') {
+    useLocalStorage = !!localStorage.<?= Cookie::COOKIE_NAME ?>;
+    if (useLocalStorage) {
+        cookieStored = localStorage.<?= Cookie::COOKIE_NAME ?>;
+    }
+}
+var useYandexStorage = false;
 
 // SUDOKU VARS
 const sudokuSet1Column = new Set([1,4,7]);
@@ -56,16 +68,17 @@ const CHAT_SCRIPT = 'send_chat_message.php';
 const COMPLAIN_SCRIPT = 'complain.php';
 const SET_INACTIVE_SCRIPT = 'set_inactive.php';
 const MERGE_IDS_SCRIPT = 'merge_the_ids.php';
+
 const SET_PLAYER_NAME_SCRIPT = 'players/saveUserName';
+const AVATAR_UPLOAD_SCRIPT = 'players/avatarUpload';
+
 const DELETE_BAN_URL = 'mvc/ban/remove?common_id=';
 const STATS_URL = 'mvc/stats/viewV2/?common_id='
 const NEW_GAME_SCRIPT = 'newGame';
 
 const CHANGE_FISHKI_SCRIPT = 'change_fishki.php';
 const COOKIE_CHECKER_SCRIPT = 'cookie_checker.php';
-// const CABINET_SCRIPT = 'player_cabinet.php';
 const INVITE_SCRIPT = 'invite_to_new_game.php';
-const AVATAR_UPLOAD_SCRIPT = 'avatar_upload.php';
 const SET_AVATAR_SCRIPT = 'set_player_avatar_url.php';
 const HOR = 'horizontal';
 const VERT = 'vertical';
@@ -280,8 +293,6 @@ var gWLimit = false;
 var pageActive = 'visible';
 var fullImgID = false;
 var fullImgWidth = 0;
-
-var useLocalStorage = !!localStorage.erudit_user_session_ID;
 
 var soundPlayed = false;
 var instruction = `<?= T::S('faq_rules') ?>`;

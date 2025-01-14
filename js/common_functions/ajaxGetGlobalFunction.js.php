@@ -1,3 +1,6 @@
+<?php
+use classes\Cookie;
+?>
 //
 async function fetchGlobal(script, param_name = '', param_data = '') {
     if (pageActive == 'hidden' && gameState == 'chooseGame' && script === STATUS_CHECKER_SCRIPT) {
