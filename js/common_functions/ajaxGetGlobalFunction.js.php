@@ -45,7 +45,7 @@ async function fetchGlobal(script, param_name = '', param_data = '') {
 
 async function fetchGlobalMVC(urlPart, param_name, param_data) {
     const response = await fetch(
-        '/' + urlPart,
+        BASE_URL + urlPart,
         {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, *cors, same-origin

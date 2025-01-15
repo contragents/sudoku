@@ -113,7 +113,7 @@ class PlayerModel extends BaseModel
 
                 self::$cache[$cookie]['common_id'] = (int)$id;
 
-                /*
+
                 // Начисляем приветственный бонус
                 BalanceModel::changeBalance(
                     $id,
@@ -121,7 +121,7 @@ class PlayerModel extends BaseModel
                     BalanceHistoryModel::GREETING_DEPOSIT_TYPE,
                     BalanceHistoryModel::TYPE_IDS[BalanceHistoryModel::GREETING_DEPOSIT_TYPE]
                 );
-*/
+
                 return (int)$id;
             }
         }

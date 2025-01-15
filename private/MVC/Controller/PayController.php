@@ -199,10 +199,12 @@ class PayController extends BaseSubController
         return $commonIdHash === md5($commonId . $salt);
     }
 
-    public static function getCommonIdHash(int $commonId): string
+    public static function getCommonIdHash(?int $commonId): ?string
     {
-        $salt = Config::$config['SALT'];
+        if(!$commonId) {
+            return null;
+        }
 
-        return md5($commonId . $salt);
+        return md5($commonId . Config::$config['SALT']);
     }
 }

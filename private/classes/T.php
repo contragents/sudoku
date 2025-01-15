@@ -344,8 +344,7 @@ class T
             self::RU_LANG => 'Баланс SUDOKU'
         ],
         'Claim' => [
-            self::EN_LANG => 'Claim <br>(soon)',
-            self::RU_LANG => 'Забрать<br>(скоро)'
+            self::RU_LANG => 'Забрать'
         ],
         'Name' => [
             self::RU_LANG => 'Имя'

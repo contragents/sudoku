@@ -63,6 +63,8 @@ const STATUS_HIDDEN_CHECKER_SCRIPT = 'statusHiddenChecker';
 const INIT_GAME_SCRIPT = 'initGame';
 const CABINET_SCRIPT = 'playerCabinet';
 const PLAYER_RATING_SCRIPT = 'players/info/'; // todo ...
+const CLAIM_SCRIPT = 'pay/claim';
+const PAY_SCRIPT = 'pay/pay';
 
 const CHAT_SCRIPT = 'send_chat_message.php';
 const COMPLAIN_SCRIPT = 'complain.php';

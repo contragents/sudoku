@@ -6,6 +6,7 @@ namespace classes;
 use BaseController as BC;
 use CommonIdRatingModel;
 use GamesModel;
+use PayController;
 use PlayerModel;
 use UserModel;
 
@@ -31,6 +32,7 @@ class Game
         'gameNumber' => ['gameStatus' => 'gameNumber'], // todo зачем 2 одинаковых параметра в ответе?
         'current_game' => 'currentGame', // current_game = game_number
         'common_id' => 'getCurrentPlayerCommonId',
+        'common_id_hash' => 'getCommonIdHash',
         'timeLeft' => 'getTimeLeft',
         'secondsLeft' => 'getTurnSecondsLeft',
         'minutesLeft' => 'getTurnMinutesLeft',
@@ -203,10 +205,11 @@ class Game
     public function getCurrentPlayerCommonId(): ?int
     {
         return BC::$commonId;
+    }
 
-        return $this->gameStatus !== null && $this->numUser !== null
-            ? ($this->gameStatus->users[$this->numUser]->common_id ?? null)
-            : null;
+    public function getCommonIdHash(): ?string
+    {
+        return PayController::getCommonIdHash(BC::$commonId);
     }
 
     public static function getCacheKey(string $lastKeyPart): string

@@ -1545,7 +1545,7 @@ function RobokassaPaymentGlobal(actionType) {
         };
         orderParams['quickpay-form'] = 'button';
 
-        fetch(BASE_URL + 'pay/pay', {
+        fetch(BASE_URL + PAY_SCRIPT, {
             method: "POST",
             body: getFormData(orderParams),
         }).then(response => response.json())

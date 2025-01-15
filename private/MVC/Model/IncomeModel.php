@@ -47,9 +47,9 @@ class IncomeModel extends BaseModel
         return true;
     }
 
-    public static function getIncome(int $commonId)
+    public static function getIncome(int $commonId): float
     {
-        return DB::queryValue(
+        return (float)DB::queryValue(
             ORM::select([self::SUDOKU_INCOME_FIELD], self::TABLE_NAME)
             . ORM::where(self::COMMON_ID_FIELD, '=', $commonId, true)
         );
