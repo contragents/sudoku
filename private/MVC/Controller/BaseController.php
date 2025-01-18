@@ -44,7 +44,8 @@ class BaseController
     const CELLS_PARAM = 'cells';
     const JSON_DECODE_PARAMS = [self::CELLS_PARAM => true];
 
-    public $Action;
+    public string $Action; // action . 'Action'
+    public string $ActionRaw; // action - используется в BaseSubController::getUrl
 
     public static ?string $User = null;
     public static ?int $commonId = null;
@@ -67,6 +68,7 @@ class BaseController
         self::$instance = $this;
 
         $this->Action = $action . 'Action';
+        $this->ActionRaw = $action;
 
         sleep(self::SLEEP_ACTIONS[$action] ?? 0);
     }
@@ -130,6 +132,14 @@ class BaseController
         return $this->callSubController(
             'FaqController',
             self::$Request[self::SUB_ACTION_PARAM] ?: FaqController::DEFAULT_ACTION
+        );
+    }
+
+    public function statsAction()
+    {
+        return $this->callSubController(
+            'StatsController',
+            self::$Request[self::SUB_ACTION_PARAM] ?: StatsController::DEFAULT_ACTION
         );
     }
 

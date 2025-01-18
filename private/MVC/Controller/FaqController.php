@@ -9,7 +9,6 @@ class FaqController extends BaseSubController
     const NO_SILVER_PARAM = 'no_silver';
     const NO_GOLD_PARAM = 'no_gold';
     const FILTER_PLAYER_PARAM = 'opponent_id';
-    const DEFAULT_ACTION = 'index';
 
     public function getAllAction(): string
     {

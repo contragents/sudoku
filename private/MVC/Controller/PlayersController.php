@@ -1,9 +1,9 @@
 <?php
 
-use classes\Cache;
 use classes\Config;
 use classes\Cookie;
 use classes\Game;
+use classes\MonetizationService;
 use classes\T;
 use BaseController as BC;
 use classes\Tg;
@@ -25,7 +25,6 @@ class PlayersController extends BaseSubController
 
     const HIDE = 'hide';
     const SHOW = 'show';
-    const DEFAULT_ACTION = 'index';
 
     const MAX_UPLOAD_SIZE = 2 * 1024 * 1024;
     const UPLOAD_DIR = '/img/upload/';
@@ -231,11 +230,12 @@ class PlayersController extends BaseSubController
 
         // SUD-9 todo переделать на классы GameStatus
         if ($gameId && $gameId > 0 && $commonId) {
-            $gameStatus = Cache::get(Game::GAME_STATUS_KEY . $gameId);
+            $gameStatus = BC::$instance->Game->gameStatus;
 
-            if (is_array($gameStatus)) {
-                foreach ($gameStatus['users'] ?? [] as $numUser => $user) {
-                    $res[$numUser]['common_id'] = $user['common_id'] ?? 0;
+
+            if ($gameStatus && is_array($gameStatus->users)) {
+                foreach ($gameStatus->users as $numUser => $user) {
+                    $res[$numUser]['common_id'] = $user->common_id ?? 0;
                     $res[$numUser]['you'] = $res[$numUser]['common_id'] == $commonId;
 
                     if ($res[$numUser]['common_id'] == 0) {
@@ -266,15 +266,15 @@ class PlayersController extends BaseSubController
                             : BalanceModel::HIDDEN_BALANCE_REPLACEMENT
                         );
 
-                    $res[$numUser]['rating'] = CommonIdRatingModel::getRating($thisUser->_id, Game::$gameName);
+                    $res[$numUser]['rating'] = CommonIdRatingModel::getRating($thisUser->_id, BC::gameName());
                     $res[$numUser]['rating_position'] = CommonIdRatingModel::getTopByRating(
                         $res[$numUser]['rating'],
-                        Game::GAME_NAME
+                        BC::gameName()
                     );
 
                     $res[$numUser]['games_played'] = RatingHistoryModel::getNumGamesPlayed(
                         $thisUser->_id,
-                        Game::GAME_NAME
+                        BC::gameName()
                     );
 
                     if ($res[$numUser]['rating_position'] <= 10) {

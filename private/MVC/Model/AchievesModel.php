@@ -1,6 +1,7 @@
 <?php
 
 use classes\DB;
+use classes\GameUser;
 use classes\ORM;
 use classes\T;
 use classes\ViewHelper;
@@ -105,7 +106,6 @@ class AchievesModel extends BaseModel
     const YOUR_RATING_PROGRESS = 'your_progress';
     public const ACHIEVES_ELEMENT_ID = 'achieves_table';
 
-/*
     public static function getDescription(string $eventType, string $eventPeriod, string $gameName = ''): string
     {
         $res = '';
@@ -497,14 +497,15 @@ class AchievesModel extends BaseModel
 
     public static function getPlayerNameByCommonId(int $commonId): string
     {
-        //$instance = self::getGameInstance();
         $cookie = PlayerModel::getOne($commonId)['cookie'] ?? '';
 
         return PlayerModel::getPlayerName(
-            [
-                'ID' => $cookie,
-                'common_id' => $commonId
-            ]
+            new GameUser(
+                [
+                    'ID' => $cookie,
+                    'common_id' => $commonId
+                ]
+            )
         );
     }
 
@@ -518,5 +519,4 @@ class AchievesModel extends BaseModel
             . ($period ? ORM::andWhere(self::EVENT_PERIOD_FIELD, '=', $period) : '')
         ) ?: [];
     }
-*/
 }

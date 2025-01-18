@@ -300,7 +300,8 @@ var players = {
         numbers: true,
     },
     goalBlock: {
-        filename: 'goal',
+        modes: [OTJAT_MODE],
+        filename: 'goal_54',
         x: botXY.x + buttonStepX + buttonWidth / 2,
         y: botXY.y + botHeight * 0.75 * (0.8 + 0.1),
         width: buttonWidth,

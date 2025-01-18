@@ -607,6 +607,8 @@ class Queue
 
     private function getBotPlayer(): string
     {
-        return 'botV3#9';
+        $config = include(__DIR__ . '/../../configs/conf.php');
+
+        return 'botV3#' . array_rand($config['botNames']);
     }
 }

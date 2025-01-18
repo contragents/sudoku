@@ -3,11 +3,16 @@
 
 namespace classes;
 
+
+use AchievesModel;
+use BalanceHistoryModel;
+use BalanceModel;
 use BaseController as BC;
 use CommonIdRatingModel;
 use GamesModel;
 use PayController;
 use PlayerModel;
+use RatingHistoryModel;
 use UserModel;
 
 class Game
@@ -20,6 +25,7 @@ class Game
     public const GAME_DATA_KEY = '.current_game_';
     public const GET_GAME_KEY = '.get_game_';
     public const GAME_USERS_KEY = '.game_users_';
+    const STATS_FAILED = 'games_statistics_failed';
 
     const GAMES_COUNTER = 'erudit.num_games';
 
@@ -49,6 +55,7 @@ class Game
         'log' => 'getLog',
     ];
     const SPECIAL_PARAMS = 'special';
+    const BOT_TPL = 'botV3#';
 
     public ?string $User;
     public ?int $numUser = null;
@@ -269,7 +276,7 @@ class Game
                 }
 
                 //Номер пользователя по порядку
-                $this->numUser = $this->gameStatus->{$this->User};
+                $this->numUser = (int)$this->gameStatus->{$this->User};
 
 
                 if (isset($_GET['page_hidden']) && $_GET['page_hidden'] == 'true') {
@@ -344,7 +351,7 @@ class Game
             $this->gameStatus->desk = $this->newDesk();
 
             //Номер пользователя по порядку
-            $this->numUser = $this->gameStatus->{$this->User};
+            $this->numUser = (int)$this->gameStatus->{$this->User};
         }
 
         $this->doSaveGameState = true;
@@ -352,18 +359,18 @@ class Game
         return Response::state($this->SM::getPlayerStatus($this->User));
     }
 
-    protected function isBot(): bool
+    public static function isBot(string $User): bool
     {
-        return false;
+        return !(strstr($User, self::BOT_TPL) === false);
     }
 
     public static function getNewGameId(): int
     {
-        $gameId = Cache::incr(self::getCacheKey(self::GAMES_COUNTER));
+        $gameId = Cache::incr(self::GAMES_COUNTER);
 
         if ($gameId == 1) {
             $gameId = GamesModel::getLastId() + 1;
-            Cache::set(static::GAMES_COUNTER, $gameId);
+            Cache::set(self::GAMES_COUNTER, $gameId);
         }
 
         return $gameId;
@@ -491,7 +498,13 @@ class Game
         if ($this->currentGame && ($this->numUser ?? false) !== false) {
             $this->gameStatus->users[$this->numUser]->isActive = false;
             //Игрок стал неактивен
-            $this->addToLog("has left the game", $this->numUser);
+            $this->addToLog(T::S('has left the game'), $this->numUser);
+
+            if(count($this->gameStatus->users) == 2) {
+                $this->storeGameResults($this->gameStatus->users[($this->numUser + 1) % 2]->ID);
+                $this->addToLog('остался в игре один - Победа!', ($this->numUser + 1) % 2);
+            }
+
             $left = true;
         }
 
@@ -694,6 +707,25 @@ class Game
                     $this->gameStatus->users[$num]->last_request_num
                 );
             }
+        }
+
+        $resultRatings = RatingService::processGameResult($this->gameStatus);
+        foreach ($this->gameStatus->users as $user) {
+            // todo учитывать в сообщениях игры изменение рейтинга - см. Эрудит по фразе ['result_ratings']
+            $user->result_ratings = $resultRatings[$user->common_id];
+
+            /* todo Включить при настройке игры на монеты
+            if (RatingHistoryModel::getNumGamesPlayed($user->common_id) % 100 == 0) {
+                // Начисляем бонус за каждые 100 игр
+                BalanceModel::changeBalance(
+                    $user->common_id,
+                    MonetizationService::REWARD[AchievesModel::DAY_PERIOD],
+                    '100-game bonus',
+                    BalanceHistoryModel::TYPE_IDS[BalanceHistoryModel::MOTIVATION_TYPE]
+                );
+            }
+            */
+
         }
     }
 

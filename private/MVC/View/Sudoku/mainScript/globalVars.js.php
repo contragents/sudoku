@@ -13,9 +13,10 @@ const chooseFile = "'<?= T::S('Choose file') ?>'";
 document.documentElement.style.setProperty('--choose-file', chooseFile);
 
 const INVITE_FRIEND_PROMPT = '<?= T::getInviteFriendPrompt() ?>';
-const GAME_BOT_URL = '<?= T::PHRASES['game_bot_url'][T::$lang] ?>';
-const LOADING_TEXT = '<?= T::PHRASES['loading_text'][T::$lang] ?>';
+const GAME_BOT_URL = '<?= T::S('game_bot_url') ?>';
+const LOADING_TEXT = '<?= T::S('loading_text') ?>';
 const errorServerMessage = '<?= T::S('Server connecting error. Please try again')?>';
+const STATS_GET_ERROR = '<?= T::S('Stats getting error')?>';
 
 const BLINK_COUNT = 3000;
 var dontBlink = true;
@@ -55,6 +56,7 @@ const SUDOKU_PRICE = <?= MonetizationService::SUDOKU_PRICE ?>;
 const COMMON_TPL_DIR = 'tpl/common/';
 const PROFILE_TPL =  BASE_URL + COMMON_TPL_DIR + (!isYandexAppGlobal() ? 'profile-modal-tpl_1.html' : 'profile-modal-tpl_yandex.html');
 const FAQ_TPL = BASE_URL + COMMON_TPL_DIR + 'faq-modal-tpl_' + lang + '.html'
+const STATS_TPL =  BASE_URL + COMMON_TPL_DIR + 'stats-modal-tpl.html';
 
 const SUBMIT_SCRIPT = 'turnSubmitter';
 const WORD_CHECKER_SCRIPT = 'word_checker.php';
@@ -62,7 +64,8 @@ const STATUS_CHECKER_SCRIPT = 'statusChecker';
 const STATUS_HIDDEN_CHECKER_SCRIPT = 'statusHiddenChecker';
 const INIT_GAME_SCRIPT = 'initGame';
 const CABINET_SCRIPT = 'playerCabinet';
-const PLAYER_RATING_SCRIPT = 'players/info/'; // todo ...
+const PLAYER_RATING_SCRIPT = 'players/info'; // todo ...
+const HIDE_BALANCE_SCRIPT = 'players/hideBalance';
 const CLAIM_SCRIPT = 'pay/claim';
 const PAY_SCRIPT = 'pay/pay';
 
@@ -75,7 +78,7 @@ const SET_PLAYER_NAME_SCRIPT = 'players/saveUserName';
 const AVATAR_UPLOAD_SCRIPT = 'players/avatarUpload';
 
 const DELETE_BAN_URL = 'mvc/ban/remove?common_id=';
-const STATS_URL = 'mvc/stats/viewV2/?common_id='
+const STATS_URL = 'stats/viewV2'
 const NEW_GAME_SCRIPT = 'newGame';
 
 const CHANGE_FISHKI_SCRIPT = 'change_fishki.php';

@@ -1378,7 +1378,7 @@ function commonCallback(data) {
 
     if ('winScore' in data) {
         if (!winScore) {
-            buttonSetModeGlobal(players, 'goalBlock', data.winScore == 200 ? OTJAT_MODE : ALARM_MODE);
+            buttonSetModeGlobal(players, 'goalBlock', OTJAT_MODE);
         }
 
         winScore = data.winScore;

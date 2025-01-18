@@ -25,8 +25,13 @@ class GameUser
     public int $common_id;
     public array $logStack = [];
     protected array $comments = [];
+    public array $result_ratings = [];
 
     protected array $data = [];
+    /**
+     * @var mixed|null
+     */
+
 
     public function __construct(array $params) {
         foreach($params as $attribute => $value) {

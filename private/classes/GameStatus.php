@@ -23,7 +23,7 @@ class GameStatus
     public array $gameLog = [];
     public int $gameGoal = 0; // Число очков для победы
 
-    private array $data = [];
+    private array $data = []; // Массив разных свойств по запросу
 
     public function __get($attribute)
     {

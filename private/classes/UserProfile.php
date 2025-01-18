@@ -11,6 +11,7 @@ use BaseController;
 use CommonIdRatingModel;
 use IncomeModel;
 use PaymentModel;
+use PlayerModel;
 use RefModel;
 use classes\ViewHelper as VH;
 use UserModel;
@@ -80,9 +81,9 @@ class UserProfile
 
         $message['common_id'] = BaseController::$commonId;
 
-        $userData = UserModel::getOne(BaseController::$commonId);
+        $userData = UserModel::getOneO(BaseController::$commonId);
 
-        $message['url'] = $userData['avatar_url'] ?? false;
+        $message['url'] = $userData->_avatar_url ?: false;
         if (!$message['url']) {
             $message['url'] = AvatarModel::getDefaultAvatar(BaseController::$commonId);
             $message['img_title'] = T::S('Default avatar is used');
@@ -90,7 +91,10 @@ class UserProfile
             $message['img_title'] = T::S('Avatar by provided link');
         }
 
-        $message['name'] = $userData['name'] ?? '';
+        $message['name'] = $userData->_name
+            ?: PlayerModel::getPlayerName(
+                new GameUser(['ID' => BaseController::$User, 'common_id' => BaseController::$commonId])
+            );
 
         $message['text'] = '';
         $message['form'][] = [

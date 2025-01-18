@@ -9,6 +9,7 @@
 use classes\Cache;
 use classes\DB;
 use classes\Game;
+use classes\GameUser;
 use classes\MonetizationService;
 use classes\ORM;
 use classes\Ru;
@@ -37,8 +38,9 @@ class PlayerModel extends BaseModel
     public ?string $_cookie = null;
     public ?int $_common_id = null;
 
-    public static function validateCommonIdByCookie(int $commonId, string $cookie): bool {
-        return true; // todo CLUB-397 убрать после тестирования задачи
+    public static function validateCommonIdByCookie(int $commonId, string $cookie): bool
+    {
+        return true; // todo доделать валидацию и убрать
 
         $player = self::getOneCustomO(self::COOKIE_FIELD, $cookie);
 
@@ -179,7 +181,10 @@ class PlayerModel extends BaseModel
             return 0;
         }
 
-        return CommonIdRatingModel::getRating($player[self::COMMON_ID_FIELD], BaseController::gameName()) ?: ($player[self::RATING_FIELD] ?? CommonIdRatingModel::INITIAL_RATING);
+        return CommonIdRatingModel::getRating(
+            $player[self::COMMON_ID_FIELD],
+            BaseController::gameName()
+        );
     }
 
     public static function getRating($commonID = false, $cookie = false, $userID = false)
@@ -236,7 +241,7 @@ class PlayerModel extends BaseModel
 
     public static function getTopPlayersCached(int $top, ?int $topMax = null): array
     {
-        $cacheKey = self::RATING_CACHE_PREFIX . "_top_{$top}_" . ($topMax ??  self::TOP_10);
+        $cacheKey = self::RATING_CACHE_PREFIX . "_top_{$top}_" . ($topMax ?? self::TOP_10);
 
         if ($topRatings = Cache::get($cacheKey)) {
             return $topRatings;
@@ -263,35 +268,25 @@ class PlayerModel extends BaseModel
         }
     }
 
-    public
-    static function getPlayerName(
-        array $user = ['ID' => 'cookie', 'common_id' => 15, 'userID' => 'user_ID']
-    ) {
-        if (strpos($user['ID'], 'bot') !== false) {
+    public static function getPlayerName(GameUser $user)
+    {
+        if (Game::isBot($user->ID)) {
             $config = include(__DIR__ . '/../../../configs/conf.php');
 
             return T::translit(
-                $config['botNames'][str_replace('botV3#', '', $user['ID'])] ?? 'John Doe',
+                $config['botNames'][str_replace('botV3#', '', $user->ID)] ?? 'John Doe',
                 T::$lang === T::EN_LANG
             );
         }
 
-        $commonId = $user['common_id'];
-        if (
-        $commonIDName = DB::queryValue(
-            "SELECT name 
-                    FROM users 
-                    WHERE id=$commonId 
-                    LIMIT 1"
-        )) {
-            return $commonIDName;
+        $commonId = $user->common_id;
+
+        $userModel = UserModel::getOneO($commonId);
+        if ($userModel && !empty($userModel->_name)) {
+            return $userModel->_name;
         }
 
-        if (isset($user['userID'])) {
-            $idSource = $user['userID'];
-        } else {
-            $idSource = $user['ID'];
-        }
+        $idSource = $user->ID;
 
         if (
         $res = DB::queryValue(
@@ -303,9 +298,7 @@ class PlayerModel extends BaseModel
         ) {
             return $res;
         } else {
-            $sintName = isset($user['userID'])
-                ? md5($user['userID'])
-                : $user['ID'];
+            $sintName = $user->ID;
             $letterName = '';
 
             foreach (str_split($sintName) as $index => $lowByte) {
@@ -350,7 +343,7 @@ class PlayerModel extends BaseModel
         foreach ($topRatings as $num => &$playerArr) {
             foreach ($playerArr as $numPlayer => &$player) {
                 $player['avatar_url'] = self::getAvatarUrl($player[self::COMMON_ID_FIELD]);
-                $player['name'] = self::getPlayerName(['common_id' => $player[self::COMMON_ID_FIELD]]);
+                $player['name'] = self::getPlayerName(new GameUser(['common_id' => $player[self::COMMON_ID_FIELD]]));
             }
         }
 
@@ -379,7 +372,7 @@ class PlayerModel extends BaseModel
         $resultRatings = [];
 
         for ($i = $top; $i <= $top + $topMax ?? 0; $i++) {
-            $currentRating = $topRatings[$i-$top][self::RATING_FIELD] ?? false;
+            $currentRating = $topRatings[$i - $top][self::RATING_FIELD] ?? false;
             if (!$currentRating) {
                 break;
             }

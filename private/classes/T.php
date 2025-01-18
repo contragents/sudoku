@@ -167,11 +167,15 @@ class T
             self::RU_LANG => 'Присоединяйся к онлайн игре Эрудит в Telegram! Набери максимальный рейтинг, зарабатывай монеты и выводи токены на кошелек'
         ],
         'game_bot_url' => [
-            self::EN_LANG => 'https://t.me/scrabble_online_bot',
-            self::RU_LANG => 'https://t.me/erudit_club_bot'
+            SudokuGame::GAME_NAME => [
+                self::EN_LANG => 'https://t.me/sudoku_app_bot',
+                self::RU_LANG => 'https://t.me/sudoku_app_bot'
+            ],
+            self::EN_LANG => 'https://t.me/sudoku_app_bot',
+            self::RU_LANG => 'https://t.me/sudoku_app_bot'
         ],
         'loading_text' => [
-            self::EN_LANG => 'Scrabble is loading...',
+            self::EN_LANG => 'Game is loading...',
             self::RU_LANG => 'Загружаем игру...'
         ],
         'ground_file' => [
@@ -354,8 +358,14 @@ class T
         'Nickname updated' => [
             self::RU_LANG => 'Ник пользователя сохранен',
         ],
+        'Stats getting error' => [
+            self::RU_LANG => 'Ошибка загрузки статистики',
+        ],
         'Error saving Nick change' => [
             self::RU_LANG => 'Ошибка сохранения Ника!',
+        ],
+        'Play at least one game to view statistics' => [
+            self::RU_LANG => 'Для просмотра статистики сыграйте хотя бы одну партию',
         ],
         'Lost server synchronization' => [
             'Потеря синхронизации с сервером',
@@ -808,6 +818,9 @@ class T
             self::RU_LANG => 'остался в игре один - Победа!'
         ],
         'left game' => [
+            self::RU_LANG => 'покинул игру'
+        ],
+        'has left the game' => [
             self::RU_LANG => 'покинул игру'
         ],
         "is the only one left in the game! Start a new game" => [

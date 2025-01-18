@@ -40,10 +40,10 @@ class CommonIdRatingModel extends BaseModel
 
     public static function getRating(int $commonId, string $gameName): int
     {
-        return (int)DB::queryValue(
+        return ((int)DB::queryValue(
             ORM::select([self::RATING_FIELD_PREFIX . $gameName], self::TABLE_NAME)
             . ORM::where(self::COMMON_ID_FIELD, '=', $commonId, true)
-        );
+        )) ?: self::INITIAL_RATING;
     }
 
     public static function getTopByRating(int $rating, string $gameName): int

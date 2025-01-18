@@ -1,5 +1,6 @@
 <?php
 
+use classes\Config;
 use classes\Response;
 use classes\T;
 use BaseController as BC;
@@ -10,6 +11,8 @@ class BaseSubController
 
     const COMMON_ID_PARAM = BaseController::COMMON_ID_PARAM;
     const TG_ID_PARAM = BaseController::TG_ID_PARAM;
+
+    const DEFAULT_ACTION = 'index';
 
     public $Action;
 
@@ -40,5 +43,25 @@ class BaseSubController
             ],
             JSON_UNESCAPED_UNICODE
         );
+    }
+
+    public static function getUrl(string $action, array $params = [], array $excludedParams = [])
+    {
+        return BC::$instance::GAME_URL
+            . BC::$instance->ActionRaw . '/'
+            . $action
+            . (!empty($params)
+                ? ('?' . implode(
+                        '&',
+                        array_filter(
+                            array_map(
+                                fn($param, $value) => !in_array($param, $excludedParams) ? "$param=$value" : null,
+                                array_keys($params),
+                                $params
+                            )
+                        )
+                    )
+                )
+                : '');
     }
 }

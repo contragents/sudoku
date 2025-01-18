@@ -407,10 +407,14 @@ function StatsPage({ json, BASE_URL }) {
                 }
 
                 if (url) {
-                    // console.log(`${BASE_URL}/${url}`);
-
-                    return fetch(`${BASE_URL}/${url}`, {
-                        headers: { 'Content-Type': 'application/json' },
+                    return fetch(`${url}`, {
+                        method: 'GET',
+                        mode: 'cors',
+                        cache: 'no-cache',
+                        credentials: 'include',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
                     })
                         .then((response) => {
                             if (!response.ok) {
@@ -422,7 +426,7 @@ function StatsPage({ json, BASE_URL }) {
                             updateHtml(json);
                             // prevLink = link;
                         })
-                        .catch((error) => console.error('Ошибка загрузки страницы:', error));
+                        .catch((error) => console.error('Error loading page:', error));
                 }
 
             };
@@ -442,7 +446,7 @@ function StatsPage({ json, BASE_URL }) {
     })();
 
     function getStatsModal(json) {
-        return fetch('/stats-modal-tpl.html')
+        return fetch(STATS_TPL)
             .then((response) => response.text())
             .then((template) => {
                 // Заменяем маркеры в шаблоне реальными данными
@@ -469,7 +473,7 @@ function StatsPage({ json, BASE_URL }) {
 
                 return message;
             })
-            .catch((error) => console.error('Ошибка загрузки stats-modal-tpl:', error));
+            .catch((error) => console.error('Error loading stats-modal-tpl:', error));
     }
 
     // ON MODAL LOADED
@@ -976,7 +980,7 @@ function PlayersPage(json) {
             const userId = btn.getAttribute('data-user-id');
             const newVisibility = isHidden ? 'show' : 'hide';
 
-            const url = `/mvc/players/hideBalance/?common_id=${userId}&hide=${newVisibility}`;
+            const url = BASE_URL + HIDE_BALANCE_SCRIPT + `?common_id=${userId}&hide=${newVisibility}`;
 
             fetch(url).then((response) => {
                     if (!response.ok) {

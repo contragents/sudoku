@@ -298,7 +298,7 @@ function savePlayerAvatar(commonIdParam) {
 }
 
 function refreshId(element_id, url) {
-    let respMessage = 'Ошибка загрузки статистики';
+    let respMessage = STATS_GET_ERROR;
 
     $.ajax({
         url: url,
@@ -319,22 +319,24 @@ function version(oneKey = false) {
 }
 
 async function getStatPageGlobal(userId = commonId) {
-    let urlPart = STATS_URL + userId + '&lang=' + lang + version();
-    let respMessage = 'Ошибка загрузки статистики';
+    let url = BASE_URL + STATS_URL + '?common_id=' + userId + version();
+    let respMessage = STATS_GET_ERROR;
 
     if (userId) {
         try {
-            const response = await fetch('/' + urlPart, {
+            const response = await fetch(url, {
                 method: 'GET',
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'include',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                cache: 'no-cache',
             });
 
             // Проверяем успешность запроса
             if (!response.ok) {
-                throw new Error(`Ошибка запроса: ${response.status}`);
+                throw new Error(`Error: ${response.status}`);
             }
 
             const returndata = await response.json();
@@ -351,14 +353,14 @@ async function getStatPageGlobal(userId = commonId) {
                 onLoad: s.onLoad,
             };
         } catch (error) {
-            console.error('Ошибка при загрузке статистики:', error.message);
+            console.error(STATS_GET_ERROR, error.message);
             return {
                 message: respMessage,
             };
         }
     } else {
         return {
-            message: 'Для просмотра статистики сыграйте хотя бы одну партию',
+            message: '<?= T::S('Play at least one game to view statistics') ?>'
         };
     }
 }

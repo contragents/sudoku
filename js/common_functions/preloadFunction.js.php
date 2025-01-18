@@ -75,17 +75,30 @@ function () {
         if ('preload' in players[k] && !players[k].preload) {
             continue;
         }
-
-        playerBlockModes.forEach(mode => this.load.svg(k + mode, 'img/' + mode.toLowerCase() + '/' + players[k]['filename'] + '.svg',
-            'width' in players[k]
-                ? {
-                    'width': players[k]['width'],
-                    'height': 'height' in players[k] ? players[k].height : buttonHeight,
-                }
-                : {
-                    'height': 'height' in players[k] ? players[k].height : buttonHeight,
-                }
-        ));
+        if ('modes' in players[k]) {
+            players[k].modes.forEach(mode => this.load.svg(k + mode, 'img/' + mode.toLowerCase() + '/' + players[k]['filename'] + '.svg',
+                'width' in players[k]
+                    ? {
+                        'width': players[k].width,
+                        'height': 'height' in players[k] ? players[k].height : buttonHeight,
+                    }
+                    : {
+                        'height': 'height' in players[k] ? players[k].height : buttonHeight,
+                    }
+            ));
+        }
+        else {
+            playerBlockModes.forEach(mode => this.load.svg(k + mode, 'img/' + mode.toLowerCase() + '/' + players[k]['filename'] + '.svg',
+                'width' in players[k]
+                    ? {
+                        'width': players[k].width,
+                        'height': 'height' in players[k] ? players[k].height : buttonHeight,
+                    }
+                    : {
+                        'height': 'height' in players[k] ? players[k].height : buttonHeight,
+                    }
+            ));
+        }
     }
 
     playerBlockModes.forEach(mode => {
