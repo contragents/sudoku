@@ -25,11 +25,12 @@ class BaseController
     const DESCRIPTION = 'In Game, the objective is to WIN!';
     const FB_IMG_URL = 'https://' . Config::ERUDIT_DOMAIN . '/img/share/hor_640_360.png';
     const FORCE_ACTIONS = [
-        'gameState' . 'Action',
+        self::GAME_STATE_PARAM . 'Action',
         'mainScript' . 'Action',
         'index' . 'Action',
     ];
     const MAX_UPLOAD_SIZE = 2 * 1024 * 1024;
+    const GAME_STATE_PARAM = 'gameState';
 
     public static ?BaseController $instance = null;
     public Game $Game;

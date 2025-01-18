@@ -6,6 +6,7 @@ use BaseController;
 
 class StateMachine
 {
+    public const INIT_STATES = [self::STATE_INIT_GAME, self::STATE_INIT_RATING_GAME];
     public static ?string $gamePrefix = null;
 
     const CACHE_TTL = 60 * 60;
@@ -19,6 +20,7 @@ class StateMachine
     const STATE_NO_GAME = 'noGame'; // Статус, в котором ничего не происходит. Ждем пока юзер нажмет Новая игра
     const STATE_CHOOSE_GAME = 'chooseGame'; // Выбор режима игры (время на ход и т.д.)
     const STATE_INIT_GAME = 'initGame'; // Статус подбора игры, ждем соперника
+    const STATE_INIT_RATING_GAME = 'initRatingGame'; // Статус подбора игры, ждем соперника с рейтингом
     const STATE_NEW_GAME = 'newGame'; // Когда с сервера прилетает этот статус, начинаем новую игру
     const STATE_PRE_MY_TURN = 'preMyTurn'; // Мой ход следующий
     const STATE_MY_TURN = 'myTurn'; // Мой ход

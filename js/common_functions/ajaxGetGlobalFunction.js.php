@@ -89,7 +89,6 @@ function commonParams() {
 
 async function fetchGlobalNominal(script, param_name, param_data) {
     const response = await fetch(BASE_URL
-        + ''
         + script
         + '?'
         + commonParams(),
@@ -127,6 +126,7 @@ async function fetchGlobalNominal(script, param_name, param_data) {
     return await response.json(); // parses JSON response into native JavaScript objects
 }
 
+// todo ...
 async function fetchGlobalYowser(script, param_name, param_data) {
     const response = await fetch('yowser'
         + '?cooki='

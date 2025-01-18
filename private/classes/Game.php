@@ -473,7 +473,7 @@ class Game
         Cache::setex(self::getCacheKey(self::GET_GAME_KEY . $User), self::CACHE_TIMEOUT, $gameNumber);
     }
 
-    public function clearUserGameNumber(string $User = null)
+    public function clearUserGameNumber(?string $User = null)
     {
         $User = $User ?? $this->User;
 
@@ -484,7 +484,7 @@ class Game
     {
         $this->Queue::cleanUp($this->User);
 
-        if ($this->currentGame && ($_REQUEST['gameState'] ?? '') == $this->SM::STATE_INIT_GAME) {
+        if ($this->currentGame && (in_array(BC::$Request[BC::GAME_STATE_PARAM] ?? '', StateMachine::INIT_STATES))) {
             return $this->checkGameStatus();
             //Пользователь думает, что находится в подборе игры, но игра уже началась
         }
@@ -508,8 +508,11 @@ class Game
         $this->SM::setPlayerStatus($this->SM::STATE_NEW_GAME);
         $this->SM::setPlayerStatus($this->SM::STATE_NO_GAME);
 
-        return Response::state($this->SM::setPlayerStatus($this->SM::STATE_CHOOSE_GAME))
+        /*return Response::state($this->SM::setPlayerStatus($this->SM::STATE_CHOOSE_GAME))
             + ['gameSubState' => 'choosing']
+            + ['left' => $left ?? false];*/
+
+        return $this->Queue->chooseGame(true)
             + ['left' => $left ?? false];
     }
 
@@ -588,7 +591,7 @@ class Game
     {
         $desk = $this->gameStatus->desk;
         return [
-            'gameState' => $this->SM::STATE_GAME_RESULTS,
+            BC::GAME_STATE_PARAM => $this->SM::STATE_GAME_RESULTS,
             'comments' => $this->gameStatus->results['winner'] == $this->User
                 ? "<strong style=\"color:green;\">Вы выиграли!</strong><br/>Начните новую игру"
                 : "<strong style=\"color:red;\">Вы проиграли!</strong><br/>Начните новую игру",

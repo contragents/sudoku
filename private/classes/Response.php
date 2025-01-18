@@ -2,7 +2,7 @@
 
 namespace classes;
 
-use BaseController;
+use BaseController as BC;
 
 class Response
 {
@@ -24,7 +24,7 @@ class Response
 
     public static function state(string $playerStatus): array
     {
-        return ['gameState' => $playerStatus];
+        return [BC::GAME_STATE_PARAM => $playerStatus];
     }
 
     private static function enrichResponse(Game $game): array

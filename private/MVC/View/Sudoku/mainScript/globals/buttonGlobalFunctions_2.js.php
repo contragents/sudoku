@@ -146,7 +146,7 @@ function newGameButtonFunction(ignoreDialog = false) {
                         requestToServerEnabled = true;
                         fetchGlobal(NEW_GAME_SCRIPT, '', 'gameState=' + gameState)
                             .then((data) => {
-                                document.location.reload(true);
+                                commonCallback(data);
                             });
 
                         buttons['newGameButton']['svgObject'].setInteractive();
@@ -199,10 +199,11 @@ function newGameButtonFunction(ignoreDialog = false) {
 
         fetchGlobal(NEW_GAME_SCRIPT, '', 'gameState=' + gameState)
             .then((data) => {
-                document.location.reload(true);
+                commonCallback(data);
             });
     }
 };
+
 
 function resetButtonFunction(ignoreBootBox = false) {
     if (ignoreBootBox === false)
