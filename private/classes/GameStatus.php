@@ -22,6 +22,7 @@ class GameStatus
     public bool $isGameEndedSaved = false;
     public array $gameLog = [];
     public int $gameGoal = 0; // Число очков для победы
+    public int $bid = 0; // Ставка за партию в монетах
 
     private array $data = []; // Массив разных свойств по запросу
 

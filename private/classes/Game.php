@@ -4,16 +4,13 @@
 namespace classes;
 
 
-use AchievesModel;
-use BalanceHistoryModel;
-use BalanceModel;
 use BaseController as BC;
 use CommonIdRatingModel;
 use GamesModel;
 use PayController;
 use PlayerModel;
-use RatingHistoryModel;
 use UserModel;
+use classes\ViewHelper as VH;
 
 class Game
 {
@@ -552,7 +549,7 @@ class Game
             $log[] = trim(
                 (
                 $logRecord[0] !== false
-                    ? $this->gameStatus['users'][$logRecord[0]]['username']
+                    ? $this->gameStatus->users[$logRecord[0]]->username
                     : ''
                 )
                 . ' ' . $logRecord[1]
@@ -681,12 +678,12 @@ class Game
         foreach ($this->gameStatus->users as $numUser => $user) {
             if ($user->ID == $winnerUser) {
                 $results['winner'] = $winnerUser;
-                $user->addComment('Вы выиграли!');
+                // $user->addComment('Вы выиграли!');
 
                 $this->addToLog('Игрок' . ($numUser + 1) . ' выиграл!');
             } else {
                 $results['lostUsers'][] = $user->ID;
-                $user->addComment('Вы проиграли!');
+                // $user->addComment('Вы проиграли!');
             }
         }
 
@@ -710,9 +707,14 @@ class Game
         }
 
         $resultRatings = RatingService::processGameResult($this->gameStatus);
-        foreach ($this->gameStatus->users as $user) {
+        foreach ($this->gameStatus->users as $numUser => $user) {
             // todo учитывать в сообщениях игры изменение рейтинга - см. Эрудит по фразе ['result_ratings']
             $user->result_ratings = $resultRatings[$user->common_id];
+
+            $user->addComment(self::playerGameResultsRendered(
+                $results['winner'] == $this->User,
+                $user->result_ratings
+            ));
 
             /* todo Включить при настройке игры на монеты
             if (RatingHistoryModel::getNumGamesPlayed($user->common_id) % 100 == 0) {
@@ -846,5 +848,35 @@ class Game
         }
 
         return $commonId === PlayerModel::getPlayerCommonId($this->User);
+    }
+
+    protected function playerGameResultsRendered(bool $isWinner, array $ratingsChanged): string
+    {
+        return
+            VH::strong(
+                $isWinner ? T::S('you_won') : T::S('you_lost'),
+                ['style' => 'color:' . ($isWinner ? '#00ff00' : 'red') . ';']
+            )
+            . VH::br()
+            . T::S('rating_changed')
+            . "{$ratingsChanged['prev_rating']} -> "
+            . VH::strong(
+                "{$ratingsChanged['new_rating']} (" . ($isWinner ? '+' : '') . "{$ratingsChanged['delta_rating']})",
+                ['style' => 'color:' . ($isWinner ? '#00ff00' : 'red') . ';']
+            )
+            . ($this->gameStatus->bid
+                    ? (
+                        VH::br()
+                        . T::S('The bank of') . ' '
+                        . VH::strong(
+                            number_format($this->gameStatus->bid * count($this->gameStatus->users), 0, '.', ',')
+                        )
+                        . T::S('{{sudoku_icon_15}}') . ' '
+                        . ($isWinner ? T::S('goes to you') : T::S('is taken by the opponent'))
+                    )
+                    : ''
+            )
+            . VH::br()
+            . T::S('start_new_game');
     }
 }

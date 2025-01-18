@@ -508,7 +508,7 @@ class Queue
                 'status' => $this->caller->SM::GAME_STATE_START_GAME,
                 'isActive' => true,
                 'score' => 0,
-                'username' => 'Игрок' . ($num + 1),
+                'username' => T::S('Player') . ($num + 1),
                 'avatarUrl' => false,
                 'wishTurnTime' => $user['options'] !== false ? $user['options'][self::TURN_TIME_PARAM_NAME] : 0,
             ]);
