@@ -25,6 +25,7 @@ class GameUser
     public int $common_id;
     public array $logStack = [];
     protected array $comments = [];
+    protected string $lastComment = ''; // Комментарий отдаем, если comments пуст
     public array $result_ratings = [];
 
     protected array $data = [];
@@ -51,10 +52,16 @@ class GameUser
 
     public function getLastComment(): ?string
     {
-        $res = implode(VH::br(), $this->comments) ?: null;
+        $res = implode(VH::br(), $this->comments);
         $this->comments = [];
 
-        return $res;
+        if(!$res) {
+            $res = $this->lastComment;
+        } else {
+            $this->lastComment = $res;
+        }
+
+        return $res ?: '&nbsp;';
     }
 
     public function addComment(string $comment)

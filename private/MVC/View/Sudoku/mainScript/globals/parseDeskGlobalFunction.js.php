@@ -124,14 +124,11 @@ function blinkRightGlobal() {
 
     for (let k in errorsToBlink) {
         if (blinkErrorsCounter > 0) {
-            //errorsToBlink[k].x += 0.05;
-            //errorsToBlink[k].alpha = 0.3;
             errorsToBlink[k].scale += 0.01;
             if (errorsToBlink[k].scale >= 1.5) {
                 errorsToBlink[k].scale = 1.5;
             }
         } else {
-            //errorsToBlink[k].alpha = 1;
             errorsToBlink[k].scale = 1;
             errorsToBlink[k].displayHeight = errorsToBlink[k].getData('displayHeight');
             errorsToBlink[k].displayWidth = errorsToBlink[k].getData('displayWidth');

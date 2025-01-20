@@ -604,6 +604,34 @@ function getSVGBlockGlobal(X, Y, buttonName, _this, scalable, hasDigits = false)
     return container;
 }
 
+function clearBlinkVars() {
+    dontBlink = true;
+
+    while (errorsToBlink.length) {
+        errorsToBlink.pop();
+    }
+
+    while (prevErrors.length) {
+        prevErrors.pop();
+    }
+
+    while (sudokuMistakesContainer.length) {
+        sudokuMistakesContainer.pop().destroy();
+    }
+
+    blinkErrorsCounter = 0;
+
+    while (prevCellsOpened.length) {
+        prevCellsOpened.pop().destroy();
+    }
+
+    while (cellsToBlink.length) {
+        cellsToBlink.pop();
+    }
+
+    blinkCellsCounter = 0;
+}
+
 //<?php include('globals/getFishkaGlobalFunction.js')?>
 //<?php include('globals/buttonGlobalFunctions_2.js.php')?>
 

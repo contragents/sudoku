@@ -104,6 +104,8 @@ var gameStates = {
             };
             initScoresGlobal();
 
+            clearBlinkVars();
+
             let under1800 = '<?= T::S('Only for players rated 1800+') ?>';
             let noRatingPlayers = '<?= T::S('Not enough 1900+ rated players online') ?>';
             let haveRatingPlayers = '<?= T::S('Select the minimum opponent rating') ?>';
@@ -449,38 +451,6 @@ var gameStates = {
                 onEscape: false,
                 closeButton: false,
                 buttons: {
-                    ...(false && !!isPureSiteRoot() && lang !== 'EN' && {
-                    oferta: {
-                        label: '<?= T::S('Оферта') ?>',
-                        className: 'btn-outline-success',
-                        callback: function () {
-                            async function getOfertaModal() {
-                                return fetch('/oferta.html')
-                                    .then((response) => response.text());
-                            };
-                            console.log('!!!!!!!!!!!');
-                            getOfertaModal().then((html) => {
-                                dialog = bootbox.alert({
-                                    title: '',
-                                    message: html,
-                                    locale: 'ru',
-                                    className: 'modal-settings modal-profile',
-                                    buttons: {
-                                        ok: {
-                                            label: '<?= T::S('Back') ?>',
-                                            className: 'btn-sm ml-auto mr-0',
-                                        },
-                                    },
-                                    callback: function () {
-                                        gameStates.chooseGame.action(data);
-                                    },
-                                })
-                            });
-                        },
-                    }
-                    })
-                    ,
-                    //...(true /*!isPureSiteRoot()*/ && {
                     cabinet: {
                         label: '<?= T::S('Profile') ?>',
                         className: 'btn-outline-success',
@@ -627,7 +597,7 @@ var gameStates = {
                                                 profileModal.onProfileModalLoaded();
                                             },
                                             callback: function () {
-                                                gameStates['chooseGame']['action'](data);
+                                                gameStates.chooseGame.action(data);
                                             },
                                         });
                                     });
