@@ -339,8 +339,7 @@ var players = {
     },
 };
 
-function displayScoreGlobal(score, blockName, isActive = false)
-{
+function displayScoreGlobal(score, blockName, isActive = false) {
     let mode = isActive ? ALARM_MODE : OTJAT_MODE;
 
     let container = players[blockName].svgObject;
@@ -350,15 +349,15 @@ function displayScoreGlobal(score, blockName, isActive = false)
     let secondDigit = ((score - thirdDigit) % 100) / 10;
     let firstDigit = (score - secondDigit * 10 - thirdDigit) / 100;
 
-    if(thirdDigit !== playerScores[blockName].digit3 || mode !== playerScores[blockName].mode) {
+    if (thirdDigit !== playerScores[blockName].digit3 || mode !== playerScores[blockName].mode) {
         container.getByName(playerScores[blockName].mode + '_' + playerScores[blockName].digit3 + '_' + '3').setVisible(false);
     }
 
-    if(secondDigit !== playerScores[blockName].digit2 || mode !== playerScores[blockName].mode) {
+    if (secondDigit !== playerScores[blockName].digit2 || mode !== playerScores[blockName].mode) {
         container.getByName(playerScores[blockName].mode + '_' + playerScores[blockName].digit2 + '_' + '2').setVisible(false);
     }
 
-    if(firstDigit !== playerScores[blockName].digit1 || mode !== playerScores[blockName].mode) {
+    if (firstDigit !== playerScores[blockName].digit1 || mode !== playerScores[blockName].mode) {
         container.getByName(playerScores[blockName].mode + '_' + playerScores[blockName].digit1 + '_' + '1').setVisible(false);
     }
 
@@ -431,6 +430,20 @@ function buttonSetModeGlobal(objectSet, objectName, mode)
     } else {
         svgObject.getByName(objectName + ALARM_MODE).setVisible(false);
         svgObject.getByName(objectName + OTJAT_MODE).setVisible(true);
+    }
+}
+
+function initScoresGlobal() {
+    for (let blockName in playerScores) {
+        let container = players[blockName].svgObject;
+
+        for (let number = 0; number <= 9; number++) {
+            for (let mode in playerBlockModes) {
+                for (let digitPos = 1; digitPos <= 3; digitPos++) {
+                    container.getByName(playerBlockModes[mode] + '_' + number + '_' + digitPos).setVisible(false);
+                }
+            }
+        }
     }
 }
 

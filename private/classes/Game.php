@@ -42,14 +42,9 @@ class Game
         'yourUserNum' => 'numUser',
         'comments' => 'getLastUserComment',
         'activeUser' => ['gameStatus' => 'activeUser'],
-        self::SPECIAL_PARAMS => [
-            StateMachine::STATE_CHOOSE_GAME => [
-                'players_test' => 'onlinePlayers',
-                'coin_players_test' => 'onlineCoinPlayers',
-            ],
-        ],
         'score_arr' => 'getPlayerScores',
         'log' => 'getLog',
+        BC::GAME_STATE_PARAM => 'getPlayerStatus',
     ];
     const SPECIAL_PARAMS = 'special';
     const BOT_TPL = 'botV3#';
@@ -508,10 +503,6 @@ class Game
         $this->SM::setPlayerStatus($this->SM::STATE_NEW_GAME);
         $this->SM::setPlayerStatus($this->SM::STATE_NO_GAME);
 
-        /*return Response::state($this->SM::setPlayerStatus($this->SM::STATE_CHOOSE_GAME))
-            + ['gameSubState' => 'choosing']
-            + ['left' => $left ?? false];*/
-
         return $this->Queue->chooseGame(true)
             + ['left' => $left ?? false];
     }
@@ -587,6 +578,7 @@ class Game
         return $this->Queue->doSomethingWithThisStuff();
     }
 
+    /*
     protected function resultsResponse(): array
     {
         $desk = $this->gameStatus->desk;
@@ -598,6 +590,7 @@ class Game
             ($desk ? 'desk' : 'nothing') => $desk
         ];
     }
+    */
 
     protected function lost3TurnsWinner($numLostUser, bool $pass = false): string
     {
@@ -711,11 +704,10 @@ class Game
 
         $resultRatings = RatingService::processGameResult($this->gameStatus);
         foreach ($this->gameStatus->users as $numUser => $user) {
-            // todo учитывать в сообщениях игры изменение рейтинга - см. Эрудит по фразе ['result_ratings']
             $user->result_ratings = $resultRatings[$user->common_id];
 
             $user->addComment(self::playerGameResultsRendered(
-                $results['winner'] == $this->User,
+                $results['winner'] == $user->ID,
                 $user->result_ratings
             ));
 
@@ -745,14 +737,19 @@ class Game
             $this->updateUserStatus($this->SM::STATE_NO_GAME);
             $this->updateUserStatus($this->SM::STATE_CHOOSE_GAME);
 
+            /*
             $chooseGameParams = Response::state($this->SM::getPlayerStatus($this->User))
                 + [
-                    'gameSubState' => 'choosing',
+                    'gameSubState' => $this->SM::SUBSTATE_CHOOSING,
                     'players' => $this->onlinePlayers(),
                     'coin_players' => $this->onlineCoinPlayers(),
                     'prefs' => $this->Queue->getUserPrefs($this->User),
                     'reason' => 'No currentGame'
                 ];
+            */
+
+            $chooseGameParams = $this->Queue->chooseGame(true)
+                + ['reason' => 'No currentGame'];
 
             return $chooseGameParams;
         }
@@ -769,7 +766,7 @@ class Game
 
         if ($this->SM::getPlayerStatus($this->User) == $this->SM::STATE_GAME_RESULTS) {
             if (isset($this->gameStatus->results['winner'])) {
-                return $this->resultsResponse();
+                return []; // $this->resultsResponse();
             }
         }
 
@@ -801,7 +798,7 @@ class Game
                 $this->storeGameResults($this->lost3TurnsWinner($this->gameStatus->activeUser));
 
                 if (isset($this->gameStatus->results['winner'])) {
-                    return $this->resultsResponse();
+                    return []; // $this->resultsResponse();
                 }
             } else {
                 $this->nextTurn();
@@ -842,6 +839,11 @@ class Game
     protected function makeBotTurn(int $botUserNum)
     {
         // return Response::state($this->SM::getPlayerStatus($this->User));
+    }
+
+    public function getPlayerStatus(): string
+    {
+        return $this->SM::getPlayerStatus($this->User);
     }
 
     public function checkCommonIdUnsafe(?int $commonId = null): bool

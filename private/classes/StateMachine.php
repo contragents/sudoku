@@ -31,6 +31,8 @@ class StateMachine
 
     const DEFAULT_STATUS = self::STATE_CHOOSE_GAME;
 
+    const SUBSTATE_CHOOSING = 'choosing';
+
     const IN_GAME_STATES = [
         self::STATE_MY_TURN,
         self::STATE_OTHER_TURN,

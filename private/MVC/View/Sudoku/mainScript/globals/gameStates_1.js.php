@@ -88,10 +88,21 @@ var gameStates = {
         message: '',
         noDialog: true,
         action: function (data) {
-            /*data = {
-                players: {0: 30, 1900: 25, 2000:20, 2100:15, thisUserRating: 2400},
-                prefs:{from_rating: 2100}
-            };*/
+            showStickyBannerYandex();
+            tWaiting = 0;
+            isUserBlockActive = false;
+            isOpponentBlockActive = false;
+            winScore = false;
+            gameBid = false;
+
+            playerScores = {
+                youBlock: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+                player1Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+                player2Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+                player3Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+                player4Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+            };
+            initScoresGlobal();
 
             let under1800 = '<?= T::S('Only for players rated 1800+') ?>';
             let noRatingPlayers = '<?= T::S('Not enough 1900+ rated players online') ?>';
@@ -1157,15 +1168,15 @@ function commonCallback(data) {
 
 
                             if ('timeWaiting' in data) {
-                                if (!tWaiting) {
-                                    tWaiting = data['timeWaiting'];
+                                if (!tWaiting || data.timeWaiting > 0) {
+                                    tWaiting = data.timeWaiting;
                                 }
                                 if (!gWLimit) {
-                                    gWLimit = data['gameWaitLimit'];
+                                    gWLimit = data.gameWaitLimit;
                                 }
                             } else {
                                 if (!gWLimit) {
-                                    gWLimit = data['gameWaitLimit'];
+                                    gWLimit = data.gameWaitLimit;
                                 }
                                 if (!tWaiting) {
                                     tWaiting = 0
@@ -1319,7 +1330,6 @@ function commonCallback(data) {
     }
 
     if ('timeLeft' in data) {
-        vremia.text = data['timeLeft'];
         vremiaMinutes = data['minutesLeft'];
         vremiaSeconds = data['secondsLeft'];
 
@@ -1330,13 +1340,28 @@ function commonCallback(data) {
         gameBid = data.bid;
         gameBank = data.bank;
         gameBankString = data.bank_string;
-        console.log(gameBid, gameBank, gameBankString);
 
-        buttons.logButton.svgObject.x = buttons.chatButton.svgObject.x - (buttons.checkButton.svgObject.width - buttons.logButton.svgObject.width) / 2;
-        buttons.playersButton.svgObject.x += (buttons.changeButton.svgObject.width - buttons.playersButton.svgObject.width) / 2
-        buttons.chatButton.svgObject.x = buttons.logButton.svgObject.x + (buttons.playersButton.svgObject.x - buttons.logButton.svgObject.x) / 2;
+        if (players.bankBlock.svgObject === false) {
+            buttons.logButton.svgObject.x = buttons.chatButton.svgObject.x - (buttons.checkButton.svgObject.width - buttons.logButton.svgObject.width) / 2;
+            buttons.playersButton.svgObject.x += (buttons.changeButton.svgObject.width - buttons.playersButton.svgObject.width) / 2
+            buttons.chatButton.svgObject.x = buttons.logButton.svgObject.x + (buttons.playersButton.svgObject.x - buttons.logButton.svgObject.x) / 2;
+        } else {
+            while(players.bankBlock.svgObject.length) {
+                players.bankBlock.svgObject.pop().setVisible(false).destroy();
+            }
+        }
 
-        preloaderObject.load.svg('bankBlockOtjat', `/img/otjat/${players.bankBlock.filename}${gameBankString}.svg`,
+        players.bankBlock.svgObject = [];
+
+        let resourceName = 'bankBlock_' + gameBankString + '_' + Date.now();
+
+        preloaderObject.load.reset();
+
+        let ruModifier = (gameBank < 1000 && isYandexAppGlobal() && lang === 'RU')
+            ? '_ru'
+            : '';
+
+        preloaderObject.load.svg(resourceName + OTJAT_MODE, `img/otjat/${players.bankBlock.filename}${gameBankString}${ruModifier}.svg`,
             {
                 ...('width' in players.bankBlock && {
                     'width': players.bankBlock.width,
@@ -1350,7 +1375,12 @@ function commonCallback(data) {
 
         preloaderObject.load.on('complete', function () {
             playerBlockModes = [OTJAT_MODE];
-            players.bankBlock.svgObject = getSVGBlockGlobal(players.bankBlock.x, players.bankBlock.y, 'bankBlock', faserObject, players.bankBlock.scalable, false);
+
+            while(players.bankBlock.svgObject.length) {
+                players.bankBlock.svgObject.pop().setVisible(false).destroy();
+            }
+            players.bankBlock.svgObject.push(getSVGBlockGlobal(players.bankBlock.x, players.bankBlock.y, resourceName, faserObject, players.bankBlock.scalable, false));
+
             playerBlockModes = [OTJAT_MODE, ALARM_MODE];
         });
     }
@@ -1377,11 +1407,8 @@ function commonCallback(data) {
     }
 
     if ('winScore' in data) {
-        if (!winScore) {
-            buttonSetModeGlobal(players, 'goalBlock', OTJAT_MODE);
-        }
-
         winScore = data.winScore;
+        buttonSetModeGlobal(players, 'goalBlock', OTJAT_MODE); // 54 points is the goal for sudoku
     }
 
     responseData = data;
@@ -1397,7 +1424,7 @@ function commonCallback(data) {
 function userScores(data) {
     if ("score_arr" in data) {
         for (let k in data['score_arr']) {
-            if (k == data['yourUserNum']) {
+            if (k == data.yourUserNum) {
                 let youBlock = players.youBlock.svgObject;
 
                 if (!isUserBlockActive) {
@@ -1425,20 +1452,26 @@ function userScores(data) {
                 buttonSetModeGlobal(players, 'youBlock', gameState === MY_TURN_STATE ? ALARM_MODE : OTJAT_MODE);
             } else {
                 let playerBlockName = 'player' + (+k + 1) + 'Block';
+                let opponentBlock = players[playerBlockName].svgObject;
+
+                if (!opponentBlock.visible) {
+                    opponentBlock.setVisible(true);
+                }
 
                 displayScoreGlobal(data['score_arr'][k], playerBlockName, false);
                 buttonSetModeGlobal(players, playerBlockName, k == data['activeUser'] ? ALARM_MODE : OTJAT_MODE);
 
-                if (players[playerBlockName].svgObject.alpha < 1) {
-                    players[playerBlockName].svgObject.setAlpha(1);
+                if (opponentBlock.alpha < 1) {
+                    opponentBlock.setAlpha(1);
                 }
 
                 if (('userNames' in data) && (k in data['userNames']) && (data['userNames'][k] === '')) {
-                    players[playerBlockName].svgObject.setAlpha(INACTIVE_USER_ALPHA);
+                    opponentBlock.setAlpha(INACTIVE_USER_ALPHA);
                 }
 
-                if (noNetworkImgOpponent.x == 200 && noNetworkImgOpponent.y == 200 && (+k < 2)) {
-                    let opponentBlock = players[playerBlockName].svgObject;
+                if (!isOpponentBlockActive && (+k < 2)) {
+                    isOpponentBlockActive = true;
+
                     noNetworkImgOpponent.setScale(opponentBlock.height / 232 / 4);
                     noNetworkImgOpponent.x = opponentBlock.x + opponentBlock.width / 2 + noNetworkImgOpponent.displayWidth / 2;
                     noNetworkImgOpponent.y = opponentBlock.y;

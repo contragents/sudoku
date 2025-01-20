@@ -18,6 +18,10 @@ const LOADING_TEXT = '<?= T::S('loading_text') ?>';
 const errorServerMessage = '<?= T::S('Server connecting error. Please try again')?>';
 const STATS_GET_ERROR = '<?= T::S('Stats getting error')?>';
 
+const ALARM_MODE = 'Alarm';
+const OTJAT_MODE = 'Otjat';
+const INACTIVE_MODE = 'Inactive';
+
 const BLINK_COUNT = 3000;
 var dontBlink = true;
 var preloaderObject = false;
@@ -39,6 +43,21 @@ if(localStorage != 'undefined') {
     }
 }
 var useYandexStorage = false;
+
+// vars initializing in chooseGame state
+var tWaiting = false;
+var isUserBlockActive = false;
+var isOpponentBlockActive = false;
+var winScore = false;
+var gameBid = false;
+var playerScores = {
+    youBlock: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+    player1Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+    player2Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+    player3Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+    player4Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+}
+// vars initializing in chooseGame state END
 
 // SUDOKU VARS
 const sudokuSet1Column = new Set([1,4,7]);
@@ -88,10 +107,6 @@ const SET_AVATAR_SCRIPT = 'set_player_avatar_url.php';
 const HOR = 'horizontal';
 const VERT = 'vertical';
 
-const ALARM_MODE = 'Alarm';
-const OTJAT_MODE = 'Otjat';
-const INACTIVE_MODE = 'Inactive';
-
 const MY_TURN_STATE = 'myTurn';
 const PRE_MY_TURN_STATE = 'preMyTurn';
 const OTHER_TURN_STATE = 'otherTurn';
@@ -110,14 +125,6 @@ const INACTIVE_USER_ALPHA = 0.2;
 var activeUser = false;
 var commonId = false;
 var commonIdHash = false;
-var isUserBlockActive = false;
-var playerScores = {
-    youBlock: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
-    player1Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
-    player2Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
-    player3Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
-    player4Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
-}
 
 var timerState = {
     mode: OTJAT_MODE,
@@ -149,7 +156,6 @@ const standardHorizontalWidth = 960 * 2;
 const standardHorizontalHeight = standardVerticalWidth;
 
 var gameNumber = false;
-var gameBid = false;
 var gameBank = false;
 var gameBankString = '';
 var faserObject = false;
@@ -269,7 +275,6 @@ var submitButton = false;
 var dialog = false;
 var dialogResponse = false;
 
-var winScore = false;
 var ochki = false;
 var ochki_arr = false;
 var myUserNum = false;
@@ -292,7 +297,6 @@ var vremiaFontSizeDefault = 24 * 2;
 var vremiaFontSizeDelta = 8;
 var vremiaFontSize = vremiaFontSizeDefault;
 
-var tWaiting = false;
 var gWLimit = false;
 
 var pageActive = 'visible';

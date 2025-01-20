@@ -1,24 +1,21 @@
 //
 function (time, delta) {
 
-    if (requestSended && ((new Date()).getTime() - requestTimestamp > normalRequestTimeout)) {
-        if (noNetworkImg !== false) {
-            noNetworkImg.visible = true;
-            noNetworkImg.alpha = ((new Date()).getTime() - requestTimestamp) < (normalRequestTimeout * 2)
-                ? ((new Date()).getTime() - requestTimestamp - normalRequestTimeout) / 1000
-                : 1;
-        }
+    let dateGetTime = (new Date()).getTime();
+    if (isUserBlockActive && requestSended && (dateGetTime - requestTimestamp > normalRequestTimeout)) {
+        noNetworkImg.visible = true;
+        noNetworkImg.alpha = (dateGetTime - requestTimestamp) < (normalRequestTimeout * 2)
+            ? (dateGetTime - requestTimestamp - normalRequestTimeout) / 1000
+            : 1;
     } else {
-        if (noNetworkImg !== false) {
-            noNetworkImg.visible = false;
-        }
+        noNetworkImg.visible = false;
     }
 
     if (gameState == 'chooseGame' && (queryNumber > 1)) {
         return;
     }
 
-    var flor = Math.floor(time / 1000);
+    let flor = Math.floor(time / 1000);
 
     if (
         (

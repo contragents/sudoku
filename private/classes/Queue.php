@@ -117,12 +117,12 @@ class Queue
 
         $chooseGameParams = Response::state($newStatus)
             + [
-                'gameSubState' => 'choosing',
+                'gameSubState' => $this->caller->SM::SUBSTATE_CHOOSING,
                 'players' => $this->caller->onlinePlayers(),
                 'coin_players' => $this->caller->onlineCoinPlayers(),
                 'prefs' => $this->getUserPrefs(),
             ]
-            + ($isOuterCall
+            + (!$isOuterCall
                 ? ['reason' => 'Queue error']
                 : []);
 
