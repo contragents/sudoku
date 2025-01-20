@@ -45,6 +45,7 @@ class Game
         'score_arr' => 'getPlayerScores',
         'log' => 'getLog',
         BC::GAME_STATE_PARAM => 'getPlayerStatus',
+        'winScore' => ['gameStatus' => 'gameGoal'],
     ];
     const SPECIAL_PARAMS = 'special';
     const BOT_TPL = 'botV3#';
