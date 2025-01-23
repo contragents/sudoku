@@ -32,9 +32,15 @@ class Response
         $res = [];
 
         try {
+            $playerStatus = $game->SM::getPlayerStatus($game->User);
+
             foreach ($game::RESPONSE_PARAMS as $param => $path) {
+                // Проверим по массиву исключений, обрабатывать ли этот параметр при данном статусе
+                if (isset($game::EXCLUDED_PARAMS[$playerStatus]) && in_array($param, $game::EXCLUDED_PARAMS[$playerStatus])){
+                    continue;
+                }
+
                 if($param === $game::SPECIAL_PARAMS) {
-                    $playerStatus = $game->SM::getPlayerStatus($game->User);
                     foreach($path as $status => $statusParams) {
                         if ($status === $playerStatus) {
                             foreach ($statusParams as $param => $path) {

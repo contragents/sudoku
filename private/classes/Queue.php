@@ -2,6 +2,9 @@
 
 namespace classes;
 
+use BalanceHistoryModel;
+use BalanceModel;
+use CommonIdRatingModel;
 use PlayerModel;
 
 class Queue
@@ -507,25 +510,88 @@ class Queue
             return $this->storeTo2Players($this->User, $game_users[0]['options'] ?? []);
         }
 
+        // Определяем ставку в монетах как минимальную из ставок игроков
+        $bid = 0;
+        $noCoinGame = false;
         foreach ($game_users as $num => $user) {
+            $userBalance = BalanceModel::getBalance(PlayerModel::getPlayerCommonId($user['userCookie'], true));
+
+            // todo иногда ставка делает баланс игрока отрицательным. Нужно не давать балансу уходить в минус
+
+            if (!isset($user['options']['bid'])) {
+                if ($userBalance > 0) {
+                    $user['options']['bid'] = self::getBid($userBalance);
+                }
+            } elseif ($user['options']['bid'] > $userBalance) {
+                unset($user['options']['bid']);
+            }
+
+            if (!isset($user['options']['bid'])) {
+                $noCoinGame = true;
+            } elseif ($bid == 0 || $bid > $user['options']['bid'] || $bid > $userBalance) {
+                $bid = $user['options']['bid'];
+            }
+        }
+
+        if ($noCoinGame) {
+            $bid = 0;
+        }
+
+        if ($bid) {
+            DB::transactionStart(); // транзакция поверх транзакций баланса
+        }
+
+        foreach ($game_users as $num => $user) {
+            $playerCommonId = PlayerModel::getPlayerCommonId($user['userCookie'], true);
             $this->caller->gameStatus->users[$num] = new GameUser(
                 [
                     'ID' => $user['userCookie'],
-                    'common_id' => PlayerModel::getPlayerCommonId($user['userCookie'], true),
+                    'common_id' => $playerCommonId,
                     'status' => $this->caller->SM::GAME_STATE_START_GAME,
                     'isActive' => true,
                     'score' => 0,
                     'username' => T::S('Player') . ($num + 1),
                     'avatarUrl' => false,
                     'wishTurnTime' => $user['options'] !== false ? $user['options'][self::TURN_TIME_PARAM_NAME] : 0,
+                    'rating' => CommonIdRatingModel::getRating($playerCommonId, $this->caller::GAME_NAME),
                 ]
             );
             //Прописали игроков в состояние игры
 
+            if ($bid) {
+                if (
+                    !BalanceModel::changeBalance(
+                        BalanceModel::SYSTEM_ID,
+                        $bid,
+                        $this->caller->gameStatus->users[$num]->common_id . ' started game',
+                        BalanceHistoryModel::TYPE_IDS[BalanceHistoryModel::GAME_TYPE],
+                        $this->caller->currentGame
+                    )
+                    ||
+                    !BalanceModel::changeBalance(
+                        $this->caller->gameStatus->users[$num]->common_id,
+                        -1 * $bid,
+                        'Start game',
+                        BalanceHistoryModel::TYPE_IDS[BalanceHistoryModel::GAME_TYPE],
+                        $this->caller->currentGame
+                    )) {
+                    DB::transactionRollback();
+                    $bid = false;
+                }
+            }
+
             $this->caller->gameStatus->{$user['userCookie']} = $num;
             // Заполнили массив нормеров игроков
+
             $this->caller->updateUserStatus($this->caller->SM::GAME_STATE_START_GAME, $user['userCookie']);
             // Назначили статусы всем игрокам
+        }
+
+        $this->caller->gameStatus->bid = $bid;
+
+        if ($bid) {
+            DB::transactionCommit();
+            $this->caller->addToLog(T::S('Coins written off the balance sheet') . ": $bid");
         }
 
         $this->caller->saveGameUsers($this->caller->currentGame, $this->caller->currentGameUsers);
@@ -618,5 +684,25 @@ class Queue
         $config = include(__DIR__ . '/../../configs/conf.php');
 
         return 'botV3#' . array_rand($config['botNames']);
+    }
+
+    protected static function getBid(int $maxBid): ?int
+    {
+        $bidsArr = MonetizationService::BIDS;
+        arsort($bidsArr);
+
+        foreach ($bidsArr as $bid) {
+            if ($bid <= floor($maxBid / 20)) {
+                return $bid;
+            }
+        }
+
+        foreach ($bidsArr as $bid) {
+            if ($bid <= $maxBid) {
+                return $bid;
+            }
+        }
+
+        return null;
     }
 }

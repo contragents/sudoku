@@ -4,6 +4,7 @@
 namespace classes;
 
 
+use BalanceModel;
 use BaseController as BC;
 use CommonIdRatingModel;
 use GamesModel;
@@ -18,13 +19,12 @@ class Game
     const TURN_DELTA_TIME = 10; // Разрешенное превышение длительности хода
 
     public const GAME_NAME = 'sudoku';
-    public const GAME_ID_KEY = '.num_games';
-    public const GAME_DATA_KEY = '.current_game_';
-    public const GET_GAME_KEY = '.get_game_';
-    public const GAME_USERS_KEY = '.game_users_';
+    public const GAME_DATA_KEY = '.current_game_'; // Получает состояние игры по номеру
+    public const GET_GAME_KEY = '.get_game_'; // Получает игру пользователя
+    public const GAME_USERS_KEY = '.game_users_'; // Список игроков в игре
     const STATS_FAILED = 'games_statistics_failed';
 
-    const GAMES_COUNTER = 'erudit.num_games';
+    const GAMES_COUNTER = 'erudit.num_games'; // общий счетчик на все игры
 
     const GAMES_ENDED_KEY = '.games_ended';
     const RATING_INIT_TIMEOUT = 360;
@@ -32,8 +32,7 @@ class Game
     const RESPONSE_PARAMS = [
         'desk' => ['gameStatus' => ['desk' => 'desk']],
         'mistakes' => ['gameStatus' => ['desk' => 'mistakes']],
-        'gameNumber' => ['gameStatus' => 'gameNumber'], // todo зачем 2 одинаковых параметра в ответе?
-        'current_game' => 'currentGame', // current_game = game_number
+        'gameNumber' => ['gameStatus' => 'gameNumber'],
         'common_id' => 'getCurrentPlayerCommonId',
         'common_id_hash' => 'getCommonIdHash',
         'timeLeft' => 'getTimeLeft',
@@ -46,9 +45,38 @@ class Game
         'log' => 'getLog',
         BC::GAME_STATE_PARAM => 'getPlayerStatus',
         'winScore' => ['gameStatus' => 'gameGoal'],
+        'bid' => ['gameStatus' => 'bid'],
+        'bank' => 'getBank',
+        'bank_string' => 'getBankString'
     ];
+
+    // Параметры, которые не отдаем при определенных статусах
+    const EXCLUDED_PARAMS = [
+        StateMachine::STATE_CHOOSE_GAME => [
+            'desk',
+            'mistakes',
+            'gameNumber',
+            'timeLeft',
+            'secondsLeft',
+            'minutesLeft',
+            'yourUserNum',
+            'comments',
+            'activeUser',
+            'score_arr',
+            'log',
+            'winScore',
+            'bid',
+            'bank',
+            'bank_string',
+        ]
+    ];
+
     const SPECIAL_PARAMS = 'special';
     const BOT_TPL = 'botV3#';
+    const NUM_RATING_PLAYERS_KEY = '.num_rating_players';
+    const RATINGS_CACHE_TIMEOUT = 200;
+    const NUM_COINS_PLAYERS_KEY = '.num_coins_players';
+    public static array $players = []; // онлайн игроки
 
     public ?string $User;
     public ?int $numUser = null;
@@ -73,138 +101,6 @@ class Game
         } else {
             return null;
         }
-    }
-
-    public function getLastUserComment(): ?string
-    {
-        if ($this->gameStatus->users ?? null) {
-            return $this->gameStatus->users[$this->numUser]->getLastComment();
-        } else {
-            return null;
-        }
-    }
-
-    public function genKeyForCommonID($id)
-    {
-        $messageToEncrypt = $id;
-        $secretKey = Config::$config['SALT'];
-        $method = 'AES-128-CBC';
-        $iv = base64_decode(Config::$config['IV'] . '==');
-        $encrypted_message = openssl_encrypt($messageToEncrypt, $method, $secretKey, 0, $iv);
-
-        return $encrypted_message;
-    }
-
-    public function mergeTheIDs($encryptedMessage, $commonID, $secretKey = '')
-    {
-        $secretKey = $secretKey ?: Config::$config['SALT'];
-        $method = 'AES-128-CBC';
-        $iv = base64_decode(Config::$config['IV'] . '==');
-        $decrypted_message = openssl_decrypt($encryptedMessage, $method, $secretKey, 0, $iv);
-
-        if (!is_numeric($decrypted_message)) {
-            return json_encode(
-                [
-                    'result' => 'error_decryption' . ' ' . $decrypted_message,
-                    'message' => T::S('Key transcription error')
-                ],
-                JSON_UNESCAPED_UNICODE
-            );
-        }
-
-        $oldCommonID = UserModel::getCustom(
-                'id',
-                '=',
-                $decrypted_message,
-                false,
-                false,
-                ['id']
-            )[0]['id'] ?? false;
-
-        if ($oldCommonID === false) {
-            return json_encode(
-                [
-                    'result' => 'error_query_oldID',
-                    'message' => T::S("Player's ID NOT found by key")
-                ],
-                JSON_UNESCAPED_UNICODE
-            );
-        }
-
-        if (PlayerModel::setParamMass(
-            'common_id',
-            $oldCommonID,
-            [
-                'field_name' => 'common_id',
-                'condition' => '=',
-                'value' => $commonID,
-                'raw' => true
-            ]
-        )
-        ) {
-            return json_encode(
-                [
-                    'result' => 'save',
-                    'message' => T::S('Accounts linked')
-                ],
-                JSON_UNESCAPED_UNICODE
-            );
-        } else {
-            return json_encode(
-                [
-                    'result' => 'error_update ' . $oldCommonID . '->' . $commonID,
-                    'message' => T::S('Accounts are already linked')
-                ],
-                JSON_UNESCAPED_UNICODE
-            );
-        }
-    }
-
-    public function getPlayerScores(): ?array
-    {
-        $score_arr = [];
-        $countUsers = count($this->gameStatus->users ?? []);
-
-        if (!$countUsers) {
-            return null;
-        }
-
-        $score_arr[$this->numUser] = $this->gameStatus->users[$this->numUser]->score;
-        for ($i = 1; $i < $countUsers; $i++) {
-            $nextUserNum = ($this->numUser + $i) % $countUsers;
-            $score_arr[$nextUserNum] = $this->gameStatus->users[$nextUserNum]->score;
-        }
-
-        return $score_arr ?: null;
-    }
-
-    public function getTurnSecondsLeft(): int
-    {
-        return $this->getTimeLeft() % 60;
-    }
-
-    public function getTurnMinutesLeft(): int
-    {
-        return floor($this->getTimeLeft() / 60);
-    }
-
-    public function getTimeLeft(): int
-    {
-        if (@($this->gameStatus->aquiringTimes[$this->gameStatus->turnNumber] > 0)) {
-            @($turnTimeLeft = ($this->gameStatus->aquiringTimes[$this->gameStatus->turnNumber] + $this->gameStatus->turnTime) - date(
-                    'U'
-                ));
-        } else {
-            @$turnTimeLeft = $this->gameStatus->turnBeginTime + $this->gameStatus->turnTime - date('U');
-        }
-
-        $res = $turnTimeLeft ?? 0;
-        return $res >= 0 ? $res : 0;
-    }
-
-    public function getCurrentPlayerCommonId(): ?int
-    {
-        return BC::$commonId;
     }
 
     public function getCommonIdHash(): ?string
@@ -328,18 +224,6 @@ class Game
             $this->updateUserStatus($this->SM::STATE_PRE_MY_TURN, $this->currentGameUsers[$preMyTurnUser]);
             //Вычислили игрока, идущего за первым и дали ему статус преМайТерн
 
-            foreach ($this->gameStatus->users as $num => $user) {
-                // Заполнили массив нормеров игроков
-                $this->gameStatus->{$user->ID} = $num;
-
-                $this->gameStatus->users[$num]->common_id = (int)PlayerModel::getPlayerCommonId($user->ID, true);
-                $userRating = CommonIdRatingModel::getRating(
-                    $this->gameStatus->users[$num]->common_id,
-                    static::GAME_NAME
-                );
-                $this->gameStatus->users[$num]->rating = $userRating ?: 0;
-            }
-
             // Создали состояние доски
             $this->gameStatus->desk = $this->newDesk();
 
@@ -379,14 +263,172 @@ class Game
         return new Desk;
     }
 
-    public function onlinePlayers()
+    protected function getPlayers()
     {
-        return []; // todo добавить реальное колво игроков онлайн
+        $lastGame = Cache::get(self::GAMES_COUNTER);
+        // todo Добавить анализ названия игры, а не все игры подряд
+        for ($i = $lastGame; $i > ($lastGame - 50); $i--) {
+            $game = $this->getGameStatus($i);
+            if ($game && $game instanceof GameStatus && !empty($game->users)) {
+                if (!isset($game->results)) {
+                    foreach ($game->users as $num => $user) {
+                        if (!isset($user->ID)) {
+                            continue;
+                        }
+
+                        if (strstr($user->ID, self::BOT_TPL) === false) {
+                            self::$players[$user->ID] = [
+                                'cookie' => $user->ID,
+                                'common_id' => $user->common_id,
+                            ];
+                        }
+                    }
+                }
+            }
+        }
     }
 
-    public function onlineCoinPlayers()
+    public function onlinePlayers(): array
     {
-        return []; // todo добавить реальное колво игроков онлайн
+        if (!($rangedOnlinePlayers = Cache::get(static::NUM_RATING_PLAYERS_KEY))) {
+            if (empty(self::$players)) {
+                $this->getPlayers();
+            }
+
+            $rangedOnlinePlayers = [
+                0 => 10,
+                1900 => 9,
+                2000 => 6,
+                2100 => 4,
+                2200 => 3,
+                2300 => 2,
+                2400 => 1,
+                2500 => 0,
+                2600 => 0,
+                2700 => 0
+            ];
+
+            $coinPlayers = array_combine(MonetizationService::BIDS, array_fill(0, count(MonetizationService::BIDS), 0));
+            $thisPlayerBalance = BalanceModel::getBalance(BC::$commonId);
+
+            foreach (self::$players as $num => $player) {
+                $rangedOnlinePlayers[0]++;
+
+                $currentPlayerBalance = BalanceModel::getBalance($player['common_id']);
+
+                // Отмечаем в массиве игроков на монеты число игроков с таким количеством монет
+                foreach ($coinPlayers as $bid => $num) {
+                    if ($thisPlayerBalance < $bid) {
+                        unset($coinPlayers[$bid]);
+
+                        continue;
+                    }
+
+                    if ($currentPlayerBalance >= $bid) {
+                        $coinPlayers[$bid]++;
+                    }
+                }
+
+                if (($rating = CommonIdRatingModel::getRating(
+                    $player['common_id'],
+                    static::GAME_NAME
+                ))) {
+                    if ($rating > 1900) {
+                        $rangedOnlinePlayers[1900]++;
+                    }
+                    if ($rating > 2000) {
+                        $rangedOnlinePlayers[2000]++;
+                    }
+                    if ($rating > 2100) {
+                        $rangedOnlinePlayers[2100]++;
+                    }
+                    if ($rating > 2200) {
+                        $rangedOnlinePlayers[2200]++;
+                    }
+                    if ($rating > 2300) {
+                        $rangedOnlinePlayers[2300]++;
+                    }
+                    if ($rating > 2400) {
+                        $rangedOnlinePlayers[2400]++;
+                    }
+                    if ($rating > 2500) {
+                        $rangedOnlinePlayers[2500]++;
+                    }
+                    if ($rating > 2600) {
+                        $rangedOnlinePlayers[2600]++;
+                    }
+                    if ($rating > 2700) {
+                        $rangedOnlinePlayers[2700]++;
+                    }
+                }
+            }
+
+
+            Cache::setex(
+                static::NUM_RATING_PLAYERS_KEY,
+                self::RATINGS_CACHE_TIMEOUT,
+                $rangedOnlinePlayers
+            );
+        }
+
+        if ($rangedOnlinePlayers[1900]) {
+            $cnt = Cache::hlen($this->Queue::QUEUES['rating_waiters']);
+            if ($cnt < ($rangedOnlinePlayers[1900] / 2)) {
+                $thisUserRating = CommonIdRatingModel::getRating(
+                    BC::$commonId,
+                    static::GAME_NAME
+                );
+
+                $rangedOnlinePlayers['thisUserRating'] = $thisUserRating;
+
+                return $rangedOnlinePlayers;
+            }
+        }
+
+        return $rangedOnlinePlayers;
+    }
+
+    public function onlineCoinPlayers(): array
+    {
+        if (empty(self::$players)) {
+            $this->getPlayers();
+        }
+
+        $coinPlayers = array_combine(MonetizationService::BIDS, array_fill(0, count(MonetizationService::BIDS), 0));
+        $thisPlayerBalance = BalanceModel::getBalance(BC::$commonId);
+
+        // Чистим массив ставок от ставок больше баланса игрока
+        foreach ($coinPlayers as $bid => $num) {
+            if ($thisPlayerBalance < $bid) {
+                unset($coinPlayers[$bid]);
+            }
+
+            // ...а также от мелких ставок
+            if ($bid < ($thisPlayerBalance / 20)) {
+                unset($coinPlayers[$bid]);
+            }
+        }
+
+        foreach (self::$players as $num => $player) {
+            $currentPlayerBalance = BalanceModel::getBalance($player['common_id']);
+
+            // Отмечаем в массиве игроков на монеты число игроков с таким количеством монет
+            foreach ($coinPlayers as $bid => $num) {
+                if ($currentPlayerBalance >= $bid) {
+                    $coinPlayers[$bid]++;
+                }
+            }
+        }
+
+        $coinPlayers['thisUserBalance'] = $thisPlayerBalance;
+
+        Cache::setex(
+            static::NUM_COINS_PLAYERS_KEY,
+            self::RATINGS_CACHE_TIMEOUT,
+            $coinPlayers
+        );
+
+        return $coinPlayers;
     }
 
     public function saveGameUsers(int $currentGame, array $currentGameUsers)
@@ -493,7 +535,7 @@ class Game
             //Игрок стал неактивен
             $this->addToLog(T::S('has left the game'), $this->numUser);
 
-            if(count($this->gameStatus->users) == 2) {
+            if (count($this->gameStatus->users) == 2) {
                 $this->storeGameResults($this->gameStatus->users[($this->numUser + 1) % 2]->ID);
                 $this->addToLog('остался в игре один - Победа!', ($this->numUser + 1) % 2);
             }
@@ -534,7 +576,7 @@ class Game
 
     public function getLog(): ?array
     {
-        if(!$this->gameStatus) {
+        if (!$this->gameStatus) {
             return null;
         }
 
@@ -554,7 +596,7 @@ class Game
         return $log ?: null;
     }
 
-    protected function addToLog($message, $numUser = false)
+    public function addToLog($message, $numUser = false)
     {
         $this->gameStatus->gameLog[] = [$numUser, $message];
         foreach ($this->gameStatus->users as $num => $User) {
@@ -707,11 +749,12 @@ class Game
         foreach ($this->gameStatus->users as $numUser => $user) {
             $user->result_ratings = $resultRatings[$user->common_id];
 
-            $user->addComment(self::playerGameResultsRendered(
-                $results['winner'] == $user->ID,
-                $user->result_ratings
-            ));
-
+            $user->addComment(
+                self::playerGameResultsRendered(
+                    $results['winner'] == $user->ID,
+                    $user->result_ratings
+                )
+            );
             /* todo Включить при настройке игры на монеты
             if (RatingHistoryModel::getNumGamesPlayed($user->common_id) % 100 == 0) {
                 // Начисляем бонус за каждые 100 игр
@@ -723,7 +766,6 @@ class Game
                 );
             }
             */
-
         }
     }
 
@@ -731,23 +773,12 @@ class Game
     {
         if (!$this->currentGame) {
             if ($this->Queue::isUserInQueue($this->User)) {
-                return $this->startGame();
+                return $this->Queue->doSomethingWithThisStuff();
             }
 
             $this->updateUserStatus($this->SM::STATE_NEW_GAME);
             $this->updateUserStatus($this->SM::STATE_NO_GAME);
             $this->updateUserStatus($this->SM::STATE_CHOOSE_GAME);
-
-            /*
-            $chooseGameParams = Response::state($this->SM::getPlayerStatus($this->User))
-                + [
-                    'gameSubState' => $this->SM::SUBSTATE_CHOOSING,
-                    'players' => $this->onlinePlayers(),
-                    'coin_players' => $this->onlineCoinPlayers(),
-                    'prefs' => $this->Queue->getUserPrefs($this->User),
-                    'reason' => 'No currentGame'
-                ];
-            */
 
             $chooseGameParams = $this->Queue->chooseGame(true)
                 + ['reason' => 'No currentGame'];
@@ -784,10 +815,11 @@ class Game
             }
         }
 
-        if($this->isActivePlayerBot() && date('U') - $this->gameStatus->turnBeginTime > 20) {
-                $this->makeBotTurn($this->gameStatus->activeUser);
-                //$this->nextTurn();
-        } elseif ((date('U') - $this->gameStatus->turnBeginTime) > ($this->gameStatus->turnTime + static::TURN_DELTA_TIME)) {
+        if ($this->isActivePlayerBot() && date('U') - $this->gameStatus->turnBeginTime > 20) {
+            $this->makeBotTurn($this->gameStatus->activeUser);
+        } elseif (
+            (date('U') - $this->gameStatus->turnBeginTime) > ($this->gameStatus->turnTime + static::TURN_DELTA_TIME)
+        ) {
             $this->addToLog('Время хода истекло', $this->gameStatus->activeUser);
 
             $this->gameStatus->users[$this->gameStatus->activeUser]->lostTurns++;
@@ -811,15 +843,15 @@ class Game
         return Response::state($userStatus);
     }
 
-    public function startGame()
-    {
-        if ($this->currentGame && is_array($this->currentGameUsers)) {
+    //public function startGame()
+    //{
+        /*if ($this->currentGame && is_array($this->currentGameUsers)) {
             return $this->gameStarted(false);
             //Вернули статус начатой игры без обновления статусов в кеше
-        }
+        }*/
 
-        return $this->Queue->doSomethingWithThisStuff();
-    }
+        //return $this->Queue->doSomethingWithThisStuff();
+    //}
 
     public function submitTurn(): array
     {
@@ -839,7 +871,6 @@ class Game
 
     protected function makeBotTurn(int $botUserNum)
     {
-        // return Response::state($this->SM::getPlayerStatus($this->User));
     }
 
     public function getPlayerStatus(): string
@@ -871,18 +902,213 @@ class Game
                 ['style' => 'color:' . ($isWinner ? '#00ff00' : 'red') . ';']
             )
             . ($this->gameStatus->bid
-                    ? (
-                        VH::br()
-                        . T::S('The bank of') . ' '
-                        . VH::strong(
-                            number_format($this->gameStatus->bid * count($this->gameStatus->users), 0, '.', ',')
-                        )
-                        . T::S('{{sudoku_icon_15}}') . ' '
-                        . ($isWinner ? T::S('goes to you') : T::S('is taken by the opponent'))
+                ? (
+                    VH::br()
+                    . T::S('The bank of') . ' '
+                    . VH::strong(
+                        number_format($this->gameStatus->bid * count($this->gameStatus->users), 0, '.', ',')
                     )
-                    : ''
+                    . T::S('{{sudoku_icon_15}}') . ' '
+                    . ($isWinner ? T::S('goes to you') : T::S('is taken by the opponent'))
+                )
+                : ''
             )
             . VH::br()
             . T::S('start_new_game');
+    }
+
+    protected function coinsPrompt(): string
+    {
+        return ($this->gameStatus->bid ?? false
+                ? (
+                    VH::br()
+                    . T::S('The bank of') . ' '
+                    . VH::strong(
+                        number_format($this->gameStatus->bid * count($this->gameStatus->users), 0, '.', ',')
+                    )
+                    . T::S('{{sudoku_icon_15}}') . ' '
+                    . T::S('will go to the winner')
+                )
+                : ''
+        );
+    }
+
+    protected function getStartComment(?int $numUser = null): string
+    {
+        $res ='';
+
+        /*try {
+            throw new \Exception('trace');
+        } catch (\Throwable $e) {
+            $res = $e->__toString();
+        }*/
+
+        return $res . T::S('New game has started!') . ' <br />'
+            . T::S('Get') . ' '
+            . VH::strong(T::S('[[number]] [[point]]', [$this->gameStatus->gameGoal, $this->gameStatus->gameGoal]))
+            . VH::br()
+            . $this->gameStatus->users[$this->gameStatus->activeUser]->username
+            . T::S(' is making a turn.')
+            . VH::br()
+            . (
+                isset($numUser)
+                ? (T::S('Your current rank')
+                    . ' - ' . VH::strong($this->gameStatus->users[$numUser]->rating))
+                : ''
+            )
+            . $this->coinsPrompt();
+    }
+
+    public function getBank(): ?int
+    {
+        return $this->gameStatus
+            ? $this->gameStatus->bid * count($this->gameStatus->users)
+            : null;
+    }
+
+    public function getBankString(): ?string
+    {
+        $bank = $this->getBank();
+        if (!isset($bank)) {
+            return null;
+        }
+
+        return $bank < 1000
+            ? $bank
+            : ($bank < 1000000
+                ? ((string)(round($bank / 1000)) . 'K')
+                : ((string)(round($bank / 1000000)) . 'M'));
+    }
+
+    public function getLastUserComment(): ?string
+    {
+        if ($this->gameStatus->users ?? null) {
+            return $this->gameStatus->users[$this->numUser]->getLastComment();
+        } else {
+            return null;
+        }
+    }
+
+    public function genKeyForCommonID($id)
+    {
+        $messageToEncrypt = $id;
+        $secretKey = Config::$config['SALT'];
+        $method = 'AES-128-CBC';
+        $iv = base64_decode(Config::$config['IV'] . '==');
+        $encrypted_message = openssl_encrypt($messageToEncrypt, $method, $secretKey, 0, $iv);
+
+        return $encrypted_message;
+    }
+
+    public function mergeTheIDs($encryptedMessage, $commonID, $secretKey = '')
+    {
+        $secretKey = $secretKey ?: Config::$config['SALT'];
+        $method = 'AES-128-CBC';
+        $iv = base64_decode(Config::$config['IV'] . '==');
+        $decrypted_message = openssl_decrypt($encryptedMessage, $method, $secretKey, 0, $iv);
+
+        if (!is_numeric($decrypted_message)) {
+            return json_encode(
+                [
+                    'result' => 'error_decryption' . ' ' . $decrypted_message,
+                    'message' => T::S('Key transcription error')
+                ],
+                JSON_UNESCAPED_UNICODE
+            );
+        }
+
+        $oldCommonID = UserModel::getCustom(
+                'id',
+                '=',
+                $decrypted_message,
+                false,
+                false,
+                ['id']
+            )[0]['id'] ?? false;
+
+        if ($oldCommonID === false) {
+            return json_encode(
+                [
+                    'result' => 'error_query_oldID',
+                    'message' => T::S("Player's ID NOT found by key")
+                ],
+                JSON_UNESCAPED_UNICODE
+            );
+        }
+
+        if (PlayerModel::setParamMass(
+            'common_id',
+            $oldCommonID,
+            [
+                'field_name' => 'common_id',
+                'condition' => '=',
+                'value' => $commonID,
+                'raw' => true
+            ]
+        )
+        ) {
+            return json_encode(
+                [
+                    'result' => 'save',
+                    'message' => T::S('Accounts linked')
+                ],
+                JSON_UNESCAPED_UNICODE
+            );
+        } else {
+            return json_encode(
+                [
+                    'result' => 'error_update ' . $oldCommonID . '->' . $commonID,
+                    'message' => T::S('Accounts are already linked')
+                ],
+                JSON_UNESCAPED_UNICODE
+            );
+        }
+    }
+
+    public function getPlayerScores(): ?array
+    {
+        $score_arr = [];
+        $countUsers = count($this->gameStatus->users ?? []);
+
+        if (!$countUsers) {
+            return null;
+        }
+
+        $score_arr[$this->numUser] = $this->gameStatus->users[$this->numUser]->score;
+        for ($i = 1; $i < $countUsers; $i++) {
+            $nextUserNum = ($this->numUser + $i) % $countUsers;
+            $score_arr[$nextUserNum] = $this->gameStatus->users[$nextUserNum]->score;
+        }
+
+        return $score_arr ?: null;
+    }
+
+    public function getTurnSecondsLeft(): int
+    {
+        return $this->getTimeLeft() % 60;
+    }
+
+    public function getTurnMinutesLeft(): int
+    {
+        return floor($this->getTimeLeft() / 60);
+    }
+
+    public function getTimeLeft(): int
+    {
+        if (@($this->gameStatus->aquiringTimes[$this->gameStatus->turnNumber] > 0)) {
+            @($turnTimeLeft = ($this->gameStatus->aquiringTimes[$this->gameStatus->turnNumber] + $this->gameStatus->turnTime) - date(
+                    'U'
+                ));
+        } else {
+            @$turnTimeLeft = $this->gameStatus->turnBeginTime + $this->gameStatus->turnTime - date('U');
+        }
+
+        $res = $turnTimeLeft ?? 0;
+        return $res >= 0 ? $res : 0;
+    }
+
+    public function getCurrentPlayerCommonId(): ?int
+    {
+        return BC::$commonId;
     }
 }

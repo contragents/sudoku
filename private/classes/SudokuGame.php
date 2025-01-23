@@ -4,12 +4,16 @@ namespace classes;
 
 use BaseController as BC;
 use classes\ViewHelper as VH;
+use CommonIdRatingModel;
 
 class SudokuGame extends Game
 {
     public const GAME_NAME = 'sudoku';
     const KEY_OPEN_POINTS = 10; // 10 очков за открытый ключ;
     const CELL_OPEN_POINTS = 1; // 1 очко за открытую клетку
+
+    const NUM_RATING_PLAYERS_KEY = self::GAME_NAME . parent::NUM_RATING_PLAYERS_KEY; // Список игроков онлайн
+    const NUM_COINS_PLAYERS_KEY = self::GAME_NAME . '.num_coins_players';
 
     public function __construct()
     {
@@ -348,12 +352,6 @@ class SudokuGame extends Game
             $this->gameStatus->users[($botUserNum + 1) % 2]->addComment(
                 T::S('Your opponent got [[number]] [[point]]', [$numPointsObtained, $numPointsObtained])
             );
-            /*$this->addToLog(
-                'Игрок' . ($botUserNum + 1) . ' получает ' . ($numPointsObtained) . ' ' . T::S(
-                    '[[point]]',
-                    [$numPointsObtained]
-                )
-            );*/
         }
 
         if ($this->gameStatus->users[$botUserNum]->score >= $this->gameStatus->gameGoal) {
@@ -421,19 +419,17 @@ class SudokuGame extends Game
             / 2
         );
 
-        $comment = 'Новая игра начата! <br />Набери <strong>' . $this->gameStatus->gameGoal . '</strong> ' .
-            T::S('[[point]]', [$this->gameStatus->gameGoal]);
-        $this->addToLog($comment);
+        $this->addToLog($this->getStartComment()); // Добавляем в лог пстартовый коммент без рейтинга
 
         foreach ($this->gameStatus->users as $num => $user) {
             $user->addComment(
                 VH::strong(
                     $num === $this->gameStatus->activeUser
-                        ? 'Ваш ход!'
-                        : 'Ваш ход следующий'
+                        ? T::S('Your turn!')
+                        : T::S('Your turn is next - get ready!')
                 )
-                . VH::div($comment)
-                . $this->getBriefRules()
+                . VH::div($this->getStartComment($num)) // Стартовый коммент с указанием рейтинга игрока
+                . $this->getBriefRules() // правила игры вкратце - потом вынести в фак, не выводить бывалым игрокам
             );
         }
         // Особенности создания конкретной игры | конец

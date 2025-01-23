@@ -10,16 +10,16 @@ class AvatarModel extends BaseModel
         2160
     ];
 
-    public static function getDefaultAvatar($playerID)
+    public static function getDefaultAvatar(int $commonId): string
     {
         $maxImgId = 34768;
-        $imgId = $playerID % $maxImgId;
+        $imgId = $commonId % $maxImgId;
 
         $query = ORM::select(['concat(site,mini_url)'], self::TABLE_DEFAULT_URL)
             . ORM::where('site_img_id', '>=', $imgId, true)
             . ORM::andNot('site_img_id', 'in', '(' . implode(', ', self::BLOCKED_AVATAR_IDS) . ')', true)
             . ORM::limit(1);
 
-        return DB::queryValue($query);
+        return DB::queryValue($query) ?: '';
     }
 }

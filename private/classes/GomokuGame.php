@@ -5,6 +5,8 @@ namespace classes;
 class GomokuGame extends Game
 {
     public const GAME_NAME = 'gomoku';
+    const NUM_RATING_PLAYERS_KEY = self::GAME_NAME . parent::NUM_RATING_PLAYERS_KEY;
+    const NUM_COINS_PLAYERS_KEY = self::GAME_NAME . '.num_coins_players';
 
     public function __construct()
     {
