@@ -1102,16 +1102,19 @@ function commonCallback(data) {
             requestToServerEnabled = false;
         }
 
-        if (dialog && canCloseDialog)
+        if (dialog && canCloseDialog) {
             dialog.modal('hide');
+        }
+
         if (intervalId) {
             clearInterval(intervalId);
             intervalId = 0;
         }
+
         if (canOpenDialog) {
             if (gameState == 'initGame' || gameState == 'initRatingGame' || gameState == 'initCoinGame') {
                 dialog = bootbox.confirm({
-                    message: ('comments' in data) ? data['comments'] : gameStates[gameState]['message'],
+                    message: ('comments' in data) ? data['comments'] : gameStates[gameState].message,
                     size: 'small',
                     className: 'modal-settings modal-profile text-white',
                     buttons: {
@@ -1129,6 +1132,7 @@ function commonCallback(data) {
                         }
                     }
                 });
+
                 if ('gameWaitLimit' in data) {
                     dialog.init(function () {
                         intervalId = setInterval(function () {
@@ -1153,7 +1157,8 @@ function commonCallback(data) {
                                 }
                             }
 
-                            let content = data['comments'] + igrokiWaiting
+                            let content = (('comments' in data) ? data.comments : gameStates[gameState].message)
+                                + igrokiWaiting
                                 + '<br /><?= T::S('Time elapsed:') ?> '
                                 + (tWaiting++)
                                 + '<br /><?= T::S('Average waiting time:') ?> '
