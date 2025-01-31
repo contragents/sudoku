@@ -851,7 +851,7 @@ class Game
                 $this->storeGameResults($this->lost3TurnsWinner($this->gameStatus->activeUser));
 
                 if (isset($this->gameStatus->results['winner'])) {
-                    return []; // $this->resultsResponse();
+                    return [];
                 }
             } else {
                 $this->nextTurn();
@@ -862,16 +862,6 @@ class Game
 
         return Response::state($userStatus);
     }
-
-    //public function startGame()
-    //{
-    /*if ($this->currentGame && is_array($this->currentGameUsers)) {
-        return $this->gameStarted(false);
-        //Вернули статус начатой игры без обновления статусов в кеше
-    }*/
-
-    //return $this->Queue->doSomethingWithThisStuff();
-    //}
 
     public function submitTurn(): array
     {
@@ -1019,7 +1009,6 @@ class Game
         }
 
         if ($isSendSuccess) {
-            //$this->gameStatus->chatLog[] = [$this->numUser, $toNumUser, $message];
             $this->addToChat($message, $toNumUser);
         }
 
@@ -1045,12 +1034,6 @@ class Game
     protected function getStartComment(?int $numUser = null): string
     {
         $res = '';
-
-        /*try {
-            throw new \Exception('trace');
-        } catch (\Throwable $e) {
-            $res = $e->__toString();
-        }*/
 
         return $res . T::S('New game has started!') . ' <br />'
             . T::S('Get') . ' '
