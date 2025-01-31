@@ -31,6 +31,8 @@ class BaseController
     ];
     const MAX_UPLOAD_SIZE = 2 * 1024 * 1024;
     const GAME_STATE_PARAM = 'gameState';
+    const MESSAGE_PARAM = 'messageText';
+    const CHAT_TO_PARAM = 'chatTo';
 
     public static ?BaseController $instance = null;
     public Game $Game;
@@ -79,15 +81,18 @@ class BaseController
         self::$instance->Game->storeGameStatus();
     }
 
-    public function Run(): string
+    public function Run()
     {
         self::cors();
 
         foreach (self::$Request as $param => $value) {
             if (isset(self::JSON_DECODE_PARAMS[$param])) {
-                //print self::$Request[$param];
                 self::$Request[$param] = json_decode($value, true);
-                //print_r(self::$Request[$param]);
+            }
+
+            // отфильтруем NULL-значения параметров
+            if($value === 'NULL') {
+                unset(self::$Request[$param]);
             }
         }
 
@@ -105,8 +110,8 @@ class BaseController
 
         if (is_callable([$this, $this->Action])) {
             $res = $this->{$this->Action}();
-            return is_array($res) ? Response::jsonResp($this->Game->submitTurn(), $this->Game) : (string)$res;
-            //return $this->{$this->Action}();
+            //return is_array($res) ? Response::jsonResp($res, $this->Game) : (string)$res;
+            return $res;
         } else {
             return $this->forbiddenAction();
         }
@@ -215,6 +220,45 @@ class BaseController
         return Response::jsonResp($this->Game->newGame(), $this->Game);
     }
 
+    function sendChatMessageAction(): array
+    {
+        $resp = ['message' => T::S('Error sending message')];
+
+        if (!empty(self::$Request[self::MESSAGE_PARAM])) {
+            $resp = $this->Game->addToChat(
+                self::$Request[self::MESSAGE_PARAM],
+                self::$Request[self::CHAT_TO_PARAM] ?? null
+            );
+        }
+
+        return $resp;
+    }
+
+    public function complainAction()
+    {
+        $resp = ['message' => T::S('Error sending complaint<br><br>Choose opponent')];
+
+        if (isset(self::$Request[self::CHAT_TO_PARAM]) && is_numeric(self::$Request[self::CHAT_TO_PARAM])) {
+            $resp = $this->Game->addComplain((int)self::$Request[self::CHAT_TO_PARAM]);
+        }
+
+        return $resp;
+    }
+
+    /**
+     * Вызывается в момент закрытия вкладки в браузере
+     * @return string
+     */
+    public function setInactiveAction(): string
+    {
+        $gameStatus = $this->Game->gameStatus;
+        unset($gameStatus->users[$this->Game->numUser]->lastActiveTime);
+        $gameStatus->users[$this->Game->numUser]->inactiveTurn = $gameStatus->turnNumber;
+        $this->Game->addToLog(T::S('Closed game window'), $this->Game->numUser);
+
+        return Response::jsonResp([], $this->Game);
+    }
+
     public function statusHiddenCheckerAction(): string
     {
         sleep(10);
@@ -311,5 +355,12 @@ class BaseController
             header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
             header('Access-Control-Allow-Credentials: true');
         }
+    }
+
+    public function debugAction(): array
+    {
+        return [
+            'Game' => var_export($this->Game, true)
+         ];
     }
 }

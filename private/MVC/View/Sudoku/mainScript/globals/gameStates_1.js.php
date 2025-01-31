@@ -1097,7 +1097,7 @@ function commonCallback(data) {
     console.log(gameOldState + '->' + gameState);
 
     if ((gameOldState != gameState) || (gameOldSubState != gameSubState)) {
-        if ('active_users' in data && data['active_users'] == 0) {
+        if ('active_users' in data && data.active_users == 0) {
             clearTimeout(requestToServerEnabledTimeout);
             requestToServerEnabled = false;
         }
@@ -1366,15 +1366,10 @@ function commonCallback(data) {
 
     if ('chat' in data) {
         for (k in data['chat']) {
-
-            if (!
-                (((data['chat'][k].indexOf('<?= T::S('You') ?>') + 1) === 1)
-                    ||
-                    ((data['chat'][k].indexOf('<?= T::S('News') ?>') + 1) === 1))
-            ) {
+            if ((data['chat'][k].indexOf('<?= T::S('You') ?>') + 1) !== 1) {
                 hasIncomingMessages = true;
-                buttons['chatButton']['svgObject'].bringToTop(buttons['chatButton']['svgObject'].getByName('chatButton' + ALARM_MODE));
-                buttons['chatButton']['svgObject'].getByName('chatButton' + ALARM_MODE).setData('alarm', true);
+                buttons['chatButton'].svgObject.bringToTop(buttons['chatButton'].svgObject.getByName('chatButton' + ALARM_MODE));
+                buttons['chatButton'].svgObject.getByName('chatButton' + ALARM_MODE).setData('alarm', true);
             }
 
             chatLog.unshift(data['chat'][k]);

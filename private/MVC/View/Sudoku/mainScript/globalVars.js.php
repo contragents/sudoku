@@ -88,9 +88,9 @@ const HIDE_BALANCE_SCRIPT = 'players/hideBalance';
 const CLAIM_SCRIPT = 'pay/claim';
 const PAY_SCRIPT = 'pay/pay';
 
-const CHAT_SCRIPT = 'send_chat_message.php';
-const COMPLAIN_SCRIPT = 'complain.php';
-const SET_INACTIVE_SCRIPT = 'set_inactive.php';
+const CHAT_SCRIPT = 'sendChatMessage';
+const COMPLAIN_SCRIPT = 'complain';
+const SET_INACTIVE_SCRIPT = 'setInactive';
 const MERGE_IDS_SCRIPT = 'merge_the_ids.php';
 
 const SET_PLAYER_NAME_SCRIPT = 'players/saveUserName';

@@ -25,6 +25,8 @@ class GameStatus
     public ?int $bid = null; // Ставка за партию в монетах
 
     private array $data = []; // Массив разных свойств по запросу
+    public array $chatLog = []; // Лог чата игроков, нужен для сохранения в таблицу жалоб
+    public array $invite_accepted_users = [];
 
     public function __get($attribute)
     {

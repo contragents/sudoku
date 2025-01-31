@@ -4,12 +4,17 @@
 namespace classes;
 
 
+use AchievesModel;
+use BalanceHistoryModel;
 use BalanceModel;
+use BanModel;
 use BaseController as BC;
 use CommonIdRatingModel;
+use ComplainModel;
 use GamesModel;
 use PayController;
 use PlayerModel;
+use RatingHistoryModel;
 use UserModel;
 use classes\ViewHelper as VH;
 
@@ -47,7 +52,14 @@ class Game
         'winScore' => ['gameStatus' => 'gameGoal'],
         'bid' => ['gameStatus' => 'bid'],
         'bank' => 'getBank',
-        'bank_string' => 'getBankString'
+        'bank_string' => 'getBankString',
+        'is_opponent_active' => 'isOpponentActive',
+        'chat' => 'getNewChatMessages',
+        self::SPECIAL_PARAMS => [
+            StateMachine::STATE_GAME_RESULTS => [
+                'active_users' => 'getActiveUsersCount',
+            ],
+        ],
     ];
 
     // Параметры, которые не отдаем при определенных статусах
@@ -68,7 +80,17 @@ class Game
             'bid',
             'bank',
             'bank_string',
-        ]
+            'is_opponent_active',
+            'chat',
+        ],
+        StateMachine::STATE_INIT_GAME => [
+            'is_opponent_active',
+            'chat',
+        ],
+        StateMachine::STATE_INIT_RATING_GAME => [
+            'is_opponent_active',
+            'chat',
+        ],
     ];
 
     const SPECIAL_PARAMS = 'special';
@@ -189,7 +211,6 @@ class Game
             $this->gameStatus->users[$this->numUser]->lastRequestNum
                 =
                 $_GET['queryNumber'] ?? $this->gameStatus->users[$this->numUser]->lastRequestNum;
-
 
             if (!(isset($_GET['page_hidden']) && $_GET['page_hidden'] == 'true')) {
                 //Обновили время активности, если это не закрытие вкладки
@@ -755,17 +776,16 @@ class Game
                     $user->result_ratings
                 )
             );
-            /* todo Включить при настройке игры на монеты
-            if (RatingHistoryModel::getNumGamesPlayed($user->common_id) % 100 == 0) {
+
+            if (RatingHistoryModel::getNumGamesPlayed($user->common_id, $this::GAME_NAME) % 100 == 0) {
                 // Начисляем бонус за каждые 100 игр
                 BalanceModel::changeBalance(
                     $user->common_id,
                     MonetizationService::REWARD[AchievesModel::DAY_PERIOD],
-                    '100-game bonus',
+                    '100-game bonus' . ' ' . $this::GAME_NAME,
                     BalanceHistoryModel::TYPE_IDS[BalanceHistoryModel::MOTIVATION_TYPE]
                 );
             }
-            */
         }
     }
 
@@ -845,18 +865,75 @@ class Game
 
     //public function startGame()
     //{
-        /*if ($this->currentGame && is_array($this->currentGameUsers)) {
-            return $this->gameStarted(false);
-            //Вернули статус начатой игры без обновления статусов в кеше
-        }*/
+    /*if ($this->currentGame && is_array($this->currentGameUsers)) {
+        return $this->gameStarted(false);
+        //Вернули статус начатой игры без обновления статусов в кеше
+    }*/
 
-        //return $this->Queue->doSomethingWithThisStuff();
+    //return $this->Queue->doSomethingWithThisStuff();
     //}
 
     public function submitTurn(): array
     {
         return Response::state($this->SM::getPlayerStatus($this->User));
     }
+
+    public function addToChat(string $message, ?int $toNumUser = null, bool $needConfirm = true): array
+    {
+        try {
+            $commonIdFrom = BC::$commonId;
+
+            $bannedTill = BanModel::isBannedTotal($commonIdFrom ?: 0);
+            if ($bannedTill) {
+                if ($needConfirm) {
+                    return [
+                        'message' => T::S('Message NOT sent - BAN until ') . date('d.m.Y', $bannedTill)
+                    ];
+                } else {
+                    return []; // Игрок забанен, подтверждение не нужно - пустой ответ
+                }
+            }
+
+            $bannedBy = BanModel::bannedBy($commonIdFrom ?: 0);
+
+            $this->gameStatus->chatLog[] = [$this->numUser, $toNumUser, $message];
+
+            if ($toNumUser === null) {
+                foreach ($this->gameStatus->users as $num => $User) {
+                    if ($num == $this->numUser) {
+                        $this->gameStatus->users[$num]->chatStack[] = [T::S('You'), T::S('to all: ') . $message];
+                    } elseif (!isset($bannedBy[$User->common_id])) {
+                        $this->gameStatus->users[$num]->chatStack[] = [
+                            T::S('From player') . ($this->numUser + 1) . T::S(' (to all):'),
+                            $message
+                        ];
+                    }
+                }
+            } elseif (!isset($bannedBy[$this->gameStatus->users[$toNumUser]->common_id])) {
+                $this->gameStatus->users[$toNumUser]->chatStack[] = [
+                    T::S('From player') . ($this->numUser + 1) . ":",
+                    $message
+                ];
+                $this->gameStatus->users[$this->numUser]->chatStack[] = [
+                    T::S('You'),
+                    T::S('To Player') . ((int)$toNumUser + 1) . ': ' . $message
+                ];
+            } elseif ($needConfirm) {
+                return [
+                    'message' => VH::strong(T::S('Message NOT sent - BAN from Player') . ((int)$toNumUser + 1)),
+                ];
+            }
+
+            if ($needConfirm) {
+                return ['message' => T::S('Message sent')];
+            } else {
+                return [];
+            }
+        } catch (\Throwable $e) {
+            return ['message' => T::S('Error sending message')];
+        }
+    }
+
 
     public static function hash_str_2_int($str, $len = 16)
     {
@@ -917,6 +994,38 @@ class Game
             . T::S('start_new_game');
     }
 
+    public function addComplain(int $toNumUser): array
+    {
+        $message = T::S('Report sent');
+
+        $isSendSuccess = false;
+        if (ComplainModel::add(
+            BC::$commonId,
+            $this->gameStatus->users[$toNumUser]->common_id,
+            $this->gameStatus->chatLog
+        )) {
+            $respMessage = '<span style="align-content: center;"><strong>'
+                . T::S('Your report accepted and will be processed by moderator')
+                . '<br /><br /> '
+                . T::S('If confirmed, the player will be banned')
+                . '</strong></span>';
+            $isSendSuccess = true;
+        } else {
+            $respMessage = '<span style="align-content: center;"><strong><span style="color:red;">'
+                . T::S('Report declined!')
+                . '</span><br /><br /> '
+                . T::S('Only one complaint per each player per day can be sent. Total 24 hours complaints limit is')
+                . ' ' . ComplainModel::COMPLAINS_PER_DAY . '</strong></span>';
+        }
+
+        if ($isSendSuccess) {
+            //$this->gameStatus->chatLog[] = [$this->numUser, $toNumUser, $message];
+            $this->addToChat($message, $toNumUser);
+        }
+
+        return ['message' => $respMessage];
+    }
+
     protected function coinsPrompt(): string
     {
         return ($this->gameStatus->bid ?? false
@@ -935,7 +1044,7 @@ class Game
 
     protected function getStartComment(?int $numUser = null): string
     {
-        $res ='';
+        $res = '';
 
         /*try {
             throw new \Exception('trace');
@@ -951,9 +1060,9 @@ class Game
             . T::S(' is making a turn.')
             . VH::br()
             . (
-                isset($numUser)
+            isset($numUser)
                 ? (T::S('Your current rank')
-                    . ' - ' . VH::strong($this->gameStatus->users[$numUser]->rating))
+                . ' - ' . VH::strong($this->gameStatus->users[$numUser]->rating))
                 : ''
             )
             . $this->coinsPrompt();
@@ -1110,5 +1219,64 @@ class Game
     public function getCurrentPlayerCommonId(): ?int
     {
         return BC::$commonId;
+    }
+
+    public function getNewChatMessages(): ?array
+    {
+        if (count($this->gameStatus->users[$this->numUser]->chatStack)) {
+            $log = [];
+            while ($logRecord = array_shift($this->gameStatus->users[$this->numUser]->chatStack)) {
+                $log[] = trim(
+                    ($logRecord[0] !== false
+                        ? (isset($this->gameStatus->users[$logRecord[0]])
+                            ? $this->gameStatus->users[$logRecord[0]]->username
+                            : $logRecord[0])
+                        : '')
+                    . ' '
+                    . $logRecord[1]
+                );
+            }
+
+            return $log;
+        }
+
+        return null;
+    }
+
+    public function isOpponentActive(): ?bool
+    {
+        // Отдаем параметр только для двух игроков в игре
+        if (isset($this->gameStatus->users) && count($this->gameStatus->users) === 2) {
+            $numOpponent = $this->numUser === 1 ? 0 : 1;
+            return
+                isset($this->gameStatus->users[$numOpponent]->lastActiveTime)
+                &&
+                $this->gameStatus->users[$numOpponent]->isActive
+            ;
+        } else {
+            return null;
+        }
+    }
+
+    public function getActiveUsersCount(): ?int
+    {
+        if (!($this->gameStatus ?? null) || !count($this->gameStatus->users)) {
+            return null;
+        }
+
+        $numActiveUsers = 0;
+        foreach ($this->gameStatus->users as $num => $user) {
+            if($num === $this->numUser) {
+                continue;
+            }
+
+            if ($user->isActive && isset($user->lastActiveTime)) {
+                $numActiveUsers++;
+            } elseif (isset($this->gameStatus->invite_accepted_users[$user->ID])) { // todo настроить инвайты
+                $numActiveUsers++;
+            }
+        }
+
+        return $numActiveUsers;
     }
 }

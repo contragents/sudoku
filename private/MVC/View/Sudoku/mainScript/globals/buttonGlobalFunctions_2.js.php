@@ -271,7 +271,7 @@ function chatButtonFunction() {
 
     let isSelectedPlaced = false;
     if (ochki_arr.length > 1) {
-        radioButtons += '<div style="font-size: 70%;" class="form-check form-check-inline"><input class="form-check-input" type="radio" id="chatall" name="chatTo" value="all" checked> <label class="form-check-label" for="chatall"><?= T::S('For everyone') ?></label></div>';
+        radioButtons += '<div style="font-size: 70%;" class="form-check form-check-inline"><input class="form-check-input" type="radio" id="chatall" name="chatTo" value="NULL" checked> <label class="form-check-label" for="chatall"><?= T::S('For everyone') ?></label></div>';
         isSelectedPlaced = true;
     }
 
@@ -282,7 +282,7 @@ function chatButtonFunction() {
         }
     }
 
-    radioButtons += '<div style="font-size: 70%;" class="form-check form-check-inline"><input class="form-check-input" type="radio" id="to_words" name="chatTo" value="words" ' + (isSelectedPlaced ? '' : ' checked ') + '> <label class="form-check-label" for="to_words"><?= T::S('Word matching') ?></label></div>';
+    // radioButtons += '<div style="font-size: 70%;" class="form-check form-check-inline"><input class="form-check-input" type="radio" id="to_words" name="chatTo" value="words" ' + (isSelectedPlaced ? '' : ' checked ') + '> <label class="form-check-label" for="to_words"><?= T::S('Word matching') ?></label></div>';
 
     let textInput = '<div class="input-group input-group-lg">  <div class="input-group-prepend"></div>  <input type="text" id="chattext" class="form-control" name="messageText"></div>';
 
@@ -290,15 +290,9 @@ function chatButtonFunction() {
 
     dialog = bootbox.dialog({
         title: '</h5>'
-            + (
-                !isYandexAppGlobal()
-                    ? (
-                        '<h6>&nbsp;&nbsp;<?= T::S('Player support and chat at') ?> <a target="_blank" title="<?= T::S('Join group') ?>" href="'
-                        + (gameWidth < gameHeight ? 'https://t.me/eruditclub' : 'https://web.telegram.org/#/im?p=@eruditclub')
-                        + '">Telegram</a> </h6>'
-                    )
-                    : ''
-            )
+            + '<h6>&nbsp;&nbsp;<?= T::S('Player support and chat at') ?> <a target="_blank" title="<?= T::S('Join group') ?>" href="'
+            + '<?= T::S('game_bot_url') ?>'
+            + '">Telegram</a> </h6>'
             + '<h5><?= T::S('Send an in-game message') ?>',
         message: '<form onsubmit="return false" id="myChatForm">' + radioButtons + textInput + '</form>',
         locale: 'ru',
@@ -406,7 +400,6 @@ function chatButtonFunction() {
         }
     });
 }
-;
 
 function logButtonFunction() {
     if (bootBoxIsOpenedGlobal())

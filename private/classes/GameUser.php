@@ -12,13 +12,13 @@ class GameUser
 {
     public string $ID;
     public string $status;
-    public bool $isActive = true;
+    public bool $isActive = true; // Ставится в false только при полном выходе из игры
     public int $score = 0;
     public string $username;
     public string $avatarUrl;
     public int $wishTurnTime = 0;
     public int $lastRequestNum = 0;
-    public int $lastActiveTime = 0;
+    public ?int $lastActiveTime = null;
     public int $inactiveTurn = 1000;
     public int $lostTurns = 0;
     public int $rating = 0;
@@ -27,6 +27,7 @@ class GameUser
     protected array $comments = [];
     protected string $lastComment = ''; // Комментарий отдаем, если comments пуст
     public array $result_ratings = [];
+    public array $chatStack = []; // Сообщения чата
 
     protected array $data = [];
     /**

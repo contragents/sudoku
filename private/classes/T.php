@@ -208,6 +208,9 @@ class T
         'Authorization error' => [
             self::RU_LANG => 'Ошибка авторизации'
         ],
+        'Error sending message' => [
+            self::RU_LANG => 'Ошибка отправки сообщения'
+        ],
         // Рекорды
         'Got reward' => [
             self::RU_LANG => 'Получена награда'
@@ -373,7 +376,7 @@ class T
         'Closed game window' => [
             self::RU_LANG => 'Закрыл вкладку с игрой'
         ],
-        "You closed the game window and became inactive!" => [
+        'You closed the game window and became inactive!' => [
             self::RU_LANG => 'Вы закрыли вкладку с игрой и стали Неактивным!'
         ],
         "Request denied. Game is still ongoing" => [
@@ -605,6 +608,9 @@ class T
             self::RU_LANG => 'Играть в'
         ],
         // Чат
+        'Error sending complaint<br><br>Choose opponent' => [
+            self::RU_LANG => 'Ошибка отправки жалобы<br><br>Выберите игрока'
+        ],
         'You' => [
             self::RU_LANG => 'Вы'
         ],
