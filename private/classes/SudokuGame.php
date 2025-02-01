@@ -15,13 +15,21 @@ class SudokuGame extends Game
     const NUM_RATING_PLAYERS_KEY = self::GAME_NAME . parent::NUM_RATING_PLAYERS_KEY; // Список игроков онлайн
     const NUM_COINS_PLAYERS_KEY = self::GAME_NAME . '.num_coins_players';
 
+    const RESPONSE_PARAMS = parent::RESPONSE_PARAMS
+    + [
+        'mistakes' => ['gameStatus' => ['desk' => 'mistakes']],
+    ];
+
     public function __construct()
     {
         parent::__construct(QueueSudoku::class);
     }
 
-    private static function makeBotMove(array $desk): array
+    private function makeBotMove(): array
     {
+        $desk = $this->gameStatus->desk->desk;
+        $mistakes = $this->gameStatus->desk->mistakes;
+
         $newDesk = [];
 
         foreach ($desk as $i => $row) {
@@ -53,6 +61,7 @@ class SudokuGame extends Game
                     $nums7
                     + DeskSudoku::getHorCellValues($cellToPick['j'], $desk)
                     + DeskSudoku::getSquareCellValues($cellToPick['i'], $cellToPick['j'], $desk)
+                    + ($mistakes[$cellToPick['i']][$cellToPick['j']] ?? [])
                 );
                 $newDesk[$cellToPick['i']][$cellToPick['j']][1] = $candidateDigits[array_rand($candidateDigits, 1)];
 
@@ -85,6 +94,7 @@ class SudokuGame extends Game
                     $nums7
                     + DeskSudoku::getVertCellValues($cellToPick['i'], $desk)
                     + DeskSudoku::getSquareCellValues($cellToPick['i'], $cellToPick['j'], $desk)
+                    + ($mistakes[$cellToPick['i']][$cellToPick['j']] ?? [])
                 );
                 $newDesk[$cellToPick['i']][$cellToPick['j']][1] = $candidateDigits[array_rand($candidateDigits, 1)];
 
@@ -117,6 +127,7 @@ class SudokuGame extends Game
                         $nums7
                         + DeskSudoku::getVertCellValues($cellToPick['i'], $desk)
                         + DeskSudoku::getHorCellValues($cellToPick['j'], $desk)
+                        + ($mistakes[$cellToPick['i']][$cellToPick['j']] ?? [])
                     );
                     $newDesk[$cellToPick['i']][$cellToPick['j']][1] = $candidateDigits[array_rand($candidateDigits, 1)];
 
@@ -145,6 +156,7 @@ class SudokuGame extends Game
                     $nums8
                     + DeskSudoku::getHorCellValues($cellToPick['j'], $desk)
                     + DeskSudoku::getSquareCellValues($cellToPick['i'], $cellToPick['j'], $desk)
+                    + ($mistakes[$cellToPick['i']][$cellToPick['j']] ?? [])
                 );
                 $newDesk[$cellToPick['i']][$cellToPick['j']][1] = $candidateDigits[array_rand($candidateDigits, 1)];
 
@@ -174,6 +186,7 @@ class SudokuGame extends Game
                     $nums8
                     + DeskSudoku::getVertCellValues($cellToPick['i'], $desk)
                     + DeskSudoku::getSquareCellValues($cellToPick['i'], $cellToPick['j'], $desk)
+                    + ($mistakes[$cellToPick['i']][$cellToPick['j']] ?? [])
                 );
                 $newDesk[$cellToPick['i']][$cellToPick['j']][1] = $candidateDigits[array_rand($candidateDigits, 1)];
 
@@ -203,6 +216,7 @@ class SudokuGame extends Game
                         $nums8
                         + DeskSudoku::getVertCellValues($cellToPick['i'], $desk)
                         + DeskSudoku::getHorCellValues($cellToPick['j'], $desk)
+                        + ($mistakes[$cellToPick['i']][$cellToPick['j']] ?? [])
                     );
                     $newDesk[$cellToPick['i']][$cellToPick['j']][1] = $candidateDigits[array_rand($candidateDigits, 1)];
 
@@ -212,6 +226,9 @@ class SudokuGame extends Game
         }
 
         // Просто ставим 1 случайную цифру в пустую клетку
+
+        // todo для каждой клетки рассчитать степень неопределенности - сколько цифр в ней может быть
+        // выбрать клетку с наименьшей неопределенностью - в идеале 1 возможная цифра - и поставить ход в нее
         for ($cycle = 1; $cycle <= 100; $cycle++) {
             foreach ($newDesk as $i => $row) {
                 foreach ($row as $j => $cell) {
@@ -221,9 +238,9 @@ class SudokuGame extends Game
                             DeskSudoku::getVertCellValues($i, $desk)
                             + DeskSudoku::getHorCellValues($j, $desk)
                             + DeskSudoku::getSquareCellValues($i, $j, $desk)
+                            + ($mistakes[$i][$j] ?? [])
                         );
                         $freeValues = array_diff(DeskSudoku::CELL_VALUES, $occupiedCellsValues);
-                        // todo добавить проверку на совпадение по mistakes
                         // todo добавить учет рейтинга соперника для вариабельности сложности игры бота
                         // если рейтинг соперника больше, то использовать mistakes. Иначе не использовать
                         $newDesk[$i][$j][1] = $freeValues[array_rand($freeValues, 1)];
@@ -309,9 +326,13 @@ class SudokuGame extends Game
 
     public function makeBotTurn(int $botUserNum)
     {
+        //Обновили время активности бота
+        $this->gameStatus->users[$botUserNum]->lastActiveTime = date('U');
+        $this->gameStatus->users[$botUserNum]->inactiveTurn = 1000;
+
         $numCellsSolved = 0;
         $numKeysSolved = 0;
-        $newDesk = self::makeBotMove($this->gameStatus->desk->desk);
+        $newDesk = $this->makeBotMove();
 
         if ($this->gameStatus->desk->checkNewDesc($newDesk)) {
             $turnRes = $this->gameStatus->desk->checkNewDigit($numCellsSolved);
@@ -324,7 +345,6 @@ class SudokuGame extends Game
                     $numKeysSolved++;
                 }
             }
-            // todo добавить комментарий - ход удачный, ход неудачный
         }
 
         if ($numCellsSolved) {

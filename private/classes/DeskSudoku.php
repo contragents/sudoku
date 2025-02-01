@@ -43,6 +43,12 @@ class DeskSudoku extends Desk
         }
     }
 
+    /**
+     * Получает открытые цифры из клеток по вертикали
+     * @param int $i
+     * @param array $desk
+     * @return array массив цифр
+     */
     public static function getVertCellValues(int $i, array $desk): array
     {
         $res = [];
@@ -55,6 +61,12 @@ class DeskSudoku extends Desk
         return $res;
     }
 
+    /**
+     * Получает открытые цифры из клеток по горизонтали
+     * @param int $j
+     * @param array $desk
+     * @return array массив цифр
+     */
     public static function getHorCellValues(int $j, array $desk): array
     {
         $res = [];
@@ -67,6 +79,13 @@ class DeskSudoku extends Desk
         return $res;
     }
 
+    /**
+     * Получает открытые цифры из клеток в квадрате $i, $j
+     * @param int $i
+     * @param int $j
+     * @param array $desk
+     * @return array массив цифр
+     */
     public static function getSquareCellValues(int $i, int $j, array $desk): array
     {
         $res = [];
@@ -82,6 +101,10 @@ class DeskSudoku extends Desk
         return $res;
     }
 
+    /**
+     * Получить количество ключей на доске, раскрытых и закрытых
+     * @return int
+     */
     public function getKeyCount(): int
     {
         $keyNum = 0;
@@ -192,6 +215,7 @@ class DeskSudoku extends Desk
 
     /**
      * Определяет, можно ли открыть ключ на присланной изменненной доске
+     * @param int $numCellsSolved
      * @return bool
      */
     public function newSolvedKey(int &$numCellsSolved): bool

@@ -36,7 +36,7 @@ class Game
 
     const RESPONSE_PARAMS = [
         'desk' => ['gameStatus' => ['desk' => 'desk']],
-        'mistakes' => ['gameStatus' => ['desk' => 'mistakes']],
+        //'mistakes' => ['gameStatus' => ['desk' => 'mistakes']],
         'gameNumber' => ['gameStatus' => 'gameNumber'],
         'common_id' => 'getCurrentPlayerCommonId',
         'common_id_hash' => 'getCommonIdHash',

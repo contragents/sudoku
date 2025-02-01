@@ -92,14 +92,7 @@ function checkButtonFunction() {
             }
 
             if (addCheck) {
-                // todo проверить, нет ли mistake в данной клетке с данной цифрой
-                for (let k in sudokuMistakesContainer) {
-                    if (sudokuMistakesContainer[k].getData('cellX') == i
-                        && sudokuMistakesContainer[k].getData('cellY') == j
-                        && sudokuMistakesContainer[k].getData('letter') == number) {
-                        addCheck = false;
-                    }
-                }
+                addCheck = !cellHasError(i, j, number);
             }
 
             if (addCheck) {

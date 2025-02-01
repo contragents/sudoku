@@ -22,7 +22,7 @@ function findPlaceGlobal(gameObject, oldX, oldY, cellX, cellY) {
                     cellX = i;
                     cellY = j;
                     minQuad = newQuad;
-                } else if (cells[i][j][0] === false && newQuad < minQuad) {
+                } else if (cells[i][j][0] === false && !cellHasError(i, j, gameObject.getData('letter')) && newQuad < minQuad) {
                     cellX = i;
                     cellY = j;
                     minQuad = newQuad;
@@ -141,5 +141,17 @@ function correctCellNumber(n, cellNumber) {
     }
 
     return cellNumber
+}
+
+function cellHasError(i, j, number) {
+    for (let k in sudokuMistakesContainer) {
+        if (sudokuMistakesContainer[k].getData('cellX') == i
+            && sudokuMistakesContainer[k].getData('cellY') == j
+            && sudokuMistakesContainer[k].getData('letter') == number) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
