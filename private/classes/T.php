@@ -574,9 +574,6 @@ class T
         'Waiting for other players' => [
             self::RU_LANG => 'Поиск других игроков'
         ],
-        'Game goal:' => [
-            self::RU_LANG => 'Игра до'
-        ],
         'Game goal' => [
             self::RU_LANG => 'Игра до'
         ],
@@ -832,7 +829,7 @@ class T
         "is the only one left in the game! Start a new game" => [
             self::RU_LANG => 'остался в игре один! Начните новую игру'
         ],
-        "Time for the turn ran out" => [
+        'Time for the turn ran out' => [
             self::RU_LANG => 'Время хода истекло'
         ],
         "is left without any pieces! Winner - " => [

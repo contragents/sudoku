@@ -20,6 +20,8 @@ class SudokuGame extends Game
         'mistakes' => ['gameStatus' => ['desk' => 'mistakes']],
     ];
 
+    const DEFAUTL_TURN_TIME = 90;
+
     public function __construct()
     {
         parent::__construct(QueueSudoku::class);
@@ -428,7 +430,6 @@ class SudokuGame extends Game
         $res = parent::gameStarted($statusUpdateNeeded);
 
         // Особенности создания конкретной игры | начало
-        $numKeys = ceil($this->gameStatus->desk->getKeyCount() / 2);
 
         // Число очков для победы - половина всех ключей и всех закрытых клеток + 1 очко
         $this->gameStatus->gameGoal = ceil(

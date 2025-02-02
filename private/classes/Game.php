@@ -98,6 +98,8 @@ class Game
     const NUM_RATING_PLAYERS_KEY = '.num_rating_players';
     const RATINGS_CACHE_TIMEOUT = 200;
     const NUM_COINS_PLAYERS_KEY = '.num_coins_players';
+    const TIME_VARIANTS = [60 => 0, 90 => 0, 120 => 0];
+    const DEFAUTL_TURN_TIME = 120;
     public static array $players = []; // онлайн игроки
 
     public ?string $User;
@@ -230,7 +232,7 @@ class Game
             $this->gameStatus->turnBeginTime = $this->gameStatus->gameBeginTime;
             $this->gameStatus->turnNumber = 1;
             $this->gameStatus->firstTurnUser = $firstTurnUser;
-            $this->gameStatus->turnTime = 120;
+            $this->gameStatus->turnTime = $this->makeWishTime();
             $this->gameStatus->aquiringTimes[$this->gameStatus->turnNumber] = false;
             $this->updateUserStatus($this->SM::STATE_MY_TURN, $this->currentGameUsers[$firstTurnUser]);
             //Назначили ход случайному юзеру
@@ -840,7 +842,18 @@ class Game
         } elseif (
             (date('U') - $this->gameStatus->turnBeginTime) > ($this->gameStatus->turnTime + static::TURN_DELTA_TIME)
         ) {
-            $this->addToLog('Время хода истекло', $this->gameStatus->activeUser);
+            $this->addToLog(T::S('Time for the turn ran out'), $this->gameStatus->activeUser);
+            $this->gameStatus->users[$this->gameStatus->activeUser]->addComment(T::S('Time for the turn ran out'));
+
+            // Добавили коммент о пропуске хода всем игрокам
+            foreach($this->gameStatus->users as $numUser => $user) {
+                if($numUser !== $this->gameStatus->activeUser) {
+                    $user->addComment(
+                        $this->gameStatus->users[$this->gameStatus->activeUser]->username
+                        . ' - ' . T::S('Time for the turn ran out')
+                    );
+                }
+            }
 
             $this->gameStatus->users[$this->gameStatus->activeUser]->lostTurns++;
             $this->gameStatus->users[$this->gameStatus->activeUser]->inactiveTurn = $this->gameStatus->turnNumber;
@@ -1261,5 +1274,36 @@ class Game
         }
 
         return $numActiveUsers;
+    }
+
+    protected function makeWishTime(): int
+    {
+        $korzinaGolosov = [];
+        foreach ($this->gameStatus->users as $user) {
+            if (isset($user->wishTurnTime)) {
+                $korzinaGolosov[] = $user->wishTurnTime;
+            }
+        }
+
+        if (!count($korzinaGolosov)) {
+            return static::DEFAUTL_TURN_TIME;
+        }
+
+        $srednee = array_sum($korzinaGolosov) / count($korzinaGolosov);
+
+        $variants = [];
+
+        foreach (static::TIME_VARIANTS as $vremya => $delta) {
+            $variants[$vremya] = abs($srednee - $vremya);
+        }
+
+        asort($variants);
+
+        foreach ($variants as $vremya => $delta) {
+            return $vremya;
+        }
+        //Голосование проведено
+
+        return 90;
     }
 }
