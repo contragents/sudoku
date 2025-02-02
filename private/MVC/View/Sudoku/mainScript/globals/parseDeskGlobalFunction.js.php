@@ -34,24 +34,23 @@ function parseDeskGlobal(newDesc) {
                     }
                 }
 
-                if (!dontBlink && !(i in prevCellsOpened && j in prevCellsOpened[i])) {
-                    fixFishka.setData('displayHeight', fixFishka.displayHeight);
-                    fixFishka.setData('displayWidth', fixFishka.displayWidth);
-                    cellsToBlink.push(fixFishka);
-                } else if (!dontBlink && i in prevCellsOpened && j in prevCellsOpened[i] && prevCellsOpened[i][j] === 0 && cells[i][j][1] > 10) {
-                    fixFishka.setData('displayHeight', fixFishka.displayHeight);
-                    fixFishka.setData('displayWidth', fixFishka.displayWidth);
-                    cellsToBlink.push(fixFishka);
+                if (!dontBlink) {
+                    if (
+                        !(i in prevCellsOpened && j in prevCellsOpened[i]) // ячейка не открыта
+                        ||
+                        (i in prevCellsOpened && j in prevCellsOpened[i] && prevCellsOpened[i][j] === 0 && cells[i][j][1] > 10) // в ячейке ключ
+                    ) {
+                        fixFishka.setData('displayHeight', fixFishka.displayHeight);
+                        fixFishka.setData('displayWidth', fixFishka.displayWidth);
+                        cellsToBlink.push(fixFishka);
+                    }
                 }
 
-                //if(cells[i][j][1] !== 0) {
                 if (!(i in prevCellsOpened)) {
                     prevCellsOpened[i] = {};
                 }
 
                 prevCellsOpened[i][j] = cells[i][j][1];
-                //}
-
             }
         }
     }

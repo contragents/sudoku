@@ -104,7 +104,7 @@ var gameStates = {
             };
             initScoresGlobal();
 
-            clearBlinkVars();
+            clearContainerVarsGlobal();
 
             let under1800 = '<?= T::S('Only for players rated 1800+') ?>';
             let noRatingPlayers = '<?= T::S('Not enough 1900+ rated players online') ?>';
@@ -729,6 +729,8 @@ var gameStates = {
     initGame: {
         1: 'waiting', 2: 'done',
         action: function (data) {
+            initLotok();
+            resetButtonFunction(true);
             buttons.submitButton.setDisabled();
         },
         message: '<?= T::S('Game selection - please wait') ?>',
@@ -859,7 +861,7 @@ var gameStates = {
         },
         refresh: 10,
         action: function (data, parseDesk = true) {
-            if (/*parseDesk && */"desk" in data && data.desk.length > 0) {
+            if (/*parseDesk && */'desk' in data && data.desk.length > 0) {
                 parseDeskGlobal(data['desk']);
             }
             if ("score_arr" in data) {

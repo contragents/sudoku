@@ -217,14 +217,6 @@ function resetButtonFunction(ignoreBootBox = false) {
                 container[k].setInteractive();
                 placeToLotok(container[k]);
             }
-
-            if (container[k].getData('isTemporary') === true) {
-                for (let i = 0; i <= 8; i++)
-                    for (let j = 0; j <= 8; j++)
-                        cells[i][j][2] = false;
-                container[k].destroy();
-                container.splice(k, 1);
-            }
         }
     }
 

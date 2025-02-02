@@ -433,11 +433,7 @@ function lotokFreeXY(X, Y) {
 }
 
 function placeToLotok(fishka) {
-    if (fishka.getData('isTemporary')) {
-        var slotXY = lotokFindSlotReverseXY();
-    } else {
-        var slotXY = lotokFindSlotXY();
-    }
+    var slotXY = lotokFindSlotXY();
 
     fishka.setData('cellX', false);
     fishka.setData('cellY', false);
@@ -604,7 +600,7 @@ function getSVGBlockGlobal(X, Y, buttonName, _this, scalable, hasDigits = false)
     return container;
 }
 
-function clearBlinkVars() {
+function clearContainerVarsGlobal() {
     dontBlink = true;
 
     while (errorsToBlink.length) {
@@ -621,15 +617,27 @@ function clearBlinkVars() {
 
     blinkErrorsCounter = 0;
 
-    while (prevCellsOpened.length) {
-        prevCellsOpened.pop().destroy();
-    }
+    prevCellsOpened = {};
 
     while (cellsToBlink.length) {
         cellsToBlink.pop();
     }
 
     blinkCellsCounter = 0;
+
+    while(container.length) {
+        container.pop().destroy();
+    }
+
+    for (let i = 0; i <= 8; i++) {
+        for (let j = 0; j <= 8; j++) {
+            if (i in sudokuChecksContainer && j in sudokuChecksContainer[i]) {
+                while (sudokuChecksContainer[i][j].length) {
+                    sudokuChecksContainer[i][j].pop().destroy();
+                }
+            }
+        }
+    }
 }
 
 //<?php include('globals/getFishkaGlobalFunction.js')?>
