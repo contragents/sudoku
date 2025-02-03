@@ -83,7 +83,7 @@ class UserProfile
 
         $userData = UserModel::getOneO(BaseController::$commonId);
 
-        $message['url'] = $userData->_avatar_url ?: false;
+        $message['url'] = ($userData->_avatar_url ?? null) ?: false;
         if (!$message['url']) {
             $message['url'] = AvatarModel::getDefaultAvatar(BaseController::$commonId);
             $message['img_title'] = T::S('Default avatar is used');
@@ -91,7 +91,7 @@ class UserProfile
             $message['img_title'] = T::S('Avatar by provided link');
         }
 
-        $message['name'] = $userData->_name
+        $message['name'] = ($userData->_name ?? null)
             ?: PlayerModel::getPlayerName(
                 new GameUser(['ID' => BaseController::$User, 'common_id' => BaseController::$commonId])
             );
