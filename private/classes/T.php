@@ -75,6 +75,7 @@ class T
             self::RU_LANG => 'Доступ запрещен',
         ],
         'Sudoku online' => [
+            self::EN_LANG => 'Sudoku with friends',
             self::RU_LANG => 'Судоку с друзьями',
         ],
         'secret_prompt' => [
@@ -1025,9 +1026,32 @@ class T
         "Error saving new URL" => [
             self::RU_LANG => 'Ошибка сохранения нового URL'
         ],
+        'A player may open more than one cell and more than one KEY in one turn. Use the CASCADES rule' => [
+          self::RU_LANG => 'За один ход игрок может открыть несколько ячеек и несколько КЛЮЧЕЙ. Пользуйтесь правилом КАСКАДОВ'
+        ],
+        'If after the automatic opening of a number, new blocks of EIGHT open cells are formed on the field, such blocks are also opened by CASCADE' => [
+            self::RU_LANG => 'Если после автоматического открытия числа на поле образуются новые блоки из ВОСЬМИ открытых ячеек, то такие блоки также открываются КАСКАДОМ'
+        ],
+        'If a player has opened a cell (solved a number in it) and there is only ONE closed digit left in the block, this digit is opened automatically' => [
+        self::RU_LANG => 'Если игрок открыл ячейку (разгадал число в ней) и в блоке осталась только ОДНА закрытая цифра, то такая цифра открывается автоматически'
+            ],
+        'is awarded for solved empty cell' => [
+            self::RU_LANG => 'начисляется за открытую цифру'
+        ],
+        'by calculating all of other 8 digits in a block - vertically OR horizontally OR in a 3x3 square' => [
+            self::RU_LANG => ', вычислив все остальные 8 цифр в блоке - по вертикали ИЛИ по горизонтали ИЛИ в квадрате 3х3'
+        ],
+        "The players' task is to take turns making moves and accumulating points to open black squares" => [
+            self::RU_LANG => 'Задача игроков - делая ходы по очереди и накапливая очки, открывать черные квадраты'
+        ],
+        'The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated'=> [
+            self::RU_LANG => 'Действуют классические правила СУДОКУ - в блоке из девяти ячеек (по вертикали, по горизонтали и в квадрате 3х3) цифры не должны повторяться'
+        ],
         'faq_rules' => [
-            self::EN_LANG => Faq::RULES[self::EN_LANG],
-            self::RU_LANG => Faq::RULES[self::RU_LANG],
+            SudokuGame::GAME_NAME => [
+                self::EN_LANG => Faq::RULES[self::EN_LANG],
+                self::RU_LANG => Faq::RULES[self::RU_LANG],
+            ],
         ],
         'faq_rating' => [
             self::EN_LANG => Faq::RATING[self::EN_LANG],
@@ -1215,33 +1239,6 @@ class T
         return $text;
     }
 
-    /*
-        public static function cellPlural(int $num): string
-        {
-            if (self::$lang === self::RU_LANG) {
-                return $num === 1
-                    ? 'клетку'
-                    : (($num <= 4 && $num > 0) ? 'клетки' : 'клеток');
-            } else {
-                return $num === 1
-                    ? 'cell'
-                    : 'cells';
-            }
-        }
-
-        public static function pointPlural(int $num): string
-        {
-            if (self::$lang === self::RU_LANG) {
-                return $num === 1
-                    ? 'очко'
-                    : (($num <= 4 && $num > 0) ? 'очка' : 'очков');
-            } else {
-                return $num === 1
-                    ? 'point'
-                    : 'points';
-            }
-        }
-    */
     const PLURALS = [
         'point' => [
             self::EN_LANG => [0 => 'points', 1 => 'point', 2 => 'points'],
@@ -1271,7 +1268,13 @@ class T
                     $wordReplace = call_user_func([self::class, $value . 'Plural'], $params[$num]);
                 } else {
                     // Для разных языков и количества делаем отдельную поправку на расчетное количество
-                    $numPlural = (self::$lang === self::RU_LANG && $params[$num] < 20) ? ($params[$num] % 20) : ($params[$num] % 10);
+                    $numPlural = self::$lang === self::EN_LANG
+                        ? $params[$num]
+                        : (
+                        ($params[$num] % 100) < 20
+                            ? ($params[$num] % 20)
+                            : ($params[$num] % 10)
+                        );
                     for ($i = $numPlural; $i >= 0; $i--) {
                         if (isset(self::PLURALS[$value][self::$lang][$i])) {
                             $wordReplace = self::PLURALS[$value][self::$lang][$i];

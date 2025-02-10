@@ -10,439 +10,45 @@ class Faq
         T::EN_LANG =>
         <<<EN
 <h2 id="nav1">About the game</h2>
-                            <p>Scrabble &mdash; a word board game that can be played by 2 to 4 people by building words from the letters they have on a 15x15 field.</p>
-                            <div class="fon-right">
-                                <h2 id="nav2">Playing board</h2>
-                                <p>The game board consists of 15x15, i.e. 225 squares, on which the participants of the game put letters, thus making words. At the beginning of the game each player receives 7 random letters. 
-                                <p>The first word is placed in the middle of the game board. To this word, if possible, it is necessary to add the remaining letters so that at the intersection you get new words.</p>
-                                <p>Then the next players must put their letters “across” or attach them to the words they have already made up.</p>
-                                <p>Words are laid out either left to right or top to bottom.</p>
-                            </div>
-                            <div class="fon-right">
-                                <h2 id="nav3">Vocabulary</h2>
-                                <p>All words in the Cambridge English-Russian Dictionary (https://dictionary.cambridge.org/ru/ ), including the <a href="#" onclick="$('#abbr').css({ display: 'block' });return false;" style="cursor: pointer;" title="ad AGM AIDS ATM BA BBC BSc BSE CCTV CD CEO CFC Corp dab DIY DNA DVD EFL ELT er ESL FA FAQ FM GCSE GDP GMO GMT GNP GP GPS HIV HQ ICT IOU IPA IQ ISP it ITV IVF JP JPEG LAN LCD LPG MA MBA MEP MP MPV MRI MRSA Ms MSc MTV NATO OAP PC PDA PE pin POW PR pt QC ram RSI SARS SASE SATNAV SGML SIDS SMS SPF SUV TB TEFL TESOL TV UFO UK USA VAT VCR VDU VIP WC WMD www XML">most common abbreviations</a>, may be used.<span id="abbr" style="display:none;">ad AGM AIDS ATM BA BBC BSc BSE CCTV CD CEO CFC Corp dab DIY DNA DVD EFL ELT er ESL FA FAQ FM GCSE GDP GMO GMT GNP GP GPS HIV HQ ICT IOU IPA IQ ISP it ITV IVF JP JPEG LAN LCD LPG MA MBA MEP MP MPV MRI MRSA Ms MSc MTV NATO OAP PC PDA PE pin POW PR pt QC ram RSI SARS SASE SATNAV SGML SIDS SMS SPF SUV TB TEFL TESOL TV UFO UK USA VAT VCR VDU VIP WC WMD www XML</span></p>
-                                <p>Only proper nouns in the singular (or in the plural if the word has no singular form) may be used.</p>
-                                <p>To see what words players have made in previous turns, as well as their meaning and “cost”, click on the button <img src="/img/otjat/log2.svg" height="64"/></p>
-                            </div>
-                            <div class="fon-right">
-                                <h2 id="nav4">Game play</h2>
-                                <p>At the beginning of the game, each person is given 7 chips with printed letters on them. Several words can be placed in one turn. Each new word must be adjacent (have a common letter or letters) to the previously laid out words. Words are read only horizontally from left to right and vertically from top to bottom.</p>
-                                <p>The first lined&nbsp;word&nbsp;must go through the center cell.</p>
-                                <p>
-                                You can send your combination by pressing the button <br /><img src="/img/otjat/otpravit2.svg" width="80%"/>
-                                <br />
-                                If it is not your move at the moment, the button will become inactive <br /><img src="/img/inactive/otpravit2.svg" width="80%"/>
-                                <br />
-                                If the SEND button starts blinking red - your turn time is running out. Hurry up and send your combination!
-                                </p>
-                                <p>If a player doesn't want to or can't lay out any words - he has the right to change any number of his letters, skipping a turn.
-                                <br /><img src="/img/otjat/pomenyat2.svg" width="80%"/>
-                                </p>
-                                <p>Any sequence of letters horizontally and vertically must be a word. In other words, the game does not allow random letter combinations on the field that do not represent words that meet the above criteria.</p>
-                                <p>After each turn you need to add new letters up to 7.</p>
-                                <p>If a player has used all 7 letters during a turn, he is awarded an additional 15 score points.</p>
-                            </div>
-                            <div class="fon-right">
-                                <h2 id="nav5">Distribution of chips and cost of letters</h2>
-                                <table cellpadding="10" cellspacing="10">
-                                    <tbody>
-                                        <tr>
-                                            <th>Letter</th>
-                                            <th>Quantity</th>
-                                            <th>Price (score points)</th>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Wild (blank) card</strong></td>
-                                            <td>10</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>A</td>
-                                            <td>9</td>
-                                            <td>1 point</td>
-                                        </tr>
-                                        <tr>
-                                            <td>B</td>
-                                            <td>2</td>
-                                            <td>3 points</td>
-                                        </tr>
-                                        <tr>
-                                            <td>C</td>
-                                            <td>2</td>
-                                            <td>3 points</td>
-                                        </tr>
-                                        <tr>
-                                            <td>D</td>
-                                            <td>4</td>
-                                            <td>2 points</td>
-                                        </tr>
-                                        <tr>
-                                            <td>E</td>
-                                            <td>12</td>
-                                            <td>1 point</td>
-                                        </tr>
-                                        <tr>
-                                            <td>F</td>
-                                            <td>2</td>
-                                            <td>4 points</td>
-                                        </tr>
-                                        <tr>
-                                            <td>G</td>
-                                            <td>3</td>
-                                            <td>2 points</td>
-                                        </tr>
-                                        <tr>
-                                            <td>H</td>
-                                            <td>2</td>
-                                            <td>4 points</td>
-                                        </tr>
-                                        <tr>
-                                            <td>I</td>
-                                            <td>9</td>
-                                            <td>1 point</td>
-                                        </tr>
-                                        <tr>
-                                            <td>J</td>
-                                            <td>1</td>
-                                            <td>8 points</td>
-                                        </tr>
-                                        <tr>
-                                            <td>K</td>
-                                            <td>1</td>
-                                            <td>5 points</td>
-                                        </tr>
-                                        <tr>
-                                            <td>L</td>
-                                            <td>4</td>
-                                            <td>1 point</td>
-                                        </tr>
-                                        <tr>
-                                            <td>M</td>
-                                            <td>2</td>
-                                            <td>3 points</td>
-                                        </tr>
-                                        <tr>
-                                            <td>N</td>
-                                            <td>6</td>
-                                            <td>1 point</td>
-                                        </tr>
-                                        <tr>
-                                            <td>O</td>
-                                            <td>8</td>
-                                            <td>1 point</td>
-                                        </tr>
-                                        <tr>
-                                            <td>P</td>
-                                            <td>2</td>
-                                            <td>3 points</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Q</td>
-                                            <td>1</td>
-                                            <td>10 points</td>
-                                        </tr>
-                                        <tr>
-                                            <td>R</td>
-                                            <td>6</td>
-                                            <td>1 point</td>
-                                        </tr>
-                                        <tr>
-                                            <td>S</td>
-                                            <td>4</td>
-                                            <td>1 point</td>
-                                        </tr>
-                                        <tr>
-                                            <td>T</td>
-                                            <td>6</td>
-                                            <td>1 point</td>
-                                        </tr>
-                                        <tr>
-                                            <td>U</td>
-                                            <td>4</td>
-                                            <td>1 point</td>
-                                        </tr>
-                                        <tr>
-                                            <td>V</td>
-                                            <td>2</td>
-                                            <td>4 points</td>
-                                        </tr>
-                                        <tr>
-                                            <td>W</td>
-                                            <td>2</td>
-                                            <td>4 points</td>
-                                        </tr>
-                                        <tr>
-                                            <td>X</td>
-                                            <td>1</td>
-                                            <td>8 points</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Y</td>
-                                            <td>2</td>
-                                            <td>4 points</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Z</td>
-                                            <td>1</td>
-                                            <td>10 points</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="fon-right">
-                                <h2 id="nav6">Scoring and bonus points</h2>
-                                <p>Each letter is assigned a number of score points from 1 to 10. Some cells on the board are painted in different colors. The number of points a player receives for a word is calculated as follows:</p>
-                                <ul>
-                                    <li>If cell under the letter is colorless, the number of score points written on the letter is added</li>
-                                    <li>If cell is <span style="background-color:#A1ACCE;color:black;">light blue</span> - the number of score points of the <strong>letter</strong> is multiplied by <strong>2</strong></li>
-                                    <li>If cell is <span style="background-color:#111143;color:white;">dark blue</span> - the number of score points of the <strong>letter</strong> is multiplied by <strong>3</strong></li>
-                                    <li>If cell is <span style="background-color:#FF7B7B;color:black;">rose</span> - the number of score points of the whole <strong>word</strong> is multiplied by <strong>2</strong></li>
-                                    <li>If cell is <span style="background-color:#E20000;color:white;">red</span> - the number of score points of the whole <strong>word</strong> is multiplied by <strong>3</strong></li>
-                                </ul>
-                                <p>If a word uses multipliers of both types, the doubling (tripling) of letter score points is counted before the doubling (tripling) of word score points.</p>
-                            </div>
-                            <div class="fon-right">
-                                <h2 id="nav7">The Wild card</h2>
-                                <p>Also, there are 10 wild cards in the set of chips. Such a chip can be used as any letter of the player's choice. For example, the player can put the word &laquo;P_ONE&raquo;, where the role of the letter &laquo;H&raquo; will be played by The Wild card.</p>
-                                <p>As soon as the player places the Wild card on the field, the game will immediately offer to choose the letter to be replaced by it. When rearranging the Wild card the choice of letter will be offered again.</p>
-                                <p>The Wild card gives as many score points as the letter whose role it plays.</p>
-                                <h3>Reusing the Wild card</h3>
-                                <p>If any player has a letter that is replaced by the Wild card on the playing board, he can replace that Wild card chip with his own letter and use the obtained Wild card to make a word, but only for the current turn. It is not possible to take Wild card from the field “to spare”.</p>
-                            </div>
+The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated
+<br><br>
+The players' task is to take turns making moves and accumulating points to open black squares (+10 points) by calculating all of other 8 digits in a block - vertically OR horizontally OR in a 3x3 square
+<br><br>
+A +1 point is awarded for solved empty cell
+<br><br>
+Victory goes to the player who scores 50% of all possible points +1 point
+<br><br>
+If a player has opened a cell (solved a number in it) and there is only ONE closed digit left in the block, this digit is opened automatically
+<br><br>
+If after the automatic opening of a number, new blocks of EIGHT open cells are formed on the field, such blocks are also opened by CASCADE
+<br><br>
+A player may open more than one cell and more than one KEY in one turn. Use the CASCADES rule
+<br><br>
+In case of an erroneous move - the digit in the cell is wrong - a small red error digit appears on this cell, which is visible to both players. This digit may not be placed on this cell again
+<br><br>
+Using the Check button, the player can make a mark - put a small green number in the cell. This can be a calculated figure that the player is sure of, or just a guess. Use notes as in a normal SUDOKU - the other player cannot see them
 EN,
 
         T::RU_LANG =>
     <<<RU
 <h2 id="nav1">Об игре</h2>
-                            <p>Эрудит &mdash; настольная игра со словами, в которую могут играть от 2 до 4 человек, выкладывая слова из имеющихся у них букв на поле размером 15x15.</p>
-                            <div class="fon-right">
-                                <h2 id="nav2">Игровое поле</h2>
-                                <p>Игровое поле состоит из 15х15, то есть 225 квадратов, на которые участники игры выкладывают буквы, составляя тем самым&nbsp;слова. В начале игры каждый игрок получает 7 случайных букв (всего их в игре 102). 
-                                <p>На середину игрового поля выкладывается первое&nbsp;слово. К этому слову по возможности, нужно приставить осташиеся буквы так, чтобы на пересечении получились новые слова.</p>
-                                <p>Затем следующий игрок должен выставить свои&nbsp;буквы&nbsp;&laquo;на пересечение&raquo; или приставить их к уже составленным словам.</p>
-                                <p>Слова&nbsp;выкладываются либо слева направо, либо сверху вниз.</p>
-                            </div>
-                            <div class="fon-right">
-                                <h2 id="nav3">Словарь</h2>
-                                <p>Разрешается использовать все&nbsp;слова, приведенные в стандартном словаре языка за исключением&nbsp;слов, пишущихся с прописных букв, сокращений, и слов, которые пишутся через апостроф или дефис.</p>
-                                <p>Разрешено использовать только нарицательные имена существительные в именительном падеже и единственном числе (либо во множественном при отсутствии у слова формы единственного числа, ЛИБО, если слово во множественном числе содержится в одном из словарей Игры - см. значение слова в меню ЛОГ).</p>
-                                <p>Чтобы посмотреть, какие слова составили игроки в предыдущих ходах, а также узнать их значение и &laquo;стоимость&raquo;, кликните на кнопку <img src="/img/otjat/log2.svg" height="64"/></p>
-                            </div>
-                            <div class="fon-right">
-                                <h2 id="nav4">Ход игры</h2>
-                                <p>В начале игры каждому дается по 7 фишек. За один ход можно выложить несколько&nbsp;слов. Каждое новое&nbsp;слово&nbsp;должно соприкасаться (иметь общую букву или буквы) с ранее выложенными&nbsp;словами.&nbsp;Слова&nbsp;читаются только по горизонтали слева направо и по вертикали сверху вниз.</p>
-                                <p>Первое выложенное&nbsp;слово&nbsp;должно проходить через центральную клетку.</p>
-                                <p>
-                                Отправить свою комбинацию можно, нажав кнопку <br /><img src="/img/otjat/otpravit2_ru.svg" width="80%"/>
-                                <br />
-                                Если в данный момент ход не Ваш - кнопка станет неактивной <br /><img src="/img/inactive/otpravit2_ru.svg" width="80%"/>
-                                <br />
-                                Если кнопка ОТПРАВИТЬ начала мигать красным - время Вашего хода заканчивается. Скорее отправляйте свою комбинацию!
-                                </p>
-                                <p>Если игрок не хочет или не может выложить ни одного слова, - он имеет право поменять любое количество своих букв, пропустив при этом ход.
-                                <br /><img src="/img/otjat/pomenyat2_ru.svg" width="80%"/>
-                                </p>
-                                <p>Любая последовательность букв по горизонтали и вертикали должна являться&nbsp;словом. Т.е. в игре не допускается появление на поле случайных буквосочетаний, не представляющих собою&nbsp;слов, соответствующих вышеприведенным критериям.</p>
-                                <p>После каждого хода необходимо добрать новых букв до 7.</p>
-                                <p>Если за ход игрок использовал все 7 букв, то ему начисляются дополнительные 15 очков.</p>
-                            </div>
-                            <div class="fon-right">
-                                <h2 id="nav5">Распределение фишек и стоимость букв</h2>
-                                <table cellpadding="10" cellspacing="10">
-                                    <tbody>
-                                        <tr>
-                                            <th>Буква</th>
-                                            <th>Кол-во</th>
-                                            <th>Цена</th>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>*</strong></td>
-                                            <td>3 шт.</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>А</td>
-                                            <td>8 шт.</td>
-                                            <td>1 очко</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Б</td>
-                                            <td>2 шт.</td>
-                                            <td>3 очка</td>
-                                        </tr>
-                                        <tr>
-                                            <td>В</td>
-                                            <td>4 шт.</td>
-                                            <td>1 очко</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Г</td>
-                                            <td>2 шт.</td>
-                                            <td>3 очка</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Д</td>
-                                            <td>4 шт.</td>
-                                            <td>2 очка</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Е</td>
-                                            <td>9 шт.</td>
-                                            <td>1 очко</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ж</td>
-                                            <td>1 шт.</td>
-                                            <td>5 очков</td>
-                                        </tr>
-                                        <tr>
-                                            <td>З</td>
-                                            <td>2 шт.</td>
-                                            <td>5 очков</td>
-                                        </tr>
-                                        <tr>
-                                            <td>И</td>
-                                            <td>6 шт.</td>
-                                            <td>1 очко</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Й</td>
-                                            <td>1 шт.</td>
-                                            <td>4 очка</td>
-                                        </tr>
-                                        <tr>
-                                            <td>К</td>
-                                            <td>4 шт.</td>
-                                            <td>2 очка</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Л</td>
-                                            <td>4 шт.</td>
-                                            <td>2 очка</td>
-                                        </tr>
-                                        <tr>
-                                            <td>М</td>
-                                            <td>3 шт.</td>
-                                            <td>2 очка</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Н</td>
-                                            <td>5 шт.</td>
-                                            <td>1 очко</td>
-                                        </tr>
-                                        <tr>
-                                            <td>О</td>
-                                            <td>10 шт.</td>
-                                            <td>1 очко</td>
-                                        </tr>
-                                        <tr>
-                                            <td>П</td>
-                                            <td>4 шт.</td>
-                                            <td>2 очка</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Р</td>
-                                            <td>5 шт.</td>
-                                            <td>1 очко</td>
-                                        </tr>
-                                        <tr>
-                                            <td>С</td>
-                                            <td>5 шт.</td>
-                                            <td>1 очко</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Т</td>
-                                            <td>5 шт.</td>
-                                            <td>1 очко</td>
-                                        </tr>
-                                        <tr>
-                                            <td>У</td>
-                                            <td>4 шт.</td>
-                                            <td>2 очка</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ф</td>
-                                            <td>1 шт.</td>
-                                            <td>8 очков</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Х</td>
-                                            <td>1 шт.</td>
-                                            <td>5 очков</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ц</td>
-                                            <td>1 шт.</td>
-                                            <td>5 очков</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ч</td>
-                                            <td>1 шт.</td>
-                                            <td>5 очков</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ш</td>
-                                            <td>1 шт.</td>
-                                            <td>8 очков</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Щ</td>
-                                            <td>1 шт.</td>
-                                            <td>10 очков</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ъ</td>
-                                            <td>1 шт.</td>
-                                            <td>15 очков</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ы</td>
-                                            <td>2 шт.</td>
-                                            <td>4 очка</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ь</td>
-                                            <td>2 шт.</td>
-                                            <td>3 очка</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Э</td>
-                                            <td>1 шт.</td>
-                                            <td>8 очков</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ю</td>
-                                            <td>1 шт.</td>
-                                            <td>8 очков</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Я</td>
-                                            <td>2 шт.</td>
-                                            <td>3 очка</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="fon-right">
-                                <h2 id="nav6">Подсчет очков и бонусы</h2>
-                                <p>Каждой букве присвоено количество очков от 1 до 10. Некоторые квадраты на доске раскрашены в разные цвета. Количество очков, получаемых игроком за выложенное слово, подсчитывается следующим образом:</p>
-                                <ul>
-                                    <li>Если квадрат под буквой бесцветен, добавляется количество очков, написанное на букве</li>
-                                    <li>Если квадрат <span style="background-color:green;color:white;">зеленый</span> - количество очков <strong>буквы</strong> умножается на <strong>2</strong></li>
-                                    <li>Если квадрат <span style="background-color:yellow;color:black;">желтый</span> - количество очков <strong>буквы</strong> умножается на <strong>3</strong></li>
-                                    <li>Если квадрат <span style="background-color:blue;color:white;">синий</span> - количество очков всего <strong>слова</strong> умножается на <strong>2</strong></li>
-                                    <li>Если квадрат <span style="background-color:red;color:white;">красный</span> - количество очков всего <strong>слова</strong> умножается на <strong>3</strong></li>
-                                </ul>
-                                <p>Если слово использует множители обоего типа, то в удвоении (утроении) очков слова учитывается удвоение (утроение) очков букв.</p>
-                            </div>
-                            <div class="fon-right">
-                                <h2 id="nav7">Звёздочка</h2>
-                                <p>Также, в наборе фишек присутствуют три звёздочки. Такая фишка может быть использована как любая буква на выбор игрока. Например, игрок может выставить слово &laquo;ТЕ*ЕФОН&raquo;, где роль буквы &laquo;Л&raquo; будет играть звездочка.</p>
-                                <p>Как только игрок выставит на поле звездочку, игра сразу предложит выбрать заменяемую ею букву. При перестановке звездочки выбор буквы будет предлагаться вновь.</p>
-                                <p>Звездочка приносит столько очков, сколько бы принесла буква, роль которой она играет.&nbsp;</p>
-                                <h3>Повторное использование звёздочки&nbsp;</h3>
-                                <p>Если у любого из игроков есть буква, которую заменяет звёздочка на игровом поле, то он может заменить эту звёздочку своей буквой и использовать полученную звёздочку для составления слова, но только в текущий ход. Забрать звёздочку с поля "про запас" себе нельзя.</p>
-                            </div>
+Действуют классические правила СУДОКУ - в блоке из девяти ячеек (по вертикали, по горизонтали и в квадрате 3х3) цифры не должны повторяться
+<br><br>
+Задача игроков - делая ходы по очереди и накапливая очки, открывать черные квадраты (+10 очков), вычислив все остальные 8 цифр в блоке - по вертикали ИЛИ по горизонтали ИЛИ в квадрате 3х3
+<br><br>
+Также нужно открывать пустые клетки (+1 очко)
+<br><br>
+Победа достается игроку, который набрал 50% от всех возможных очков +1 очко
+<br><br>
+Если игрок открыл ячейку (разгадал число в ней) и в блоке осталась только ОДНА закрытая цифра, то такая цифра открывается автоматически
+<br><br>
+Если после автоматического открытия числа на поле образуются новые блоки из ВОСЬМИ открытых ячеек, то такие блоки также открываются КАСКАДОМ
+<br><br>
+За один ход игрок может открыть несколько ячеек и несколько КЛЮЧЕЙ. Пользуйтесь правилом КАСКАДОВ
+<br><br>
+В случае ошибочного хода - цифра в ячейке не верна - на данной клетке появляется маленькая красная цифра-ошибка, которая видна обоим игрокам. На данную клетку больше нельзя ставить эту цифру
+<br><br>
+С помощью кнопки Проверить, игрок может сделать пометку - поставить в клетку маленькую цифру зеленого цвета. Это может быть вычисленная цифра, в которой игрок уверен, или просто предположение. Используйте заметки как в обычном СУДОКУ - другой игрок их не видит.
 RU
     ];
     const RATING = [
@@ -462,9 +68,7 @@ Thus, it is more advantageous for a strong player to play with equals - if you w
 <br><br>
 It is safe for a beginner to fight an experienced master.
 <br>The loss of ranking if you lose will be small.
-<br>But, in case of victory, the master will generously share the rank points 
-<br><br>
-When playing three and four player games, the new rating is calculated for each pair of players and the total number of rank points of its gain/loss is displayed.
+<br>But, in case of victory, the master will generously share the rank points
 EN
         ,
         T::RU_LANG => <<<RU
@@ -483,9 +87,7 @@ EN
 <br><br>
 Новичку безопасно сразиться с опытным мастером.
 <br>Потеря рейтинга в случае проигрыша будет небольшой.
-<br>Зато, в случае победы, мастер щедро поделится баллами 
-<br><br>
-При игре втроем и вчетвером новый рейтинг рассчитывается для каждой пары игроков и выводится итоговое количество очков его прибавки / потери. 
+<br>Зато, в случае победы, мастер щедро поделится баллами  
 RU
         ,
     ];

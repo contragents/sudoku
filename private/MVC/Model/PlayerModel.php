@@ -334,7 +334,10 @@ class PlayerModel extends BaseModel
                 }
             }
 
-            return mb_strtoupper(mb_substr($letterName, 0, 1)) . mb_substr($letterName, 1);
+            // Перевести автогенеренные ники на латиницу
+            $letterName = T::translit($letterName, T::$lang === T::EN_LANG);
+
+            return mb_strtoupper(mb_substr($letterName, 0, 1), 'UTF-8') . mb_substr($letterName, 1);
         }
     }
 
