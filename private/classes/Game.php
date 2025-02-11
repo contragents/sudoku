@@ -286,6 +286,64 @@ class Game
         return new Desk;
     }
 
+    public function exitGame(?int $numuser = null)
+    {
+        if (!$numuser) {
+            $numuser = $this->numUser;
+        }
+
+        $this->clearUserGameNumber($this->gameStatus->users[$numuser]['ID']);
+        //Удалили указатель на текущую игру для пользователя
+
+        $this->gameStatus->users[$numuser]->isActive = false;
+        //Игрок стал неактивен
+
+        $this->addToLog(T::S('left game'), $numuser);
+    }
+
+    public function processInvites(): array
+    {
+        $inviteState = [];
+        $gameSubState = $this->gameStatus->invite;
+
+        if ($this->gameStatus->invite === $this->SM::NEW_INVITE_GAME_STARTED_STATE) {
+            $gameSubState .= rand(1, 100);
+            $inviteState['gameSubState'] = $gameSubState;
+            $inviteState['inviteStatus'] = $this->SM::NEW_INVITE_GAME_STARTED_STATE;
+
+            $this->exitGame($this->numUser);
+
+            $this->Queue->storePlayerToInviteQueue($this->User);
+
+            return $inviteState;
+        }
+
+        $numActiveUsers = $this->getActiveUsersCount();
+        $gameSubState .= $numActiveUsers;
+        $inviteState['comments'] = '';
+
+        if ($this->gameStatus->invite === $this->User) {
+            $inviteState['comments'] .= "<br />"
+                . T::S("Asking for adversaries' approval.")
+                . "<br />"
+                . T::S('Remaining in the game:')
+                . " $numActiveUsers";
+            $inviteState['inviteStatus'] = $this->SM::WAITING_INVITE_ANSWER_STATE;
+        } else {
+            if ($numActiveUsers) {
+                $inviteState['comments'] .= '<br />' . T::S('You got invited for a rematch! - Accept?');
+            } else {
+                $inviteState['comments'] .= '<br />' . T::S('All players have left the game');
+            }
+            $inviteState['inviteStatus'] = $this->SM::DECIDING_INVITE_ANSWER_STATE;
+        }
+
+        $inviteState['active_users'] = $numActiveUsers;
+        $inviteState['gameSubState'] = $gameSubState . $inviteState['inviteStatus'] . $inviteState['active_users'];
+
+        return $inviteState;
+    }
+
     protected function getPlayers()
     {
         $lastGame = Cache::get(self::GAMES_COUNTER);
@@ -658,7 +716,7 @@ class Game
     }
     */
 
-    protected function lost3TurnsWinner($numLostUser, bool $pass = false): string
+    public function lost3TurnsWinner($numLostUser, bool $pass = false): string
     {
         $maxres = 0;
         $userWinner = 0;
@@ -733,19 +791,17 @@ class Game
     /**
      * @param string $winnerUser user->ID
      */
-    protected function storeGameResults(string $winnerUser)
+    public function storeGameResults(string $winnerUser)
     {
         $results = [];
 
         foreach ($this->gameStatus->users as $numUser => $user) {
             if ($user->ID == $winnerUser) {
                 $results['winner'] = $winnerUser;
-                // $user->addComment('Вы выиграли!');
 
                 $this->addToLog('Игрок' . ($numUser + 1) . ' выиграл!');
             } else {
                 $results['lostUsers'][] = $user->ID;
-                // $user->addComment('Вы проиграли!');
             }
         }
 
@@ -846,8 +902,8 @@ class Game
             $this->gameStatus->users[$this->gameStatus->activeUser]->addComment(T::S('Time for the turn ran out'));
 
             // Добавили коммент о пропуске хода всем игрокам
-            foreach($this->gameStatus->users as $numUser => $user) {
-                if($numUser !== $this->gameStatus->activeUser) {
+            foreach ($this->gameStatus->users as $numUser => $user) {
+                if ($numUser !== $this->gameStatus->activeUser) {
                     $user->addComment(
                         $this->gameStatus->users[$this->gameStatus->activeUser]->username
                         . ' - ' . T::S('Time for the turn ran out')
@@ -1247,8 +1303,7 @@ class Game
             return
                 isset($this->gameStatus->users[$numOpponent]->lastActiveTime)
                 &&
-                $this->gameStatus->users[$numOpponent]->isActive
-            ;
+                $this->gameStatus->users[$numOpponent]->isActive;
         } else {
             return null;
         }
@@ -1262,7 +1317,7 @@ class Game
 
         $numActiveUsers = 0;
         foreach ($this->gameStatus->users as $num => $user) {
-            if($num === $this->numUser) {
+            if ($num === $this->numUser) {
                 continue;
             }
 

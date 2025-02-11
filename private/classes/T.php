@@ -380,7 +380,7 @@ class T
         'You closed the game window and became inactive!' => [
             self::RU_LANG => 'Вы закрыли вкладку с игрой и стали Неактивным!'
         ],
-        "Request denied. Game is still ongoing" => [
+        'Request denied. Game is still ongoing' => [
             self::RU_LANG => 'Запрос отклонен. Игра еще продолжается'
         ],
         'Request rejected' => [

@@ -60,6 +60,17 @@ class Response
                     ? [$param => $paramValue]
                     : [];
             }
+
+            if ($playerStatus == $game->SM::STATE_GAME_RESULTS && isset($game->gameStatus->invite)) {
+                $inviteParams = $game->processInvites();
+
+                // Добавляем к комментам игры комменты состояния приглашения
+                $res['comments'] = ($res['comments'] ?? '') . ($inviteParams['comments'] ?? '');
+                unset($inviteParams['comments']);
+
+                // Добавляем остальные параметры состояния приглашения к ответу
+                $res += $inviteParams;
+            }
         } catch(\Throwable $e) {
             $res['error'] = $e->__toString();
         }

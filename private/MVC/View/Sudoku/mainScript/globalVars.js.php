@@ -96,13 +96,13 @@ const MERGE_IDS_SCRIPT = 'merge_the_ids.php';
 const SET_PLAYER_NAME_SCRIPT = 'players/saveUserName';
 const AVATAR_UPLOAD_SCRIPT = 'players/avatarUpload';
 
-const DELETE_BAN_URL = 'mvc/ban/remove?common_id=';
+const DELETE_BAN_URL = 'mvc/ban/remove?common_id='; // fix
 const STATS_URL = 'stats/viewV2'
 const NEW_GAME_SCRIPT = 'newGame';
+const INVITE_SCRIPT = 'inviteToNewGame';
 
 const CHANGE_FISHKI_SCRIPT = 'change_fishki.php';
 const COOKIE_CHECKER_SCRIPT = 'cookie_checker.php';
-const INVITE_SCRIPT = 'invite_to_new_game.php';
 const SET_AVATAR_SCRIPT = 'set_player_avatar_url.php';
 const HOR = 'horizontal';
 const VERT = 'vertical';

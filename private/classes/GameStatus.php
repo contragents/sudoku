@@ -26,7 +26,8 @@ class GameStatus
 
     private array $data = []; // Массив разных свойств по запросу
     public array $chatLog = []; // Лог чата игроков, нужен для сохранения в таблицу жалоб
-    public array $invite_accepted_users = [];
+    public array $invite_accepted_users = []; // Массив игроков принявших приглашение на реванш
+    public ?string $invite = null; // Статус инвайта (игрок который пригласил или статус начала реванша)
 
     public function __get($attribute)
     {

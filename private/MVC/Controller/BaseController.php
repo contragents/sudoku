@@ -220,6 +220,33 @@ class BaseController
         return Response::jsonResp($this->Game->newGame(), $this->Game);
     }
 
+    public function inviteToNewGameAction()
+    {
+        // Если в игре остаются игроки, то ничего не делать
+        if ($this->Game->getActiveUsersCount() > 2) {
+            return ['message' => T::S('Request denied. Game is still ongoing')];
+        }
+
+        // Если игрок решил сдаться и отправить вызов на реванш
+        if (in_array(self::$SM::getPlayerStatus(self::$User), self::$SM::IN_GAME_STATES)) {
+            $this->Game->storeGameResults($this->Game->lost3TurnsWinner($this->Game->numUser, true));
+        }
+
+        $this->Game->gameStatus->invite_accepted_users[self::$User] = self::$User;
+
+        if (!isset($this->Game->gameStatus->invite)) {
+            $this->Game->gameStatus->invite = self::$User;
+            $message = 'Запрос на новую игру отправлен';
+        } elseif ($this->Game->gameStatus->invite === self::$User) {
+            $message = T::S('Your new game request awaits players response');
+        } else {
+            $message = T::S('Request was aproved! Starting new game');
+            $this->Game->gameStatus->invite = self::$SM::NEW_INVITE_GAME_STARTED_STATE;
+        }
+
+        return ['message' => $message, 'inviteStatus' => $this->Game->gameStatus->invite];
+    }
+
     function sendChatMessageAction(): array
     {
         $resp = ['message' => T::S('Error sending message')];

@@ -6,7 +6,17 @@ use BaseController;
 
 class StateMachine
 {
-    public const INIT_STATES = [self::STATE_INIT_GAME, self::STATE_INIT_RATING_GAME];
+    const INIT_STATES = [self::STATE_INIT_GAME, self::STATE_INIT_RATING_GAME];
+    const IN_GAME_STATES = [
+        self::STATE_MY_TURN,
+        self::STATE_OTHER_TURN,
+        self::STATE_PRE_MY_TURN,
+        self::GAME_STATE_START_GAME,
+    ];
+    const NEW_INVITE_GAME_STARTED_STATE = 'newGameStarting';
+    const WAITING_INVITE_ANSWER_STATE = 'waiting';
+    const DECIDING_INVITE_ANSWER_STATE = 'deciding';
+
     public static ?string $gamePrefix = null;
 
     const CACHE_TTL = 60 * 60;
@@ -32,14 +42,6 @@ class StateMachine
     const DEFAULT_STATUS = self::STATE_CHOOSE_GAME;
 
     const SUBSTATE_CHOOSING = 'choosing';
-
-    const IN_GAME_STATES = [
-        self::STATE_MY_TURN,
-        self::STATE_OTHER_TURN,
-        self::STATE_PRE_MY_TURN,
-        self::STATE_GAME_RESULTS,
-        self::GAME_STATE_START_GAME,
-    ];
 
     const STATE_REFRESH_DELAY = [
         self::STATE_CHOOSE_GAME => 0,
