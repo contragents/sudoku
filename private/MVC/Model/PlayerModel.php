@@ -176,13 +176,8 @@ class PlayerModel extends BaseModel
 
     public static function getRatingByCookie(string $cookie): int
     {
-        $player = self::getOneCustom(self::COOKIE_FIELD, $cookie);
-        if (empty($player)) {
-            return 0;
-        }
-
         return CommonIdRatingModel::getRating(
-            $player[self::COMMON_ID_FIELD],
+            self::getPlayerCommonId($cookie),
             BaseController::gameName()
         );
     }

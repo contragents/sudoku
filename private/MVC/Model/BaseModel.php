@@ -175,9 +175,9 @@ class BaseModel
      * @param $field
      * @param $value
      * @param bool $isRaw
-     * @return BaseModel|null
+     * @return static
      */
-    public static function getOneCustomO($field, $value, bool $isRaw = false): ?object
+    public static function getOneCustomO($field, $value, bool $isRaw = false): ?self
     {
         $row = self::getOneCustom($field, $value, $isRaw);
 

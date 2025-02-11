@@ -141,7 +141,7 @@ class Queue
         if ($this->checkInviteQueue()) {
             if ($this->inviteQueueFull()) {
                 if (Cache::lock(self::SEMAPHORE_KEY)) {
-                    return $this->makeGame(static::QUEUE_NUMS['invite'], 4);
+                    return $this->makeGame(static::QUEUE_NUMS['invite'], 2); // todo использовать константу макс. колва игроков для каждой игры
                 }
             }
 
@@ -154,7 +154,7 @@ class Queue
                 ];
         }
 
-        if ($ratingWanted = $this->waitRatingPlayer($this->User)) // Сразу помещает в спецочередь
+        if ($ratingWanted = $this->waitRatingPlayer($this->User))
         {
             if ($ratingPlayer = $this->findRatingPlayer($ratingWanted)) {
                 if (Cache::lock(self::SEMAPHORE_KEY)) {
@@ -163,7 +163,7 @@ class Queue
             }
 
             if ($this->timeToWaitRatingPlayerOver($this->User)) {
-                return $this->storeToCommonQueue($this->User) ?: $this->stillWaitRatingPlayer();
+                return $this->storeToCommonQueue($this->User) ?? $this->stillWaitRatingPlayer();
             }
 
             return $this->stillWaitRatingPlayer();
@@ -193,7 +193,7 @@ class Queue
         return $this->storeTo2Players($this->User);
     }
 
-    protected function inviteQueueFull()
+    protected function inviteQueueFull(): bool
     {
         if (Cache::hlen(static::QUEUES["inviteplayers_waiters"]) < 2) {
             return false;
@@ -235,10 +235,16 @@ class Queue
         return false;
     }
 
-    protected function waitRatingPlayer($User)
+    /**
+     * Возвращает рейтинг, от которого игрок ищет соперника.
+     * Если рейтинг определен, помещает игрока в очередь подбора на рейтинг
+     * @param string $User
+     * @return int|null
+     */
+    protected function waitRatingPlayer(string $User): ?int
     {
         if (isset($this->POST['from_rating']) && ($this->POST['from_rating'] == 0)) {
-            return false;
+            return null;
         }
 
         if (($this->POST['from_rating'] ?? 0) > 0 && Cache::lock($User)) {
@@ -247,18 +253,18 @@ class Queue
             $this->userTime = date('U');
 
             if (self::addToQueue('rating_waiters', $User, $options, ['from_rating' => $this->POST['from_rating']])) {
-                return $this->POST['from_rating'];
+                return (integer)$this->POST['from_rating'];
             }
         } elseif ($waiterData = Cache::hget(static::QUEUES["rating_waiters"], $User)) {
             $this->userTime = $waiterData['time'];
 
-            return $waiterData['from_rating'];
+            return (integer)$waiterData['from_rating'];
         }
 
-        return false;
+        return null;
     }
 
-    protected function findRatingPlayer($ratingWanted)
+    protected function findRatingPlayer(int $ratingWanted)
     {
         if (($players2Waiting = Cache::hgetall(static::QUEUES["2players_waiters"]))) {
             foreach ($players2Waiting as $player => $data) {
@@ -400,16 +406,23 @@ class Queue
         return false;
     }
 
-    protected function storeToCommonQueue($User)
+    /**
+     * @param $User
+     * @return string[]|null
+     */
+    protected function storeToCommonQueue($User): ?array
     {
         $waiterData = Cache::hget(static::QUEUES["rating_waiters"], $User) ?: [];
         if (self::cleanUp($User)) {
             return $this->storeTo2Players($User, $waiterData['options'] ?? []);
         }
 
-        return false;
+        return null;
     }
 
+    /**
+     * @return string[]
+     */
     protected function stillWaitRatingPlayer(): array
     {
         $newStatus = $this->caller->updateUserStatus($this->caller->SM::STATE_INIT_GAME, $this->User, true);
@@ -634,6 +647,11 @@ class Queue
         return false;
     }
 
+    /**
+     * @param $User
+     * @param array $options
+     * @return string[]
+     */
     protected function storeTo2Players($User, $options = []): array
     {
         if (empty($options)) {
