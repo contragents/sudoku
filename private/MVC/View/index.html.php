@@ -15,6 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="js/bootstrap_4.5.2/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/choose_css_new_10.css">
+    <link rel="stylesheet" type="text/css" href="css/tg_app_tuning.css">
 
     <meta property="og:locale" content="ru_RU">
     <meta property="og:type" content="website">
