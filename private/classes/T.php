@@ -818,7 +818,7 @@ class T
         'set record for number of games played for' => [
             self::RU_LANG => 'устанавливает рекорд по числу сыгранных партий за'
         ],
-        "is the only one left in the game - Victory!" => [
+        'is the only one left in the game - Victory!' => [
             self::RU_LANG => 'остался в игре один - Победа!'
         ],
         'left game' => [
@@ -827,7 +827,7 @@ class T
         'has left the game' => [
             self::RU_LANG => 'покинул игру'
         ],
-        "is the only one left in the game! Start a new game" => [
+        'is the only one left in the game! Start a new game' => [
             self::RU_LANG => 'остался в игре один! Начните новую игру'
         ],
         'Time for the turn ran out' => [

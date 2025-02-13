@@ -292,7 +292,7 @@ class Game
             $numuser = $this->numUser;
         }
 
-        $this->clearUserGameNumber($this->gameStatus->users[$numuser]['ID']);
+        $this->clearUserGameNumber($this->gameStatus->users[$numuser]->ID);
         //Удалили указатель на текущую игру для пользователя
 
         $this->gameStatus->users[$numuser]->isActive = false;
@@ -618,7 +618,7 @@ class Game
 
             if (count($this->gameStatus->users) == 2) {
                 $this->storeGameResults($this->gameStatus->users[($this->numUser + 1) % 2]->ID);
-                $this->addToLog('остался в игре один - Победа!', ($this->numUser + 1) % 2);
+                $this->addToLog(T::S('is the only one left in the game - Victory!'), ($this->numUser + 1) % 2);
             }
 
             $left = true;
@@ -743,6 +743,11 @@ class Game
 
     protected function nextTurn()
     {
+        // Костыль проверка, что игра уже завершена - ничего не делать
+        if(!empty($this->gameStatus->results)) {
+            return;
+        }
+
         foreach ($this->gameStatus->users as $numUser => $user) {
             // Дали всем игрокам статус - другойХодит
             $this->updateUserStatus($this->SM::STATE_OTHER_TURN, $user->ID);
@@ -768,7 +773,7 @@ class Game
                 $this->gameStatus->activeUser = $nextActiveUser;
             } else {
                 $this->storeGameResults($this->User);
-                $this->addToLog('остался в игре один - Победа!', $this->numUser);
+                $this->addToLog('is the only one left in the game - Victory!', $this->numUser);
 
                 return; // todo что делать если нет ни одного юзера - заканчиваем игру
             }
@@ -867,16 +872,17 @@ class Game
         if ($this->numActiveGameUsers() < 2) {
             if (!count($this->gameStatus->results)) {
                 $this->storeGameResults($this->User);
-                $this->addToLog('остался в игре один - Победа!', $this->numUser);
+                $this->addToLog('is the only one left in the game - Victory!', $this->numUser);
                 //Пользователь остался в игре один и выиграл
-            } else {
-                $this->addToLog('остался в игре один! Начните новую игру', $this->numUser);
-            }
+            } /* Игра окончена - ничего не делаем
+                else {
+                    $this->addToLog(T::S('is the only one left in the game! Start a new game'), $this->numUser);
+            }*/
         }
 
         if ($this->SM::getPlayerStatus($this->User) == $this->SM::STATE_GAME_RESULTS) {
             if (isset($this->gameStatus->results['winner'])) {
-                return []; // $this->resultsResponse();
+                return [];
             }
         }
 
