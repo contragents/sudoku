@@ -36,10 +36,6 @@ function submitButtonFunction() {
                         parseDeskGlobal(data.desk);
                     }
 
-                    if ('fishki' in data) {
-                        placeFishki(data.fishki);
-                    }
-
                     if ('gameState' in data) {
                         commonCallback(data);
                     }
@@ -152,6 +148,10 @@ function newGameButtonFunction(ignoreDialog = false) {
                     className: 'btn-info',
                     callback: function () {
                         setTimeout(function () {
+                            isInviteGameWaiting = true;
+                            //initNewGameVarsGlobal();
+                            //gameStates.initGame.action({});
+
                             fetchGlobal(INVITE_SCRIPT, '', 'gameState=' + gameState)
                                 .then((dataInvite) => {
                                     let responseText = '<?= T::S('Request rejected') ?>';

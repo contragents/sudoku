@@ -89,22 +89,8 @@ var gameStates = {
         noDialog: true,
         action: function (data) {
             showStickyBannerYandex();
-            tWaiting = 0;
-            isUserBlockActive = false;
-            isOpponentBlockActive = false;
-            winScore = false;
-            gameBid = false;
 
-            playerScores = {
-                youBlock: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
-                player1Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
-                player2Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
-                player3Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
-                player4Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
-            };
-            initScoresGlobal();
-
-            clearContainerVarsGlobal();
+            initNewGameVarsGlobal();
 
             let under1800 = '<?= T::S('Only for players rated 1800+') ?>';
             let noRatingPlayers = '<?= T::S('Not enough 1900+ rated players online') ?>';
@@ -669,14 +655,6 @@ var gameStates = {
         message: '<?= T::S('Game selection - please wait') ?>',
         refresh: 10
     },
-    initCoinGame: {
-        1: 'waiting', 2: 'done',
-        action: function (data) {
-            buttons.submitButton.setDisabled();
-        },
-        message: '<?= T::S('Game selection - please wait') ?>',
-        refresh: 10
-    },
     myTurn: {
         1: 'thinking', 2: 'checking', 3: 'submiting', 4: 'done',
         message: '<?= T::S('Your turn!') ?>',
@@ -685,6 +663,10 @@ var gameStates = {
             gameStates['gameResults']['action'](data);
             setSubmitButtonState();
             setCheckButtonState();
+        },
+        from_inviteGame: function (data) {
+            gameStates['startGame']['from_initGame']();
+            gameStates['myTurn']['from_noGame'](data);
         },
         from_initRatingGame: function (data) {
             gameStates['startGame']['from_initGame']();
@@ -725,6 +707,10 @@ var gameStates = {
             setCheckButtonState();
             buttons.submitButton.setDisabled();
         },
+        from_inviteGame: function (data) {
+            gameStates['startGame']['from_initGame']();
+            gameStates['myTurn']['from_noGame'](data);
+        },
         from_desync: function (data) {
             placeFishki();
         },
@@ -764,6 +750,10 @@ var gameStates = {
             buttons.submitButton.setDisabled();
             setCheckButtonState();
         },
+        from_inviteGame: function (data) {
+            gameStates['startGame']['from_initGame']();
+            gameStates['myTurn']['from_noGame'](data);
+        },
         from_desync: function (data) {
             placeFishki();
         },
@@ -796,15 +786,17 @@ var gameStates = {
             if ('activeUser' in data) {
                 activeUser = data.activeUser;
             }
-        }
-
-        ,
+        },
         results: function (data) {
             if (dialog && canCloseDialog)
                 dialog.modal('hide');
             var okButtonCaption = '<?= T::S('Refuse') ?>';
             if ('inviteStatus' in data && data['inviteStatus'] == 'waiting') {
                 var okButtonCaption = 'OK';
+            }
+
+            if (!('comments' in data && !!data.comments)) {
+                return;
             }
 
             bootbox.hideAll();
@@ -820,6 +812,10 @@ var gameStates = {
                         className: 'btn-primary',
                         callback: function () {
                             setTimeout(function () {
+                                isInviteGameWaiting = true;
+                                //initNewGameVarsGlobal();
+                                //gameStates.initGame.action({});
+
                                 fetchGlobal(INVITE_SCRIPT, '', 12)
                                     .then((dataInvite) => {
                                         if (dataInvite == '')
@@ -827,8 +823,14 @@ var gameStates = {
                                         else
                                             var responseText = dataInvite['message'];
                                         if ('inviteStatus' in dataInvite) {
-                                            if (dataInvite['inviteStatus'] == 'newGameStarting')
-                                                document.location.reload(true);
+                                            if (dataInvite['inviteStatus'] == 'newGameStarting') {
+                                                // document.location.reload(true);
+
+                                                fetchGlobal(STATUS_CHECKER_SCRIPT).then((data) => {
+                                                    commonCallback(data);
+                                                    // gameStates['chooseGame']['action'](data)
+                                                });
+                                            }
                                         }
                                         dialogResponse = bootbox.alert({
                                             message: responseText,
@@ -870,8 +872,7 @@ var gameStates = {
                     }
                 }
             });
-        }
-        ,
+        },
         decision: function (data) {
             if (dialog && canCloseDialog) {
                 dialog.modal('hide');
@@ -893,6 +894,10 @@ var gameStates = {
                         className: 'btn-primary',
                         callback: function () {
                             setTimeout(function () {
+                                isInviteGameWaiting = true;
+                                //initNewGameVarsGlobal();
+                                //gameStates.initGame.action({});
+
                                 fetchGlobal(INVITE_SCRIPT, '', 12)
                                     .then((dataInvite) => {
                                         if (dataInvite == '') {
@@ -901,8 +906,13 @@ var gameStates = {
                                             var responseText = dataInvite['message'];
                                         }
                                         if ('inviteStatus' in dataInvite) {
-                                            if (dataInvite['inviteStatus'] == 'newGameStarting')
-                                                document.location.reload(true);
+                                            if (dataInvite['inviteStatus'] == 'newGameStarting') {
+                                                // document.location.reload(true);
+                                                fetchGlobal(STATUS_CHECKER_SCRIPT).then((data) => {
+                                                    commonCallback(data);
+                                                    // gameStates['chooseGame']['action'](data)
+                                                });
+                                            }
                                         }
                                         dialogResponse = bootbox.alert({
                                             message: responseText,
@@ -1045,7 +1055,7 @@ function commonCallback(data) {
         }
 
         if (canOpenDialog) {
-            if (gameState == 'initGame' || gameState == 'initRatingGame' || gameState == 'initCoinGame') {
+            if (gameState == 'initGame' || gameState == 'initRatingGame') {
                 dialog = bootbox.confirm({
                     message: ('comments' in data) ? data['comments'] : gameStates[gameState].message,
                     size: 'small',
@@ -1125,7 +1135,7 @@ function commonCallback(data) {
             } else if (gameState == 'gameResults') {
                 if ('inviteStatus' in data) {
                     if (data['inviteStatus'] == 'newGameStarting') {
-                        document.location.reload(true);
+                        // document.location.reload(true); // Do nothing
                     } else if (data['inviteStatus'] == 'waiting') {
                         gameStates['gameResults']['results'](data);
                     } else {
@@ -1225,6 +1235,15 @@ function commonCallback(data) {
         }
 
         enableButtons();
+
+        if ('isInviteGame' in data && isInviteGameWaiting) {
+            initNewGameVarsGlobal();
+            gameStates.initGame.action({});
+
+            if ('from_inviteGame' in gameStates[gameState]) {
+                gameStates[gameState]['from_inviteGame']();
+            }
+        }
 
         if ('from_' + gameOldState in gameStates[gameState])
             gameStates[gameState]['from_' + gameOldState](data);

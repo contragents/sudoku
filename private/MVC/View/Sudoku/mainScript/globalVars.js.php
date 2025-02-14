@@ -45,6 +45,7 @@ if(localStorage != 'undefined') {
 var useYandexStorage = false;
 
 // vars initializing in chooseGame state
+var isInviteGameWaiting = false;
 var tWaiting = false;
 var isUserBlockActive = false;
 var isOpponentBlockActive = false;

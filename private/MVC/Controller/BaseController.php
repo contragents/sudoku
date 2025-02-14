@@ -245,6 +245,12 @@ class BaseController
 
             // Если игрок подтверждает приглашение, то его отключают от игры, дают статус InitGame, помещают в очередь инвайта
             $this->Game->exitGame($this->Game->numUser);
+
+            // Удаляем из игры пригласившего игрока
+            if (isset($this->Game->gameStatus->{$this->Game->gameStatus->invite})) {
+                $this->Game->exitGame($this->Game->gameStatus->{$this->Game->gameStatus->invite});
+            }
+
             $this->Game->Queue->storePlayerToInviteQueue(self::$User);
         }
 

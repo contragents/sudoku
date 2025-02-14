@@ -600,6 +600,10 @@ class Queue
             // Назначили статусы всем игрокам
         }
 
+        if($queue === self::QUEUE_NUMS['invite']) {
+            $this->caller->gameStatus->isInviteGame = true;
+        }
+
         $this->caller->gameStatus->bid = $bid;
 
         if ($bid) {
@@ -612,7 +616,6 @@ class Queue
         return $this->caller->gameStarted(true);
     }
 
-    // todo сделать инвайты
     public function storePlayerToInviteQueue($User)
     {
         if (!Cache::hget(static::QUEUES["inviteplayers_waiters"], $User)) {
@@ -629,7 +632,7 @@ class Queue
 
         return Response::state($newStatus)
             + [
-                'gameSubState' => Cache::hlen(static::QUEUES["inviteplayers_waiters"]),
+                'gameSubState' => Cache::hlen(static::QUEUES['inviteplayers_waiters']),
                 'gameWaitLimit' => $this->caller->gameWaitLimit
             ];
     }

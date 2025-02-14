@@ -36,8 +36,8 @@ class Game
 
     const RESPONSE_PARAMS = [
         'desk' => ['gameStatus' => ['desk' => 'desk']],
-        //'mistakes' => ['gameStatus' => ['desk' => 'mistakes']],
         'gameNumber' => ['gameStatus' => 'gameNumber'],
+        'isInviteGame' => ['gameStatus' => 'isInviteGame'],
         'common_id' => 'getCurrentPlayerCommonId',
         'common_id_hash' => 'getCommonIdHash',
         'timeLeft' => 'getTimeLeft',
@@ -870,14 +870,12 @@ class Game
         }
 
         if ($this->numActiveGameUsers() < 2) {
-            if (!count($this->gameStatus->results)) {
+            if (empty($this->gameStatus->results)) {
+                //Пользователь остался в игре один и выиграл
                 $this->storeGameResults($this->User);
                 $this->addToLog('is the only one left in the game - Victory!', $this->numUser);
-                //Пользователь остался в игре один и выиграл
-            } /* Игра окончена - ничего не делаем
-                else {
-                    $this->addToLog(T::S('is the only one left in the game! Start a new game'), $this->numUser);
-            }*/
+
+            }
         }
 
         if ($this->SM::getPlayerStatus($this->User) == $this->SM::STATE_GAME_RESULTS) {

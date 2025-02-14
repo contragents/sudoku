@@ -3,6 +3,26 @@
 use classes\T;
 ?>
 
+function initNewGameVarsGlobal() {
+    isInviteGameWaiting = false;
+    tWaiting = 0;
+    isUserBlockActive = false;
+    isOpponentBlockActive = false;
+    winScore = false;
+    gameBid = false;
+
+    playerScores = {
+        youBlock: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+        player1Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+        player2Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+        player3Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+        player4Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+    };
+    initScoresGlobal();
+
+    clearContainerVarsGlobal();
+}
+
 function activateFullScreenForMobiles() {
     if (gameWidth < gameHeight) {
         if (!isIOSDevice()) {
