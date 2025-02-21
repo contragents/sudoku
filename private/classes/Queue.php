@@ -608,7 +608,13 @@ class Queue
 
         if ($bid) {
             DB::transactionCommit();
-            $this->caller->addToLog(T::S('Coins written off the balance sheet') . ": $bid");
+
+            foreach (T::SUPPORTED_LANGS as $lang) {
+                $this->caller->addToLog(
+                    t::S('Coins written off the balance sheet' . ": $bid", null, $lang),
+                    $lang
+                );
+            }
         }
 
         $this->caller->saveGameUsers($this->caller->currentGame, $this->caller->currentGameUsers);

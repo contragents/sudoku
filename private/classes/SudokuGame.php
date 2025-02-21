@@ -276,17 +276,29 @@ class SudokuGame extends Game
 
         if ($numCellsSolved) {
             $this->gameStatus->users[$this->numUser]->score += $numCellsSolved * self::CELL_OPEN_POINTS;
-            $this->addToLog(
-                T::S(
-                    "[[Player]] opened [[number]] [[cell]]",
-                    [$this->numUser + 1, $numKeysSolved + $numCellsSolved, $numKeysSolved + $numCellsSolved]
-                )
-                . ($numKeysSolved
-                    ? T::S(" (including [[number]] [[key]])", [$numKeysSolved, $numKeysSolved])
-                    : '')
-            );
+            foreach (T::SUPPORTED_LANGS as $lang) {
+                $this->addToLog(
+                    T::S(
+                        "[[Player]] opened [[number]] [[cell]]",
+                        [$this->numUser + 1, $numKeysSolved + $numCellsSolved, $numKeysSolved + $numCellsSolved],
+                        $lang
+                    )
+                    . ($numKeysSolved
+                        ? T::S(" (including [[number]] [[key]])", [$numKeysSolved, $numKeysSolved], $lang)
+                        : ''),
+                    $lang
+                );
+            }
+
+
         } else {
-            $this->addToLog(T::S('[[Player]] made a mistake', [$this->numUser + 1]));
+            foreach (T::SUPPORTED_LANGS as $lang) {
+                $this->addToLog(
+                    t::S('[[Player]] made a mistake', [$this->numUser + 1], $lang),
+                    $lang
+                );
+            }
+
             $this->gameStatus->users[$this->numUser]->addComment(T::S('You made a mistake!'));
             $this->gameStatus->users[($this->numUser + 1) % 2]->addComment(T::S('Your opponent made a mistake'));
         }
@@ -294,12 +306,14 @@ class SudokuGame extends Game
         $numPointsObtained = $numKeysSolved * self::KEY_OPEN_POINTS + $numCellsSolved * self::CELL_OPEN_POINTS;
 
         if ($numPointsObtained) {
-            $this->addToLog(
-                T::S(
-                    '[[Player]] gets [[number]] [[point]]',
-                    [$this->numUser + 1, $numPointsObtained, $numPointsObtained]
-                )
-            );
+            foreach (T::SUPPORTED_LANGS as $lang) {
+                $this->addToLog(
+                    t::S('[[Player]] gets [[number]] [[point]]',
+                         [$this->numUser + 1, $numPointsObtained, $numPointsObtained], $lang),
+                    $lang
+                );
+            }
+
             $this->gameStatus->users[$this->numUser]->addComment(
                 T::S('You got [[number]] [[point]]', [$numPointsObtained, $numPointsObtained])
             );
@@ -351,26 +365,43 @@ class SudokuGame extends Game
 
         if ($numCellsSolved) {
             $this->gameStatus->users[$botUserNum]->score += $numCellsSolved * self::CELL_OPEN_POINTS;
-            $this->addToLog(
-                T::S(
-                    "[[Player]] opened [[number]] [[cell]]",
-                    [$botUserNum + 1, $numKeysSolved + $numCellsSolved, $numKeysSolved + $numCellsSolved]
-                )
-                . ($numKeysSolved
-                    ? T::S(" (including [[number]] [[key]])", [$numKeysSolved, $numKeysSolved])
-                    : '')
-            );
+            foreach (T::SUPPORTED_LANGS as $lang) {
+                $this->addToLog(
+                    T::S(
+                        "[[Player]] opened [[number]] [[cell]]",
+                        [$botUserNum + 1, $numKeysSolved + $numCellsSolved, $numKeysSolved + $numCellsSolved],
+                        $lang
+                    )
+                    . ($numKeysSolved
+                        ? T::S(" (including [[number]] [[key]])", [$numKeysSolved, $numKeysSolved], $lang)
+                        : ''),
+                    $lang
+                );
+            }
+
+
         } else {
-            $this->addToLog(T::S('[[Player]] made a mistake', [$botUserNum + 1]));
+            foreach (T::SUPPORTED_LANGS as $lang) {
+                $this->addToLog(T::S('[[Player]] made a mistake', [$botUserNum + 1], $lang), $lang);
+            }
+
             $this->gameStatus->users[($botUserNum + 1) % 2]->addComment(T::S('Your opponent made a mistake'));
         }
 
         $numPointsObtained = $numKeysSolved * self::KEY_OPEN_POINTS + $numCellsSolved * self::CELL_OPEN_POINTS;
 
         if ($numPointsObtained) {
-            $this->addToLog(
-                T::S('[[Player]] gets [[number]] [[point]]', [$botUserNum + 1, $numPointsObtained, $numPointsObtained])
-            );
+            foreach (T::SUPPORTED_LANGS as $lang) {
+                $this->addToLog(
+                    T::S(
+                        '[[Player]] gets [[number]] [[point]]',
+                        [$botUserNum + 1, $numPointsObtained, $numPointsObtained],
+                        $lang
+                    ),
+                    $lang
+                );
+            }
+
             $this->gameStatus->users[($botUserNum + 1) % 2]->addComment(
                 T::S('Your opponent got [[number]] [[point]]', [$numPointsObtained, $numPointsObtained])
             );
@@ -439,7 +470,11 @@ class SudokuGame extends Game
             / 2
         );
 
-        $this->addToLog($this->getStartComment()); // Добавляем в лог пстартовый коммент без рейтинга
+        // Добавляем в лог стартовый коммент без рейтинга
+        foreach (T::SUPPORTED_LANGS as $lang) {
+            $this->addToLog($this->getStartComment(null, $lang), $lang);
+        }
+
 
         foreach ($this->gameStatus->users as $num => $user) {
             $user->addComment(

@@ -298,7 +298,9 @@ class Game
         $this->gameStatus->users[$numuser]->isActive = false;
         //Игрок стал неактивен
 
-        $this->addToLog(T::S('left game'), $numuser);
+        foreach (T::SUPPORTED_LANGS as $lang) {
+            $this->addToLog(T::S('left game', null, $lang), $lang, $numuser);
+        }
     }
 
     public function processInvites(): array
@@ -614,11 +616,17 @@ class Game
         if ($this->currentGame && ($this->numUser ?? false) !== false) {
             $this->gameStatus->users[$this->numUser]->isActive = false;
             //Игрок стал неактивен
-            $this->addToLog(T::S('has left the game'), $this->numUser);
+            foreach (T::SUPPORTED_LANGS as $lang) {
+                $this->addToLog(T::S('has left the game', null, $lang), $lang, $this->numUser);
+            }
+
 
             if (count($this->gameStatus->users) == 2) {
                 $this->storeGameResults($this->gameStatus->users[($this->numUser + 1) % 2]->ID);
-                $this->addToLog(T::S('is the only one left in the game - Victory!'), ($this->numUser + 1) % 2);
+
+                foreach (T::SUPPORTED_LANGS as $lang) {
+                    $this->addToLog(T::S('is the only one left in the game - Victory!', null, $lang), $lang, ($this->numUser + 1) % 2);
+                }
             }
 
             $left = true;
@@ -677,11 +685,19 @@ class Game
         return $log ?: null;
     }
 
-    public function addToLog($message, $numUser = false)
+    public function addToLog($message, string $lang, ?int $numUser = null)
     {
-        $this->gameStatus->gameLog[] = [$numUser, $message];
+        if(!isset($this->gameStatus->gameLog[$lang])) {
+            $this->gameStatus->gameLog[$lang] = [];
+        }
+        $this->gameStatus->gameLog[$lang][] = [$numUser ?? false, $message];
+
         foreach ($this->gameStatus->users as $num => $User) {
-            $this->gameStatus->users[$num]->logStack[] = [$numUser, $message];
+            if(!isset($this->gameStatus->users[$num]->logStack[$lang])) {
+                $this->gameStatus->users[$num]->logStack[$lang] = [];
+            }
+
+            $this->gameStatus->users[$num]->logStack[$lang][] = [$numUser ?? false, $message];
         }
     }
 
@@ -731,12 +747,19 @@ class Game
             }
         }
 
-        $this->addToLog(
-            $pass
-                ? 'сдался'
-                : 'пропустил 3 хода! Победитель - ' . $this->gameStatus->users[$userWinner]->username . ' со счетом ' . $this->gameStatus->users[$userWinner]->score,
-            $numLostUser
-        );
+        foreach (T::SUPPORTED_LANGS as $lang) {
+            $this->addToLog(
+                ($pass
+                    ? T::S('gave up! Winner - ', null, $lang)
+                    : T::S('skipped 3 turns! Winner - ', null, $lang)
+                )
+                . $this->gameStatus->users[$userWinner]->username
+                . T::S(' with score ', null, $lang)
+                . $this->gameStatus->users[$userWinner]->score,
+                $lang,
+                $numLostUser
+            );
+        }
 
         return $this->gameStatus->users[$userWinner]->ID;
     }
@@ -744,7 +767,7 @@ class Game
     protected function nextTurn()
     {
         // Костыль проверка, что игра уже завершена - ничего не делать
-        if(!empty($this->gameStatus->results)) {
+        if (!empty($this->gameStatus->results)) {
             return;
         }
 
@@ -773,7 +796,9 @@ class Game
                 $this->gameStatus->activeUser = $nextActiveUser;
             } else {
                 $this->storeGameResults($this->User);
-                $this->addToLog('is the only one left in the game - Victory!', $this->numUser);
+                foreach (T::SUPPORTED_LANGS as $lang) {
+                    $this->addToLog(T::S('is the only one left in the game - Victory!', null, $lang), $lang, $this->numUser);
+                }
 
                 return; // todo что делать если нет ни одного юзера - заканчиваем игру
             }
@@ -804,7 +829,10 @@ class Game
             if ($user->ID == $winnerUser) {
                 $results['winner'] = $winnerUser;
 
-                $this->addToLog('Игрок' . ($numUser + 1) . ' выиграл!');
+                foreach (T::SUPPORTED_LANGS as $lang) {
+                    $this->addToLog(t::S('[[Player]] won!', [$numUser + 1], $lang), $lang);
+                }
+
             } else {
                 $results['lostUsers'][] = $user->ID;
             }
@@ -873,8 +901,13 @@ class Game
             if (empty($this->gameStatus->results)) {
                 //Пользователь остался в игре один и выиграл
                 $this->storeGameResults($this->User);
-                $this->addToLog('is the only one left in the game - Victory!', $this->numUser);
-
+                foreach (T::SUPPORTED_LANGS as $lang) {
+                    $this->addToLog(
+                        t::S('is the only one left in the game - Victory!', null, $lang),
+                        $lang,
+                        $this->numUser
+                    );
+                }
             }
         }
 
@@ -902,7 +935,14 @@ class Game
         } elseif (
             (date('U') - $this->gameStatus->turnBeginTime) > ($this->gameStatus->turnTime + static::TURN_DELTA_TIME)
         ) {
-            $this->addToLog(T::S('Time for the turn ran out'), $this->gameStatus->activeUser);
+            foreach (T::SUPPORTED_LANGS as $lang) {
+                $this->addToLog(
+                    t::S('Time for the turn ran out', null, $lang),
+                    $lang,
+                    $this->gameStatus->activeUser
+                );
+            }
+
             $this->gameStatus->users[$this->gameStatus->activeUser]->addComment(T::S('Time for the turn ran out'));
 
             // Добавили коммент о пропуске хода всем игрокам
@@ -1088,36 +1128,36 @@ class Game
         return ['message' => $respMessage];
     }
 
-    protected function coinsPrompt(): string
+    protected function coinsPrompt(?string $lang = null): string
     {
         return ($this->gameStatus->bid ?? false
                 ? (
                     VH::br()
-                    . T::S('The bank of') . ' '
+                    . T::S('The bank of', null, $lang) . ' '
                     . VH::strong(
                         number_format($this->gameStatus->bid * count($this->gameStatus->users), 0, '.', ',')
                     )
                     . T::S('{{sudoku_icon_15}}') . ' '
-                    . T::S('will go to the winner')
+                    . T::S('will go to the winner', null, $lang)
                 )
                 : ''
         );
     }
 
-    protected function getStartComment(?int $numUser = null): string
+    protected function getStartComment(?int $numUser = null, ?string $lang = null): string
     {
         $res = '';
 
-        return $res . T::S('New game has started!') . ' <br />'
-            . T::S('Get') . ' '
-            . VH::strong(T::S('[[number]] [[point]]', [$this->gameStatus->gameGoal, $this->gameStatus->gameGoal]))
+        return $res . T::S('New game has started!', null, $lang) . ' <br />'
+            . T::S('Get', null, $lang) . ' '
+            . VH::strong(T::S('[[number]] [[point]]', [$this->gameStatus->gameGoal, $this->gameStatus->gameGoal], $lang))
             . VH::br()
             . $this->gameStatus->users[$this->gameStatus->activeUser]->username
-            . T::S(' is making a turn.')
+            . T::S(' is making a turn.', null, $lang)
             . VH::br()
             . (
             isset($numUser)
-                ? (T::S('Your current rank')
+                ? (T::S('Your current rank', null, $lang)
                 . ' - ' . VH::strong($this->gameStatus->users[$numUser]->rating))
                 : ''
             )

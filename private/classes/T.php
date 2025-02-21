@@ -9,6 +9,8 @@ class T
 {
     const RU_LANG = 'RU';
     const EN_LANG = 'EN';
+    const SUPPORTED_LANGS = [self::EN_LANG, self::RU_LANG];
+
     const PLURAL_PATTERN = '[[';
 
     public static string $lang = self::EN_LANG;
@@ -18,26 +20,18 @@ class T
         return self::PHRASES['invite_friend_prompt'][self::$lang];
     }
 
-    // Здесь задается язык и режим игры для папки запуска скрипта (и для игры scrabble, erudit)
-    const GAME_MODE_LANG = [
-        'scrabble' => self::EN_LANG,
-        'yandex' => self::RU_LANG,
-        'dev' => self::RU_LANG,
-        'erudit' => self::RU_LANG,
-    ];
-
     public static function setLang(string $lang)
     {
         self::$lang = $lang;
     }
 
-    public static function S($keyPhrase, ?array $params = null): string
+    public static function S($keyPhrase, ?array $params = null, ?string $forceLang = null): string
     {
         if (BC::$instance->gameName && isset(self::PHRASES[$keyPhrase][BC::$instance->gameName])) {
-            $res = self::PHRASES[$keyPhrase][BC::$instance->gameName][self::$lang]
-                ?? (self::PHRASES[$keyPhrase][self::$lang] ?? $keyPhrase);
+            $res = self::PHRASES[$keyPhrase][BC::$instance->gameName][$forceLang ?? self::$lang]
+                ?? (self::PHRASES[$keyPhrase][$forceLang ?? self::$lang] ?? $keyPhrase);
         } else {
-            $res = self::PHRASES[$keyPhrase][self::$lang] ?? $keyPhrase;
+            $res = self::PHRASES[$keyPhrase][$forceLang ?? self::$lang] ?? $keyPhrase;
         }
 
         if (strpos($res, Macros::PATTERN) !== false) {
@@ -45,7 +39,7 @@ class T
         }
 
         if (strpos($res, self::PLURAL_PATTERN) !== false && $params) {
-            return self::applyPlurals($res, $params);
+            return self::applyPlurals($res, $params, $forceLang ?? self::$lang);
         }
 
         return $res;
@@ -197,6 +191,9 @@ class T
         'you_won' => [
             self::EN_LANG => 'You won!',
             self::RU_LANG => 'Вы выиграли!'
+        ],
+        '[[Player]] won!' => [
+            self::RU_LANG => '[[Player]] выиграл!'
         ],
         'start_new_game' => [
             self::EN_LANG => 'Start a new game',
@@ -836,16 +833,16 @@ class T
         "is left without any pieces! Winner - " => [
             self::RU_LANG => 'остался без фишек! Победитель - '
         ],
-        " with score " => [
+        ' with score ' => [
             self::RU_LANG => ' со счетом '
         ],
         "is left without any pieces! You won with score " => [
             self::RU_LANG => 'остался без фишек! Вы победили со счетом '
         ],
         "gave up! Winner - " => [
-            self::RU_LANG => 'сдался'
+            self::RU_LANG => 'сдался. Победитель - '
         ],
-        "skipped 3 turns! Winner - " => [
+        'skipped 3 turns! Winner - ' => [
             self::RU_LANG => 'пропустил 3 хода! Победитель - '
         ],
         'New game has started!' => [
@@ -1258,7 +1255,13 @@ class T
         ],
     ];
 
-    private static function applyPlurals(string $res, array $params): string
+    /**
+     * @param string $res
+     * @param array $params
+     * @param string $lang Язык указываем явно для комментов пользователям на разных языках
+     * @return string
+     */
+    private static function applyPlurals(string $res, array $params, string $lang): string
     {
         preg_match_all('/\[\[([a-zA-Z]+)]]/', $res, $matches);
 
@@ -1268,7 +1271,7 @@ class T
                     $wordReplace = call_user_func([self::class, $value . 'Plural'], $params[$num]);
                 } else {
                     // Для разных языков и количества делаем отдельную поправку на расчетное количество
-                    $numPlural = self::$lang === self::EN_LANG
+                    $numPlural = $lang === self::EN_LANG
                         ? $params[$num]
                         : (
                         ($params[$num] % 100) < 20
@@ -1276,8 +1279,8 @@ class T
                             : ($params[$num] % 10)
                         );
                     for ($i = $numPlural; $i >= 0; $i--) {
-                        if (isset(self::PLURALS[$value][self::$lang][$i])) {
-                            $wordReplace = self::PLURALS[$value][self::$lang][$i];
+                        if (isset(self::PLURALS[$value][$lang][$i])) {
+                            $wordReplace = self::PLURALS[$value][$lang][$i];
 
                             break;
                         }

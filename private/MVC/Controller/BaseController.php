@@ -291,7 +291,11 @@ class BaseController
         $gameStatus = $this->Game->gameStatus;
         unset($gameStatus->users[$this->Game->numUser]->lastActiveTime);
         $gameStatus->users[$this->Game->numUser]->inactiveTurn = $gameStatus->turnNumber;
-        $this->Game->addToLog(T::S('Closed game window'), $this->Game->numUser);
+
+        foreach (T::SUPPORTED_LANGS as $lang) {
+            $this->Game->addToLog(T::S('Closed game window', null, $lang), $lang, $this->Game->numUser);
+        }
+
 
         return Response::jsonResp([], $this->Game);
     }
