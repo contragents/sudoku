@@ -871,12 +871,15 @@ class Game
         foreach ($this->gameStatus->users as $numUser => $user) {
             $user->result_ratings = $resultRatings[$user->common_id];
 
-            $user->addComment(
-                self::playerGameResultsRendered(
-                    $results['winner'] == $user->ID,
-                    $user->result_ratings
-                )
-            );
+            foreach (T::SUPPORTED_LANGS as $lang) {
+                $user->addComment(
+                    self::playerGameResultsRendered(
+                        $results['winner'] == $user->ID,
+                        $user->result_ratings
+                    ),
+                    $lang
+                );
+            }
 
             if (RatingHistoryModel::getNumGamesPlayed($user->common_id, $this::GAME_NAME) % 100 == 0) {
                 // Начисляем бонус за каждые 100 игр
@@ -953,15 +956,20 @@ class Game
                 );
             }
 
-            $this->gameStatus->users[$this->gameStatus->activeUser]->addComment(T::S('Time for the turn ran out'));
+            foreach (T::SUPPORTED_LANGS as $lang) {
+                $this->gameStatus->users[$this->gameStatus->activeUser]->addComment(T::S('Time for the turn ran out', null, $lang), $lang);
+            }
 
             // Добавили коммент о пропуске хода всем игрокам
             foreach ($this->gameStatus->users as $numUser => $user) {
                 if ($numUser !== $this->gameStatus->activeUser) {
-                    $user->addComment(
-                        $this->gameStatus->users[$this->gameStatus->activeUser]->username
-                        . ' - ' . T::S('Time for the turn ran out')
-                    );
+                    foreach (T::SUPPORTED_LANGS as $lang) {
+                        $user->addComment(
+                            $this->gameStatus->users[$this->gameStatus->activeUser]->username
+                            . ' - ' . T::S('Time for the turn ran out', null, $lang),
+                            $lang
+                        );
+                    }
                 }
             }
 
@@ -1077,15 +1085,15 @@ class Game
         return $commonId === PlayerModel::getPlayerCommonId($this->User);
     }
 
-    protected function playerGameResultsRendered(bool $isWinner, array $ratingsChanged): string
+    protected function playerGameResultsRendered(bool $isWinner, array $ratingsChanged, ?string $lang = null): string
     {
         return
             VH::strong(
-                $isWinner ? T::S('you_won') : T::S('you_lost'),
+                $isWinner ? T::S('you_won', null, $lang) : T::S('you_lost', null, $lang),
                 ['style' => 'color:' . ($isWinner ? '#00ff00' : 'red') . ';']
             )
             . VH::br()
-            . T::S('rating_changed')
+            . T::S('rating_changed', null, $lang)
             . "{$ratingsChanged['prev_rating']} -> "
             . VH::strong(
                 "{$ratingsChanged['new_rating']} (" . ($isWinner ? '+' : '') . "{$ratingsChanged['delta_rating']})",
@@ -1094,17 +1102,17 @@ class Game
             . ($this->gameStatus->bid
                 ? (
                     VH::br()
-                    . T::S('The bank of') . ' '
+                    . T::S('The bank of', null, $lang) . ' '
                     . VH::strong(
                         number_format($this->gameStatus->bid * count($this->gameStatus->users), 0, '.', ',')
                     )
                     . T::S('{{sudoku_icon_15}}') . ' '
-                    . ($isWinner ? T::S('goes to you') : T::S('is taken by the opponent'))
+                    . ($isWinner ? T::S('goes to you', null, $lang) : T::S('is taken by the opponent', null, $lang))
                 )
                 : ''
             )
             . VH::br()
-            . T::S('start_new_game');
+            . T::S('start_new_game', null, $lang);
     }
 
     public function addComplain(int $toNumUser): array

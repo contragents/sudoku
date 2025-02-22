@@ -53,7 +53,7 @@ class GameUser
 
     public function getLastComment(): ?string
     {
-        $res = implode(VH::br(), $this->comments);
+        $res = implode(VH::br(), $this->comments[T::$lang] ?? []);
         $this->comments = [];
 
         if(!$res) {
@@ -65,8 +65,12 @@ class GameUser
         return $res ?: '&nbsp;';
     }
 
-    public function addComment(string $comment)
+    public function addComment(string $comment, string $lang)
     {
-        $this->comments[] = $comment;
+        if (!isset($this->comments[$lang])) {
+            $this->comments[$lang] = [];
+        }
+
+        $this->comments[$lang][] = $comment;
     }
 }

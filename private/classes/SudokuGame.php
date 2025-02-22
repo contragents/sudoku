@@ -299,8 +299,13 @@ class SudokuGame extends Game
                 );
             }
 
-            $this->gameStatus->users[$this->numUser]->addComment(T::S('You made a mistake!'));
-            $this->gameStatus->users[($this->numUser + 1) % 2]->addComment(T::S('Your opponent made a mistake'));
+            foreach (T::SUPPORTED_LANGS as $lang) {
+                $this->gameStatus->users[$this->numUser]->addComment(T::S('You made a mistake!', null, $lang), $lang);
+                $this->gameStatus->users[($this->numUser + 1) % 2]->addComment(
+                    T::S('Your opponent made a mistake', null, $lang),
+                    $lang
+                );
+            }
         }
 
         $numPointsObtained = $numKeysSolved * self::KEY_OPEN_POINTS + $numCellsSolved * self::CELL_OPEN_POINTS;
@@ -314,12 +319,16 @@ class SudokuGame extends Game
                 );
             }
 
-            $this->gameStatus->users[$this->numUser]->addComment(
-                T::S('You got [[number]] [[point]]', [$numPointsObtained, $numPointsObtained])
-            );
-            $this->gameStatus->users[($this->numUser + 1) % 2]->addComment(
-                T::S('Your opponent got [[number]] [[point]]', [$numPointsObtained, $numPointsObtained])
-            );
+            foreach (T::SUPPORTED_LANGS as $lang) {
+                $this->gameStatus->users[$this->numUser]->addComment(
+                    T::S('You got [[number]] [[point]]', [$numPointsObtained, $numPointsObtained], $lang),
+                    $lang
+                );
+                $this->gameStatus->users[($this->numUser + 1) % 2]->addComment(
+                    T::S('Your opponent got [[number]] [[point]]', [$numPointsObtained, $numPointsObtained], $lang),
+                    $lang
+                );
+            }
         }
 
         if ($this->gameStatus->users[$this->numUser]->score >= $this->gameStatus->gameGoal) {
@@ -385,7 +394,9 @@ class SudokuGame extends Game
                 $this->addToLog(T::S('[[Player]] made a mistake', [$botUserNum + 1], $lang), $lang);
             }
 
-            $this->gameStatus->users[($botUserNum + 1) % 2]->addComment(T::S('Your opponent made a mistake'));
+            foreach (T::SUPPORTED_LANGS as $lang) {
+                $this->gameStatus->users[($botUserNum + 1) % 2]->addComment(T::S('Your opponent made a mistake', null, $lang), $lang);
+            }
         }
 
         $numPointsObtained = $numKeysSolved * self::KEY_OPEN_POINTS + $numCellsSolved * self::CELL_OPEN_POINTS;
@@ -402,9 +413,13 @@ class SudokuGame extends Game
                 );
             }
 
-            $this->gameStatus->users[($botUserNum + 1) % 2]->addComment(
-                T::S('Your opponent got [[number]] [[point]]', [$numPointsObtained, $numPointsObtained])
-            );
+
+            foreach (T::SUPPORTED_LANGS as $lang) {
+                $this->gameStatus->users[($botUserNum + 1) % 2]->addComment(
+                    T::S('Your opponent got [[number]] [[point]]', [$numPointsObtained, $numPointsObtained], $lang),
+                    $lang
+                );
+            }
         }
 
         if ($this->gameStatus->users[$botUserNum]->score >= $this->gameStatus->gameGoal) {
@@ -423,35 +438,35 @@ class SudokuGame extends Game
         }
     }
 
-    private function getBriefRules(): string
+    private function getBriefRules(?string $lang = null): string
     {
         return VH::div(
-                T::S('The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated')
+                T::S('The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated', null, $lang)
             )
             . VH::div(
-                T::S("The players' task is to take turns making moves and accumulating points to open black squares")
+                T::S("The players' task is to take turns making moves and accumulating points to open black squares", null, $lang)
                 . ' ('
                 . VH::strong(
                     '+'
-                    . self::KEY_OPEN_POINTS . ' ' . T::S('[[point]]', [self::KEY_OPEN_POINTS])
+                    . self::KEY_OPEN_POINTS . ' ' . T::S('[[point]]', [self::KEY_OPEN_POINTS], $lang)
                 )
-                . ')' . T::S('by calculating all of other 8 digits in a block - vertically OR horizontally OR in a 3x3 square')
+                . ')' . T::S('by calculating all of other 8 digits in a block - vertically OR horizontally OR in a 3x3 square', null, $lang)
             )
             . VH::div(
                 VH::strong(
                     '+'
-                    . self::CELL_OPEN_POINTS . ' ' . T::S('[[point]]', [self::CELL_OPEN_POINTS])
+                    . self::CELL_OPEN_POINTS . ' ' . T::S('[[point]]', [self::CELL_OPEN_POINTS], $lang)
                 )
-                . ' ' . T::S('is awarded for solved empty cell')
+                . ' ' . T::S('is awarded for solved empty cell', null, $lang)
             )
             . VH::div(
-                T::S('If a player has opened a cell (solved a number in it) and there is only ONE closed digit left in the block, this digit is opened automatically')
+                T::S('If a player has opened a cell (solved a number in it) and there is only ONE closed digit left in the block, this digit is opened automatically', null, $lang)
             )
             . VH::div(
-                T::S('If after the automatic opening of a number, new blocks of EIGHT open cells are formed on the field, such blocks are also opened by CASCADE')
+                T::S('If after the automatic opening of a number, new blocks of EIGHT open cells are formed on the field, such blocks are also opened by CASCADE', null, $lang)
             )
             . VH::div(
-                T::S('A player may open more than one cell and more than one KEY in one turn. Use the CASCADES rule')
+                T::S('A player may open more than one cell and more than one KEY in one turn. Use the CASCADES rule', null, $lang)
             );
     }
 
@@ -477,15 +492,18 @@ class SudokuGame extends Game
 
 
         foreach ($this->gameStatus->users as $num => $user) {
-            $user->addComment(
-                VH::strong(
-                    $num === $this->gameStatus->activeUser
-                        ? T::S('Your turn!')
-                        : T::S('Your turn is next - get ready!')
-                )
-                . VH::div($this->getStartComment($num)) // Стартовый коммент с указанием рейтинга игрока
-                . $this->getBriefRules() // правила игры вкратце - потом вынести в фак, не выводить бывалым игрокам
-            );
+            foreach (T::SUPPORTED_LANGS as $lang) {
+                $user->addComment(
+                    VH::strong(
+                        $num === $this->gameStatus->activeUser
+                            ? T::S('Your turn!', null, $lang)
+                            : T::S('Your turn is next - get ready!', null, $lang)
+                    )
+                    . VH::div($this->getStartComment($num, $lang)) // Стартовый коммент с указанием рейтинга игрока
+                    . $this->getBriefRules($lang), // правила игры вкратце - потом вынести в фак, не выводить бывалым игрокам
+                $lang
+                );
+            }
         }
         // Особенности создания конкретной игры | конец
 
