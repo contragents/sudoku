@@ -35,6 +35,7 @@ class Game
     const RATING_INIT_TIMEOUT = 360;
 
     const RESPONSE_PARAMS = [
+        'debug' => 'debug',
         'desk' => ['gameStatus' => ['desk' => 'desk']],
         'gameNumber' => ['gameStatus' => 'gameNumber'],
         'isInviteGame' => ['gameStatus' => 'isInviteGame'],
@@ -125,6 +126,11 @@ class Game
         } else {
             return null;
         }
+    }
+
+    public function debug(): ?array
+    {
+        return json_decode(json_encode($this->gameStatus ?? []), true);
     }
 
     public function getCommonIdHash(): ?string
@@ -671,7 +677,11 @@ class Game
 
         $log = [];
 
-        while ($logRecord = array_shift($this->gameStatus->users[$this->numUser]->logStack)) {
+        if (!isset($this->gameStatus->users[$this->numUser]->logStack[T::$lang])) {
+            $this->gameStatus->users[$this->numUser]->logStack[T::$lang] = [];
+        }
+
+        while ($logRecord = array_shift($this->gameStatus->users[$this->numUser]->logStack[T::$lang])) {
             $log[] = trim(
                 (
                 $logRecord[0] !== false
