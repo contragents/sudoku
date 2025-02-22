@@ -875,7 +875,8 @@ class Game
                 $user->addComment(
                     self::playerGameResultsRendered(
                         $results['winner'] == $user->ID,
-                        $user->result_ratings
+                        $user->result_ratings,
+                        $lang
                     ),
                     $lang
                 );
