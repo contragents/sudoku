@@ -227,6 +227,8 @@ class BaseController
             return ['message' => T::S('Request denied. Game is still ongoing')];
         }
 
+        $this->Game->gameStatus->isInviteGame = false; // Отменяем признак игы на реванш, чтобы не путать со следующей игрой
+
         // Если игрок решил сдаться и отправить вызов на реванш
         if (in_array(self::$SM::getPlayerStatus(self::$User), self::$SM::IN_GAME_STATES)) {
             $this->Game->storeGameResults($this->Game->lost3TurnsWinner($this->Game->numUser, true));
@@ -236,7 +238,7 @@ class BaseController
 
         if (!isset($this->Game->gameStatus->invite)) {
             $this->Game->gameStatus->invite = self::$User;
-            $message = 'Запрос на новую игру отправлен';
+            $message = T::S('New game request sent');
         } elseif ($this->Game->gameStatus->invite === self::$User) {
             $message = T::S('Your new game request awaits players response');
         } else {

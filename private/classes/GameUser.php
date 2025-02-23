@@ -14,7 +14,7 @@ class GameUser
     public string $status;
     public bool $isActive = true; // Ставится в false только при полном выходе из игры
     public int $score = 0;
-    public string $username;
+    public array $usernameLangArray = [];
     public string $avatarUrl;
     public int $wishTurnTime = 0;
     public int $lastRequestNum = 0;

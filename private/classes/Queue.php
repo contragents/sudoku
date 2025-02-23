@@ -6,6 +6,7 @@ use BalanceHistoryModel;
 use BalanceModel;
 use CommonIdRatingModel;
 use PlayerModel;
+use classes\ViewHelper as VH;
 
 class Queue
 {
@@ -45,6 +46,13 @@ class Queue
         $this->userInInitStatus = $this->checkPlayerInitStatus($initGame);
 
         $this->saveUserPrefs();
+    }
+
+    private static function getInvitedPlayerTime($User): int
+    {
+        $playerInfo = Cache::hget(static::QUEUES['inviteplayers_waiters'], $User);
+
+        return date('U') - $playerInfo['time'];
     }
 
     public function init()
@@ -150,7 +158,9 @@ class Queue
             return Response::state($newStatus)
                 + [
                     'gameSubState' => Cache::hlen(static::QUEUES["inviteplayers_waiters"]),
-                    'gameWaitLimit' => $this->caller->gameWaitLimit
+                    'gameWaitLimit' => $this->caller->gameWaitLimit,
+                    'timeWaiting' => self::getInvitedPlayerTime($this->User),
+                    'comments' => VH::h6(T::S('Awaiting invited players'))
                 ];
         }
 
@@ -432,7 +442,7 @@ class Queue
                 'gameSubState' => 0,
                 'timeWaiting' => date('U') - $this->userTime,
                 'ratingGameWaitLimit' => $this->caller::RATING_INIT_TIMEOUT,
-                'comments' => '<h6>Поиск игрока с указанным рейтингом</h6>'
+                'comments' => VH::h6(T::S('Searching for players with selected rank'))
             ];
     }
 
@@ -563,7 +573,13 @@ class Queue
                     'status' => $this->caller->SM::GAME_STATE_START_GAME,
                     'isActive' => true,
                     'score' => 0,
-                    'username' => T::S('Player') . ($num + 1),
+                    'usernameLangArray' => array_combine(
+                        T::SUPPORTED_LANGS,
+                        array_map(
+                            fn($lang) => T::S('Player', null, $lang) . ($num + 1),
+                            T::SUPPORTED_LANGS
+                        )
+                    ),
                     'avatarUrl' => false,
                     'wishTurnTime' => $user['options'] !== false ? $user['options'][self::TURN_TIME_PARAM_NAME] : 0,
                     'rating' => CommonIdRatingModel::getRating($playerCommonId, $this->caller::GAME_NAME),
@@ -625,11 +641,8 @@ class Queue
     public function storePlayerToInviteQueue($User)
     {
         if (!Cache::hget(static::QUEUES["inviteplayers_waiters"], $User)) {
-            if (isset($this->POST[self::TURN_TIME_PARAM_NAME])) {
-                $options = $this->POST;
-            } else {
-                $options = false;
-            }
+
+            $options = $this->getUserPrefs($User);
 
             self::addToQueue("inviteplayers_waiters", $User, $options);
         }
@@ -639,7 +652,9 @@ class Queue
         return Response::state($newStatus)
             + [
                 'gameSubState' => Cache::hlen(static::QUEUES['inviteplayers_waiters']),
-                'gameWaitLimit' => $this->caller->gameWaitLimit
+                'gameWaitLimit' => $this->caller->gameWaitLimit,
+                'timeWaiting' => 0,
+                'comments' => VH::h6(T::S('Awaiting invited players'))
             ];
     }
 
@@ -679,6 +694,7 @@ class Queue
             + [
                 'gameSubState' => Cache::hlen(static::QUEUES["2players_waiters"]),
                 'gameWaitLimit' => $this->caller->gameWaitLimit,
+                'comments' => VH::h6(T::S('Searching for players'))
             ];
     }
 

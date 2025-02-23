@@ -386,7 +386,7 @@ class T
         'No messages yet' => [
             self::RU_LANG => 'Сообщений пока нет'
         ],
-        "New game request sent" => [
+        'New game request sent' => [
             self::RU_LANG => 'Запрос на новую игру отправлен'
         ],
         'Your new game request awaits players response' => [
@@ -466,6 +466,12 @@ class T
         ],
         'To Player' => [
             self::RU_LANG => 'Игроку'
+        ],
+        'Awaiting invited players' => [
+            self::RU_LANG => 'Ожидаем приглашенных игроков'
+        ],
+        'Searching for players' => [
+            self::RU_LANG => 'Ожидаем игроков'
         ],
         'Searching for players with selected rank' => [
             self::RU_LANG => 'Поиск игрока с указанным рейтингом'

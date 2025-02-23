@@ -1236,7 +1236,7 @@ function commonCallback(data) {
 
         enableButtons();
 
-        if ('isInviteGame' in data && isInviteGameWaiting) {
+        if ('isInviteGame' in data && data.isInviteGame && isInviteGameWaiting) {
             initNewGameVarsGlobal();
             gameStates.initGame.action({});
 

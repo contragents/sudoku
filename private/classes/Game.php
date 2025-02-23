@@ -685,7 +685,7 @@ class Game
             $log[] = trim(
                 (
                 $logRecord[0] !== false
-                    ? $this->gameStatus->users[$logRecord[0]]->username
+                    ? $this->gameStatus->users[$logRecord[0]]->usernameLangArray[T::$lang]
                     : ''
                 )
                 . ' ' . $logRecord[1]
@@ -763,7 +763,7 @@ class Game
                     ? T::S('gave up! Winner - ', null, $lang)
                     : T::S('skipped 3 turns! Winner - ', null, $lang)
                 )
-                . $this->gameStatus->users[$userWinner]->username
+                . $this->gameStatus->users[$userWinner]->usernameLangArray[$lang]
                 . T::S(' with score ', null, $lang)
                 . $this->gameStatus->users[$userWinner]->score,
                 $lang,
@@ -966,7 +966,7 @@ class Game
                 if ($numUser !== $this->gameStatus->activeUser) {
                     foreach (T::SUPPORTED_LANGS as $lang) {
                         $user->addComment(
-                            $this->gameStatus->users[$this->gameStatus->activeUser]->username
+                            $this->gameStatus->users[$this->gameStatus->activeUser]->usernameLangArray[$lang]
                             . ' - ' . T::S('Time for the turn ran out', null, $lang),
                             $lang
                         );
@@ -1171,7 +1171,7 @@ class Game
             . T::S('Get', null, $lang) . ' '
             . VH::strong(T::S('[[number]] [[point]]', [$this->gameStatus->gameGoal, $this->gameStatus->gameGoal], $lang))
             . VH::br()
-            . $this->gameStatus->users[$this->gameStatus->activeUser]->username
+            . $this->gameStatus->users[$this->gameStatus->activeUser]->usernameLangArray[$lang]
             . T::S(' is making a turn.', null, $lang)
             . VH::br()
             . (
@@ -1344,7 +1344,7 @@ class Game
                 $log[] = trim(
                     ($logRecord[0] !== false
                         ? (isset($this->gameStatus->users[$logRecord[0]])
-                            ? $this->gameStatus->users[$logRecord[0]]->username
+                            ? $this->gameStatus->users[$logRecord[0]]->usernameLangArray[T::$lang]
                             : $logRecord[0])
                         : '')
                     . ' '
