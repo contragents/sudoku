@@ -29,6 +29,15 @@ var UIScene = new Phaser.Class({
 
 var game = new Phaser.Game(config);
 
-document.body.style.backgroundColor = "#dddddd";
+document.body.style.backgroundImage = screenOrient === HOR ? ("url('" + BASE_URL + "img/back_gorizont_2.svg')") : "url('img/back2.svg')";
+document.body.style.backgroundSize = 'cover';
+document.body.style.backgroundPosition = 'center';
+document.body.style.backgroundOrigin = 'border-box';
 
-//<?php include(ROOT_DIR . '/js/common_functions/ysdk.js')?>
+//CLUB-421
+document.addEventListener('contextmenu', event => event.preventDefault());
+document.addEventListener('dragstart', event => {
+    if (event.target.tagName === 'IMG') event.preventDefault();
+});
+
+//<?php include(ROOT_DIR . '/js/common_functions/ysdk_4.js')?>

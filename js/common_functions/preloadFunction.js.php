@@ -39,7 +39,7 @@ function () {
 
     preloaderObject = this;
 
-    this.load.svg('back', 'img/back2.svg', {'height': 1980, 'width': 1080});
+    // this.load.svg('back', 'img/back2.svg', {'height': 1980, 'width': 1080});
 
     <?php foreach (BaseController::$FR::getImgsPreload() as $name => $resourceArr) { ?>
     this.load.<?= $resourceArr['type'] ?>('<?= $name ?>', '<?= $resourceArr['url'] ?>'

@@ -27,7 +27,7 @@
 
     <meta name="description" content="<?= $description ?>" />
     
-    <script src="js/phaser_35/phaser.min.js"></script>
+    <script src="js/phaser_3.87/phaser.min.js"></script>
 
     <!-- JS dependencies -->
     <script src="js/jquery_1.12.4/jquery.min.js"></script>
@@ -41,7 +41,7 @@
 
 </head>
 
-<body>
+<body style="overscroll-behavior-y: none;" oncontextmenu="return false" onselectstart="return false" onselect="return false" oncopy="return false">
 <div id="game_block"></div>
 <script>
     var loader = loader || {}
