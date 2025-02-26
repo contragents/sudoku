@@ -10,6 +10,7 @@ use classes\T;
 use classes\Tg;
 use classes\UserProfile;
 use classes\ViewHelper;
+use classes\Yandex;
 
 /**
  * @property string $gameName // Название текущей игры __get()..
@@ -62,11 +63,14 @@ class BaseController
 
     public function __construct($action, array $request)
     {
+        self::cors();
+
         static::$Request = $request;
         self::$User = $this->checkCookie();
 
         self::$commonId = Tg::$commonId // авторизован через Телеграм или...
-            ?? PlayerModel::getPlayerCommonId(self::$User, true);
+            ?? (Yandex::$commonId // авторизован через Яндекс или...
+                ??  PlayerModel::getPlayerCommonId(self::$User, true));
 
         self::$instance = $this;
 
@@ -83,8 +87,6 @@ class BaseController
 
     public function Run()
     {
-        self::cors();
-
         foreach (self::$Request as $param => $value) {
             if (isset(self::JSON_DECODE_PARAMS[$param])) {
                 self::$Request[$param] = json_decode($value, true);
@@ -167,6 +169,12 @@ class BaseController
         if (Tg::authorize()) {
             if (Tg::$tgUser) {
                 return Tg::$tgUser['user']['id'];
+            }
+        }
+
+        if (Yandex::authorize()) {
+            if (Yandex::$yandexUser) {
+                return Yandex::$yandexUser;
             }
         }
 

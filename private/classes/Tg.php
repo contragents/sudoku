@@ -5,6 +5,7 @@ namespace classes;
 
 use PlayerModel;
 use TgUserModel;
+use \BaseController as BC;
 
 class Tg
 {
@@ -78,7 +79,8 @@ class Tg
 
     public static function checkUserDataUnsafe($data): bool
     {
-        $botToken = Config::$config[TgUserModel::BOT_TOKEN_CONFIG_KEY[T::$lang]];
+        /** @var ?string $gamePrefix */
+        $botToken = Config::$config[TgUserModel::BOT_TOKEN_CONFIG_KEY[BC::$SM::$gamePrefix]];
         $hash = false;
         $newData = [];
 
