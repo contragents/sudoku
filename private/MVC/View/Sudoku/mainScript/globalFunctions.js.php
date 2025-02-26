@@ -294,6 +294,7 @@ function savePlayerAvatar(commonIdParam) {
 
     $.ajax({
         url: URL,
+        xhrFields: { withCredentials: true },
         type: 'POST',
         data: formData,
         async: false,

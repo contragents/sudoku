@@ -81,6 +81,9 @@ class T
                 self::RU_LANG => '&#42;Сохраните ключ для восстановления аккаунта в <a href="https://t.me/sudoku_app_bot">Telegram</a>'
             ]
         ],
+        'COIN Balance' => [
+            self::RU_LANG => 'Баланс монет'
+        ],
         PaymentModel::INIT_STATUS => [
             self::EN_LANG => 'Started',
             self::RU_LANG => 'Начата'

@@ -13,6 +13,12 @@
     <meta charset="utf-8">
     <title><?= $title ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
     <link rel="stylesheet" type="text/css" href="js/bootstrap_4.5.2/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/choose_css_new_10.css">
     <link rel="stylesheet" type="text/css" href="css/tg_app_tuning.css">
@@ -26,6 +32,9 @@
     <meta property="og:image" content="<?= $fbImgUrl ?>">
 
     <meta name="description" content="<?= $description ?>" />
+
+    <!-- TG web -->
+    <script src="js/t-web-app.js"></script>
     
     <script src="js/phaser_3.87/phaser.min.js"></script>
 

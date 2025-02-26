@@ -193,7 +193,7 @@ class BaseController
         $title = T::S(static::TITLE);
         $url = static::GAME_URL;
         $siteName = static::SITE_NAME;
-        $description = static::DESCRIPTION;
+        $description = strip_tags(T::S('faq_rules'));
         $fbImgUrl = static::FB_IMG_URL;
 
         include self::VIEW_PATH . 'index.html.php';

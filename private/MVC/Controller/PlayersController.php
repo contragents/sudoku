@@ -108,7 +108,8 @@ class PlayersController extends BaseSubController
                 [
                     'result' => 'saved',
                     'message' => 'Аватар обновлен',
-                    'url' => UserModel::getOne($commonID)[UserModel::AVATAR_URL_FIELD]
+                    'url' => UserModel::getOne($commonID)[UserModel::AVATAR_URL_FIELD],
+                    'common_id' => $commonID
                 ],
                 JSON_UNESCAPED_UNICODE
             );
