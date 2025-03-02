@@ -1,12 +1,12 @@
 <?php
 
-use classes\Config;
 use classes\Response;
 use classes\T;
 use BaseController as BC;
 
 class BaseSubController
 {
+    public const GAME_ID_PARAM = BC::GAME_ID_PARAM;
     public static $Request;
 
     const COMMON_ID_PARAM = BaseController::COMMON_ID_PARAM;

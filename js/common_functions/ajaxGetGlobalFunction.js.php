@@ -78,7 +78,7 @@ function commonParams() {
         + (queryNumber++)
         + '&lang='
         + lang
-        + '&gameNumber='
+        + '&game_id='
         + (gameNumber ? gameNumber : 0)
         + '&gameState='
         + gameState

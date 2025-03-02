@@ -47,6 +47,22 @@ function () {
     <?php } ?>
 
     for (let k in buttons) {
+        let mods = 'modes' in buttons[k]
+            ? buttons[k].modes
+            : modes;
+
+        mods.forEach(mode => this.load.svg(k + mode, 'img/' + mode.toLowerCase() + '/' + buttons[k]['filename'] + '.svg',
+            'width' in buttons[k]
+                ? {
+                    'width': buttons[k]['width'],
+                    'height': 'height' in buttons[k] ? buttons[k].height : buttonHeight,
+                }
+                : {
+                    'height': 'height' in buttons[k] ? buttons[k].height : buttonHeight,
+                }
+        ));
+
+        /*
         if ('modes' in buttons[k])
             buttons[k]['modes'].forEach(mode => this.load.svg(k + mode, 'img/' + mode.toLowerCase() + '/' + buttons[k]['filename'] + '.svg',
                 'width' in buttons[k]
@@ -68,7 +84,7 @@ function () {
                     : {
                         'height': 'height' in buttons[k] ? buttons[k].height : buttonHeight,
                     }
-            ));
+            ));*/
     }
 
     for (let k in players) {
@@ -76,7 +92,21 @@ function () {
             continue;
         }
 
-        if ('modes' in players[k]) {
+        let mods = 'modes' in players[k]
+            ? players[k].modes
+            : playerBlockModes;
+        mods.forEach(mode => this.load.svg(k + mode, 'img/' + mode.toLowerCase() + '/' + players[k].filename + '.svg',
+            'width' in players[k]
+                ? {
+                    'width': players[k].width,
+                    'height': 'height' in players[k] ? players[k].height : buttonHeight,
+                }
+                : {
+                    'height': 'height' in players[k] ? players[k].height : buttonHeight,
+                }
+        ));
+
+        /*if ('modes' in players[k]) {
             players[k].modes.forEach(mode => this.load.svg(k + mode, 'img/' + mode.toLowerCase() + '/' + players[k].filename + '.svg',
                 'width' in players[k]
                     ? {
@@ -99,7 +129,7 @@ function () {
                         'height': 'height' in players[k] ? players[k].height : buttonHeight,
                     }
             ));
-        }
+        }*/
     }
 
     playerBlockModes.forEach(mode => {

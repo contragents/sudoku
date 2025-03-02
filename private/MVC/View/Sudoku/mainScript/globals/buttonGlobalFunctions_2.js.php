@@ -481,7 +481,7 @@ function playersButtonFunction() {
     buttons['playersButton']['svgObject'].bringToTop(buttons['playersButton']['svgObject'].getByName('playersButton' + 'Inactive'));
 
     setTimeout(function () {
-        fetchGlobalMVC(PLAYER_RATING_SCRIPT + '?game_id=' + gameNumber + '&common_id=' + commonId + '&lang=' + lang, '', orient).then((data) => {
+        fetchGlobalMVC(PLAYER_RATING_SCRIPT + '?common_id=' + commonId + commonParams(), '', orient).then((data) => {
                 canOpenDialog = false;
                 canCloseDialog = false;
 

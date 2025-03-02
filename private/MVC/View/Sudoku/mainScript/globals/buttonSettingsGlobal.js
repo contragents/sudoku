@@ -176,6 +176,7 @@ var buttons = {
     }),
     logButton: {
         filename: 'log2' + ((isYandexAppGlobal() && lang === 'RU') ? '_ru' : ''),
+        modes: [OTJAT_MODE, 'Inactive', 'Navedenie', 'Najatie'],
         x: botXY.x + buttonStepX + buttonWidth / 2,
         y: botXY.y + botHeight * (0.75 + 0.125),
         caption: 'log',
@@ -293,7 +294,7 @@ var players = {
         y: botXY.y + botHeight * 0.75 * (1 + 0.1),
         width: buttonWidth,
         object: false,
-        svgObject: false,
+        svgObject: false, // array of 1 object - needs to properly destroy
         preload: false,
         pointerupFunction: function () {
             console.log(gameBid);

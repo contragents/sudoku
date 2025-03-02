@@ -34,6 +34,7 @@ class BaseController
     const GAME_STATE_PARAM = 'gameState';
     const MESSAGE_PARAM = 'messageText';
     const CHAT_TO_PARAM = 'chatTo';
+    const GAME_ID_PARAM = 'game_id';
 
     public static ?BaseController $instance = null;
     public Game $Game;
@@ -334,7 +335,7 @@ class BaseController
 
     public function gameStateAction(): string
     {
-        $gameStatus = $this->Game->getGameStatus(self::$Request['game_id'] ?? null);
+        $gameStatus = $this->Game->getGameStatus(self::$Request[self::GAME_ID_PARAM] ?? null);
 
         if ($gameStatus->gameNumber === null) {
             return 'Game not found';

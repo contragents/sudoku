@@ -10,7 +10,6 @@ use classes\Tg;
 
 class PlayersController extends BaseSubController
 {
-    const GAME_ID_PARAM = 'game_id';
     const HIDE_PARAM = 'hide'; // hide/show
 
     const SIGN_PARAM = 'sign';
@@ -225,7 +224,7 @@ class PlayersController extends BaseSubController
     {
         // todo проверять куки на соответствие common_id
 
-        $gameId = self::$Request[self::GAME_ID_PARAM] ?? false;
+        $gameId = self::$Request[BaseSubController::GAME_ID_PARAM] ?? false;
         $commonId = self::$Request[self::COMMON_ID_PARAM] ?? false;
         $res = [];
 
