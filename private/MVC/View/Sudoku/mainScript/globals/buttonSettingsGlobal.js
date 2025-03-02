@@ -1,5 +1,12 @@
 //
-var topButtons = {newGameButton: {displayWidth: 0}, instructButton: {displayWidth: 0}, prizesButton: {displayWidth: 0}, inviteButton: {displayWidth: 0}};
+var topButtons = {
+    newGameButton: {displayWidth: 0},
+    instructButton: {displayWidth: 0},
+    ...(!isYandexAppGlobal() && {
+        prizesButton: {displayWidth: 0},
+        inviteButton: {displayWidth: 0}
+    }),
+};
 
 var modes = [OTJAT_MODE, ALARM_MODE, 'Inactive', 'Navedenie', 'Najatie'];
 
@@ -16,7 +23,7 @@ var buttons = {
         }
     },
     instructButton: {
-        filename: 'instrukt2',
+        filename: 'instrukt2' + ((isYandexAppGlobal() && lang === 'RU') ? '_ru' : ''),
         x: topXY.x + lotokX + buttonWidth / 2 - lotokCellStep / 2 + 5 + buttonWidth,
         y: (topXY.y + topHeight) / 2,
         caption: 'инструкция',
@@ -30,48 +37,49 @@ var buttons = {
             }
 
             btnFAQClickHandler(false);
-            // shareButtonFunction();
         }
     },
-    prizesButton: {
-        filename: 'prizes2',
-        modes: [OTJAT_MODE, 'Navedenie', 'Najatie'],
-        x: (topXY.x + knopkiWidth) / 2,
-        y: (topXY.y + topHeight) / 2,
-        caption: 'Prizes',
-        width: buttonWidth / 2,
-        //height: topHeight,
-        object: false,
-        svgObject: false,
-        pointerupFunction: function () {
-            if (bootBoxIsOpenedGlobal()) {
-                return;
-            }
-
-            return;
-        }
-    },
-    inviteButton: {
-        filename: 'invite2',
-        modes: [OTJAT_MODE, 'Navedenie', 'Najatie'],
-        x: topXY.x + knopkiWidth - buttonWidth,
-        y: topXY.y + topHeight / 2,
-        caption: 'Invite',
-        width: buttonWidth / 2,
-        object: false,
-        svgObject: false,
-        pointerupFunction: function () {
-            {
+    ...(!isYandexAppGlobal() && {
+        prizesButton: {
+            filename: 'prizes2',
+            modes: [OTJAT_MODE, 'Navedenie', 'Najatie'],
+            x: (topXY.x + knopkiWidth) / 2,
+            y: (topXY.y + topHeight) / 2,
+            caption: 'Prizes',
+            width: buttonWidth / 2,
+            //height: topHeight,
+            object: false,
+            svgObject: false,
+            pointerupFunction: function () {
                 if (bootBoxIsOpenedGlobal()) {
                     return;
                 }
 
-                shareTgGlobal();
-
-                return false;
+                return;
             }
-        }
-    },
+        },
+        inviteButton: {
+            filename: 'invite2',
+            modes: [OTJAT_MODE, 'Navedenie', 'Najatie'],
+            x: topXY.x + knopkiWidth - buttonWidth,
+            y: topXY.y + topHeight / 2,
+            caption: 'Invite',
+            width: buttonWidth / 2,
+            object: false,
+            svgObject: false,
+            pointerupFunction: function () {
+                {
+                    if (bootBoxIsOpenedGlobal()) {
+                        return;
+                    }
+
+                    shareTgGlobal();
+
+                    return false;
+                }
+            }
+        },
+    }),
     submitButton: {
         filename: 'otpravit2' +  (lang === 'RU' ? '_ru' : ''),
         x: botXY.x + knopkiWidth - buttonWidth / 2 - buttonStepX,
@@ -110,19 +118,6 @@ var buttons = {
         enabled: {myTurn: 1, preMyTurn: 1, otherTurn: 1},
         pointerupFunction: function () {
             resetButtonFunction();
-        }
-    },
-    changeButton: {
-        filename: 'pomenyat2' +  (lang === 'RU' ? '_ru' : ''),
-        x: botXY.x + knopkiWidth - buttonWidth / 2 - buttonStepX,
-        y: botXY.y + botHeight * (0.5 + 0.125),
-        caption: 'change',
-        width: buttonWidth,
-        object: false,
-        svgObject: false,
-        enabled: {myTurn: 1},
-        pointerupFunction: function () {
-            return;
         }
     },
     playersButton: {
@@ -165,6 +160,7 @@ var buttons = {
             this.svgObject.bringToTop(this.svgObject.getByName('checkButton' + INACTIVE_MODE));
         }
     },
+    ...(!isYandexAppGlobal() && {
     chatButton: {
         filename: 'chat2',
         x: botXY.x + knopkiWidth / 2,
@@ -177,8 +173,9 @@ var buttons = {
             chatButtonFunction();
         },
     },
+    }),
     logButton: {
-        filename: 'log2',
+        filename: 'log2' + ((isYandexAppGlobal() && lang === 'RU') ? '_ru' : ''),
         x: botXY.x + buttonStepX + buttonWidth / 2,
         y: botXY.y + botHeight * (0.75 + 0.125),
         caption: 'log',
@@ -276,24 +273,6 @@ var players = {
         filename: 'player2' +  (lang === 'RU' ? '_ru' : ''),
         x: botXY.x + buttonStepX + buttonWidth / 2,
         y: botXY.y + botHeight * 0.75 * (0.2 + 0.1),
-        width: buttonWidth,
-        object: false,
-        svgObject: false,
-        numbers: true,
-    },
-    player3Block: {
-        filename: 'player3' +  (lang === 'RU' ? '_ru' : ''),
-        x: botXY.x + buttonStepX + buttonWidth / 2,
-        y: botXY.y + botHeight * 0.75 * (0.4 + 0.1),
-        width: buttonWidth,
-        object: false,
-        svgObject: false,
-        numbers: true,
-    },
-    player4Block: {
-        filename: 'player4' +  (lang === 'RU' ? '_ru' : ''),
-        x: botXY.x + buttonStepX + buttonWidth / 2,
-        y: botXY.y + botHeight * 0.75 * (0.6 + 0.1),
         width: buttonWidth,
         object: false,
         svgObject: false,

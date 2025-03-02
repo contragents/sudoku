@@ -62,6 +62,9 @@ class T
     }
 
     const PHRASES = [
+        'Agreement' => [
+            self::RU_LANG => 'Оферта',
+        ],
         'Empty value is forbidden' => [
             self::RU_LANG => 'Задано пустое значение',
         ],

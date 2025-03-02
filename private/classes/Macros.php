@@ -3,6 +3,7 @@
 namespace classes;
 
 use AchievesModel;
+use BaseController as BC;
 
 class Macros
 {
@@ -20,6 +21,7 @@ class Macros
         'sudokuIcon' => '{{sudoku_icon}}',
         'sudokuIcon15' => '{{sudoku_icon_15}}',
         'sudokuIcon20' => '{{sudoku_icon_20}}',
+        'yandexExclude' => ['macros' => '{{yandex_exclude}}', 'text_as_param' => true],
     ];
 
     const SUDOKU_IMG_URL = '<img src="images/coin.png" alt="SUDOKU coin image" width="30%">';
@@ -79,18 +81,37 @@ class Macros
         return MonetizationService::INCOME[AchievesModel::DAY_PERIOD];
     }
 
-    public static function applyMacros(string $res): string
+    public static function applyMacros(string $text): string
     {
-        try {
-            foreach (self::MACROSES as $method => $macros) {
-                if (strpos($res, $macros) !== false) {
-                    $res = str_replace($macros, call_user_func([Macros::class, $method]), $res);
-                }
+        foreach (self::MACROSES as $method => $macros) {
+            if (is_array($macros) && ($macros['text_as_param'] ?? false) && strpos($text, $macros['macros']) !== false) {
+                // метод доллжен обрабатывать все свои макросы в переданной строке
+                $text = call_user_func([Macros::class, $method], $text);
+
+                continue;
+            } elseif(!is_array($macros)) {
+                $text = str_replace($macros, call_user_func([self::class, $method]), $text);
             }
-        } catch (\Throwable $e) {
-            $res = $e->__toString();
         }
 
-        return $res;
+        return $text;
+    }
+
+    public static function yandexExclude(string $text): string
+    {
+        preg_match_all('/({{yandex_exclude}})({{[\s\S]+?}})/', $text, $matches); // ? - отмена жадности, поиск до первых }}
+
+        foreach ($matches[1] as $num => $match) {
+            $text = str_replace($match, '', $text);
+            $text = str_replace(
+                $matches[2][$num],
+                BC::isYandexApp()
+                    ? ''
+                    : trim($matches[2][$num], '{}'),
+                $text
+            );
+        }
+
+        return $text;
     }
 }

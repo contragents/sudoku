@@ -331,7 +331,7 @@ var gameStates = {
 
                                 <span><?= T::S('CHOOSE GAME OPTIONS') ?></span>
 
-                                <div class="ml-auto"><a href="#" id="btn-faq" class="btn">FAQ</a>
+                                <div class="ml-auto"><a href="#" id="btn-faq" class="btn">${(isYandexAppGlobal() && lang === 'RU') ? 'ЧАВО' : 'FAQ'}</a>
                                 </div>
                             </div>
                         </div>
@@ -521,7 +521,7 @@ var gameStates = {
                     //})
                     ,
                     instruction: {
-                        label: 'FAQ',
+                        label: (isYandexAppGlobal() && lang === 'RU') ? 'ЧАВО' : 'FAQ',
                         className: 'btn-outline-success d-none',
                         callback: function () {
                             dialog = bootbox
@@ -610,7 +610,7 @@ var gameStates = {
 
                         },
                     },
-                    ...(!isTgBot() && {
+                    ...(!isTgBot()  && !isYandexAppGlobal() && {
                         telegram: {
                             label: '<?= T::S('Play on') ?>',
                             className: 'btn-tg',
@@ -622,7 +622,7 @@ var gameStates = {
                             },
                         },
                     }),
-                    ...(isTgBot() && {
+                    ...(isTgBot() && !isYandexAppGlobal() && {
                         invite: {
                             label: '<?= T::S('Invite a friend') ?>',
                             className: 'btn-danger',
@@ -632,6 +632,35 @@ var gameStates = {
                                 return false;
                             },
                         },
+                    }),
+                    ...(isYandexAppGlobal() && {
+                        oferta: {
+                            label: '<?= T::S('Agreement') ?>',
+                            className: 'btn-outline-success',
+                            callback: function () {
+                                async function getOfertaModal() {
+                                    return fetch(BASE_URL + `tpl/common/oferta_${lang}.html` + version(true))
+                                        .then((response) => response.text());
+                                };
+                                getOfertaModal().then((html) => {
+                                    dialog = bootbox.alert({
+                                        title: '',
+                                        message: html,
+                                        locale: 'ru',
+                                        className: 'modal-settings modal-profile',
+                                        buttons: {
+                                            ok: {
+                                                label: '<?= T::S('Back') ?>',
+                                                className: 'btn-sm ml-auto mr-0',
+                                            },
+                                        },
+                                        callback: function () {
+                                            gameStates.chooseGame.action(data);
+                                        },
+                                    })
+                                });
+                            },
+                        }
                     }),
                 },
             });
@@ -1269,9 +1298,13 @@ function commonCallback(data) {
         gameBankString = data.bank_string;
 
         if (players.bankBlock.svgObject === false) {
-            buttons.logButton.svgObject.x = buttons.chatButton.svgObject.x - (buttons.checkButton.svgObject.width - buttons.logButton.svgObject.width) / 2;
-            buttons.playersButton.svgObject.x += (buttons.changeButton.svgObject.width - buttons.playersButton.svgObject.width) / 2
-            buttons.chatButton.svgObject.x = buttons.logButton.svgObject.x + (buttons.playersButton.svgObject.x - buttons.logButton.svgObject.x) / 2;
+            buttons.logButton.svgObject.x = ('chatButton' in buttons ? buttons.chatButton.svgObject.x : buttons.checkButton.svgObject.x) - (buttons.checkButton.svgObject.width - buttons.logButton.svgObject.width) / 2;
+            buttons.playersButton.svgObject.x += (buttons.resetButton.svgObject.width - buttons.playersButton.svgObject.width) / 2
+            if('chatButton' in buttons) {
+                buttons.chatButton.svgObject.x = buttons.logButton.svgObject.x + (buttons.playersButton.svgObject.x - buttons.logButton.svgObject.x) / 2;
+            } else {
+                buttons.logButton.svgObject.x = buttons.logButton.svgObject.x + (buttons.playersButton.svgObject.x - buttons.logButton.svgObject.x) / 2;
+            }
         } else {
             while (players.bankBlock.svgObject.length) {
                 players.bankBlock.svgObject.pop().setVisible(false).destroy();
@@ -1316,7 +1349,7 @@ function commonCallback(data) {
         for (k in data['log'])
             gameLog.unshift(data['log'][k]);
 
-    if ('chat' in data) {
+    if ('chat' in data && 'chatButton' in buttons) {
         for (k in data['chat']) {
             if ((data['chat'][k].indexOf('<?= T::S('You') ?>') + 1) !== 1) {
                 hasIncomingMessages = true;

@@ -50,15 +50,16 @@ function () {
         });
 
         buttons[k]['svgObject'].on('pointerover', function () {
-            if (k == 'chatButton') {
+            if (k === 'chatButton') {
                 if (buttons['chatButton']['svgObject'].getByName('chatButton' + 'Alarm').getData('alarm') !== true)
                     buttons[k]['svgObject'].bringToTop(buttons[k]['svgObject'].getByName(k + 'Navedenie'));
-            } else
+            } else {
                 buttons[k]['svgObject'].bringToTop(buttons[k]['svgObject'].getByName(k + 'Navedenie'));
+            }
         });
 
         buttons[k]['svgObject'].on('pointerout', function () {
-            if (k == 'chatButton') {
+            if (k === 'chatButton') {
                 if (buttons['chatButton']['svgObject'].getByName('chatButton' + 'Alarm').getData('alarm') !== true)
                     buttons[k]['svgObject'].bringToTop(buttons[k]['svgObject'].getByName(k + 'Otjat'));
             } else if ('enabled' in buttons[k]) {

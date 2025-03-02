@@ -15,8 +15,6 @@ function initNewGameVarsGlobal() {
         youBlock: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
         player1Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
         player2Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
-        player3Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
-        player4Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
     };
     initScoresGlobal();
 

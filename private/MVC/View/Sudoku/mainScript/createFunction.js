@@ -48,22 +48,24 @@ function () {
         });
 
         buttons[k]['svgObject'].on('pointerover', function () {
-            if (k == 'chatButton') {
+            if (k === 'chatButton') {
                 if (buttons['chatButton']['svgObject'].getByName('chatButton' + ALARM_MODE).getData('alarm') !== true)
                     buttons[k]['svgObject'].bringToTop(buttons[k]['svgObject'].getByName(k + 'Navedenie'));
-            } else
+            } else {
                 buttons[k]['svgObject'].bringToTop(buttons[k]['svgObject'].getByName(k + 'Navedenie'));
+            }
         });
 
         buttons[k]['svgObject'].on('pointerout', function () {
-            if (k == 'chatButton') {
+            if (k === 'chatButton') {
                 if (buttons['chatButton']['svgObject'].getByName('chatButton' + ALARM_MODE).getData('alarm') !== true)
                     buttons[k]['svgObject'].bringToTop(buttons[k]['svgObject'].getByName(k + OTJAT_MODE));
             } else if ('enabled' in buttons[k]) {
                 if (gameState in buttons[k]['enabled'])
                     buttons[k]['svgObject'].bringToTop(buttons[k]['svgObject'].getByName(k + OTJAT_MODE));
-            } else
+            } else {
                 buttons[k]['svgObject'].bringToTop(buttons[k]['svgObject'].getByName(k + OTJAT_MODE));
+            }
         });
     }
 

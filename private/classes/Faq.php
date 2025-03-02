@@ -658,7 +658,7 @@ EN,
 Награды игрока отражаются в разделе "СТАТИСТИКА" в следующих
 номинациях: золото/серебро/бронза/камень.
 <br><br>
-При полученнии карточки-награды игроку также начисляется бонус монетами SUDOKU {{sudoku_icon}}<br> 
+При полученнии карточки-награды игроку также начисляется бонус монетами {{yandex_exclude}}{{SUDOKU}} {{sudoku_icon}}<br> 
 Использовать монеты можно в специальном режиме игры "НА МОНЕТЫ", можно пополнять внутриигровой кошелек, 
 а также выводить монеты из игры - подробнее читайте во вкладке "ИГРА НА МОНЕТЫ"
 <br><br>
@@ -742,235 +742,7 @@ EN,
 
 <table class="table table-dark table-transp">
 <thead>
-ОЧКИ ЗА ИГРУ
-</thead>
-<tr>
-<td>
-Тип
-</td>
-<td>
-Название
-</td>
-<td>
-Награда
-</td>
-<td>
-Прибыль<br> в час
-</td>
-</tr>
-<tr>
-<td>
-золото
-</td>
-<td>
-РЕКОРД ГОДА
-</td>
-<td>
-{{sudoku_icon}} {{gold_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{gold_income}}
-</td>
-</tr>
-<tr>
-<td>
-серебро
-</td>
-<td>
-РЕКОРД МЕСЯЦА
-</td>
-<td>
-{{sudoku_icon}} {{silver_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{silver_income}}
-</td>
-</tr>
-<tr>
-<td>
-бронза
-</td>
-<td>
-РЕКОРД НЕДЕЛИ
-</td>
-<td>
-{{sudoku_icon}} {{bronze_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{bronze_income}}
-</td>
-</tr>
-<tr>
-<td>
-камень
-</td>
-<td>
-РЕКОРД ДНЯ
-</td>
-<td>
-{{sudoku_icon}} {{stone_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{stone_income}}
-</td>
-</tr>
-</table>
-
-<table class="table table-dark table-transp">
-<thead>
 ОЧКИ ЗА ХОД
-</thead>
-<tr>
-<td>
-Тип
-</td>
-<td>
-Название
-</td>
-<td>
-Награда
-</td>
-<td>
-Прибыль<br> в час
-</td>
-</tr>
-<tr>
-<td>
-золото
-</td>
-<td>
-РЕКОРД ГОДА
-</td>
-<td>
-{{sudoku_icon}} {{gold_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{gold_income}}
-</td>
-</tr>
-<tr>
-<td>
-серебро
-</td>
-<td>
-РЕКОРД МЕСЯЦА
-</td>
-<td>
-{{sudoku_icon}} {{silver_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{silver_income}}
-</td>
-</tr>
-<tr>
-<td>
-бронза
-</td>
-<td>
-РЕКОРД НЕДЕЛИ
-</td>
-<td>
-{{sudoku_icon}} {{bronze_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{bronze_income}}
-</td>
-</tr>
-<tr>
-<td>
-камень
-</td>
-<td>
-РЕКОРД ДНЯ
-</td>
-<td>
-{{sudoku_icon}} {{stone_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{stone_income}}
-</td>
-</tr>
-</table>
-
-<table class="table table-dark table-transp">
-<thead>
-ОЧКИ ЗА СЛОВО
-</thead>
-<tr>
-<td>
-Тип
-</td>
-<td>
-Название
-</td>
-<td>
-Награда
-</td>
-<td>
-Прибыль<br> в час
-</td>
-</tr>
-<tr>
-<td>
-золото
-</td>
-<td>
-РЕКОРД ГОДА
-</td>
-<td>
-{{sudoku_icon}} {{gold_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{gold_income}}
-</td>
-</tr>
-<tr>
-<td>
-серебро
-</td>
-<td>
-РЕКОРД МЕСЯЦА
-</td>
-<td>
-{{sudoku_icon}} {{silver_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{silver_income}}
-</td>
-</tr>
-<tr>
-<td>
-бронза
-</td>
-<td>
-РЕКОРД НЕДЕЛИ
-</td>
-<td>
-{{sudoku_icon}} {{bronze_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{bronze_income}}
-</td>
-</tr>
-<tr>
-<td>
-камень
-</td>
-<td>
-РЕКОРД ДНЯ
-</td>
-<td>
-{{sudoku_icon}} {{stone_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{stone_income}}
-</td>
-</tr>
-</table>
-
-<table class="table table-dark table-transp">
-<thead>
-САМОЕ ДЛИННОЕ СЛОВО
 </thead>
 <tr>
 <td>
@@ -1205,7 +977,7 @@ EN,
 НАГРАДЫ" и перестает приносить пассивный доход.<br><br>
 Общее количество полученных монет (единовременные бонусы и
 дополнительная прибыль) можно посмотреть в разделе "ПРОФИЛЬ" во
-вкладке "КОШЕЛЕК" в поле "Баланс SUDOKU" и "Начислено бонусов" соответственно.<br><br>
+вкладке "КОШЕЛЕК" в поле "Баланс {{yandex_exclude}}{{ SUDOKU}}" и "Начислено бонусов" соответственно.<br><br>
 При превышении собственного рекорда для достижений "СЫГРАНО
 ПАРТИЙ" и "ПРИГЛАШЕННЫЕ ДРУЗЬЯ" игроку повторно не выдается новая
 карточка-награда и не начисляются монеты повторно. Само значение рекорда
@@ -1219,8 +991,8 @@ RU
         T::EN_LANG => <<<EN
 Coin <strong>SUDOKU</strong> {{sudoku_icon}} is an in-game currency for a network of games - <strong>Erudite, Scrabble, Sudoku</strong> (coming soon)<br><br>
 One account for all games, one currency, one wallet<br><br>
-In the crypto world, the coin is also called SUDOKU. Soon it will be possible to withdraw any number of SUDOKU coins from your in-game wallet to an external wallet in the TON (Telegram) network
-<br><br>
+{{yandex_exclude}}{{In the crypto world, the coin is also called SUDOKU. Soon it will be possible to withdraw any number of SUDOKU coins from your in-game wallet to an external wallet in the TON (Telegram) network
+<br><br>}}
 In the meantime, we try to win as many coins as possible in the game by selecting the “Coins” mode<br><br>
 
 This mode also takes into account and accrues player rankings.<br>
@@ -1304,10 +1076,10 @@ Passive coin earning stops when your record is broken by another player
 EN
         ,
         T::RU_LANG => <<<RU
-Монета <strong>SUDOKU</strong> {{sudoku_icon}} - это внутриигровая валюта для сети игр - <strong>Эрудит, Scrabble, Sudoku</strong> (скоро)<br><br>
-Один аккаунт на все игры, одна валюта, один кошелек<br><br>
-В крипто-мире монета также называется SUDOKU. Скоро станет возможным вывести любое количество монет SUDOKU со своего игрового кошелька на внешний кошелек сети TON (Телеграм)
-<br><br>
+Монета {{yandex_exclude}}{{<strong>SUDOKU</strong>}} {{sudoku_icon}} - это внутриигровая валюта{{yandex_exclude}}{{ для сети игр - <strong>Эрудит, Scrabble, Sudoku</strong> (скоро)<br><br>
+Один аккаунт на все игры, одна валюта, один кошелек}}<br><br>
+{{yandex_exclude}}{{В крипто-мире монета также называется SUDOKU. Скоро станет возможным вывести любое количество монет SUDOKU со своего игрового кошелька на внешний кошелек сети TON (Телеграм)
+<br><br>}}
 А пока мы стараемся выиграть как можно больше монет в игре, выбирая режим "На монеты"<br><br>
 
 Данный режим также учитывает и начисляет рейтинг игроков.<br>
@@ -1342,23 +1114,23 @@ EN
 <h2>Каким образом можно пополнить кошелек</h2>
 <ol>
 <li>
-Каждый новый игрок получает приветственные {{stone_reward}} монет SUDOKU на свой баланс и сразу может включиться в гонку за большими выигрышами
+Каждый новый игрок получает приветственные {{stone_reward}} монет {{yandex_exclude}}{{SUDOKU}} на свой баланс и сразу может включиться в гонку за большими выигрышами
 </li>
-<li>
+{{yandex_exclude}}{{<li>
 За каждого друга, пришедшего в игру по вашей реферальной ссылке, вы получите {{stone_reward}} монет. 
 Также, установив рекорд (за день, неделю, месяц, год) по числу приглашенных, вам будет начисляться награда. Чтобы пригласить пользователя, вам нужно зайти в игру через Телеграм.
-</li>
+</li>}}
 <li>
 За достижения в игре (очки за игру, очки за ход, очки за слово, количество партий, количество приглашенных, место в рейтинге от №1 до №10) начисляются монеты
 </li>
 <li>
-За каждые 100 игр начисляется {{stone_reward}} монет SUDOKU
+За каждые 100 игр начисляется {{stone_reward}} монет {{yandex_exclude}}{{SUDOKU}}
 </li>
-<li>
+{{yandex_exclude}}{{<li>
 Купить монеты за рубли переводом
 </li>
 <li>Купить монеты за криптовалюту (скоро)
-</li>
+</li>}}
 </ol>
 
 <br>
@@ -1369,12 +1141,12 @@ EN
 <li>
 Играть в наши игры, увеличивая ставки, добавляя азарт и интерес в любимое времяпрепровождение
 </li>
-<li>
+{{yandex_exclude}}{{<li>
 Продать монеты за рубли или за криптовалюту (скоро) и получить свою награду в реальном денежном выражении
-</li>
-<li>
+</li>}}
+{{yandex_exclude}}{{<li>
 Сделать подарок другому игроку, отправив последнему любое количество монет со своего кошелька (скоро)
-</li>     
+</li>}}    
 </ol>
 <br>
 Узнать детали баланса своего кошелька вы можете во вкладке "КОШЕЛЕК" меню "ПРОФИЛЬ".
@@ -1382,7 +1154,7 @@ EN
 <strong>Начислено бонусов</strong> - результат пассивного заработка, начисляемого каждый час в зависимости от достижений игрока (меню "СТАТИСТИКА", раздел "ДОСТИЖЕНИЯ").
 <br>Бонусы можно перенести в баланс по кнопке "ЗАБРАТЬ" (скоро)
 <br><br>
-<strong>Баланс SUDOKU</strong> - текущий баланс монет без учета бонусов. Из него списываются / начисляются монеты по результатам игры
+<strong>Баланс {{yandex_exclude}}{{SUDOKU}}</strong> - текущий баланс монет без учета бонусов. Из него списываются / начисляются монеты по результатам игры
 <br><br>
 Карточки достижений сродни медалям являются отметкой о ваших успехах. 
 <br>В них указывается название достижения, период (год, день, неделя, месяц), количество очков (рейтинг, длина слова, число друзей), количество монет 

@@ -55,8 +55,6 @@ var playerScores = {
     youBlock: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
     player1Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
     player2Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
-    player3Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
-    player4Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
 }
 // vars initializing in chooseGame state END
 
@@ -190,8 +188,10 @@ var yacheikaWidth = 32 * 2;
 var correctionX = 6 * 2;
 var correctionY = -7 * 2;
 
+var screenOrient = VERT;
+
 if (windowInnerWidth > windowInnerHeight) {
-    var screenOrient = HOR;
+    screenOrient = HOR;
     var gameWidth = standardHorizontalWidth;
     var gameHeight = standardHorizontalHeight;
     var knopkiWidth = gameWidth - gameHeight;
@@ -213,7 +213,6 @@ if (windowInnerWidth > windowInnerHeight) {
     var backY = (gameHeight - 2000) * Math.random();
     var backX = (gameWidth - 2000) * Math.random();
 } else {
-    var screenOrient = VERT;
     if (isYandexAppGlobal()) {
     propKoef = window.outerHeight / window.outerWidth;
 } else if (isIOSDevice()) {
@@ -247,7 +246,7 @@ if (windowInnerWidth > windowInnerHeight) {
     var lotokCellStep = 40 * 2;
     var lotokCapacityX = 9;
 } else {
-    var fishkaScale = buttonHeightKoef;
+    fishkaScale = buttonHeightKoef;
     var lotokCellStep = 40 * 2 * buttonHeightKoef;
     var lotokCapacityX = 9;
 }
