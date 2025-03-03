@@ -627,7 +627,7 @@ class Queue
 
             foreach (T::SUPPORTED_LANGS as $lang) {
                 $this->caller->addToLog(
-                    t::S('Coins written off the balance sheet' . ": $bid", null, $lang),
+                    t::S('Coins written off the balance sheet', null, $lang) . ": $bid",
                     $lang
                 );
             }

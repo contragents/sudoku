@@ -416,13 +416,13 @@ function logButtonFunction() {
             canCloseDialog = true;
         },
         buttons: {
-            cancel: {
+            /*cancel: {
                 label: "<?= T::S('Playing to') ?> <strong>" + winScore + "</strong>",
                 className: 'btn btn-outline-secondary',
                 callback: function () {
                     return false;
                 }
-            },
+            },*/
             confirm: {
                 label: "OK",
                 className: 'btn-primary',

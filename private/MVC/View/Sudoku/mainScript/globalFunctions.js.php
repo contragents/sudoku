@@ -22,14 +22,24 @@ function initNewGameVarsGlobal() {
 }
 
 function activateFullScreenForMobiles() {
+    if(isYandexAppGlobal()) {
+        return;
+    }
+
+    if (isIOSDevice()) {
+        return;
+    }
+
     if (gameWidth < gameHeight) {
-        if (!isIOSDevice()) {
-            document.body.requestFullscreen();
-        }
+        document.body.requestFullscreen();
     }
 }
 
 document.addEventListener("fullscreenchange", function() {
+    if (isYandexAppGlobal()) {
+        return;
+    }
+
     if (!document.fullscreenElement) {
         bootbox.confirm({
             size: 'small',
@@ -41,7 +51,6 @@ document.addEventListener("fullscreenchange", function() {
                 }
             }
         });
-
     }
 });
 
