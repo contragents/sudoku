@@ -422,7 +422,7 @@ var gameStates = {
                                                     .replaceAll('{{Wallet}}', '<?= T::S('Wallet') ?>')
                                                     .replaceAll('{{Referrals}}', '<?= T::S('Referrals') ?>')
                                                     .replaceAll('{{Player ID}}', '<?= T::S('Player ID') ?>')
-                                                    .replaceAll("{{Player's ID}}", "<?= T::S("Player's ID") ?>")
+                                                    .replaceAll("{{Player ID}}", "<?= T::S("Player ID") ?>")
                                                     .replaceAll('{{Save}}', '<?= T::S('Save') ?>')
                                                     .replaceAll('{{Input new nickname}}',
                                                         '<?= T::S('Input new nickname') ?>')
@@ -1350,11 +1350,11 @@ function commonCallback(data) {
             gameLog.unshift(data['log'][k]);
 
     if ('chat' in data && 'chatButton' in buttons) {
-        for (k in data['chat']) {
-            if ((data['chat'][k].indexOf('<?= T::S('You') ?>') + 1) !== 1) {
+        for (k in data.chat) {
+            if ((data.chat[k].indexOf('<?= T::S('You') ?>') + 1) !== 1) {
                 hasIncomingMessages = true;
-                buttons['chatButton'].svgObject.bringToTop(buttons['chatButton'].svgObject.getByName('chatButton' + ALARM_MODE));
-                buttons['chatButton'].svgObject.getByName('chatButton' + ALARM_MODE).setData('alarm', true);
+                buttons.chatButton.svgObject.bringToTop(buttons.chatButton.svgObject.getByName('chatButton' + ALARM_MODE));
+                buttons.chatButton.svgObject.getByName('chatButton' + ALARM_MODE).setData('alarm', true);
             }
 
             chatLog.unshift(data['chat'][k]);

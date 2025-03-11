@@ -12,9 +12,9 @@ class Faq
 <h2 id="nav1">About the game</h2>
 The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated
 <br><br>
-The players' task is to take turns making moves and accumulating points to open black squares (+10 points) by calculating all of other 8 digits in a block - vertically OR horizontally OR in a 3x3 square
+The players' task is to take turns making moves and accumulating points to open black squares (<span style="color:#0f0">+10 points</span>) by calculating all of other 8 digits in a block - vertically OR horizontally OR in a 3x3 square
 <br><br>
-A +1 point is awarded for solved empty cell
+A <span style="color:#0f0">+1 point</span> is awarded for solved empty cell
 <br><br>
 Victory goes to the player who scores 50% of all possible points +1 point
 <br><br>
@@ -34,9 +34,9 @@ EN,
 <h2 id="nav1">Об игре</h2>
 Действуют классические правила СУДОКУ - в блоке из девяти ячеек (по вертикали, по горизонтали и в квадрате 3х3) цифры не должны повторяться
 <br><br>
-Задача игроков - делая ходы по очереди и накапливая очки, открывать черные квадраты (+10 очков), вычислив все остальные 8 цифр в блоке - по вертикали ИЛИ по горизонтали ИЛИ в квадрате 3х3
+Задача игроков - делая ходы по очереди и накапливая очки, открывать черные квадраты (<span style="color:#0f0">+10 очков</span>), вычислив все остальные 8 цифр в блоке - по вертикали ИЛИ по горизонтали ИЛИ в квадрате 3х3
 <br><br>
-Также нужно открывать пустые клетки (+1 очко)
+Также нужно открывать пустые клетки (<span style="color:#0f0">+1 очко</span>)
 <br><br>
 Победа достается игроку, который набрал 50% от всех возможных очков +1 очко
 <br><br>
@@ -559,82 +559,6 @@ RECORD OF THE DAY
 </tr>
 </table>
 
-<table class="table table-dark table-transp">
-<thead>
-INVITED FRIENDS (REFERRALS)
-</thead>
-<tr>
-<td>
-Type
-</td>
-<td>
-Name
-</td>
-<td>
-Reward
-</td>
-<td>
-Income<br> per hour
-</td>
-</tr>
-<tr>
-<td>
-gold
-</td>
-<td>
-RECORD OF THE YEAR
-</td>
-<td>
-{{sudoku_icon}} {{gold_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{gold_income}}
-</td>
-</tr>
-<tr>
-<td>
-silver
-</td>
-<td>
-RECORD OF THE MONTH
-</td>
-<td>
-{{sudoku_icon}} {{silver_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{silver_income}}
-</td>
-</tr>
-<tr>
-<td>
-bronze
-</td>
-<td>
-RECORD OF THE WEEK
-</td>
-<td>
-{{sudoku_icon}} {{bronze_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{bronze_income}}
-</td>
-</tr>
-<tr>
-<td>
-stone
-</td>
-<td>
-RECORD OF THE DAY
-</td>
-<td>
-{{sudoku_icon}} {{stone_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{stone_income}}
-</td>
-</tr>
-</table>
-
 As long as one player's record has not been broken by another player, the reward card is reflected for that player in the “ACTIVE AWARDS” tab of the “STATS” section.<br><br>
 Each “ACTIVE Reward” every hour generates additional
 “profit” in coins.<br><br>
@@ -644,8 +568,7 @@ Rewards” tab and ceases to bring passive income.<br><br>
 The total number of coins received (one-time bonuses and
 additional profit) can be viewed in the “PROFILE” section in the “Wallet” tab in the “SUDOKU balance” and “Bonuses accrued” fields, respectively.
 tab “Wallet” in the field “SUDOKU balance” and “Bonuses accrued” respectively.<br><br>
-When exceeding the own record for the achievements “PLAYED PARTIES” and “APPLIED FRIENDS
-games” and ‘invited friends’ achievements, the player is not given a new reward card or coins again.
+When exceeding the own record for the achievements “PLAYED PARTIES”, the player is not given a new reward card or coins again.
 reward card and coins are not awarded again. The record value itself
 (number of games / number of friends) is updated on the reward card.<br><br>
 For example, if a player has previously earned the achievement - “GAMES PLAYED”
@@ -892,82 +815,6 @@ EN,
 </tr>
 </table>
 
-<table class="table table-dark table-transp">
-<thead>
-ПРИГЛАШЕННЫЕ ДРУЗЬЯ (РЕФЕРАЛЫ)
-</thead>
-<tr>
-<td>
-Тип
-</td>
-<td>
-Название
-</td>
-<td>
-Награда
-</td>
-<td>
-Прибыль<br> в час
-</td>
-</tr>
-<tr>
-<td>
-золото
-</td>
-<td>
-РЕКОРД ГОДА
-</td>
-<td>
-{{sudoku_icon}} {{gold_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{gold_income}}
-</td>
-</tr>
-<tr>
-<td>
-серебро
-</td>
-<td>
-РЕКОРД МЕСЯЦА
-</td>
-<td>
-{{sudoku_icon}} {{silver_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{silver_income}}
-</td>
-</tr>
-<tr>
-<td>
-бронза
-</td>
-<td>
-РЕКОРД НЕДЕЛИ
-</td>
-<td>
-{{sudoku_icon}} {{bronze_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{bronze_income}}
-</td>
-</tr>
-<tr>
-<td>
-камень
-</td>
-<td>
-РЕКОРД ДНЯ
-</td>
-<td>
-{{sudoku_icon}} {{stone_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{stone_income}}
-</td>
-</tr>
-</table>
-
 Пока рекорд одного игрока не был перебит другим игроком, карточка-награда отражается у такого игрока во вкладке "АКТИВНЫЕ НАГРАДЫ"
 раздела "СТАТИСТИКА".<br><br>
 "АКТИВНАЯ НАГРАДА" каждый час генерирует дополнительную
@@ -979,7 +826,7 @@ EN,
 дополнительная прибыль) можно посмотреть в разделе "ПРОФИЛЬ" во
 вкладке "КОШЕЛЕК" в поле "Баланс {{yandex_exclude}}{{ SUDOKU}}" и "Начислено бонусов" соответственно.<br><br>
 При превышении собственного рекорда для достижений "СЫГРАНО
-ПАРТИЙ" и "ПРИГЛАШЕННЫЕ ДРУЗЬЯ" игроку повторно не выдается новая
+ПАРТИЙ" игроку повторно не выдается новая
 карточка-награда и не начисляются монеты повторно. Само значение рекорда
 (число игр / количество друзей) обновляется на карточке-награде.<br><br>
 Например, если игрок ранее получил достижение - "СЫГРАНО ПАРТИЙ"

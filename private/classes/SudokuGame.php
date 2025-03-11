@@ -446,16 +446,22 @@ class SudokuGame extends Game
             . VH::div(
                 T::S("The players' task is to take turns making moves and accumulating points to open black squares", null, $lang)
                 . ' ('
-                . VH::strong(
-                    '+'
-                    . self::KEY_OPEN_POINTS . ' ' . T::S('[[point]]', [self::KEY_OPEN_POINTS], $lang)
+                . VH::span(
+                    VH::strong(
+                        '+'
+                        . self::KEY_OPEN_POINTS . ' ' . T::S('[[point]]', [self::KEY_OPEN_POINTS], $lang)
+                    ),
+                    ['style' => 'color:#0f0;']
                 )
                 . ')' . T::S('by calculating all of other 8 digits in a block - vertically OR horizontally OR in a 3x3 square', null, $lang)
             )
             . VH::div(
-                VH::strong(
-                    '+'
-                    . self::CELL_OPEN_POINTS . ' ' . T::S('[[point]]', [self::CELL_OPEN_POINTS], $lang)
+                VH::span(
+                    VH::strong(
+                        '+'
+                        . self::CELL_OPEN_POINTS . ' ' . T::S('[[point]]', [self::CELL_OPEN_POINTS], $lang)
+                    ),
+                    ['style' => 'color:#0f0;']
                 )
                 . ' ' . T::S('is awarded for solved empty cell', null, $lang)
             )

@@ -307,7 +307,7 @@ class T
             self::RU_LANG => 'Рефералы'
         ],
         'Player ID' => [
-            self::RU_LANG => 'ID Игрока'
+            self::RU_LANG => 'Номер игрока'
         ],
         // complaints
         'Player is unbanned' => [
@@ -890,9 +890,6 @@ class T
         ],
         "Turn time" => [
             self::RU_LANG => "Время на ход"
-        ],
-        "Player's ID" => [
-            self::RU_LANG => 'ID игрока'
         ],
         'Date' => [
             self::RU_LANG => 'Дата'
