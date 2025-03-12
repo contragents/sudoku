@@ -912,7 +912,7 @@ Make a gift to another player by sending the latter any number of coins from you
 You can find out the details of your wallet balance in the “Wallet” tab of the “PROFILE” menu.
 <br><br>
 <strong>Bonuses accrued</strong> - the result of passive earnings accrued every hour depending on the player's achievements (menu “STATS”, section “Awards”).
-<br>Bonuses can be transferred to the balance by pressing the “REMOVE” button (soon)
+<br>Bonuses can be transferred to the balance by pressing the “CLAIM” button
 <br><br>
 <strong>SUDOKU balance</strong> - current balance of coins without bonuses. Coins are deducted / credited from it according to the results of the game
 <br><br>
@@ -999,7 +999,7 @@ EN
 Узнать детали баланса своего кошелька вы можете во вкладке "КОШЕЛЕК" меню "ПРОФИЛЬ".
 <br><br>
 <strong>Начислено бонусов</strong> - результат пассивного заработка, начисляемого каждый час в зависимости от достижений игрока (меню "СТАТИСТИКА", раздел "ДОСТИЖЕНИЯ").
-<br>Бонусы можно перенести в баланс по кнопке "ЗАБРАТЬ" (скоро)
+<br>Бонусы можно перенести в баланс по кнопке "ЗАБРАТЬ"
 <br><br>
 <strong>Баланс {{yandex_exclude}}{{SUDOKU}}</strong> - текущий баланс монет без учета бонусов. Из него списываются / начисляются монеты по результатам игры
 <br><br>

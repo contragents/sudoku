@@ -103,4 +103,6 @@ function () {
 //    <?php include(ROOT_DIR . '/js/common_functions/getSVGButtonFunction.js')?>
 
     faserObject = this;
+
+    reportGameIsReadyYandex();
 }

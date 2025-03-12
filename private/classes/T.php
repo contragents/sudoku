@@ -15,11 +15,6 @@ class T
 
     public static string $lang = self::EN_LANG;
 
-    public static function getInviteFriendPrompt(): string
-    {
-        return self::PHRASES['invite_friend_prompt'][self::$lang];
-    }
-
     public static function setLang(string $lang)
     {
         self::$lang = $lang;
@@ -140,13 +135,6 @@ class T
             self::EN_LANG => 'Pay',
             self::RU_LANG => 'Оплатить'
         ],
-        'connect_bot' => [
-            self::EN_LANG => 'To access the full list, connect to our <a target="_blank" href="https://t.me/scrabble_online_bot">Telegram bot</a>',
-            self::RU_LANG => 'Для доступа к полному списку подключитесь к нашему <a target="_blank" href="https://t.me/erudit_club_bot">Telegram-боту</a>'
-        ],
-        'Only 5 words are shown in random order' => [
-            self::RU_LANG => 'Показаны только 5 слов в случайном порядке'
-        ],
         'Congratulations to Player' => [
             self::RU_LANG => 'Поздравляем игрока'
         ],
@@ -159,13 +147,14 @@ class T
         'Error changing settings. Try again later' => [
             self::RU_LANG => 'Ошибка. Пожалуйста попробуйте позднее'
         ],
-        'game_name' => [
-            self::EN_LANG => 'Scrabble',
-            self::RU_LANG => 'Эрудит'
-        ],
         'invite_friend_prompt' => [
-            self::EN_LANG => 'Join the online game Scrabble on Telegram! Get the maximum rating, earn coins and withdraw tokens to your wallet',
-            self::RU_LANG => 'Присоединяйся к онлайн игре Эрудит в Telegram! Набери максимальный рейтинг, зарабатывай монеты и выводи токены на кошелек'
+            SudokuGame::GAME_NAME => [
+                self::EN_LANG => 'Join the online game SUDOKU on Telegram! Get the maximum rating, earn coins and withdraw tokens to your wallet',
+                self::RU_LANG => 'Присоединяйся к онлайн игре SUDOKU в Telegram! Набери максимальный рейтинг, зарабатывай монеты и выводи токены на кошелек'
+            ],
+
+            self::EN_LANG => 'Join the online game on Telegram! Get the maximum rating, earn coins and withdraw tokens to your wallet',
+            self::RU_LANG => 'Присоединяйся к нашей онлайн игре в Telegram! Набери максимальный рейтинг, зарабатывай монеты и выводи токены на кошелек'
         ],
         'game_bot_url' => [
             SudokuGame::GAME_NAME => [
@@ -176,8 +165,8 @@ class T
             self::RU_LANG => 'https://t.me/sudoku_app_bot'
         ],
         'loading_text' => [
-            self::EN_LANG => 'Game is loading...',
-            self::RU_LANG => 'Загружаем игру...'
+            self::EN_LANG => 'SUDOKU Game is loading...',
+            self::RU_LANG => 'Загружаем СУДОКУ...'
         ],
         'ground_file' => [
             self::EN_LANG => 'field_source_scrabble.svg',

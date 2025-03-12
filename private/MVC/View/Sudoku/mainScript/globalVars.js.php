@@ -12,7 +12,7 @@ const BASE_URL = '<?= SudokuController::GAME_URL ?>';
 const chooseFile = "'<?= T::S('Choose file') ?>'";
 document.documentElement.style.setProperty('--choose-file', chooseFile);
 
-const INVITE_FRIEND_PROMPT = '<?= T::getInviteFriendPrompt() ?>';
+const INVITE_FRIEND_PROMPT = '<?= T::S('invite_friend_prompt') ?>';
 const GAME_BOT_URL = '<?= T::S('game_bot_url') ?>';
 const LOADING_TEXT = '<?= T::S('loading_text') ?>';
 const errorServerMessage = '<?= T::S('Server connecting error. Please try again')?>';

@@ -117,7 +117,7 @@ class AchievesModel extends BaseModel
         }
 
         if ($gameName) {
-            $res .= ' ('. T::S('game_name') .')';
+            $res .= ' ('. BC::gameName() .')';
         }
 
         return $res;
@@ -249,9 +249,6 @@ class AchievesModel extends BaseModel
         $res = DB::queryArray($query);
 
         $gameStats = [];
-
-        // todo сделать подгрузку классов централизованно
-        //include_once(__DIR__ . '/../../../autoload_helper.php');
 
         foreach($res as $row) {
             $opponentCommonId = $row[self::PLAYER1_ID_FIELD] != $commonId ? $row[self::PLAYER1_ID_FIELD] : $row[self::PLAYER2_ID_FIELD];

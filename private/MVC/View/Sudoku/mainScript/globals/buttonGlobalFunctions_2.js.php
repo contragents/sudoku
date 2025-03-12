@@ -188,7 +188,7 @@ function newGameButtonFunction(ignoreDialog = false) {
             }
         });
     } else {
-        buttons['newGameButton']['svgObject'].bringToTop(buttons['newGameButton']['svgObject'].getByName('newGameButton' + 'Inactive'));
+        buttons.newGameButton.svgObject.bringToTop(buttons.newGameButton.svgObject.getByName('newGameButton' + 'Inactive'));
 
         fetchGlobal(NEW_GAME_SCRIPT, '', 'gameState=' + gameState)
             .then((data) => {

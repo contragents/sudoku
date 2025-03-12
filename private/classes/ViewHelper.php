@@ -2,6 +2,8 @@
 
 namespace classes;
 
+use AchievesModel;
+
 class ViewHelper
 {
     const MAX_PAGE_LINKS = 16;

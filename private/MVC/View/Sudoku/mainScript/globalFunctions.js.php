@@ -156,40 +156,28 @@ function genDivGlobal(i, isChange = false) {
 
 }
 
-function asyncCSS(href) {
-    var css = document.createElement('link');
-    css.rel = "stylesheet";
-    css.href = href;
-    document.head.appendChild(css);
-}
-
-window.onbeforeunload = function () {
-    if (gameState == 'myTurn'
-        || gameState == 'preMyTurn'
-        || gameState == 'otherTurn'
-        || gameState == 'initGame'
-        || gameState == 'initRatingGame') {
-        fetchGlobal(SET_INACTIVE_SCRIPT, '', '');
-        return "Вы в игре - уверены, что хотите выйти?";
-    }
-};
-
 document.addEventListener("visibilitychange", function () {
     pageActive = document.visibilityState;
 
+    onVisibilityChange();
+});
+
+function onVisibilityChange() {
+    reportVisibilityChangeYandex();
+
     if (gameState == 'myTurn'
         || gameState == 'preMyTurn'
         || gameState == 'otherTurn'
         || gameState == 'initGame'
         || gameState == 'initRatingGame') {
-        if (pageActive == 'hidden') {
+        if (pageActive === 'hidden') {
             fetchGlobal(STATUS_CHECKER_SCRIPT)
                 .then((data) => {
                     commonCallback(data);
                 });
         }
     }
-});
+}
 
 function showFullImage(idImg, width, oldWidth = 198) {
     if ($('#' + idImg).width() < width) {

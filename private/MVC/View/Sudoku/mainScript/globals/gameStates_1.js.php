@@ -350,6 +350,9 @@ var gameStates = {
 
             bootbox.hideAll();
 
+            // SUD-42
+            reportGameStopYandex();
+
             dialog = bootbox.dialog({
                 title: gameStates['chooseGame']['message'],
                 message: gameform,
@@ -538,6 +541,9 @@ var gameStates = {
                         label: '<?= T::S('Start') ?>',
                         className: 'btn-primary',
                         callback: function () {
+                            hideStickyBannerYandex();
+                            reportGameStartYandex();
+
                             activateFullScreenForMobiles();
                             gameState = 'noGame';
                             fetchGlobal(
@@ -806,6 +812,8 @@ var gameStates = {
         },
         refresh: 10,
         action: function (data, parseDesk = true) {
+            reportGameStartYandex();
+
             if ('desk' in data && data.desk.length > 0) {
                 parseDeskGlobal(data['desk']);
             }
