@@ -848,6 +848,38 @@ class Game
                     $this->addToLog(t::S('[[Player]] won!', [$numUser + 1], $lang), $lang);
                 }
 
+                // Начисляем победителю монеты
+                if ($this->gameStatus->bid) {
+                    $sudokuCount = $this->gameStatus->bid * count($this->gameStatus->users);
+
+                    DB::transactionStart();
+
+                    if (
+                        !BalanceModel::changeBalance(
+                            BalanceModel::SYSTEM_ID,
+                            -1 * $sudokuCount,
+                            $user->common_id . ' got winner reward',
+                            BalanceHistoryModel::TYPE_IDS[BalanceHistoryModel::GAME_TYPE],
+                            $this->currentGame
+                        )
+                        ||
+                        !BalanceModel::changeBalance(
+                            $user->common_id,
+                            $sudokuCount,
+                            'Winner reward',
+                            BalanceHistoryModel::TYPE_IDS[BalanceHistoryModel::GAME_TYPE],
+                            $this->currentGame
+                        )) {
+                        DB::transactionRollback();
+                    } else {
+                        DB::transactionCommit();
+
+                        foreach (T::SUPPORTED_LANGS as $lang) {
+                            $this->addToLog(T::S('gets a win', null, $lang) . ': ' . T::S('{{sudoku_icon_15}}') . $sudokuCount, $lang);
+                        }
+                    }
+                }
+
             } else {
                 $results['lostUsers'][] = $user->ID;
             }
