@@ -40,4 +40,13 @@ document.addEventListener('dragstart', event => {
     if (event.target.tagName === 'IMG') event.preventDefault();
 });
 
+//SUD-42
+document.ondragstart = noselect;
+// запрет на перетаскивание
+document.onselectstart = noselect;
+// запрет на выделение элементов страницы
+document.oncontextmenu = noselect;
+// запрет на выведение контекстного меню
+function noselect() {return false;}
+
 //<?php include(ROOT_DIR . '/js/common_functions/ysdk_4.js')?>

@@ -24,12 +24,14 @@ function (time, delta) {
         )
         || (queryNumber === 1)
     ) {
-        if (requestToServerEnabled) {
-            lastQueryTime = flor;
-            fetchGlobal(STATUS_CHECKER_SCRIPT)
-                .then((data) => {
-                    commonCallback(data);
-                });
+        if((isYandexAppGlobal() && uniqID) || !isYandexAppGlobal()) {
+            if (requestToServerEnabled) {
+                lastQueryTime = flor;
+                fetchGlobal(STATUS_CHECKER_SCRIPT)
+                    .then((data) => {
+                        commonCallback(data);
+                    });
+            }
         }
     }
 

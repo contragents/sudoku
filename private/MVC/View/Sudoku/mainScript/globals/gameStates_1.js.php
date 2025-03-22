@@ -1,6 +1,7 @@
 //
 <?php
 use classes\Cookie;
+use classes\Game;
 use classes\T;
 ?>
 
@@ -88,8 +89,6 @@ var gameStates = {
         message: '',
         noDialog: true,
         action: function (data) {
-            showStickyBannerYandex();
-
             initNewGameVarsGlobal();
 
             let under1800 = '<?= T::S('Only for players rated 1800+') ?>';
@@ -541,7 +540,6 @@ var gameStates = {
                         label: '<?= T::S('Start') ?>',
                         className: 'btn-primary',
                         callback: function () {
-                            hideStickyBannerYandex();
                             reportGameStartYandex();
 
                             activateFullScreenForMobiles();
@@ -1040,10 +1038,10 @@ function commonCallback(data) {
 
     if (gameState == 'myTurn') {
         if (pageActive == 'hidden') {
-            snd.play();
+            if(!isYandexAppGlobal()) {snd.play();}
             soundPlayed = true;
         } else if (!soundPlayed) {
-            snd.play();
+            if(!isYandexAppGlobal()) {snd.play();}
             soundPlayed = true;
         }
     }
@@ -1120,18 +1118,18 @@ function commonCallback(data) {
                             if ('gameSubState' in data)
                                 igrokiWaiting = "<br /><?= T::S('Players ready:') ?> " + data['gameSubState'];
 
+                            if ('gameWaitLimit' in data ) {
+                                gWLimit = data.gameWaitLimit;
+                            } else if(!gWLimit) {
+                                gWLimit = <?= Game::GAME_DEFAULT_WAIT_LIMIT ?>
+                            }
 
                             if ('timeWaiting' in data) {
                                 if (!tWaiting || data.timeWaiting > 0) {
                                     tWaiting = data.timeWaiting;
                                 }
-                                if (!gWLimit) {
-                                    gWLimit = data.gameWaitLimit;
-                                }
+
                             } else {
-                                if (!gWLimit) {
-                                    gWLimit = data.gameWaitLimit;
-                                }
                                 if (!tWaiting) {
                                     tWaiting = 0
                                 }
@@ -1184,6 +1182,13 @@ function commonCallback(data) {
             } else if (!('noDialog' in gameStates[gameState])) {
                 setTimeout(function () {
                         bootbox.hideAll();
+
+                        // SUD-42
+                        canOpenDialog = true;
+                        canCloseDialog = true;
+                        dialog = false;
+                        // SUD-42 END
+
                         var message = '';
                         var cancelLabel = '<?= T::S('Close in 5 seconds') ?>';
 
@@ -1216,7 +1221,7 @@ function commonCallback(data) {
                         }*/
 
                         if (turnAutocloseDialog) {
-                            if (timeToCloseDilog == 5) {
+                            if (timeToCloseDilog === 5) {
                                 cancelLabel = '<?= T::S('Close immediately') ?>';
                             } else {
                                 cancelLabel = '<?= T::S('Will close automatically') ?>';
@@ -1243,11 +1248,11 @@ function commonCallback(data) {
 
                                     if (!timeToCloseDilog) {
                                         timeToCloseDilog = 5;
-                                    } else //if (!automaticDialogClosed) {
+                                    } else if (!automaticDialogClosed) {
                                         timeToCloseDilog = 1.5;
-                                    //}
+                                    }
 
-                                    automaticDialogClosed = false; //xz
+                                    automaticDialogClosed = false;
                                 }
                                 activateFullScreenForMobiles();
                             }

@@ -114,7 +114,8 @@ class Game
 
     public array $currentGameUsers = [];
     public ?int $currentGame = null;
-    public int $gameWaitLimit = 60;
+    const GAME_DEFAULT_WAIT_LIMIT = 30;
+    public int $gameWaitLimit = self::GAME_DEFAULT_WAIT_LIMIT; // SUD-42 чтобы первые игроки не ждали долго // todo гдето сделать вычисление как в эрудите
     public int $ratingGameWaitLimit = 360;
 
     protected bool $doSaveGameState = false;
@@ -626,8 +627,7 @@ class Game
                 $this->addToLog(T::S('has left the game', null, $lang), $lang, $this->numUser);
             }
 
-
-            if (count($this->gameStatus->users) == 2) {
+            if (count($this->gameStatus->users) == 2 && empty($this->gameStatus->results)) {
                 $this->storeGameResults($this->gameStatus->users[($this->numUser + 1) % 2]->ID);
 
                 foreach (T::SUPPORTED_LANGS as $lang) {
@@ -833,6 +833,11 @@ class Game
      */
     public function storeGameResults(string $winnerUser)
     {
+        // results можно заполнять только один раз
+        if (!empty($this->gameStatus->results)) {
+            return;
+        }
+
         $results = [];
 
         foreach ($this->gameStatus->users as $numUser => $user) {
@@ -849,7 +854,6 @@ class Game
         }
 
         $this->gameStatus->results = $results;
-        // Новая версия
 
         foreach ($this->gameStatus->users as $num => $user) {
             $this->updateUserStatus($this->SM::STATE_GAME_RESULTS, $user->ID);

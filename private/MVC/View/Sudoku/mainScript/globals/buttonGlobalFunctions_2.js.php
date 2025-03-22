@@ -224,12 +224,6 @@ function resetButtonFunction(ignoreBootBox = false) {
     setCheckButtonState();
 };
 
-function Letter(letterCode, oc = false) {
-    const imgUrl = lang === 'RU' ? `img/fishki_sets/MaxS/${letterCode}.svg` : `img/fishki_sets/Girl/${letterCode}.svg`;
-    return `<div class="letter" style="background-image: url(${imgUrl})" data-id="${letterCode}">
-</div>`
-}
-
 function chatButtonFunction() {
     if (bootBoxIsOpenedGlobal())
         return;

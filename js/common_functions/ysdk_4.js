@@ -1,6 +1,7 @@
 //
 var yaPlayer = false;
 var uniqID = false;
+var isYandexAuthorized = false;
 var ysdk = false;
 
 if (isYandexAppGlobal() && typeof YaGames != 'undefined') {
@@ -13,6 +14,11 @@ if (isYandexAppGlobal() && typeof YaGames != 'undefined') {
                 .then(_player => {
                     yaPlayer = _player;
                     uniqID = yaPlayer.getUniqueID();
+                    if (yaPlayer.getMode() === 'lite') {
+                        isYandexAuthorized = false;
+                    } else {
+                        isYandexAuthorized = true;
+                    }
                     console.log('USER ID:', uniqID);
                 }).catch(err => {
                 console.log('USER_NOT_AUTHORIZED');
@@ -90,21 +96,35 @@ function hideStickyBannerYandex() {
     }
 }
 
-function reportGameIsReadyYandex() {
-    if (isYandexAppGlobal() && !!ysdk) {
+async function reportGameIsReadyYandex() {
+    if (!isYandexAppGlobal()) {
+        return;
+    }
+
+    if (!!ysdk) {
         ysdk.features.LoadingAPI?.ready();
+    } else {
+        setTimeout(() => reportGameIsReadyYandex(), 500);
     }
 }
 
 function reportGameStartYandex() {
-    if (isYandexAppGlobal() && !!ysdk) {
+    if (!isYandexAppGlobal()) {
+        return;
+    }
+
+    if (!!ysdk) {
         ysdk.features.GameplayAPI?.start();
+        hideStickyBannerYandex();
+    } else {
+        setTimeout(() => reportGameStartYandex(), 500);
     }
 }
 
 function reportGameStopYandex() {
     if (isYandexAppGlobal() && !!ysdk) {
         ysdk.features.GameplayAPI?.stop();
+        showStickyBannerYandex();
     }
 }
 

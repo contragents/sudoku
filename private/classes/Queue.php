@@ -719,7 +719,7 @@ class Queue
             return false;
         }
 
-        return (date('U') - $userInQueueRecord['time'] > 60);
+        return (date('U') - $userInQueueRecord['time'] > $this->caller->gameWaitLimit);
     }
 
     private function getBotPlayer(): string

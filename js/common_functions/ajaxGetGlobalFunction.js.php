@@ -85,7 +85,8 @@ function commonParams() {
         + (pageActive == 'hidden' ? '&page_hidden=true' : '')
         + ('hash' in webAppInitDataUnsafe ? ('&tg_hash=' + webAppInitDataUnsafe.hash) : '')
         + ('user' in webAppInitDataUnsafe && 'id' in webAppInitDataUnsafe.user ? ('&tg_id=' + webAppInitDataUnsafe.user.id) : '')
-        + (uniqID ? ('&yandex_user_id=' + encodeURIComponent(uniqID)) : '');
+        + (uniqID ? ('&yandex_user_id=' + encodeURIComponent(uniqID)) : '')
+        + (isYandexAuthorized ? '&yandex_authorized=1' : '&yandex_authorized=0');
 }
 
 async function fetchGlobalNominal(script, param_name, param_data) {

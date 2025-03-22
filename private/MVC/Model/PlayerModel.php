@@ -80,7 +80,7 @@ class PlayerModel extends BaseModel
             // ..а если common_id не установлен - создаем
             if ($createIfNotExist) {
                 if (self::setParamMass(
-                    'common_id',
+                    self::COMMON_ID_FIELD,
                     new ORM('id'),
                     [
                         'field_name' => 'cookie',
@@ -100,7 +100,19 @@ class PlayerModel extends BaseModel
                             )
                         ]
                     )) {
-                        return self::getPlayerCommonId($cookie);
+                        $commonId = self::getPlayerCommonId($cookie);
+
+                        if ($commonId) {
+                            // Начисляем приветственный бонус
+                            BalanceModel::changeBalance(
+                                $commonId,
+                                MonetizationService::REWARD[AchievesModel::DAY_PERIOD],
+                                BalanceHistoryModel::GREETING_DEPOSIT_TYPE,
+                                BalanceHistoryModel::TYPE_IDS[BalanceHistoryModel::GREETING_DEPOSIT_TYPE]
+                            );
+                        }
+
+                        return $commonId;
                     }
                 }
             }
@@ -457,5 +469,29 @@ class PlayerModel extends BaseModel
     private static function getIdByCookie(string $cookie): ?int
     {
         return self::getOneCustom(self::COOKIE_FIELD, $cookie)['id'] ?? null;
+    }
+
+    /**
+     * Получаем первую запись с данным commonId, чтобы игрок яндекса всегда играл с одним куки
+     * @param int $commonId
+     * @param string|null $cookieExclude Куки, который нужно исклюсить из выборки
+     * @return static|null
+     */
+    public static function getFirstCommonIdRecordO(int $commonId, ?string $cookieExclude = null): ?self
+    {
+        $query = self::select()
+            . ORM::where(self::COMMON_ID_FIELD, '=', $commonId, true)
+            . ($cookieExclude
+                ? ORM::andWhere(self::COOKIE_FIELD, '!=', $cookieExclude, false)
+                : ''
+            )
+            . ORM::orderBy(self::ID_FIELD, true)
+            . ORM::limit(1);
+
+        if ($row = DB::queryArray($query)[0] ?? null) {
+            return self::arrayToObject($row);
+        } else {
+            return null;
+        }
     }
 }
