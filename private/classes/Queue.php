@@ -8,6 +8,7 @@ use CommonIdRatingModel;
 use PlayerModel;
 use classes\ViewHelper as VH;
 
+
 class Queue
 {
     const QUEUES = [
@@ -28,8 +29,12 @@ class Queue
     const RATING_QUEUE = 'ratingQueue';
     const TURN_TIME_PARAM_NAME = 'turn_time';
 
-    protected $User;
-    protected $userTime;
+    const PREFS_ATTRS = ['from_rating', 'bid', 'num_players', self::TURN_TIME_PARAM_NAME]; // Атрибуты QueuePlayer, ннужные для его префсов
+
+    protected string $User;
+    protected int $userTime; // todo заменить на $queueUser->time
+
+    protected QueueUser $queueUser;
 
     protected bool $userInInitStatus = false;
     const USER_QUEUE_STATUS_PREFIX = '.user_queue_status_';
@@ -43,9 +48,43 @@ class Queue
         $this->caller = $caller;
         $this->POST = $POST;
 
+        try {
+            $this->queueUser = QueueUser::new(
+                [
+                    'time' => date('U'),
+                    'cookie' => $User
+                ]
+                + $POST
+            );
+
+            Cache::rpush('QueueUserCreation', $this->queueUser); // SUD-48
+        } catch (\Throwable $exception) {
+            Cache::rpush('QueueUserErrors', $exception->__toString()); // SUD-48
+        }
+
         $this->userInInitStatus = $this->checkPlayerInitStatus($initGame);
 
         $this->saveUserPrefs();
+    }
+
+    /**
+     * @param string $queue
+     * @return QueueUser[]
+     */
+    protected static function getQueuePlayers(string $queue): array
+    {
+        $queuePlayers = Cache::hgetall($queue) ?: [];
+
+        foreach($queuePlayers as $num => &$player) {
+            /** @var ?QueueUser $player */
+            $player = @unserialize($player) ?: null;
+
+            if (!($player instanceof QueueUser)) {
+                unset($queuePlayers[$num]);
+            }
+        }
+
+        return $queuePlayers;
     }
 
     private static function getInvitedPlayerTime($User): int
@@ -102,8 +141,27 @@ class Queue
         return false;
     }
 
+    /**
+     * Saves Prefs to cache and adds Prefs to current queueUser if empty
+     */
     private function saveUserPrefs()
     {
+        if (isset($this->queueUser->turn_time)) {
+            Cache::setex(
+                static::PREFS_KEY . $this->User,
+                static::PREFERENCES_TTL,
+                $this->queueUser
+            );
+        } else {
+            $prefsArray = $this->getUserPrefsArray($this->getUserPrefs());
+            foreach($prefsArray as $prefAttr => $prefValue) {
+                @($this->queueUser->$prefAttr = $prefValue);
+            }
+        }
+
+        return;
+
+        // SUD-418
         if (isset($this->POST[self::TURN_TIME_PARAM_NAME])) {
             Cache::setex(
                 static::PREFS_KEY . $this->User,
@@ -113,9 +171,26 @@ class Queue
         }
     }
 
-    public function getUserPrefs($User = null)
+    public function getUserPrefs(?string $User = null): ?QueueUser
     {
-        return Cache::get(static::PREFS_KEY . ($User ?? $this->User));
+        return Cache::get(static::PREFS_KEY . ($User ?? $this->User)) ?: null;
+    }
+
+    protected function getUserPrefsArray(?QueueUser $queueUser = null): array
+    {
+        $res = [];
+
+        if (!($queueUser instanceof QueueUser)) {
+            $queueUser = $this->queueUser;
+        }
+
+        foreach (static::PREFS_ATTRS as $attr) {
+            if (isset($queueUser->$attr)) {
+                $res[$attr] = $queueUser->$attr;
+            }
+        }
+
+        return $res;
     }
 
     /**
@@ -131,7 +206,7 @@ class Queue
                 'gameSubState' => $this->caller->SM::SUBSTATE_CHOOSING,
                 'players' => $this->caller->onlinePlayers(),
                 'coin_players' => $this->caller->onlineCoinPlayers(),
-                'prefs' => $this->getUserPrefs(),
+                'prefs' => $this->getUserPrefsArray(),
             ]
             + (!$isOuterCall
                 ? ['reason' => 'Queue error']
@@ -210,11 +285,10 @@ class Queue
         }
 
         // Проверяем очередь ждущих реванша на наличие просроченных заявок от игроков
-        $waitingPlayers = Cache::hgetall(static::QUEUES["inviteplayers_waiters"]);
+        $waitingPlayers = self::getQueuePlayers(static::QUEUES["inviteplayers_waiters"]);
         foreach ($waitingPlayers as $player => $playerInfo) {
-            if ($playerInfo && $player != $this->User) {
-                $player_data = @unserialize($playerInfo);
-                if (isset($player_data['time']) && (date('U') - $player_data['time']) > self::MAX_INVITE_WAIT_TIME) {
+            if ($player != $this->User) {
+                if (isset($playerInfo->time) && (date('U') - $playerInfo->time) > self::MAX_INVITE_WAIT_TIME) {
                     self::cleanUp($player);
                 }
             }
@@ -253,17 +327,17 @@ class Queue
      */
     protected function waitRatingPlayer(string $User): ?int
     {
-        if (isset($this->POST['from_rating']) && ($this->POST['from_rating'] == 0)) {
+        if (isset($this->queueUser->from_rating) && ($this->queueUser->from_rating == 0)) {
             return null;
         }
 
-        if (($this->POST['from_rating'] ?? 0) > 0 && Cache::lock($User)) {
-            $options = $this->getUserPrefs();
+        if (($this->queueUser->from_rating ?? 0) > 0 && Cache::lock($User)) {
+            $options = $this->getUserPrefsArray();
 
-            $this->userTime = date('U');
+            $this->userTime = $this->queueUser->time ?? date('U');
 
-            if (self::addToQueue('rating_waiters', $User, $options, ['from_rating' => $this->POST['from_rating']])) {
-                return (integer)$this->POST['from_rating'];
+            if (self::addToQueue('rating_waiters', $User, $options, ['from_rating' => $this->queueUser->from_rating])) {
+                return $this->queueUser->from_rating;
             }
         } elseif ($waiterData = Cache::hget(static::QUEUES["rating_waiters"], $User)) {
             $this->userTime = $waiterData['time'];
@@ -276,13 +350,16 @@ class Queue
 
     protected function findRatingPlayer(int $ratingWanted)
     {
-        if (($players2Waiting = Cache::hgetall(static::QUEUES["2players_waiters"]))) {
-            foreach ($players2Waiting as $player => $data) {
+        $players2Waiting = self::getQueuePlayers(static::QUEUES["2players_waiters"]);
+        if ($players2Waiting) {
+            foreach ($players2Waiting as $player => $playerInfo) {
+
                 $playerRating = PlayerModel::getRatingByCookie($player);
                 if ($playerRating >= $ratingWanted) {
+
                     return [
                         'cookie' => $player,
-                        'options' => @unserialize($data)['options'] ?? false,
+                        'options' => $playerInfo,
                         'queue' => 2,
                         'rating' => $playerRating
                     ];
@@ -290,19 +367,18 @@ class Queue
             }
         }
 
-        if (($playersRatingWaiting = Cache::hgetall(static::QUEUES["rating_waiters"]))) {
-            foreach ($playersRatingWaiting as $player => $data) {
+        if (($playersRatingWaiting = self::getQueuePlayers(static::QUEUES["rating_waiters"]))) {
+            foreach ($playersRatingWaiting as $player => $playerInfo) {
                 if ($player != $this->User) {
-                    $playerInfo = unserialize($data);
                     $playerRating = PlayerModel::getRatingByCookie($player);
                     if (
                         $playerRating >= $ratingWanted
                         &&
-                        (PlayerModel::getRatingByCookie($this->User)) >= $playerInfo['from_rating']
+                        (PlayerModel::getRatingByCookie($this->User)) >= $playerInfo->from_rating
                     ) {
                         return [
                             'cookie' => $player,
-                            'options' => $data['options'] ?? false,
+                            'options' => $playerInfo,
                             'queue' => self::RATING_QUEUE,
                             'rating' => $playerRating
                         ];
@@ -316,14 +392,13 @@ class Queue
 
     protected function findWaitingRaitingPlayer($curPlayerRating)
     {
-        if (($playersRatingWaiting = Cache::hgetall(static::QUEUES["rating_waiters"]))) {
-            foreach ($playersRatingWaiting as $player => $data) {
+        if (($playersRatingWaiting = self::getQueuePlayers(static::QUEUES["rating_waiters"]))) {
+            foreach ($playersRatingWaiting as $player => $playerInfo) {
                 if ($player != $this->User) {
-                    $data = unserialize($data);
-                    if ($curPlayerRating >= $data['from_rating']) {
+                    if ($curPlayerRating >= $playerInfo->from_rating) {
                         return [
                             'cookie' => $player,
-                            'options' => $data['options'] ?? false,
+                            'options' => $playerInfo,
                             'queue' => static::RATING_QUEUE,
                             'rating' => PlayerModel::getRatingByCookie($player),
                         ];
@@ -335,7 +410,7 @@ class Queue
         return false;
     }
 
-    protected function gatherUserData()
+    protected function gatherUserData():array
     {
         if (isset($this->POST[self::TURN_TIME_PARAM_NAME])) {
             return $this->POST;
@@ -349,7 +424,7 @@ class Queue
             return $players2Queue['options'];
         }
 
-        return $this->getUserPrefs() ?: ['num_players' => 2, 'turn_time' => rand(60, 120)];
+        return $this->getUserPrefsArray() ?: ['num_players' => 2, 'turn_time' => array_rand([60 => 60, 120 => 120])];
     }
 
     protected function makeReverseRatingGame(array $ratingPlayer): array
@@ -476,29 +551,26 @@ class Queue
         $game_users = [];
         $this->caller->currentGameUsers = [];
 
-        $waitingPlayers = Cache::hgetall(static::QUEUES["{$queue}players_waiters"]);
-        $prefs = $this->getUserPrefs();
+        $waitingPlayers = self::getQueuePlayers(static::QUEUES["{$queue}players_waiters"]);
 
         if (!isset($waitingPlayers[$this->User])) {
-            $options = $prefs;
+            $options = $this->queueUser;
         } else {
-            $waitingPlayers[$this->User] = unserialize($waitingPlayers[$this->User]);
-
-            $options = $waitingPlayers[$this->User]['options'] ?? $prefs;
+            $options = $waitingPlayers[$this->User];
 
             unset($waitingPlayers[$this->User]);
             reset($waitingPlayers);
         }
 
         // Прописываем текущему юзеру - добавление в игру,  номер игры, удаляем из очереди ждунов
-        $game_users[] = ['userCookie' => $this->User, 'options' => $options];
+        $game_users[] = $options;
 
         self::cleanUp($this->User);
         $this->caller->setUserGameNumber($this->User, $this->caller->currentGame);
 
         $this->caller->currentGameUsers[] = $this->User;
 
-        foreach ($waitingPlayers as $player => $data) {
+        foreach ($waitingPlayers as $player => $playerInfo) {
             if ($wishRating && PlayerModel::getRatingByCookie($player) != $wishRating) {
                 continue;
             }
@@ -507,8 +579,7 @@ class Queue
                 continue;
             }
 
-            $prefs = $this->getUserPrefs($player);
-            $data = unserialize($data);
+            $prefs = $this->getUserPrefsArray($playerInfo);
 
             //Прописываем юзерам - удаление из очереди и номер игры
             if (!self::cleanUp($player)) {
@@ -517,8 +588,7 @@ class Queue
 
             $this->caller->setUserGameNumber($player, $this->caller->currentGame);
 
-            $options = $data['options'] ?? $prefs;
-            $game_users[] = ['userCookie' => $player, 'options' => $options];
+            $game_users[] = $playerInfo;
 
             //Заполняем массив игроков
             $this->caller->currentGameUsers[] = $player;
@@ -530,29 +600,29 @@ class Queue
 
         if (count($game_users) < 2) {
             // игра не собралась - отменяем, помещаем игрока обратно в очередь 2
-            return $this->storeTo2Players($this->User, $game_users[0]['options'] ?? []);
+            return $this->storeTo2Players($this->User, $game_users[0]);
         }
 
         // Определяем ставку в монетах как минимальную из ставок игроков
         $bid = 0;
         $noCoinGame = false;
         foreach ($game_users as $num => $user) {
-            $userBalance = BalanceModel::getBalance(PlayerModel::getPlayerCommonId($user['userCookie'], true));
+            $user->balance = BalanceModel::getBalance(PlayerModel::getPlayerCommonId($user->cookie, true));
 
             // todo иногда ставка делает баланс игрока отрицательным. Нужно не давать балансу уходить в минус
 
-            if (!isset($user['options']['bid'])) {
-                if ($userBalance > 0) {
-                    $user['options']['bid'] = self::getBid($userBalance);
+            if (!isset($user->bid)) {
+                if ($user->balance > 0) {
+                    $user->bid = self::getBid($user->balance);
                 }
-            } elseif ($user['options']['bid'] > $userBalance) {
-                unset($user['options']['bid']);
+            } elseif ($user->bid > $user->balance) {
+                unset($user->bid);
             }
 
-            if (!isset($user['options']['bid'])) {
+            if (!isset($user->bid)) {
                 $noCoinGame = true;
-            } elseif ($bid == 0 || $bid > $user['options']['bid'] || $bid > $userBalance) {
-                $bid = $user['options']['bid'];
+            } elseif ($bid == 0 || $bid > $user->bid || $bid > $user->balance) {
+                $bid = $user->bid;
             }
         }
 
@@ -565,11 +635,12 @@ class Queue
         }
 
         foreach ($game_users as $num => $user) {
-            $playerCommonId = PlayerModel::getPlayerCommonId($user['userCookie'], true);
+            $user->common_id = PlayerModel::getPlayerCommonId($user->cookie, true);
+            $user->rating = CommonIdRatingModel::getRating($user->common_id, $this->caller::GAME_NAME);
             $this->caller->gameStatus->users[$num] = new GameUser(
                 [
-                    'ID' => $user['userCookie'],
-                    'common_id' => $playerCommonId,
+                    'ID' => $user->cookie,
+                    'common_id' => $user->common_id,
                     'status' => $this->caller->SM::GAME_STATE_START_GAME,
                     'isActive' => true,
                     'score' => 0,
@@ -581,8 +652,8 @@ class Queue
                         )
                     ),
                     'avatarUrl' => false,
-                    'wishTurnTime' => $user['options'] !== false ? $user['options'][self::TURN_TIME_PARAM_NAME] : 0,
-                    'rating' => CommonIdRatingModel::getRating($playerCommonId, $this->caller::GAME_NAME),
+                    'wishTurnTime' => $user->turn_time ?: 0,
+                    'rating' => $user->rating,
                 ]
             );
             //Прописали игроков в состояние игры
@@ -609,10 +680,10 @@ class Queue
                 }
             }
 
-            $this->caller->gameStatus->{$user['userCookie']} = $num;
+            $this->caller->gameStatus->{$user->cookie} = $num;
             // Заполнили массив нормеров игроков
 
-            $this->caller->updateUserStatus($this->caller->SM::GAME_STATE_START_GAME, $user['userCookie']);
+            $this->caller->updateUserStatus($this->caller->SM::GAME_STATE_START_GAME, $user->cookie);
             // Назначили статусы всем игрокам
         }
 
@@ -642,7 +713,7 @@ class Queue
     {
         if (!Cache::hget(static::QUEUES["inviteplayers_waiters"], $User)) {
 
-            $options = $this->getUserPrefs($User);
+            $options = $this->getUserPrefsArray($this->getUserPrefs($User));
 
             self::addToQueue("inviteplayers_waiters", $User, $options);
         }
@@ -679,7 +750,7 @@ class Queue
     protected function storeTo2Players($User, $options = []): array
     {
         if (empty($options)) {
-            $options = $this->getUserPrefs($User);
+            $options = $this->getUserPrefsArray($this->getUserPrefs($User));
         }
 
         if (!Cache::hget(static::QUEUES["2players_waiters"], $User)) {
@@ -698,13 +769,13 @@ class Queue
             ];
     }
 
-    protected function addToQueue(string $queue, string $user, $options, array $params = []): bool
+    protected function addToQueue(string $queue, string $user, array $options, array $params = []): bool
     {
         if (Cache::lock($user)) {
             return (bool)Cache::hset(
                 static::QUEUES[$queue],
                 $user,
-                array_merge(['time' => date('U'), 'options' => $options], $params)
+                QueueUser::new(array_merge(['cookie' => $user, 'time' => date('U')], $options, $params))
             );
         }
 

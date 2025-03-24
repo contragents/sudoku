@@ -1458,6 +1458,6 @@ class Game
         }
         //Голосование проведено
 
-        return 90;
+        return static::DEFAUTL_TURN_TIME;
     }
 }
