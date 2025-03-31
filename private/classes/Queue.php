@@ -74,7 +74,10 @@ class Queue
 
         if (!$this->refreshLastPingTime()) {
             self::cleanUp($this->User);
-            $this->kick_this_user = true; // SUD-46 Если игрок не подавал запросы более минуты - выкинуть его из очереди
+
+            // SUD-46 Если игрок не подавал запросы более минуты - выкинуть его из очереди
+            $this->kick_this_user = true;
+            self::clearPlayerInitStatus($this->User);
         }
     }
 
@@ -125,6 +128,11 @@ class Queue
         }
 
         return false;
+    }
+
+    public static function clearPlayerInitStatus($User): void
+    {
+        Cache::del(static::USER_QUEUE_STATUS_PREFIX . $User);
     }
 
     public static function setPlayerInitStatus($User): void
@@ -360,7 +368,7 @@ class Queue
         }
 
         if (($this->queueUser->from_rating ?? 0) > 0 && Cache::lock($User)) {
-            if (self::addQueueUserToQueue(static::QUEUES['rating_waiters'], $this->queueUser)) {
+            if (self::addUserToQueue(static::QUEUES['rating_waiters'], $this->queueUser)) {
                 return $this->queueUser->from_rating;
             }
         } elseif ($waiterData = self::getUserFromQueue(static::QUEUES["rating_waiters"], $User)) {
@@ -419,7 +427,7 @@ class Queue
     {
         if (($playersRatingWaiting = self::getQueuePlayers(static::QUEUES["rating_waiters"]))) {
             foreach ($playersRatingWaiting as $player => $playerInfo) {
-                if ($player != $this->User) {
+                if ($player != $this->User && self::checkLastPingTime($playerInfo)) {
                     if ($curPlayerRating >= $playerInfo->from_rating) {
                         $playerInfo->queue = self::RATING_QUEUE;
                         $playerInfo->rating = PlayerModel::getRatingByCookie($playerInfo->cookie);
@@ -431,6 +439,11 @@ class Queue
         }
 
         return null;
+    }
+
+    protected static function checkLastPingTime(QueueUser $user): bool
+    {
+        return (date('U') - ($user->last_ping_time ?? date('U'))) > self::LAST_PING_TIMEOUT;
     }
 
     protected function gatherUserData(): array
@@ -459,10 +472,10 @@ class Queue
             &&
             self::cleanUp($this->User)
             &&
-            self::addQueueUserToQueue(static::QUEUES['2players_waiters'], $ratingPlayer)
+            self::addUserToQueue(static::QUEUES['2players_waiters'], $ratingPlayer)
             //Поместили ожидающего рейтинг игрока в очередь текущего игрока
             &&
-            self::addQueueUserToQueue(static::QUEUES['2players_waiters'], $this->queueUser)
+            self::addUserToQueue(static::QUEUES['2players_waiters'], $this->queueUser)
         ) {
             return $this->makeGame('2', 2, $ratingPlayer->rating);
         } else {
@@ -478,7 +491,7 @@ class Queue
             if (!(
                 self::cleanUp($ratingPlayer->cookie)
                 &&
-                self::addQueueUserToQueue(static::QUEUES['2players_waiters'], $ratingPlayer)
+                self::addUserToQueue(static::QUEUES['2players_waiters'], $ratingPlayer)
             )) {
                 return $this->chooseGame();
             }
@@ -487,7 +500,7 @@ class Queue
         if (
             self::cleanUp($this->User)
             &&
-            self::addQueueUserToQueue(
+            self::addUserToQueue(
                 static::QUEUES['2players_waiters'],
                 $waiterData
             )
@@ -741,7 +754,7 @@ class Queue
 
             $queueUser = $this->getUserPrefs($User);
 
-            self::addQueueUserToQueue(static::QUEUES['inviteplayers_waiters'], $queueUser);
+            self::addUserToQueue(static::QUEUES['inviteplayers_waiters'], $queueUser);
         }
 
         $newStatus = $this->caller->updateUserStatus($this->caller->SM::STATE_INIT_GAME, $User, true);
@@ -774,7 +787,7 @@ class Queue
      */
     protected function storeTo2Players(QueueUser $queueUser): array
     {
-        if (!self::addQueueUserToQueue(static::QUEUES['2players_waiters'], $queueUser)) {
+        if (!self::addUserToQueue(static::QUEUES['2players_waiters'], $queueUser)) {
             return $this->chooseGame();
         }
 
@@ -789,16 +802,15 @@ class Queue
             ];
     }
 
-    protected static function addQueueUserToQueue(string $queue, QueueUser $queueUser, $lockNeeded = true): bool
+    protected static function addUserToQueue(string $queue, QueueUser $queueUser, $lockNeeded = true): bool
     {
-        // SUD-46
-        /*if(!Game::isBot($queueUser->cookie)) {
-            if ($queueUser->last_ping_time < date('U') - self::LAST_PING_TIMEOUT) {
+        if(!Game::isBot($queueUser->cookie)) {
+            if (!self::checkLastPingTime($queueUser)) {
                 return false;
             }
-        }*/
+        }
 
-        //if (/* SUD-46 !$lockNeeded || */ Cache::lock($queueUser->cookie)) {
+        if (!$lockNeeded || Cache::lock($queueUser->cookie)) {
             $queueUser->queue_time = date('U');
 
             Cache::hset(
@@ -808,7 +820,7 @@ class Queue
             );
 
             return (bool)Cache::hget($queue, $queueUser->cookie);
-        //}
+        }
 
         return false;
     }
@@ -867,12 +879,12 @@ class Queue
     {
         foreach (static::QUEUES as $queue) {
             if($queueUser = self::getUserFromQueue($queue, $this->User)) {
-                //if ($queueUser->last_ping_time < date('U') - self::LAST_PING_TOO_OLD) {
-                //    return false;
-                //}
+                if ((date('U') - ($queueUser->last_ping_time ?? date('U'))) > self::LAST_PING_TOO_OLD) {
+                    return false;
+                }
 
                 $queueUser->last_ping_time = $this->queueUser->last_ping_time;
-                self::addQueueUserToQueue($queue, $queueUser, false);
+                self::addUserToQueue($queue, $queueUser, false);
             }
         }
 
