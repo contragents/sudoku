@@ -359,14 +359,14 @@ class Game
         // todo Добавить анализ названия игры, а не все игры подряд
         for ($i = $lastGame; $i > ($lastGame - 50); $i--) {
             $game = $this->getGameStatus($i);
-            if ($game && $game instanceof GameStatus && !empty($game->users)) {
-                if (!isset($game->results)) {
+            if ($game && $game instanceof GameStatus && $game->gameName === static::GAME_NAME && !empty($game->users)) {
+                if (!empty($game->results)) {
                     foreach ($game->users as $num => $user) {
                         if (!isset($user->ID)) {
                             continue;
                         }
 
-                        if (strstr($user->ID, self::BOT_TPL) === false) {
+                        if (!self::isBot($user->ID)) {
                             self::$players[$user->ID] = [
                                 'cookie' => $user->ID,
                                 'common_id' => $user->common_id,
@@ -386,13 +386,13 @@ class Game
             }
 
             $rangedOnlinePlayers = [
-                0 => 10,
-                1900 => 9,
-                2000 => 6,
-                2100 => 4,
-                2200 => 3,
-                2300 => 2,
-                2400 => 1,
+                0 => date('H') < 6 ? rand(1, 10) : rand(15, 50),
+                1900 => 0,
+                2000 => 0,
+                2100 => 0,
+                2200 => 0,
+                2300 => 0,
+                2400 => 0,
                 2500 => 0,
                 2600 => 0,
                 2700 => 0
@@ -555,9 +555,15 @@ class Game
 
     public function getGameStatus(int $gameNumber = null): GameStatus
     {
-        return Cache::get(
+        $gameStatus = Cache::get(
             self::getCacheKey(self::GAME_DATA_KEY . ($gameNumber ?: $this->currentGame))
-        ) ?: new GameStatus();
+        );
+
+        if (!($gameStatus instanceof GameStatus)) {
+            $gameStatus = new GameStatus();
+        }
+
+        return $gameStatus;
     }
 
     public function storeGameStatus(bool $updating = true)
@@ -594,6 +600,16 @@ class Game
     public static function getUserGameNumber(string $user): ?int
     {
         return Cache::get(self::getCacheKey(self::GET_GAME_KEY . $user)) ?: null;
+    }
+
+    /**
+     * @param QueueUser[] $users
+     */
+    public function unsetUsersGameNumber(array $users)
+    {
+        foreach($users as $user) {
+            Cache::del(self::getCacheKey(self::GET_GAME_KEY . $user->cookie));
+        }
     }
 
     public function setUserGameNumber(string $User, int $gameNumber)

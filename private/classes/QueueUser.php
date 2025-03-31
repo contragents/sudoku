@@ -17,8 +17,8 @@ use Throwable;
  * @property ?int $from_rating Желаемый рейтинг (от)
  * @property ?int $bid Максимальная ставка
  * @property ?int $num_players  2 для Судоку, Гомоку - пока для всех
- * @property int $turn_time 120 (по умолчанию), 60
- *
+ * @property ?int $turn_time 120, 60
+ * @property ?string $queue название очереди, из которой забрали игрока
  */
 
 class QueueUser
@@ -34,7 +34,7 @@ class QueueUser
     public ?int $last_ping_time = null;
     public ?int $num_players = null;
     public ?int $turn_time = null;
-    //'options' => @unserialize($data)['options'] ?? false, // todo заменить на самостоятельные параметры
+    public ?string $queue = null;
 
     /**
      * @param array $fieldsVals

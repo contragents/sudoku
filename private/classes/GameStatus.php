@@ -25,7 +25,9 @@ namespace classes;
  * @property array $invite_accepted_users = []; // Массив игроков принявших приглашение на реванш
  * @property string $invite Статус инвайта (игрок который пригласил или статус начала реванша)
  * @property bool $isInviteGame = null;
+ * @property ?string $gameName Название игры
  */
+
 class GameStatus
 {
     public array $users;
@@ -43,6 +45,7 @@ class GameStatus
     public array $gameLog = [];
     public int $gameGoal = 0;
     public ?int $bid = null;
+    public ?string $gameName = null;
 
     private array $data = [];
     public array $chatLog = [];

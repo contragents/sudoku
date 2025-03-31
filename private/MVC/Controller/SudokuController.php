@@ -22,11 +22,13 @@ class SudokuController extends BaseController
 
         parent::__construct($action, $request);
 
-        $this->Game = new SudokuGame();
+        //$this->Game = new SudokuGame();
     }
 
     public function Run()
     {
+        $this->Game = new SudokuGame();
+
         return parent::Run();
     }
 }

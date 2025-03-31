@@ -29,10 +29,11 @@ class Queue
     const RATING_QUEUE = 'ratingQueue';
     const TURN_TIME_PARAM_NAME = 'turn_time';
 
-    const PREFS_ATTRS = ['from_rating', 'bid', 'num_players', self::TURN_TIME_PARAM_NAME]; // Атрибуты QueuePlayer, ннужные для его префсов
+    const PREFS_ATTRS = ['time', 'from_rating', 'bid', 'num_players', self::TURN_TIME_PARAM_NAME]; // Атрибуты QueuePlayer, ннужные для его префсов
+    const LAST_PING_TIMEOUT = 20; // SUD-46 Если игрок не подавал запросы за последние 20 сек, не собирать  с ним игру.
+    const LAST_PING_TOO_OLD = 60; // SUD-46 Если игрок не подавал запросы более минуты - выкинуть его из очереди
 
     protected string $User;
-    protected int $userTime; // todo заменить на $queueUser->time
 
     protected QueueUser $queueUser;
 
@@ -41,6 +42,8 @@ class Queue
 
     protected Game $caller;
     protected array $POST;
+
+    protected bool $kick_this_user = false;
 
     public function __construct($User, Game $caller, array $POST, bool $initGame = false)
     {
@@ -52,7 +55,10 @@ class Queue
             $this->queueUser = QueueUser::new(
                 [
                     'time' => date('U'),
-                    'cookie' => $User
+                    'cookie' => $this->User,
+                    'last_ping_time' => date('U'),
+                    'rating' => PlayerModel::getRatingByCookie($this->User, $this->caller::GAME_NAME),
+                    'common_id' => PlayerModel::getPlayerCommonId($this->User, true)
                 ]
                 + $POST
             );
@@ -65,6 +71,11 @@ class Queue
         $this->userInInitStatus = $this->checkPlayerInitStatus($initGame);
 
         $this->saveUserPrefs();
+
+        if (!$this->refreshLastPingTime()) {
+            self::cleanUp($this->User);
+            $this->kick_this_user = true; // SUD-46 Если игрок не подавал запросы более минуты - выкинуть его из очереди
+        }
     }
 
     /**
@@ -87,11 +98,11 @@ class Queue
         return $queuePlayers;
     }
 
-    private static function getInvitedPlayerTime($User): int
+    protected function getInvitedPlayerTime($User): int
     {
-        $playerInfo = Cache::hget(static::QUEUES['inviteplayers_waiters'], $User);
+        $playerInfo = self::getUserFromQueue(static::QUEUES['inviteplayers_waiters'], $User);
 
-        return date('U') - $playerInfo['time'];
+        return date('U') - ($playerInfo->time ?? date('U'));
     }
 
     public function init()
@@ -121,19 +132,10 @@ class Queue
         Cache::setex(static::USER_QUEUE_STATUS_PREFIX . $User, 60, StateMachine::STATE_INIT_GAME);
     }
 
-    public static function isUserInInviteQueue(string $user)
-    {
-        if (Cache::hget(static::QUEUES['inviteplayers_waiters'], $user)) {
-            return true;
-        }
-
-        return false;
-    }
-
     public static function isUserInQueue(string $user): bool
     {
         foreach (static::QUEUES as $queue) {
-            if (Cache::hget($queue, $user)) {
+            if (self::getUserFromQueue($queue, $user)) {
                 return true;
             }
         }
@@ -173,7 +175,12 @@ class Queue
 
     public function getUserPrefs(?string $User = null): ?QueueUser
     {
-        return Cache::get(static::PREFS_KEY . ($User ?? $this->User)) ?: null;
+        $prefs = Cache::get(static::PREFS_KEY . ($User ?? $this->User));
+        if ($prefs instanceof QueueUser) {
+            return $prefs;
+        } else {
+            return null;
+        }
     }
 
     protected function getUserPrefsArray(?QueueUser $queueUser = null): array
@@ -212,12 +219,18 @@ class Queue
                 ? ['reason' => 'Queue error']
                 : []);
 
+        try {
+            throw new \Exception('QueueUserError');
+        } catch(\Throwable $e) {
+            Cache::rpush('QueueUserErrors', $e->__toString()); // SUD-46
+        }
+
         return $chooseGameParams;
     }
 
     public function doSomethingWithThisStuff(): array
     {
-        if (!$this->userInInitStatus) {
+        if (!$this->userInInitStatus || $this->kick_this_user) {
             return $this->chooseGame();
         }
 
@@ -232,9 +245,9 @@ class Queue
 
             return Response::state($newStatus)
                 + [
-                    'gameSubState' => Cache::hlen(static::QUEUES["inviteplayers_waiters"]),
+                    'gameSubState' => self::getQueueLen(static::QUEUES["inviteplayers_waiters"]),
                     'gameWaitLimit' => $this->caller->gameWaitLimit,
-                    'timeWaiting' => self::getInvitedPlayerTime($this->User),
+                    'timeWaiting' => $this->getInvitedPlayerTime($this->User),
                     'comments' => VH::h6(T::S('Awaiting invited players'))
                 ];
         }
@@ -254,8 +267,7 @@ class Queue
             return $this->stillWaitRatingPlayer();
         }
 
-        $curPlayerRating = PlayerModel::getRatingByCookie($this->User);
-        if ($curPlayerRating > 1900 && ($ratingPlayer = $this->findWaitingRaitingPlayer($curPlayerRating))) {
+        if ($this->queueUser->rating > 1900 && ($ratingPlayer = $this->findWaitingRaitingPlayer($this->queueUser->rating))) {
             if (Cache::lock(self::SEMAPHORE_KEY)) {
                 return $this->makeReverseRatingGame($ratingPlayer);
             }
@@ -275,12 +287,17 @@ class Queue
             return $this->makeGame('2');
         }
 
-        return $this->storeTo2Players($this->User);
+        return $this->storeTo2Players($this->queueUser);
+    }
+
+    protected function getQueueLen(string $queue): int
+    {
+        return Cache::hlen($queue) ?: 0;
     }
 
     protected function inviteQueueFull(): bool
     {
-        if (Cache::hlen(static::QUEUES["inviteplayers_waiters"]) < 2) {
+        if (self::getQueueLen(static::QUEUES["inviteplayers_waiters"]) < 2) {
             return false;
         }
 
@@ -295,19 +312,30 @@ class Queue
         }
 
         // Если очередь все еще длиной не менее 2х игроков - возвращаем тру
-        if (Cache::hlen(static::QUEUES["inviteplayers_waiters"]) >= 2) {
+        if (self::getQueueLen(static::QUEUES["inviteplayers_waiters"]) >= 2) {
             return true;
         }
 
         return false;
     }
 
+    protected static function getUserFromQueue(string $queue, string $user): ?QueueUser
+    {
+        $res = Cache::hget($queue, $user);
+
+        if (!($res instanceof QueueUser)) {
+            $res = null;
+        }
+
+        return $res;
+    }
+
     protected function checkInviteQueue()
     {
-        $playerInfo = Cache::hget(static::QUEUES["inviteplayers_waiters"], $this->User);
+        $playerInfo = self::getUserFromQueue(static::QUEUES["inviteplayers_waiters"], $this->User);
 
         if ($playerInfo) {
-            if (isset($playerInfo['time']) && (date('U') - $playerInfo['time']) > static::MAX_INVITE_WAIT_TIME) {
+            if (isset($playerInfo->time) && (date('U') - $playerInfo->time) > static::MAX_INVITE_WAIT_TIME) {
                 self::cleanUp($this->User);
 
                 return false;
@@ -332,37 +360,31 @@ class Queue
         }
 
         if (($this->queueUser->from_rating ?? 0) > 0 && Cache::lock($User)) {
-            $options = $this->getUserPrefsArray();
-
-            $this->userTime = $this->queueUser->time ?? date('U');
-
-            if (self::addToQueue('rating_waiters', $User, $options, ['from_rating' => $this->queueUser->from_rating])) {
+            if (self::addQueueUserToQueue(static::QUEUES['rating_waiters'], $this->queueUser)) {
                 return $this->queueUser->from_rating;
             }
-        } elseif ($waiterData = Cache::hget(static::QUEUES["rating_waiters"], $User)) {
-            $this->userTime = $waiterData['time'];
+        } elseif ($waiterData = self::getUserFromQueue(static::QUEUES["rating_waiters"], $User)) {
+            $this->queueUser->time = $waiterData->time ?? date('U');
 
-            return (integer)$waiterData['from_rating'];
+            return (integer)$waiterData->from_rating;
         }
 
         return null;
     }
 
-    protected function findRatingPlayer(int $ratingWanted)
+    protected function findRatingPlayer(int $ratingWanted): ?QueueUser
     {
         $players2Waiting = self::getQueuePlayers(static::QUEUES["2players_waiters"]);
         if ($players2Waiting) {
             foreach ($players2Waiting as $player => $playerInfo) {
 
-                $playerRating = PlayerModel::getRatingByCookie($player);
-                if ($playerRating >= $ratingWanted) {
+                if(!isset($playerInfo->rating)) {
+                    $playerInfo->rating = PlayerModel::getRatingByCookie($player);
+                }
+                if ($playerInfo->rating >= $ratingWanted) {
+                    $playerInfo->queue = '2';
 
-                    return [
-                        'cookie' => $player,
-                        'options' => $playerInfo,
-                        'queue' => 2,
-                        'rating' => $playerRating
-                    ];
+                    return $playerInfo;
                 }
             }
         }
@@ -370,95 +392,93 @@ class Queue
         if (($playersRatingWaiting = self::getQueuePlayers(static::QUEUES["rating_waiters"]))) {
             foreach ($playersRatingWaiting as $player => $playerInfo) {
                 if ($player != $this->User) {
-                    $playerRating = PlayerModel::getRatingByCookie($player);
+                    if(!isset($playerInfo->rating)) {
+                        $playerInfo->rating = PlayerModel::getRatingByCookie($player);
+                    }
                     if (
-                        $playerRating >= $ratingWanted
+                        $playerInfo->rating >= $ratingWanted
                         &&
-                        (PlayerModel::getRatingByCookie($this->User)) >= $playerInfo->from_rating
+                        $this->queueUser->rating >= $playerInfo->from_rating
                     ) {
-                        return [
-                            'cookie' => $player,
-                            'options' => $playerInfo,
-                            'queue' => self::RATING_QUEUE,
-                            'rating' => $playerRating
-                        ];
+                        $playerInfo->queue = self::RATING_QUEUE;
+
+                        return $playerInfo;
                     }
                 }
             }
         }
 
-        return false;
+        return null;
     }
 
-    protected function findWaitingRaitingPlayer($curPlayerRating)
+    /**
+     * @param $curPlayerRating
+     * @return QueueUser|null
+     */
+    protected function findWaitingRaitingPlayer(int $curPlayerRating): ?QueueUser
     {
         if (($playersRatingWaiting = self::getQueuePlayers(static::QUEUES["rating_waiters"]))) {
             foreach ($playersRatingWaiting as $player => $playerInfo) {
                 if ($player != $this->User) {
                     if ($curPlayerRating >= $playerInfo->from_rating) {
-                        return [
-                            'cookie' => $player,
-                            'options' => $playerInfo,
-                            'queue' => static::RATING_QUEUE,
-                            'rating' => PlayerModel::getRatingByCookie($player),
-                        ];
+                        $playerInfo->queue = self::RATING_QUEUE;
+                        $playerInfo->rating = PlayerModel::getRatingByCookie($playerInfo->cookie);
+
+                        return $playerInfo;
                     }
                 }
             }
         }
 
-        return false;
+        return null;
     }
 
-    protected function gatherUserData():array
+    protected function gatherUserData(): array
     {
         if (isset($this->POST[self::TURN_TIME_PARAM_NAME])) {
             return $this->POST;
         }
 
-        $players2Queue = Cache::hget(
+        $players2Queue = self::getUserFromQueue(
             static::QUEUES["2players_waiters"],
             $this->User
         );
-        if ($players2Queue && ($players2Queue['options'] ?? false)) {
-            return $players2Queue['options'];
+
+        if ($players2Queue) {
+            return self::getUserPrefsArray($players2Queue);
         }
 
         return $this->getUserPrefsArray() ?: ['num_players' => 2, 'turn_time' => array_rand([60 => 60, 120 => 120])];
     }
 
-    protected function makeReverseRatingGame(array $ratingPlayer): array
+    protected function makeReverseRatingGame(QueueUser $ratingPlayer): array
     {
-        $thisUserOptions = $this->gatherUserData();
-
         if (
             // Удалили ожидающего рейтинг игрока из очереди рейтинга
-            self::cleanUp($ratingPlayer['cookie'])
+            self::cleanUp($ratingPlayer->cookie)
             &&
             self::cleanUp($this->User)
             &&
-            self::addToQueue("2players_waiters", $ratingPlayer['cookie'], $ratingPlayer['options'])
+            self::addQueueUserToQueue(static::QUEUES['2players_waiters'], $ratingPlayer)
             //Поместили ожидающего рейтинг игрока в очередь текущего игрока
             &&
-            self::addToQueue("2players_waiters", $this->User, $thisUserOptions)
+            self::addQueueUserToQueue(static::QUEUES['2players_waiters'], $this->queueUser)
         ) {
-            return $this->makeGame('2', 2, $ratingPlayer['rating']);
+            return $this->makeGame('2', 2, $ratingPlayer->rating);
         } else {
             return $this->chooseGame();
         }
     }
 
-    protected function makeRatingGame(array $ratingPlayer): array
+    protected function makeRatingGame(QueueUser $ratingPlayer): array
     {
-        $waiterData = Cache::hget(static::QUEUES["rating_waiters"], $this->User);
+        $waiterData = self::getUserFromQueue(static::QUEUES["rating_waiters"], $this->User);
 
-        if ($ratingPlayer['queue'] == self::RATING_QUEUE) {
-            $playerData = Cache::hget(static::QUEUES["rating_waiters"], $ratingPlayer['cookie']);
-
+        if ($ratingPlayer->queue == self::RATING_QUEUE) {
             if (!(
-                self::cleanUp($ratingPlayer['cookie'])
+                self::cleanUp($ratingPlayer->cookie)
                 &&
-                self::addToQueue("2players_waiters", $ratingPlayer['cookie'], $playerData['options'])
+                self::addQueueUserToQueue(static::QUEUES['2players_waiters'], $ratingPlayer)
             )) {
                 return $this->chooseGame();
             }
@@ -467,14 +487,12 @@ class Queue
         if (
             self::cleanUp($this->User)
             &&
-            self::addToQueue(
-                "2players_waiters",
-                $this->User,
-                $waiterData['options'],
-                ['time' => $waiterData['time']]
+            self::addQueueUserToQueue(
+                static::QUEUES['2players_waiters'],
+                $waiterData
             )
         ) {
-            return $this->makeGame('2', 2, $ratingPlayer['rating']);
+            return $this->makeGame('2', 2, $ratingPlayer->rating);
         } else {
             return $this->chooseGame();
         }
@@ -482,9 +500,9 @@ class Queue
 
     protected function timeToWaitRatingPlayerOver($User)
     {
-        $waiterData = Cache::hget(static::QUEUES["rating_waiters"], $User);
+        $waiterData = self::getUserFromQueue(static::QUEUES["rating_waiters"], $User);
 
-        if ((date('U') - $waiterData['time']) > $this->caller->ratingGameWaitLimit) {
+        if ((date('U') - $waiterData->time) > $this->caller->ratingGameWaitLimit) {
             return true;
         }
 
@@ -497,12 +515,13 @@ class Queue
      */
     protected function storeToCommonQueue($User): ?array
     {
-        $waiterData = Cache::hget(static::QUEUES["rating_waiters"], $User) ?: [];
-        if (self::cleanUp($User)) {
-            return $this->storeTo2Players($User, $waiterData['options'] ?? []);
-        }
+        $waiterData = self::getUserFromQueue(static::QUEUES["rating_waiters"], $User);
 
-        return null;
+        if (self::cleanUp($User) && $waiterData) {
+            return $this->storeTo2Players($waiterData);
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -515,7 +534,7 @@ class Queue
         return Response::state($newStatus)
             + [
                 'gameSubState' => 0,
-                'timeWaiting' => date('U') - $this->userTime,
+                'timeWaiting' => date('U') - $this->queueUser->time,
                 'ratingGameWaitLimit' => $this->caller::RATING_INIT_TIMEOUT,
                 'comments' => VH::h6(T::S('Searching for players with selected rank'))
             ];
@@ -547,6 +566,7 @@ class Queue
         $this->caller->storeGameStatus(false);
 
         $this->caller->gameStatus = new GameStatus();
+        $this->caller->gameStatus->gameName = $this->caller::GAME_NAME;
 
         $game_users = [];
         $this->caller->currentGameUsers = [];
@@ -579,8 +599,6 @@ class Queue
                 continue;
             }
 
-            $prefs = $this->getUserPrefsArray($playerInfo);
-
             //Прописываем юзерам - удаление из очереди и номер игры
             if (!self::cleanUp($player)) {
                 continue;
@@ -600,7 +618,9 @@ class Queue
 
         if (count($game_users) < 2) {
             // игра не собралась - отменяем, помещаем игрока обратно в очередь 2
-            return $this->storeTo2Players($this->User, $game_users[0]);
+            $this->caller->unsetUsersGameNumber($game_users);
+
+            return $this->storeTo2Players($game_users[0]);
         }
 
         // Определяем ставку в монетах как минимальную из ставок игроков
@@ -635,8 +655,13 @@ class Queue
         }
 
         foreach ($game_users as $num => $user) {
-            $user->common_id = PlayerModel::getPlayerCommonId($user->cookie, true);
-            $user->rating = CommonIdRatingModel::getRating($user->common_id, $this->caller::GAME_NAME);
+            if(!isset($user->common_id)) {
+                $user->common_id = PlayerModel::getPlayerCommonId($user->cookie, true);
+            }
+            if (!isset($user->rating)) {
+                $user->rating = CommonIdRatingModel::getRating($user->common_id, $this->caller::GAME_NAME);
+            }
+
             $this->caller->gameStatus->users[$num] = new GameUser(
                 [
                     'ID' => $user->cookie,
@@ -652,7 +677,7 @@ class Queue
                         )
                     ),
                     'avatarUrl' => false,
-                    'wishTurnTime' => $user->turn_time ?: 0,
+                    'wishTurnTime' => $user->turn_time ?: array_sum(array_map(fn(QueueUser $user) => $user->turn_time ?? 0, $game_users)),
                     'rating' => $user->rating,
                 ]
             );
@@ -711,28 +736,29 @@ class Queue
 
     public function storePlayerToInviteQueue($User)
     {
-        if (!Cache::hget(static::QUEUES["inviteplayers_waiters"], $User)) {
+        $queueUser = self::getUserFromQueue(static::QUEUES["inviteplayers_waiters"], $User);
+        if (!$queueUser) {
 
-            $options = $this->getUserPrefsArray($this->getUserPrefs($User));
+            $queueUser = $this->getUserPrefs($User);
 
-            self::addToQueue("inviteplayers_waiters", $User, $options);
+            self::addQueueUserToQueue(static::QUEUES['inviteplayers_waiters'], $queueUser);
         }
 
         $newStatus = $this->caller->updateUserStatus($this->caller->SM::STATE_INIT_GAME, $User, true);
 
         return Response::state($newStatus)
             + [
-                'gameSubState' => Cache::hlen(static::QUEUES['inviteplayers_waiters']),
+                'gameSubState' => self::getQueueLen(static::QUEUES['inviteplayers_waiters']),
                 'gameWaitLimit' => $this->caller->gameWaitLimit,
-                'timeWaiting' => 0,
+                'timeWaiting' => date('U') - ($queueUser->queue_time ?? date('U')),
                 'comments' => VH::h6(T::S('Awaiting invited players'))
             ];
     }
 
     protected function players2Waiting($User): bool
     {
-        if ($cnt = Cache::hlen(static::QUEUES["2players_waiters"])) {
-            if (!Cache::hget(static::QUEUES["2players_waiters"], $User)) {
+        if ($cnt = self::getQueueLen(static::QUEUES["2players_waiters"])) {
+            if (!self::getUserFromQueue(static::QUEUES["2players_waiters"], $User)) {
                 return true;
             } elseif ($cnt > 1) {
                 return true;
@@ -743,61 +769,78 @@ class Queue
     }
 
     /**
-     * @param $User
-     * @param array $options
+     * @param QueueUser $queueUser
      * @return string[]
      */
-    protected function storeTo2Players($User, $options = []): array
+    protected function storeTo2Players(QueueUser $queueUser): array
     {
-        if (empty($options)) {
-            $options = $this->getUserPrefsArray($this->getUserPrefs($User));
+        if (!self::addQueueUserToQueue(static::QUEUES['2players_waiters'], $queueUser)) {
+            return $this->chooseGame();
         }
 
-        if (!Cache::hget(static::QUEUES["2players_waiters"], $User)) {
-            if (!self::addToQueue("2players_waiters", $User, $options)) {
-                return $this->chooseGame();
-            }
-        }
 
-        $newStatus = $this->caller->updateUserStatus($this->caller->SM::STATE_INIT_GAME, $User, true);
+        $newStatus = $this->caller->updateUserStatus($this->caller->SM::STATE_INIT_GAME, $queueUser->cookie, true);
 
         return Response::state($newStatus)
             + [
-                'gameSubState' => Cache::hlen(static::QUEUES["2players_waiters"]),
+                'gameSubState' => self::getQueueLen(static::QUEUES["2players_waiters"]),
                 'gameWaitLimit' => $this->caller->gameWaitLimit,
                 'comments' => VH::h6(T::S('Searching for players'))
             ];
     }
 
-    protected function addToQueue(string $queue, string $user, array $options, array $params = []): bool
+    protected static function addQueueUserToQueue(string $queue, QueueUser $queueUser, $lockNeeded = true): bool
     {
-        if (Cache::lock($user)) {
-            return (bool)Cache::hset(
-                static::QUEUES[$queue],
-                $user,
-                QueueUser::new(array_merge(['cookie' => $user, 'time' => date('U')], $options, $params))
+        // SUD-46
+        /*if(!Game::isBot($queueUser->cookie)) {
+            if ($queueUser->last_ping_time < date('U') - self::LAST_PING_TIMEOUT) {
+                return false;
+            }
+        }*/
+
+        //if (/* SUD-46 !$lockNeeded || */ Cache::lock($queueUser->cookie)) {
+            $queueUser->queue_time = date('U');
+
+            Cache::hset(
+                $queue,
+                $queueUser->cookie,
+                $queueUser
             );
-        }
+
+            return (bool)Cache::hget($queue, $queueUser->cookie);
+        //}
 
         return false;
     }
 
     private function playerWaitTooLong(): bool
     {
-        $userInQueueRecord = Cache::hget(static::QUEUES['2players_waiters'], $this->User);
+        $userInQueueRecord = self::getUserFromQueue(static::QUEUES['2players_waiters'], $this->User);
 
-        if (!$userInQueueRecord) {
+        if (!$userInQueueRecord || !($userInQueueRecord instanceof QueueUser)) {
             return false;
         }
 
-        return (date('U') - $userInQueueRecord['time'] > $this->caller->gameWaitLimit);
+        return (date('U') - $userInQueueRecord->time > $this->caller->gameWaitLimit);
     }
 
-    private function getBotPlayer(): string
+    private function getBotPlayer(): QueueUser
     {
         $config = include(__DIR__ . '/../../configs/conf.php');
 
-        return 'botV3#' . array_rand($config['botNames']);
+        $botCookie = 'botV3#' . array_rand($config['botNames']);
+
+        $botQueueUser = QueueUser::new(
+            [
+                'time' => date('U'),
+                'cookie' => $botCookie,
+                'last_ping_time' => date('U'),
+                'rating' => PlayerModel::getRatingByCookie($this->User, $this->caller::GAME_NAME),
+                'common_id' => PlayerModel::getPlayerCommonId($botCookie, true)
+            ]
+        );
+
+        return $botQueueUser;
     }
 
     protected static function getBid(int $maxBid): ?int
@@ -818,5 +861,21 @@ class Queue
         }
 
         return null;
+    }
+
+    protected function refreshLastPingTime(): bool
+    {
+        foreach (static::QUEUES as $queue) {
+            if($queueUser = self::getUserFromQueue($queue, $this->User)) {
+                //if ($queueUser->last_ping_time < date('U') - self::LAST_PING_TOO_OLD) {
+                //    return false;
+                //}
+
+                $queueUser->last_ping_time = $this->queueUser->last_ping_time;
+                self::addQueueUserToQueue($queue, $queueUser, false);
+            }
+        }
+
+        return true;
     }
 }
