@@ -231,6 +231,8 @@ class Queue
             throw new \Exception('QueueUserError');
         } catch(\Throwable $e) {
             Cache::rpush('QueueUserErrors', $e->__toString()); // SUD-46
+            $chooseGameParams['error'] = $e->__toString();
+            $chooseGameParams['debug'] = $this->queueUser;
         }
 
         return $chooseGameParams;
@@ -292,6 +294,7 @@ class Queue
         if ($this->playerWaitTooLong()) {
             $bot = $this->getBotPlayer();
             $this->storeTo2Players($bot);
+
             return $this->makeGame('2');
         }
 
@@ -443,7 +446,7 @@ class Queue
 
     protected static function checkLastPingTime(QueueUser $user): bool
     {
-        return (date('U') - ($user->last_ping_time ?? date('U'))) > self::LAST_PING_TIMEOUT;
+        return (date('U') - ($user->last_ping_time ?? date('U'))) <= self::LAST_PING_TIMEOUT;
     }
 
     protected function gatherUserData(): array

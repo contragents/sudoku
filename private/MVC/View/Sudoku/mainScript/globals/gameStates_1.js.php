@@ -1091,24 +1091,22 @@ function commonCallback(data) {
 
         if (canOpenDialog) {
             if (gameState == 'initGame' || gameState == 'initRatingGame') {
-                dialog = bootbox.confirm({
+                dialog = bootbox.dialog({
                     message: ('comments' in data) ? data['comments'] : gameStates[gameState].message,
+                    onEscape: false,
+                    closeButton: false,
                     size: 'small',
                     className: 'modal-settings modal-profile text-white',
                     buttons: {
-                        confirm: {
-                            label: 'Ok',
-                        },
                         cancel: {
                             label: '<?= T::S('New game') ?>',
-                            className: 'btn-danger'
+                            className: 'btn-danger',
+                            callback: function () {
+                                newGameButtonFunction(true);
+                            }
                         }
                     },
-                    callback: function (result) {
-                        if (!result) {
-                            newGameButtonFunction(true);
-                        }
-                    }
+
                 });
 
                 if ('gameWaitLimit' in data) {
