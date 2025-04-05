@@ -62,16 +62,6 @@ function copyToClipboard(selector) {
     });
 
     document.addEventListener('click', (event) => {
-        if (event.target && event.target.closest(selectors.setProfileImageBtn)) {
-            event.preventDefault();
-            const userId = document.querySelector(selectors.userIdInput).value;
-            const value = document.querySelector(selectors.profileImageInput).value;
-            savePlayerAvatar(value, userId);
-            return false;
-        }
-    });
-
-    document.addEventListener('click', (event) => {
         if (event.target && event.target.closest(selectors.tabLink)) {
             if (!document.getElementById(selectors.profileTabsId)) {
                 return;
