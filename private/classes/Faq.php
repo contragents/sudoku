@@ -181,235 +181,7 @@ Best 10
 
 <table class="table table-dark table-transp">
 <thead>
-GAME POINTS
-</thead>
-<tr>
-<td>
-Type
-</td>
-<td>
-Name
-</td>
-<td>
-Reward
-</td>
-<td>
-Income<br> per hour
-</td>
-</tr>
-<tr>
-<td>
-gold
-</td>
-<td>
-RECORD OF THE YEAR
-</td>
-<td>
-{{sudoku_icon}} {{gold_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{gold_income}}
-</td>
-</tr>
-<tr>
-<td>
-silver
-</td>
-<td>
-RECORD OF THE MONTH
-</td>
-<td>
-{{sudoku_icon}} {{silver_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{silver_income}}
-</td>
-</tr>
-<tr>
-<td>
-bronze
-</td>
-<td>
-RECORD OF THE WEEK
-</td>
-<td>
-{{sudoku_icon}} {{bronze_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{bronze_income}}
-</td>
-</tr>
-<tr>
-<td>
-stone
-</td>
-<td>
-RECORD OF THE DAY
-</td>
-<td>
-{{sudoku_icon}} {{stone_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{stone_income}}
-</td>
-</tr>
-</table>
-
-<table class="table table-dark table-transp">
-<thead>
 TURN POINTS
-</thead>
-<tr>
-<td>
-Type
-</td>
-<td>
-Name
-</td>
-<td>
-Reward
-</td>
-<td>
-Income<br> per hour
-</td>
-</tr>
-<tr>
-<td>
-gold
-</td>
-<td>
-RECORD OF THE YEAR
-</td>
-<td>
-{{sudoku_icon}} {{gold_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{gold_income}}
-</td>
-</tr>
-<tr>
-<td>
-silver
-</td>
-<td>
-RECORD OF THE MONTH
-</td>
-<td>
-{{sudoku_icon}} {{silver_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{silver_income}}
-</td>
-</tr>
-<tr>
-<td>
-bronze
-</td>
-<td>
-RECORD OF THE WEEK
-</td>
-<td>
-{{sudoku_icon}} {{bronze_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{bronze_income}}
-</td>
-</tr>
-<tr>
-<td>
-stone
-</td>
-<td>
-RECORD OF THE DAY
-</td>
-<td>
-{{sudoku_icon}} {{stone_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{stone_income}}
-</td>
-</tr>
-</table>
-
-<table class="table table-dark table-transp">
-<thead>
-WORD POINTS
-</thead>
-<tr>
-<td>
-Type
-</td>
-<td>
-Name
-</td>
-<td>
-Reward
-</td>
-<td>
-Income<br> per hour
-</td>
-</tr>
-<tr>
-<td>
-gold
-</td>
-<td>
-RECORD OF THE YEAR
-</td>
-<td>
-{{sudoku_icon}} {{gold_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{gold_income}}
-</td>
-</tr>
-<tr>
-<td>
-silver
-</td>
-<td>
-RECORD OF THE MONTH
-</td>
-<td>
-{{sudoku_icon}} {{silver_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{silver_income}}
-</td>
-</tr>
-<tr>
-<td>
-bronze
-</td>
-<td>
-RECORD OF THE WEEK
-</td>
-<td>
-{{sudoku_icon}} {{bronze_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{bronze_income}}
-</td>
-</tr>
-<tr>
-<td>
-stone
-</td>
-<td>
-RECORD OF THE DAY
-</td>
-<td>
-{{sudoku_icon}} {{stone_reward}}
-</td>
-<td>
-{{sudoku_icon}} {{stone_income}}
-</td>
-</tr>
-</table>
-
-<table class="table table-dark table-transp">
-<thead>
-LONGEST WORD
 </thead>
 <tr>
 <td>
@@ -559,21 +331,19 @@ RECORD OF THE DAY
 </tr>
 </table>
 
-As long as one player's record has not been broken by another player, the reward card is reflected for that player in the “ACTIVE AWARDS” tab of the “STATS” section.<br><br>
-Each “ACTIVE Reward” every hour generates additional
-“profit” in coins.<br><br>
-If a record has been broken by another player, the award card of the
-the previous owner of the record is moved to the “PAST AWARDS” tab and stops bringing passive income.
-Rewards” tab and ceases to bring passive income.<br><br>
-The total number of coins received (one-time bonuses and
-additional profit) can be viewed in the “PROFILE” section in the “Wallet” tab in the “SUDOKU balance” and “Bonuses accrued” fields, respectively.
-tab “Wallet” in the field “SUDOKU balance” and “Bonuses accrued” respectively.<br><br>
-When exceeding the own record for the achievements “PLAYED PARTIES”, the player is not given a new reward card or coins again.
-reward card and coins are not awarded again. The record value itself
-(number of games / number of friends) is updated on the reward card.<br><br>
+As long as one player's record has not been broken by another player, the reward card is reflected for that player in the “ACTIVE AWARDS” tab of the “STATS” section.
+<br><br>
+Each “ACTIVE Reward” every hour generates additional “profit” in coins.
+<br><br>
+If a record has been broken by another player, the award card of the previous owner of the record is moved to the “PAST AWARDS” tab and stops bringing passive income. 
+<br><br>
+The total number of coins received (one-time bonuses and additional profit) can be viewed in the “PROFILE” section in the “Wallet” tab in the “SUDOKU balance” and “Bonuses accrued” fields, respectively.
+<br><br>
+When exceeding the own record for the achievements “PLAYED PARTIES”, the player is not given a new reward card or coins again. 
+The record value itself (number of games / number of friends) is updated on the reward card.
+<br><br>
 For example, if a player has previously earned the achievement - “GAMES PLAYED”
-(gold) for 10,000 games, then when the number of games of this player is changed to 10,001 another award card will not be given to the record holder.
-10,001, no more reward cards will be issued to the record holder.<br>
+(gold) for 10,000 games, then when the number of games of this player is changed to 10,001, no more reward cards will be issued to the record holder.<br>
 EN,
         T::RU_LANG => <<<RU
 За определенные достижения (рекорды) игроки получают награды.
@@ -836,8 +606,9 @@ RU
     ];
     const COINS = [
         T::EN_LANG => <<<EN
-Coin <strong>SUDOKU</strong> {{sudoku_icon}} is an in-game currency for a network of games - <strong>Erudite, Scrabble, Sudoku</strong> (coming soon)<br><br>
-One account for all games, one currency, one wallet<br><br>
+Coin <strong>SUDOKU</strong> {{sudoku_icon}} is an in-game currency{{yandex_exclude}}{{ for a network of games - <strong>Scrabble, Sudoku</strong><br><br>
+One account for all games, one currency, one wallet}}
+<br><br>
 {{yandex_exclude}}{{In the crypto world, the coin is also called SUDOKU. Soon it will be possible to withdraw any number of SUDOKU coins from your in-game wallet to an external wallet in the TON (Telegram) network
 <br><br>}}
 In the meantime, we try to win as many coins as possible in the game by selecting the “Coins” mode<br><br>
@@ -874,7 +645,7 @@ New Rank in all cases is calculated as usual - see the “Ranking” tab
 <h2>How you can replenish your wallet</h2>
 <ol>
 <li>
-Every new player receives welcome {{stone_reward}} SUDOKU coins to his balance and can immediately get involved in the race for big wins
+Every new player receives welcome {{stone_reward}} {{yandex_exclude}}{{SUDOKU}} coins to his balance and can immediately get involved in the race for big wins
 </li>
 <li>
 You will receive {{stone_reward}} coins for each friend who comes to the game using your referral link. 
@@ -884,13 +655,13 @@ Also, by setting a record (for the day, week, month, year) on the number of invi
 Coins are awarded for achievements in the game (points per game, points per move, points per word, number of games, number of invitees, place in the ranking from #1 to #10)
 </li>
 <li>
-For every 100 games, {{stone_reward}} of SUDOKU coins are awarded
+For every 100 games, {{stone_reward}} of {{yandex_exclude}}{{SUDOKU }} coins are awarded
 </li>
-<li>
+{{yandex_exclude}}{{<li>
 Buy coins for rubles by transfer
 </li>
 <li>Buy Coins for Cryptocurrency (coming soon)
-</li>
+</li>}}
 </ol>
 
 <br>
@@ -901,12 +672,12 @@ The number of coins awarded for each achievement may change over time, either up
 <li>
 Play our games, increasing the stakes, adding excitement and interest to your favorite pastime
 </li>
-<li>
+{{yandex_exclude}}{{<li>
 Sell coins for rubles or for cryptocurrency (soon) and get your reward in real money terms
-</li>
-<li>
+</li>}}
+{{yandex_exclude}}{{<li>
 Make a gift to another player by sending the latter any number of coins from your wallet (coming soon)
-</li>     
+</li>}}   
 </ol>
 <br>
 You can find out the details of your wallet balance in the “Wallet” tab of the “PROFILE” menu.
@@ -914,7 +685,7 @@ You can find out the details of your wallet balance in the “Wallet” tab of t
 <strong>Bonuses accrued</strong> - the result of passive earnings accrued every hour depending on the player's achievements (menu “STATS”, section “Awards”).
 <br>Bonuses can be transferred to the balance by pressing the “CLAIM” button
 <br><br>
-<strong>SUDOKU balance</strong> - current balance of coins without bonuses. Coins are deducted / credited from it according to the results of the game
+<strong>{{yandex_exclude}}{{SUDOKU}} Balance</strong> - current balance of coins without bonuses. Coins are deducted / credited from it according to the results of the game
 <br><br>
 Achievement cards akin to medals are a marker of your success. 
 <br>They include the name of the achievement, the period (year, day, week, month), the number of points (rating, word length, number of friends), and the number of coins 

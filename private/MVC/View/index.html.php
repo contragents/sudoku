@@ -6,9 +6,12 @@
  * @var $description
  * @var $fbImgUrl
  */
+
+use classes\T;
+
 ?>
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="<?= strtolower(T::$lang) ?>">
 <head>
     <meta charset="utf-8">
     <title><?= $title ?></title>

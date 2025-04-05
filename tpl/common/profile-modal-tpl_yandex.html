@@ -36,15 +36,27 @@
 							<p class="main-info-id flex-fill">{{Player ID}} <span>{{common_id}}</span></p>
 							<div class="flex-grow-0">
 								<label class="file-label">
-
 									<input class="form-control form-control-sm" id="player_avatar_file" name="url"
-										type="file" placeholder="">
+										type="file" placeholder="" style="opacity:0;">
 								</label>
 							</div>
 							<div class="d-flex flex-fill">
-								<button type="submit" class="btn btn-sm ml-auto"
-									onclick="savePlayerAvatar($('#player_avatar_file').val(),{{common_id}});return false;">
+								<button type="submit" id="file_upload_action_button" class="btn btn-sm ml-auto"
+									onclick="savePlayerAvatar();return false;" disabled>
                                     {{Save}}</button>
+                                <script>
+                                    $(function () {
+                                        $('input[type="file"]').change(function () {
+                                            if ($(this).val() != "") {
+                                                $(this).css('opacity', '100%');
+                                                $('#file_upload_action_button').removeAttr('disabled');
+                                            }else{
+                                                $(this).css('opacity', '0');
+                                                $('#file_upload_action_button').attr('disabled','disabled');
+                                            }
+                                        });
+                                    })
+                                </script>
 							</div>
 						</div>
 
@@ -75,18 +87,14 @@
 									class="icon icon-coin"></i><span class="pill" id="main_balance">{{balance}}</span>
 							</li>
 							<li class="d-flex"><span class="label">{{Rating by coins}}</span><span class="pill" id="ratingByCoins">{{ratingByCoins}}</span></li>
-                            <!--<li class="d-flex"><span class="label">{{Secret key}}</span><span class="no-pill">{{secret}}</span></li>-->
                         </ul>
 					</div>
-                    <!--<span style="margin:auto; display:table;">
-                        {{secret_prompt}}
-                    </span>-->
 				</div>
 			</div>
 			<!-- end .tab-pane #main-info-tab-pane -->
 
 			<div class="tab-pane" id="wallet-tab-pane">
-                <div class="box pb-2 box-bottom"><!--<div class="box py-3"> для второго сверху дива-->
+                <div class="box pb-2 box-bottom">
 					<div class="d-flex">
 						<div class="wallet-info-wrap">
 							<div class="d-flex">

@@ -24,7 +24,7 @@ function (time, delta) {
         )
         || (queryNumber === 1)
     ) {
-        if((isYandexAppGlobal() && uniqID) || !isYandexAppGlobal()) {
+        if((isYandexAppGlobal() && uniqID) || !isYandexAppGlobal() || isYandexFakeGlobal()) {
             if (requestToServerEnabled) {
                 lastQueryTime = flor;
                 fetchGlobal(STATUS_CHECKER_SCRIPT)

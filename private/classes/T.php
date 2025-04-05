@@ -15,11 +15,6 @@ class T
 
     public static string $lang = self::EN_LANG;
 
-    public static function setLang(string $lang)
-    {
-        self::$lang = $lang;
-    }
-
     public static function S($keyPhrase, ?array $params = null, ?string $forceLang = null): string
     {
         if (BC::$instance->gameName && isset(self::PHRASES[$keyPhrase][BC::$instance->gameName])) {
@@ -67,8 +62,8 @@ class T
             self::RU_LANG => 'Доступ запрещен',
         ],
         'Sudoku online' => [
-            self::EN_LANG => 'Sudoku with friends',
-            self::RU_LANG => 'Судоку с друзьями',
+            self::EN_LANG => 'Sudoku Online with friends',
+            self::RU_LANG => 'Судоку онлайн с друзьями',
         ],
         'secret_prompt' => [
             self::EN_LANG => '&#42;Save this key for further account restoration in Telegram</a>',
@@ -1015,7 +1010,10 @@ class T
         "Must begin with " => [
             self::RU_LANG => 'Должно начинаться с '
         ],
-        "Avatar updated" => [
+        'Error! Choose image file with the size not more than' => [
+            self::RU_LANG => 'Ошибка! Выберите файл-картинку размером не более'
+        ],
+        'Avatar updated' => [
             self::RU_LANG => 'Аватар обновлен'
         ],
         "Error saving new URL" => [

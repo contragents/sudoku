@@ -56,6 +56,18 @@ function isVkAppGlobal() {
     return false;
 }
 
+function isYandexFakeGlobal() {
+    if (document.location.href.match('yandex_test')) {
+        return true;
+    }
+
+    if (window.location.href.indexOf('yandex_test') > -1) {
+        return true;
+    }
+
+    return false;
+}
+
 function isYandexAppGlobal() {
     if (document.location.href.match('yandex')) {
         return true;

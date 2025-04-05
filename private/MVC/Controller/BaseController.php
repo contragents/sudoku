@@ -355,6 +355,25 @@ class BaseController
 
     private static function setLanguage(): string
     {
+        // SUD-51
+        if(isset($_SERVER['HTTP_REFERER'])) {
+            foreach(Yandex::GAMES_ID_LANG as $gameId => $lang) {
+                if (strstr($_SERVER['HTTP_REFERER'], (string)$gameId) !== false) {
+                    return $lang;
+                }
+            }
+        }
+
+        if(isset($_SERVER['REQUEST_URI'])) {
+            foreach(Yandex::GAMES_ID_LANG as $gameId => $lang) {
+                if (strstr($_SERVER['REQUEST_URI'], (string)$gameId) !== false) {
+                    return $lang;
+                }
+            }
+        }
+
+
+
         return (stripos($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '', 'ru') !== false)
             ? T::RU_LANG
             : T::EN_LANG;

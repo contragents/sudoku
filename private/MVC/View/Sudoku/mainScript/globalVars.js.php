@@ -309,8 +309,6 @@ var instruction = `<?= T::S('faq_rules') ?>`;
 //<?php include('globals/tgGlobalFunction.js')?>
 //<?php include('globals/buttonSettingsGlobal.js')?>
 //<?php include('globals/gameStates_1.js.php')?>
-//<?php include('globals/letterPrices.js')?>
-//<?php include('globals/rusLetters.js')?>
 //<?php include('globals/wav.js')?>
 
 yacheikaWidth = 32 * 2 * 15 / 9 * 0.96;
