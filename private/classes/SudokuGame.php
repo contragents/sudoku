@@ -453,7 +453,7 @@ class SudokuGame extends Game
                     ),
                     ['style' => 'color:#0f0;']
                 )
-                . ')' . T::S('by calculating all of other 8 digits in a block - vertically OR horizontally OR in a 3x3 square', null, $lang)
+                . ') ' . T::S('by calculating all of other 8 digits in a block - vertically OR horizontally OR in a 3x3 square', null, $lang)
             )
             . VH::div(
                 VH::span(
