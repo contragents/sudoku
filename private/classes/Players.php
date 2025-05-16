@@ -54,7 +54,6 @@ class Players
                     'rating' => $playerInfo['rating'],
                     'updated_at' => $playerInfo['updated_at'],
                     'common_id' => $playerInfo['common_id'],
-                    'user_id' => $playerInfo['user_id'],
                     'name' => $playerInfo['name'] ?: self::getPlayerName($playerInfo['common_id']),
                     'avatar_url' => $playerInfo['avatar_url'] ?: self::getAvatarUrl($playerInfo['common_id'])
                 ];

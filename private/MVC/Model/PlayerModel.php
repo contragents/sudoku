@@ -65,7 +65,6 @@ class PlayerModel extends BaseModel
             return $commonId;
         }
 
-
         // Пробуем найти связанный common_id у другого плеера по user_id
         $commonIdCrossing = self::getCrossingCommonIdByCookie($cookie);
         // Если связь есть
@@ -117,9 +116,7 @@ class PlayerModel extends BaseModel
                 }
             }
         } elseif ($createIfNotExist) {
-            if (self::add(
-                ['cookie' => $cookie, 'user_id' => new ORM("conv(substring(md5('$cookie'),1,16),16,10)")]
-            )) {
+            if (self::add([self::COOKIE_FIELD => $cookie])) {
                 $id = self::getIdByCookie($cookie);
                 if ($id) {
                     self::update($id, ['field' => self::COMMON_ID_FIELD, 'value' => $id, 'raw' => true]);
@@ -192,58 +189,6 @@ class PlayerModel extends BaseModel
             self::getPlayerCommonId($cookie),
             $gameName ?? BaseController::gameName()
         );
-    }
-
-    public static function getRating($commonID = false, $cookie = false, $userID = false)
-    {
-        // todo переделать на ОРМ
-        $ratingQuery = self::getRatingBaseQuery()
-            . ($commonID
-                ? (' OR ( true'
-                    . ORM::andWhere(
-                        'user_id',
-                        'in',
-                        '('
-                        . ORM::select(['user_id'], self::TABLE_NAME)
-                        . ORM::where('common_id', '=', $commonID, true)
-                        . ORM::andWhere('user_id', '!=', new ORM('15284527576400310462'), true)
-                        . ')',
-                        true
-                    )
-                    . ')')
-                : '')
-            . ($cookie
-                ? " OR cookie = '$cookie' "
-                : '')
-            . ($userID
-                ? " OR user_id = $userID "
-                : '')
-            . ORM::groupBy(['gruping'])
-            . ORM::limit(1);
-
-        return DB::queryArray($ratingQuery);
-    }
-
-    private static function getRatingBaseQuery(): string
-    {
-        return
-            ORM::select(
-                [
-                    'max(cookie) as cookie',
-                    'max(rating) as rating',
-                    'max(games_played) as games_played',
-                    'case when max(win_percent) is null then 0 else max(win_percent) END as win_percent',
-                    'avg(inactive_percent) as inactive_percent',
-                    'case when max(rating) >= 1700 then('
-                    . ORM::select(
-                        ['case when sum(num) IS null THEN 1 else sum(num) + 1 END'],
-                        '(select 1 as num from players where rating > ps . rating group by user_id, rating) dd'
-                    )
-                    . ') else \'Не в ТОПе\' END as top'
-                ],
-                self::TABLE_NAME . ' ps'
-            )
-            . ORM::where('false', '', '', true);
     }
 
     public static function getTopPlayersCached(int $top, ?int $topMax = null): array

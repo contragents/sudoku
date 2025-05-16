@@ -19,8 +19,6 @@ class Yandex
 
     public static function authorize(): bool
     {
-
-
         if (!empty($_REQUEST[self::USER_ID_PARAM])) {
 
             // IL-33 - задача создалась в другом проекте

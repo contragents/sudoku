@@ -58,6 +58,7 @@ class Tg
                     self::TG_USER_CACHE_TTL,
                     self::$tgUser
                 );
+
                 self::$commonId = PlayerModel::getPlayerCommonID(self::$tgUser['user']['id'], true);
                 TgUserModel::refresh(self::$tgUser);
 

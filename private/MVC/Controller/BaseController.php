@@ -1,5 +1,6 @@
 <?php
 
+use classes\Cache;
 use classes\Config;
 use classes\Cookie;
 use classes\FrontResource;
@@ -35,6 +36,7 @@ class BaseController
     const MESSAGE_PARAM = 'messageText';
     const CHAT_TO_PARAM = 'chatTo';
     const GAME_ID_PARAM = 'game_id';
+    const COMMON_ID_HASH_PARAM = 'common_id_hash';
 
     public static ?BaseController $instance = null;
     public Game $Game;
@@ -179,9 +181,32 @@ class BaseController
             }
         }
 
-        /**
-         * @var string $cookieKey
-         */
+        if (($_COOKIE[Cookie::COOKIE_NAME] ?? null) && isset(self::$Request[self::COMMON_ID_PARAM]) && isset(self::$Request[self::COMMON_ID_HASH_PARAM])) {
+
+            // todo При переходе с Судоку из гугл-приложения Эрудит, не присылаются get-параметры common_id & hash
+            // Cache::hset('sudoku_button_test', $_COOKIE[Cookie::COOKIE_NAME], self::$Request);
+
+            if (PayController::checkCommonIdHash(self::$Request[self::COMMON_ID_PARAM], self::$Request[self::COMMON_ID_HASH_PARAM])){
+                $commonId = PlayerModel::getPlayerCommonId($_COOKIE[Cookie::COOKIE_NAME]);
+
+                // Привязываем куки к common_id только если пользователь еще не заходил в игру
+                if (!$commonId) {
+                    $cookie = $_COOKIE[Cookie::COOKIE_NAME];
+                    $added = PlayerModel::add(
+                        [
+                            PlayerModel::COMMON_ID_FIELD => self::$Request[self::COMMON_ID_PARAM],
+                            PlayerModel::COOKIE_FIELD => $cookie,
+                        ]
+                    );
+
+                    // Cache::hset('sudoku_button_test', $_COOKIE[Cookie::COOKIE_NAME], ['added' => $added, self::$Request[self::COMMON_ID_PARAM], $cookie]);
+
+                    return $_COOKIE[Cookie::COOKIE_NAME];
+                }
+            } else {
+                // Cache::hset('sudoku_button_test', $_COOKIE[Cookie::COOKIE_NAME], ['check_failed', self::$Request[self::COMMON_ID_PARAM], self::$Request[self::COMMON_ID_HASH_PARAM]]);
+            }
+        }
 
         if (!isset($_COOKIE[Cookie::COOKIE_NAME])) {
             $_COOKIE = Cookie::setGetCook(null, Cookie::COOKIE_NAME);
