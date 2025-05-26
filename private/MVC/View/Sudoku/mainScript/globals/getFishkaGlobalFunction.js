@@ -3,7 +3,7 @@
 function getFishkaGlobal(numLetter, X, Y, _this, draggable = true, color = 'black') {
     let tint = 0xffffff;
     if (color === 'green') {
-        tint = 0x00dd00;
+        tint = 0x00aa00;
         color = 'white';
     }
 

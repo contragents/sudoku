@@ -16,7 +16,6 @@ use classes\Yandex;
 /**
  * @property string $gameName // Название текущей игры __get()..
  */
-
 class BaseController
 {
     const TITLE = "Game";
@@ -73,7 +72,7 @@ class BaseController
 
         self::$commonId = Tg::$commonId // авторизован через Телеграм или...
             ?? (Yandex::$commonId // авторизован через Яндекс или...
-                ??  PlayerModel::getPlayerCommonId(self::$User, true));
+                ?? PlayerModel::getPlayerCommonId(self::$User, true));
 
         self::$instance = $this;
 
@@ -96,7 +95,7 @@ class BaseController
             }
 
             // отфильтруем NULL-значения параметров
-            if($value === 'NULL') {
+            if ($value === 'NULL') {
                 unset(self::$Request[$param]);
             }
         }
@@ -181,12 +180,17 @@ class BaseController
             }
         }
 
+        if (!isset($_COOKIE[Cookie::COOKIE_NAME])) {
+            $_COOKIE = Cookie::setGetCook(null, Cookie::COOKIE_NAME);
+        } elseif (rand(1, 100) <= 2) {
+            $_COOKIE = Cookie::setGetCook($_COOKIE[Cookie::COOKIE_NAME], Cookie::COOKIE_NAME);
+        }
+
         if (($_COOKIE[Cookie::COOKIE_NAME] ?? null) && isset(self::$Request[self::COMMON_ID_PARAM]) && isset(self::$Request[self::COMMON_ID_HASH_PARAM])) {
-
-            // todo При переходе с Судоку из гугл-приложения Эрудит, не присылаются get-параметры common_id & hash
-            // Cache::hset('sudoku_button_test', $_COOKIE[Cookie::COOKIE_NAME], self::$Request);
-
-            if (PayController::checkCommonIdHash(self::$Request[self::COMMON_ID_PARAM], self::$Request[self::COMMON_ID_HASH_PARAM])){
+            if (PayController::checkCommonIdHash(
+                self::$Request[self::COMMON_ID_PARAM],
+                self::$Request[self::COMMON_ID_HASH_PARAM]
+            )) {
                 $commonId = PlayerModel::getPlayerCommonId($_COOKIE[Cookie::COOKIE_NAME]);
 
                 // Привязываем куки к common_id только если пользователь еще не заходил в игру
@@ -206,12 +210,6 @@ class BaseController
             } else {
                 // Cache::hset('sudoku_button_test', $_COOKIE[Cookie::COOKIE_NAME], ['check_failed', self::$Request[self::COMMON_ID_PARAM], self::$Request[self::COMMON_ID_HASH_PARAM]]);
             }
-        }
-
-        if (!isset($_COOKIE[Cookie::COOKIE_NAME])) {
-            $_COOKIE = Cookie::setGetCook(null, Cookie::COOKIE_NAME);
-        } elseif (rand(1, 100) <= 2) {
-            $_COOKIE = Cookie::setGetCook($_COOKIE[Cookie::COOKIE_NAME], Cookie::COOKIE_NAME);
         }
 
         return $_COOKIE[Cookie::COOKIE_NAME] ?? null;
@@ -381,22 +379,21 @@ class BaseController
     private static function setLanguage(): string
     {
         // SUD-51
-        if(isset($_SERVER['HTTP_REFERER'])) {
-            foreach(Yandex::GAMES_ID_LANG as $gameId => $lang) {
+        if (isset($_SERVER['HTTP_REFERER'])) {
+            foreach (Yandex::GAMES_ID_LANG as $gameId => $lang) {
                 if (strstr($_SERVER['HTTP_REFERER'], (string)$gameId) !== false) {
                     return $lang;
                 }
             }
         }
 
-        if(isset($_SERVER['REQUEST_URI'])) {
-            foreach(Yandex::GAMES_ID_LANG as $gameId => $lang) {
+        if (isset($_SERVER['REQUEST_URI'])) {
+            foreach (Yandex::GAMES_ID_LANG as $gameId => $lang) {
                 if (strstr($_SERVER['REQUEST_URI'], (string)$gameId) !== false) {
                     return $lang;
                 }
             }
         }
-
 
 
         return (stripos($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '', 'ru') !== false)
@@ -457,7 +454,7 @@ class BaseController
     {
         return [
             'Game' => var_export($this->Game, true)
-         ];
+        ];
     }
 
     public static function isYandexApp()
