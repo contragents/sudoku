@@ -20,7 +20,8 @@ var buttons = {
         object: false, svgObject: false,
         pointerupFunction: function () {
             newGameButtonFunction();
-        }
+        },
+        enabled: {myTurn: 1, preMyTurn: 1, otherTurn: 1, gameResults: 1},
     },
     instructButton: {
         filename: 'instrukt2' + ((isYandexAppGlobal() && lang === 'RU') ? '_ru' : ''),

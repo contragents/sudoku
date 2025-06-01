@@ -61,9 +61,15 @@ class T
         'Forbidden' => [
             self::RU_LANG => 'Доступ запрещен',
         ],
-        'Sudoku online' => [
-            self::EN_LANG => 'Sudoku Online with friends',
-            self::RU_LANG => 'Судоку онлайн с друзьями',
+        'game_title' => [
+            SudokuGame::GAME_NAME => [
+                self::EN_LANG => 'Sudoku Online with friends',
+                self::RU_LANG => 'Судоку онлайн с друзьями',
+            ],
+            GomokuGame::GAME_NAME => [
+                self::EN_LANG => 'Gomoku online | X-0',
+                self::RU_LANG => 'Крестики-нолики онлайн с друзьями',
+            ],
         ],
         'secret_prompt' => [
             self::EN_LANG => '&#42;Save this key for further account restoration in Telegram</a>',

@@ -18,12 +18,10 @@ use classes\Yandex;
  */
 class BaseController
 {
-    const TITLE = "Game";
+    const TITLE = 'game_title';
     const GAME_URL = Config::BASE_URL . "game_name/"; // Используются только константы наследников
     const SITE_NAME = Config::DOMAIN;
 
-
-    const DESCRIPTION = 'In Game, the objective is to WIN!';
     const FB_IMG_URL = 'https://' . Config::ERUDIT_DOMAIN . '/img/share/hor_640_360.png';
     const FORCE_ACTIONS = [
         self::GAME_STATE_PARAM . 'Action',
@@ -378,23 +376,27 @@ class BaseController
 
     private static function setLanguage(): string
     {
-        // SUD-51
-        if (isset($_SERVER['HTTP_REFERER'])) {
-            foreach (Yandex::GAMES_ID_LANG as $gameId => $lang) {
-                if (strstr($_SERVER['HTTP_REFERER'], (string)$gameId) !== false) {
-                    return $lang;
-                }
+        // todo определение языка для яндекс.игр
+        if(isset(self::$Request['lang']) && in_array(strtoupper(self::$Request['lang']), T::SUPPORTED_LANGS)) {
+            return strtoupper(self::$Request['lang']);
+        }
+
+        $preferredLangPos = [];
+        foreach (T::SUPPORTED_LANGS as $lang) {
+            $langPos = strpos($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '', strtolower($lang));
+            if ($langPos !== false) {
+                $preferredLangPos[$lang] = $langPos;
             }
         }
 
-        if (isset($_SERVER['REQUEST_URI'])) {
-            foreach (Yandex::GAMES_ID_LANG as $gameId => $lang) {
-                if (strstr($_SERVER['REQUEST_URI'], (string)$gameId) !== false) {
-                    return $lang;
-                }
-            }
-        }
+        if(count($preferredLangPos)) {
+            asort($preferredLangPos);
 
+            // print_r(['key' => key($preferredLangPos), 'positions' => $preferredLangPos]);
+            // exit;
+
+            return strtoupper(key($preferredLangPos));
+        }
 
         return (stripos($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '', 'ru') !== false)
             ? T::RU_LANG

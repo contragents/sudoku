@@ -35,19 +35,19 @@ function () {
         if ('preCalc' in buttons[k])
             buttons[k]['preCalc']();
 
-        buttons[k]['svgObject'] = getSVGButton(buttons[k]['x'], buttons[k]['y'], k, this);
+        buttons[k].svgObject = getSVGButton(buttons[k]['x'], buttons[k]['y'], k, this);
 
-        buttons[k]['svgObject'].on('pointerup', function () {
-            buttons[k]['svgObject'].bringToTop(buttons[k]['svgObject'].getByName(k + OTJAT_MODE));
+        buttons[k].svgObject.on('pointerup', function () {
+            buttons[k].svgObject.bringToTop(buttons[k].svgObject.getByName(k + OTJAT_MODE));
             if ('pointerupFunction' in buttons[k])
-                buttons[k]['pointerupFunction']();
+                buttons[k].pointerupFunction();
         });
 
-        buttons[k]['svgObject'].on('pointerdown', function () {
-            buttons[k]['svgObject'].bringToTop(buttons[k]['svgObject'].getByName(k + 'Najatie'));
+        buttons[k].svgObject.on('pointerdown', function () {
+            buttons[k].svgObject.bringToTop(buttons[k].svgObject.getByName(k + 'Najatie'));
         });
 
-        buttons[k]['svgObject'].on('pointerover', function () {
+        buttons[k].svgObject.on('pointerover', function () {
             if (k === 'chatButton') {
                 if (buttons.chatButton.svgObject.getByName('chatButton' + ALARM_MODE).getData('alarm') !== true)
                     buttons[k].svgObject.bringToTop(buttons[k].svgObject.getByName(k + 'Navedenie'));
@@ -56,7 +56,7 @@ function () {
             }
         });
 
-        buttons[k]['svgObject'].on('pointerout', function () {
+        buttons[k].svgObject.on('pointerout', function () {
             if (k === 'chatButton') {
                 if (buttons.chatButton.svgObject.getByName('chatButton' + ALARM_MODE).getData('alarm') !== true)
                     buttons[k].svgObject.bringToTop(buttons[k].svgObject.getByName(k + OTJAT_MODE));
@@ -73,18 +73,18 @@ function () {
     let sumWidth = 0;
     for (let tbK in topButtons) {
         numTopButtons++;
-        topButtons[tbK].displayWidth = buttons[tbK]['svgObject'].displayWidth;
+        topButtons[tbK].displayWidth = buttons[tbK].svgObject.displayWidth;
         sumWidth += topButtons[tbK].displayWidth;
     }
     let stepXTopButtons = (knopkiWidth - sumWidth) / (numTopButtons + 1);
 
     let currentWidth = 0;
     for (let tbK in topButtons) {
-        buttons[tbK]['svgObject'].x = stepXTopButtons + currentWidth + buttons[tbK]['svgObject'].displayWidth / 2;
-        currentWidth += stepXTopButtons + buttons[tbK]['svgObject'].displayWidth;
+        buttons[tbK].svgObject.x = stepXTopButtons + currentWidth + buttons[tbK].svgObject.displayWidth / 2;
+        currentWidth += stepXTopButtons + buttons[tbK].svgObject.displayWidth;
     }
 
-    if (buttons['submitButton']['svgObject'] !== false) {
+    if (buttons.submitButton.svgObject !== false) {
         buttons.submitButton.setDisabled();
     }
 
@@ -93,9 +93,9 @@ function () {
             continue;
         }
 
-        players[k]['svgObject'] = getSVGBlockGlobal(players[k]['x'], players[k]['y'], k, this, players[k].scalable, 'numbers' in players[k]);
-        players[k]['svgObject'].bringToTop(players[k]['svgObject'].getByName(k + OTJAT_MODE));
-        players[k]['svgObject'].getByName(k + ALARM_MODE).setVisible(false);
+        players[k].svgObject = getSVGBlockGlobal(players[k]['x'], players[k]['y'], k, this, players[k].scalable, 'numbers' in players[k]);
+        players[k].svgObject.bringToTop(players[k].svgObject.getByName(k + OTJAT_MODE));
+        players[k].svgObject.getByName(k + ALARM_MODE).setVisible(false);
     }
 
 //    <?php include('create/fishkaDragEvents.js')?>

@@ -107,7 +107,7 @@ function newGameButtonFunction(ignoreDialog = false) {
         return;
     }
 
-    buttons['newGameButton']['svgObject'].disableInteractive();
+    buttons.newGameButton.svgObject.disableInteractive();
 
     if (gameState == 'myTurn' || gameState == 'preMyTurn' || gameState == 'otherTurn' || gameState == 'startGame') {
 
@@ -138,7 +138,7 @@ function newGameButtonFunction(ignoreDialog = false) {
                                 commonCallback(data);
                             });
 
-                        buttons['newGameButton']['svgObject'].setInteractive();
+                        buttons.newGameButton.svgObject.setInteractive();
 
                         return true;
                     }
@@ -177,7 +177,7 @@ function newGameButtonFunction(ignoreDialog = false) {
                                         , 2000
                                     );
 
-                                    buttons['newGameButton']['svgObject'].setInteractive();
+                                    buttons.newGameButton.svgObject.setInteractive();
 
                                 });
                         }, 100);

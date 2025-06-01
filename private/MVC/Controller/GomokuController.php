@@ -12,9 +12,6 @@ class GomokuController extends BaseController
 
     const GAME_URL = Config::BASE_URL . GomokuGame::GAME_NAME . '/';
 
-    const TITLE = "Gomoku online | X-0";
-    const DESCRIPTION ='Gomoku, also called Five in a Row, is an abstract strategy board game. It is traditionally played with Go pieces (black and white stones) on a 15×15 Go board. Because pieces are typically not moved or removed from the board, gomoku may also be played as a paper-and-pencil game.';
-
     const VIEW_PATH = parent::VIEW_PATH . 'Gomoku/';
 
     public function __construct($action, array $request)

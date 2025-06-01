@@ -223,17 +223,17 @@ class Queue
                 'coin_players' => $this->caller->onlineCoinPlayers(),
                 'prefs' => $this->getUserPrefsArray(),
             ]
-            + (!$isOuterCall
+            /*+ (!$isOuterCall
                 ? ['reason' => 'Queue error']
-                : []);
+                : [])*/;
 
-        try {
+        /*try {
             throw new \Exception('QueueUserError');
         } catch(\Throwable $e) {
             Cache::rpush('QueueUserErrors', $e->__toString()); // SUD-46
             $chooseGameParams['error'] = $e->__toString();
             $chooseGameParams['debug'] = $this->queueUser;
-        }
+        }*/
 
         return $chooseGameParams;
     }

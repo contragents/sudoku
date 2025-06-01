@@ -1,6 +1,6 @@
 {
     "name": "ili/sudoku",
-    "description": "Sudoku online with opponent",
+    "description": "Sudoku Online with friends",
     "type": "project",
     "minimum-stability": "stable",
     "require": {

@@ -9,11 +9,6 @@ class Yandex
     private const USER_ID_PARAM = 'yandex_user_id';
     private const YANDEX_AUTHORIZED_PARAM = 'yandex_authorized';
 
-    const GAMES_ID_LANG = [
-        '406905' => T::EN_LANG, // Sudoku Online with friends
-        '393660' => T::RU_LANG, // Судоку онлайн с друзьями
-    ];
-
     public static ?string $yandexUser = null;
     public static ?int $commonId = null;
 
