@@ -34,6 +34,7 @@ class BaseController
     const CHAT_TO_PARAM = 'chatTo';
     const GAME_ID_PARAM = 'game_id';
     const COMMON_ID_HASH_PARAM = 'common_id_hash';
+    const USER_LANGUAGE_KEY = 'user.language_storage';
 
     public static ?BaseController $instance = null;
     public Game $Game;
@@ -376,9 +377,35 @@ class BaseController
 
     private static function setLanguage(): string
     {
-        // todo определение языка для яндекс.игр
-        if(isset(self::$Request['lang']) && in_array(strtoupper(self::$Request['lang']), T::SUPPORTED_LANGS)) {
+        // Определение языка для Яндекс.игр - присылаем параметр lang из браузера
+        if (isset(self::$Request['lang']) && in_array(strtoupper(self::$Request['lang']), T::SUPPORTED_LANGS)) {
+            if (self::isYandexApp()) {
+                Cache::hset(self::USER_LANGUAGE_KEY, self::$User, strtoupper(self::$Request['lang']));
+
+                if (isset($_COOKIE[Cookie::COOKIE_NAME])) {
+                    Cache::hset(
+                        self::USER_LANGUAGE_KEY,
+                        $_COOKIE[Cookie::COOKIE_NAME],
+                        strtoupper(self::$Request['lang'])
+                    );
+                }
+            }
+
             return strtoupper(self::$Request['lang']);
+        }
+
+        // Для Я.игр ищем язык пользователя в кеше
+        if (self::isYandexApp() && $lang = Cache::hget(self::USER_LANGUAGE_KEY, self::$User)) {
+            return $lang;
+        }
+
+        if (self::isYandexApp()
+            && isset($_COOKIE[Cookie::COOKIE_NAME])
+            && $lang = Cache::hget(
+                self::USER_LANGUAGE_KEY,
+                $_COOKIE[Cookie::COOKIE_NAME]
+            )) {
+            return $lang;
         }
 
         $preferredLangPos = [];
@@ -389,11 +416,8 @@ class BaseController
             }
         }
 
-        if(count($preferredLangPos)) {
+        if (count($preferredLangPos)) {
             asort($preferredLangPos);
-
-            // print_r(['key' => key($preferredLangPos), 'positions' => $preferredLangPos]);
-            // exit;
 
             return strtoupper(key($preferredLangPos));
         }

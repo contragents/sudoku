@@ -319,19 +319,19 @@ function StatsPage({ json, BASE_URL }) {
 				<div class="total box">
 
 					<div class="col">
-						<span>Всего<br>партий</span>
+						<span><?= T::S('Games<br>total') ?></span>
 						<span>${opponent_stats[0].games_count}</span>
 					</div>
 					<div class="col">
-						<span>Всего<br>побед</span>
+						<span><?= T::S('Wins<br>total') ?></span>
 						<span>${opponent_stats[0].wins}</span>
 					</div>
 					<div class="col">
-						<span>Прибавка/потеря<br>в рейтинге</span>
+						<span><?= T::S('Gain/loss<br>in ranking') ?></span>
 						<span class="${resultClass}">${prefix}${opponent_stats[0].delta_rating}</span>
 					</div>
 					<div class="col">
-						<span>% Побед</span>
+						<span><?= T::S('% Wins') ?></span>
 						<span>${opponent_stats[0].win_percent}</span>
 					</div>
 
@@ -644,7 +644,15 @@ function onImagesLoaded(container, event) {
 function getInstructions(lang) {
     const url = BASE_URL + 'faq/getAll' + version(true);
 
-    return fetch(url)
+    return fetch(url, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+    })
         .then(response => {
             if (response.ok) {
                 return response.json();
@@ -655,7 +663,7 @@ function getInstructions(lang) {
 }
 
 function getFAQModal() {
-    return fetch(FAQ_TPL + version(true))
+    return fetch(FAQ_TPL + lang + '.html' + version(true))
         .then(response => response.text())
         .then(template => {
 
@@ -972,7 +980,15 @@ function PlayersPage(json) {
 
             const url = BASE_URL + HIDE_BALANCE_SCRIPT + `?common_id=${userId}&hide=${newVisibility}`;
 
-            fetch(url).then((response) => {
+            fetch(url, {
+                method: 'GET',
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            }).then((response) => {
                     if (!response.ok) {
                         throw new Error(`Response status: ${response.status}`);
                     }

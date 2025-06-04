@@ -166,7 +166,7 @@ class T
             self::RU_LANG => 'https://t.me/sudoku_app_bot'
         ],
         'loading_text' => [
-            self::EN_LANG => 'SUDOKU Game is loading...',
+            self::EN_LANG => 'SUDOKU is loading...',
             self::RU_LANG => 'Загружаем СУДОКУ...'
         ],
         'ground_file' => [
@@ -907,6 +907,18 @@ class T
         ],
         'Opponents' => [
             self::RU_LANG => 'Оппоненты'
+        ],
+        'Games<br>total' => [
+            self::RU_LANG => 'Всего<br>партий',
+        ],
+        'Wins<br>total' => [
+            self::RU_LANG => 'Всего<br>побед',
+        ],
+        'Gain/loss<br>in ranking' => [
+            self::RU_LANG => 'Прибавка/потеря<br>в рейтинге',
+        ],
+         '% Wins' => [
+            self::RU_LANG => '% Побед',
         ],
         'Games in total' => [
             self::RU_LANG => 'Всего партий'
