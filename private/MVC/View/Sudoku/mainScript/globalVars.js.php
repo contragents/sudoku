@@ -109,6 +109,8 @@ const VERT = 'vertical';
 const MY_TURN_STATE = 'myTurn';
 const PRE_MY_TURN_STATE = 'preMyTurn';
 const OTHER_TURN_STATE = 'otherTurn';
+const INIT_GAME_STATE = 'initGame';
+const GAME_RESULTS_STATE = 'gameResults';
 
 const BAD_REQUEST = 400;
 const PAGE_NOT_FOUND = 404;
