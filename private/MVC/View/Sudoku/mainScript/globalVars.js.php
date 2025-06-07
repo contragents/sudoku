@@ -95,7 +95,6 @@ const MERGE_IDS_SCRIPT = 'merge_the_ids.php';
 const SET_PLAYER_NAME_SCRIPT = 'players/saveUserName';
 const AVATAR_UPLOAD_SCRIPT = 'players/avatarUpload';
 
-const DELETE_BAN_URL = 'mvc/ban/remove?common_id='; // fix
 const STATS_URL = 'stats/viewV2'
 const NEW_GAME_SCRIPT = 'newGame';
 const INVITE_SCRIPT = 'inviteToNewGame';

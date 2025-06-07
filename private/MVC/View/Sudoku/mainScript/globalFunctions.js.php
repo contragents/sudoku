@@ -238,13 +238,6 @@ function copyKeyForID(key, commonID = '') {
     document.execCommand("copy");
 }
 
-function deleteBan(commonID) {
-    fetchGlobalMVC(DELETE_BAN_URL + commonID, '', 'commonID=' + commonID)
-        .then((resp) => {
-            showCabinetActionResult(resp);
-        });
-}
-
 function savePlayerName(name, commonID = '') {
     if (name.trim() == '') {
         let resp = {result: 'error', message: '<?= T::S('Empty value is forbidden') ?>'};
