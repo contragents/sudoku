@@ -469,13 +469,8 @@ function StatsPage({ json, BASE_URL }) {
     // ON MODAL LOADED
     function init() {
         return getStatsModal(json).then((html) => {
-            // document.getElementById('test-tpl').innerHTML = html;
-
-            // profileModal.onProfileModalLoaded();
             statsModal.onStatsModalLoaded();
             tabsModule.initTabs();
-
-            // document.addEventListener("DOMContentLoaded", profileModal.onProfileModalLoaded);
         });
     }
 
@@ -642,7 +637,7 @@ function onImagesLoaded(container, event) {
 }
 
 function getInstructions(lang) {
-    const url = BASE_URL + 'faq/getAll' + version(true);
+    const url = BASE_URL + 'faq/getAll' + version(true) + langParam();
 
     return fetch(url, {
         method: 'GET',

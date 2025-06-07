@@ -1199,6 +1199,10 @@ class Game
         return ['message' => $respMessage];
     }
 
+    /**
+     * @param string|null $lang
+     * @return string
+     */
     protected function coinsPrompt(?string $lang = null): string
     {
         return ($this->gameStatus->bid ?? false
@@ -1232,7 +1236,7 @@ class Game
                 . ' - ' . VH::strong($this->gameStatus->users[$numUser]->rating))
                 : ''
             )
-            . $this->coinsPrompt();
+            . $this->coinsPrompt($lang);
     }
 
     public function getBank(): ?int
