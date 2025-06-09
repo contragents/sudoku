@@ -555,9 +555,13 @@ class Game
 
     public function getGameStatus(int $gameNumber = null): GameStatus
     {
-        $gameStatus = Cache::get(
-            self::getCacheKey(self::GAME_DATA_KEY . ($gameNumber ?: $this->currentGame))
-        );
+        try {
+            $gameStatus = @Cache::get(
+                self::getCacheKey(self::GAME_DATA_KEY . ($gameNumber ?: $this->currentGame))
+            );
+        } catch (\Throwable $e) {
+            $gameStatus = null;
+        }
 
         if (!($gameStatus instanceof GameStatus)) {
             $gameStatus = new GameStatus();

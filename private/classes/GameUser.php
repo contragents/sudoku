@@ -7,7 +7,6 @@ namespace classes;
 use classes\ViewHelper as VH;
 
 /** @property string $ID */
-
 class GameUser
 {
     public string $ID;
@@ -25,18 +24,20 @@ class GameUser
     public int $common_id;
     public array $logStack = [];
     protected array $comments = [];
-    protected string $lastComment = ''; // Комментарий отдаем, если comments пуст
+    protected array $lastComment = []; // Комментарий на текущем языке юзера отдаем, если comments пуст
     public array $result_ratings = [];
     public array $chatStack = []; // Сообщения чата
 
     protected array $data = [];
+
     /**
      * @var mixed|null
      */
 
 
-    public function __construct(array $params) {
-        foreach($params as $attribute => $value) {
+    public function __construct(array $params)
+    {
+        foreach ($params as $attribute => $value) {
             $this->$attribute = $value;
         }
     }
@@ -53,16 +54,20 @@ class GameUser
 
     public function getLastComment(): ?string
     {
-        $res = implode(VH::br(), $this->comments[T::$lang] ?? []);
-        $this->comments = [];
+        // Готовим последний коммент для каждого языка, а потом отдаем на текущем языке пользователя
+        foreach (T::SUPPORTED_LANGS as $lang) {
+            $res[$lang] = implode(VH::br(), $this->comments[$lang] ?? []);
 
-        if(!$res) {
-            $res = $this->lastComment;
-        } else {
-            $this->lastComment = $res;
+            if (!$res[$lang]) {
+                $res[$lang] = $this->lastComment[$lang] ?? '';
+            } else {
+                $this->lastComment[$lang] = $res[$lang];
+            }
         }
 
-        return $res ?: '&nbsp;';
+        $this->comments = [];
+
+        return $res[T::$lang] ?: '&nbsp;';
     }
 
     public function addComment(string $comment, string $lang)
