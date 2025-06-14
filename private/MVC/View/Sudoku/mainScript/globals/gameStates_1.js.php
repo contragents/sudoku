@@ -538,7 +538,7 @@ var gameStates = {
                     },
                     beginGame: {
                         label: '<?= T::S('Start') ?>',
-                        className: 'btn-primary',
+                        className: 'btn-red' /*'btn-primary'*/,
                         callback: function () {
                             reportGameStartYandex();
 
