@@ -8,7 +8,7 @@ class Desk
 {
     public array $desk = [];
 
-    protected ?int $newEntity = null;
+    protected ?int $newEntity = null; // Новая цифра, присланная пользоватлем
     protected ?int $newEntityI = null;
     protected ?int $newEntityJ = null;
 
@@ -24,10 +24,16 @@ class Desk
         }
     }
 
-    // нужно переделать под каждую игру
-    protected function equivalentCells($cellNew, $cellOld)
+    /**
+     * ЗАГЛУШКА!!! Нужно переделать под каждую игру.
+     * Сравнивает новую ячейку и старую ячейку с учетом формата данных конкретной игры
+     * @param $cellNew
+     * @param $cellOld
+     * @return bool
+     */
+    protected function equivalentCells($cellNew, $cellOld): bool
     {
-        return $cellNew[1] == $cellOld;
+        return $cellNew == $cellOld;
     }
 
 }

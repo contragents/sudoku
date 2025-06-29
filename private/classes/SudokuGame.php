@@ -261,13 +261,14 @@ class SudokuGame extends Game
         $numCellsSolved = 0;
         $numKeysSolved = 0;
 
+        /** @var DeskSudoku $desk */
         if ($this->gameStatus->desk->checkNewDesc(BC::$Request[BC::CELLS_PARAM])) {
             $turnRes = $this->gameStatus->desk->checkNewDigit($numCellsSolved);
-            // Перенести в класс SudokuGame
+
             if ($turnRes === $this->gameStatus->desk::KEY_SOLVED_RESPONSE) {
                 $this->gameStatus->users[$this->numUser]->score += self::KEY_OPEN_POINTS;
                 $numKeysSolved++;
-                while ($this->gameStatus->desk->newSolvedKey($numKeysSolved)) {
+                while ($this->gameStatus->desk->newSolvedKey($numCellsSolved)) {
                     $this->gameStatus->users[$this->numUser]->score += self::KEY_OPEN_POINTS;
                     $numKeysSolved++;
                 }
@@ -361,11 +362,11 @@ class SudokuGame extends Game
 
         if ($this->gameStatus->desk->checkNewDesc($newDesk)) {
             $turnRes = $this->gameStatus->desk->checkNewDigit($numCellsSolved);
-            // Перенести в класс SudokuGame
+
             if ($turnRes === $this->gameStatus->desk::KEY_SOLVED_RESPONSE) {
                 $this->gameStatus->users[$botUserNum]->score += self::KEY_OPEN_POINTS;
                 $numKeysSolved++;
-                while ($this->gameStatus->desk->newSolvedKey($numKeysSolved)) {
+                while ($this->gameStatus->desk->newSolvedKey($numCellsSolved)) {
                     $this->gameStatus->users[$botUserNum]->score += self::KEY_OPEN_POINTS;
                     $numKeysSolved++;
                 }

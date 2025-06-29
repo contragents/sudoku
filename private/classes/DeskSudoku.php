@@ -374,10 +374,12 @@ class DeskSudoku extends Desk
                 }
 
                 if (!$this->equivalentCells($cell, $this->desk[$i][$j])) {
+                    // Проверяем, что новая цифра одна и только одна - иначе вернуть фалз
                     if (isset($this->newEntity)) {
                         return false;
                     }
 
+                    // Запоминаем новую присланную цифру
                     $this->newEntity = $cell[1];
                     $this->newEntityI = $i;
                     $this->newEntityJ = $j;
@@ -389,8 +391,20 @@ class DeskSudoku extends Desk
     }
 
     /**
-     * Проверяет, что прислданная цифра соответствует задаче судоку и вставляет ее в доску
+     * Сравнивает новую ячейку и старую ячейку с учетом формата данных конкретной игры
+     * @param array $cellNew
+     * @param int $cellOld
      * @return bool
+     */
+    protected function equivalentCells($cellNew, $cellOld): bool
+    {
+        return $cellNew[1] == $cellOld;
+    }
+
+    /**
+     * Проверяет, что прислданная цифра соответствует задаче судоку и вставляет ее в доску
+     * @param int $numCellsSolved
+     * @return string
      */
     public function checkNewDigit(int &$numCellsSolved): string
     {
