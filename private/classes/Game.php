@@ -950,6 +950,36 @@ class Game
         }
     }
 
+    /**
+     * Проверяет, что время на ход не истекло, возвращает true при успехе.
+     * Возвращает false - если время на ход истекло.
+     * Добавляет в лог Игрок пытается сделать ход не в свою очередь
+     * @return bool
+     */
+    protected function checkIsMyTurnAndLog(): bool
+    {
+        // todo перенести в родительский метод и вызывать родителя сначала
+        $this->checkGameStatus();
+        if ($this->SM::getPlayerStatus($this->User) != $this->SM::STATE_MY_TURN) {
+            foreach (T::SUPPORTED_LANGS as $lang) {
+                $this->addToLog(
+                    T::S(
+                        "[[Player]]",
+                        [$this->numUser + 1],
+                        $lang
+                    )
+                    . ' '
+                    . T::S('is attempting to make a turn out of his turn (turn #', [], $lang) . $this->gameStatus->turnNumber . ')',
+                    $lang
+                );
+            }
+
+            return false;
+        }
+
+        return true;
+    }
+
     public function checkGameStatus(): array
     {
         if (!$this->currentGame) {

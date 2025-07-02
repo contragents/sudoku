@@ -258,6 +258,10 @@ class SudokuGame extends Game
 
     public function submitTurn(): array
     {
+        if(!$this->checkIsMyTurnAndLog()) {
+            return parent::submitTurn();
+        }
+
         $numCellsSolved = 0;
         $numKeysSolved = 0;
 
