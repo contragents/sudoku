@@ -958,7 +958,6 @@ class Game
      */
     protected function checkIsMyTurnAndLog(): bool
     {
-        // todo перенести в родительский метод и вызывать родителя сначала
         $this->checkGameStatus();
         if ($this->SM::getPlayerStatus($this->User) != $this->SM::STATE_MY_TURN) {
             foreach (T::SUPPORTED_LANGS as $lang) {
