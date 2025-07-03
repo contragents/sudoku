@@ -227,38 +227,41 @@ class SudokuGame extends Game
             }
         }
 
-        // Просто ставим 1 случайную цифру в пустую клетку
-
-        // todo для каждой клетки рассчитать степень неопределенности - сколько цифр в ней может быть
         // выбрать клетку с наименьшей неопределенностью - в идеале 1 возможная цифра - и поставить ход в нее
-        for ($cycle = 1; $cycle <= 100; $cycle++) {
-            foreach ($newDesk as $i => $row) {
-                foreach ($row as $j => $cell) {
-                    if ($cell[1] === false && mt_rand(1, 1000) <= 10) {
-                        // Ставим цифру с вероятностью 1/100
-                        $occupiedCellsValues = array_unique(
-                            DeskSudoku::getVertCellValues($i, $desk)
-                            + DeskSudoku::getHorCellValues($j, $desk)
-                            + DeskSudoku::getSquareCellValues($i, $j, $desk)
-                            + ($mistakes[$i][$j] ?? [])
-                        );
-                        $freeValues = array_diff(DeskSudoku::CELL_VALUES, $occupiedCellsValues);
-                        // todo добавить учет рейтинга соперника для вариабельности сложности игры бота
-                        // если рейтинг соперника больше, то использовать mistakes. Иначе не использовать
-                        $newDesk[$i][$j][1] = $freeValues[array_rand($freeValues, 1)];
+        $freeValues = [];
+        $freeValueCounts = [];
+        foreach ($newDesk as $i => $row) {
+            foreach ($row as $j => $cell) {
+                if ($cell[1] === false) {
+                    // Получаем все цифры, которые не могут находиться в данной ячейке
+                    $occupiedCellsValues = array_unique(
+                        DeskSudoku::getVertCellValues($i, $desk)
+                        + DeskSudoku::getHorCellValues($j, $desk)
+                        + DeskSudoku::getSquareCellValues($i, $j, $desk)
+                        + ($mistakes[$i][$j] ?? [])
+                    );
 
-                        return $newDesk;
-                    }
+                    // Получаем цифры, которые МОГУТ находиться в данной ячейке
+                    $freeValues[$i][$j] = array_diff(DeskSudoku::CELL_VALUES, $occupiedCellsValues);
+                    // Количество вариантов цифр - в отдельную переменную
+                    $freeValueCounts["$i|$j"] = count($freeValues[$i][$j]);
                 }
             }
         }
+
+        // Сортируем массив количества вариантов цифр для свободных ячеек
+        asort($freeValueCounts);
+        // Получаем $i, $j из первого элемента массива
+        [$i, $j] = explode('|', key($freeValueCounts));
+
+        $newDesk[(int)$i][(int)$j][1] = array_rand($freeValues[(int)$i][(int)$j]);
 
         return $newDesk;
     }
 
     public function submitTurn(): array
     {
-        if(!$this->checkIsMyTurnAndLog()) {
+        if (!$this->checkIsMyTurnAndLog()) {
             return parent::submitTurn();
         }
 
@@ -294,8 +297,6 @@ class SudokuGame extends Game
                     $lang
                 );
             }
-
-
         } else {
             foreach (T::SUPPORTED_LANGS as $lang) {
                 $this->addToLog(
@@ -318,8 +319,11 @@ class SudokuGame extends Game
         if ($numPointsObtained) {
             foreach (T::SUPPORTED_LANGS as $lang) {
                 $this->addToLog(
-                    t::S('[[Player]] gets [[number]] [[point]]',
-                         [$this->numUser + 1, $numPointsObtained, $numPointsObtained], $lang),
+                    t::S(
+                        '[[Player]] gets [[number]] [[point]]',
+                        [$this->numUser + 1, $numPointsObtained, $numPointsObtained],
+                        $lang
+                    ),
                     $lang
                 );
             }
@@ -392,15 +396,16 @@ class SudokuGame extends Game
                     $lang
                 );
             }
-
-
         } else {
             foreach (T::SUPPORTED_LANGS as $lang) {
                 $this->addToLog(T::S('[[Player]] made a mistake', [$botUserNum + 1], $lang), $lang);
             }
 
             foreach (T::SUPPORTED_LANGS as $lang) {
-                $this->gameStatus->users[($botUserNum + 1) % 2]->addComment(T::S('Your opponent made a mistake', null, $lang), $lang);
+                $this->gameStatus->users[($botUserNum + 1) % 2]->addComment(
+                    T::S('Your opponent made a mistake', null, $lang),
+                    $lang
+                );
             }
         }
 
@@ -446,10 +451,18 @@ class SudokuGame extends Game
     private function getBriefRules(?string $lang = null): string
     {
         return VH::div(
-                T::S('The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated', null, $lang)
+                T::S(
+                    'The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated',
+                    null,
+                    $lang
+                )
             )
             . VH::div(
-                T::S("The players' task is to take turns making moves and accumulating points to open black squares", null, $lang)
+                T::S(
+                    "The players' task is to take turns making moves and accumulating points to open black squares",
+                    null,
+                    $lang
+                )
                 . ' ('
                 . VH::span(
                     VH::strong(
@@ -458,7 +471,11 @@ class SudokuGame extends Game
                     ),
                     ['style' => 'color:#0f0;']
                 )
-                . ') ' . T::S('by calculating all of other 8 digits in a block - vertically OR horizontally OR in a 3x3 square', null, $lang)
+                . ') ' . T::S(
+                    'by calculating all of other 8 digits in a block - vertically OR horizontally OR in a 3x3 square',
+                    null,
+                    $lang
+                )
             )
             . VH::div(
                 VH::span(
@@ -471,13 +488,25 @@ class SudokuGame extends Game
                 . ' ' . T::S('is awarded for solved empty cell', null, $lang)
             )
             . VH::div(
-                T::S('If a player has opened a cell (solved a number in it) and there is only ONE closed digit left in the block, this digit is opened automatically', null, $lang)
+                T::S(
+                    'If a player has opened a cell (solved a number in it) and there is only ONE closed digit left in the block, this digit is opened automatically',
+                    null,
+                    $lang
+                )
             )
             . VH::div(
-                T::S('If after the automatic opening of a number, new blocks of EIGHT open cells are formed on the field, such blocks are also opened by CASCADE', null, $lang)
+                T::S(
+                    'If after the automatic opening of a number, new blocks of EIGHT open cells are formed on the field, such blocks are also opened by CASCADE',
+                    null,
+                    $lang
+                )
             )
             . VH::div(
-                T::S('A player may open more than one cell and more than one KEY in one turn. Use the CASCADES rule', null, $lang)
+                T::S(
+                    'A player may open more than one cell and more than one KEY in one turn. Use the CASCADES rule',
+                    null,
+                    $lang
+                )
             );
     }
 
@@ -511,8 +540,9 @@ class SudokuGame extends Game
                             : T::S('Your turn is next - get ready!', null, $lang)
                     )
                     . VH::div($this->getStartComment($num, $lang)) // Стартовый коммент с указанием рейтинга игрока
-                    . $this->getBriefRules($lang), // правила игры вкратце - потом вынести в фак, не выводить бывалым игрокам
-                $lang
+                    . $this->getBriefRules($lang),
+                    // правила игры вкратце - потом вынести в фак, не выводить бывалым игрокам
+                    $lang
                 );
             }
         }
