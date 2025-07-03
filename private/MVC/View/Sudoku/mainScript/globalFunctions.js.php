@@ -4,6 +4,7 @@ use classes\T;
 ?>
 
 function initNewGameVarsGlobal() {
+    gameLog = [];
     isInviteGameWaiting = false;
     tWaiting = 0;
     isUserBlockActive = false;
