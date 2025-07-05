@@ -45,6 +45,7 @@ class SudokuGame extends Game
             $nums7 = [];
             $keyPresent = false;
             $cellToPick = [];
+            $cellsToPick = [];
 
             foreach ($row as $j => $cell) {
                 if ($cell[1] > 0) {
@@ -141,35 +142,28 @@ class SudokuGame extends Game
         // Поиск 8 цифр по вертикали
         foreach ($newDesk as $i => $row) {
             $nums8 = [];
-            $cellToPick = [];
+            $cellsToPick = [];
 
             foreach ($row as $j => $cell) {
                 if ($cell[1] > 0) {
                     $digitToIgnore = $cell[1] % 10;
                     $nums8[$digitToIgnore] = $digitToIgnore;
                 } elseif ($cell[1] === false) {
-                    $cellToPick = ['i' => $i, 'j' => $j];
+                    $cellsToPick[] = ['i' => $i, 'j' => $j];
                 }
             }
 
-            if (count($nums8) === 7 && $cellToPick) {
-                $candidateDigits = array_diff(
-                    DeskSudoku::CELL_VALUES,
-                    $nums8
-                    + DeskSudoku::getHorCellValues($cellToPick['j'], $desk)
-                    + DeskSudoku::getSquareCellValues($cellToPick['i'], $cellToPick['j'], $desk)
-                    + ($mistakes[$cellToPick['i']][$cellToPick['j']] ?? [])
-                );
-                $newDesk[$cellToPick['i']][$cellToPick['j']][1] = $candidateDigits[array_rand($candidateDigits, 1)];
+            $candidateDigits = [];
 
-                return $newDesk;
+            if (count($nums8) === 7 && $cellsToPick) {
+                return self::findCellAndDigit($cellsToPick, $desk, $newDesk, $mistakes, $nums8);
             }
         }
 
         // Поиск 8 цифр по горизонтали
         foreach ($newDesk as $j => $column) {
             $nums8 = [];
-            $cellToPick = [];
+            $cellsToPick = [];
 
             foreach ($column as $i => $noCell) {
                 $cell = $newDesk[$i][$j];
@@ -178,21 +172,12 @@ class SudokuGame extends Game
                     $digitToIgnore = $cell[1] % 10;
                     $nums8[$digitToIgnore] = $digitToIgnore;
                 } elseif ($cell[1] === false) {
-                    $cellToPick = ['i' => $i, 'j' => $j];
+                    $cellsToPick[] = ['i' => $i, 'j' => $j];
                 }
             }
 
-            if (count($nums8) === 7 && $cellToPick) {
-                $candidateDigits = array_diff(
-                    DeskSudoku::CELL_VALUES,
-                    $nums8
-                    + DeskSudoku::getVertCellValues($cellToPick['i'], $desk)
-                    + DeskSudoku::getSquareCellValues($cellToPick['i'], $cellToPick['j'], $desk)
-                    + ($mistakes[$cellToPick['i']][$cellToPick['j']] ?? [])
-                );
-                $newDesk[$cellToPick['i']][$cellToPick['j']][1] = $candidateDigits[array_rand($candidateDigits, 1)];
-
-                return $newDesk;
+            if (count($nums8) === 7 && $cellsToPick) {
+                return self::findCellAndDigit($cellsToPick, $desk, $newDesk, $mistakes, $nums8);
             }
         }
 
@@ -200,7 +185,7 @@ class SudokuGame extends Game
         foreach ($newDesk as $i => $row) {
             foreach ($row as $j => $cell) {
                 $nums8 = [];
-                $cellToPick = [];
+                $cellsToPick = [];
                 $squareCells = DeskSudoku::getSquareCells($i, $j);
 
                 foreach ($squareCells as $squareCell) {
@@ -208,21 +193,12 @@ class SudokuGame extends Game
                         $digitToIgnore = $newDesk[$squareCell['i']][$squareCell['j']][1] % 10;
                         $nums8[$digitToIgnore] = $digitToIgnore;
                     } elseif ($newDesk[$squareCell['i']][$squareCell['j']][1] === false) {
-                        $cellToPick = ['i' => $squareCell['i'], 'j' => $squareCell['j']];
+                        $cellsToPick[] = ['i' => $squareCell['i'], 'j' => $squareCell['j']];
                     }
                 }
 
                 if (count($nums8) === 7 && $cellToPick) {
-                    $candidateDigits = array_diff(
-                        DeskSudoku::CELL_VALUES,
-                        $nums8
-                        + DeskSudoku::getVertCellValues($cellToPick['i'], $desk)
-                        + DeskSudoku::getHorCellValues($cellToPick['j'], $desk)
-                        + ($mistakes[$cellToPick['i']][$cellToPick['j']] ?? [])
-                    );
-                    $newDesk[$cellToPick['i']][$cellToPick['j']][1] = $candidateDigits[array_rand($candidateDigits, 1)];
-
-                    return $newDesk;
+                    return self::findCellAndDigit($cellsToPick, $desk, $newDesk, $mistakes, $nums8);
                 }
             }
         }
@@ -255,6 +231,38 @@ class SudokuGame extends Game
         [$i, $j] = explode('|', key($freeValueCounts));
 
         $newDesk[(int)$i][(int)$j][1] = array_rand($freeValues[(int)$i][(int)$j]);
+
+        return $newDesk;
+    }
+
+    protected static function findCellAndDigit(
+        array &$cellsToPick,
+        array &$desk,
+        array &$newDesk,
+        array &$mistakes,
+        array &$nums8
+    ): array {
+        foreach ($cellsToPick as $num => $cellToPick) {
+            $candidateDigits[$num] = array_diff(
+                DeskSudoku::CELL_VALUES,
+                $nums8
+                + DeskSudoku::getHorCellValues($cellToPick['j'], $desk)
+                + DeskSudoku::getSquareCellValues($cellToPick['i'], $cellToPick['j'], $desk)
+                + ($mistakes[$cellToPick['i']][$cellToPick['j']] ?? [])
+            );
+        }
+
+        // Определяем клетку с наименьшим числом вариантов цифр в ней
+        if (count($candidateDigits[0]) < count($candidateDigits[1])) {
+            $numCell = 0;
+        } else {
+            $numCell = 1;
+        }
+
+        $newDesk[$cellsToPick[$numCell]['i']][$cellsToPick[$numCell]['j']][1] = $candidateDigits[$numCell][array_rand(
+            $candidateDigits[$numCell],
+            1
+        )];
 
         return $newDesk;
     }
