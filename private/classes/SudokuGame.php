@@ -448,6 +448,39 @@ class SudokuGame extends Game
         }
     }
 
+    /**
+     * СУДОКУ!
+     * Один метод для пропустивших 3 хода и для сдавшихся.
+     * Пропустил 3 хода - проиграл!
+     * @param int $numLostUser Номер проигравшего (с 0)
+     * @param bool $pass Сдался
+     * @return string
+     */
+    public function lost3TurnsWinner(int $numLostUser, bool $pass = false): string
+    {
+        if ($this->gameStatus->users[$numLostUser]->score === 0) {
+            $this->gameStatus->users[$numLostUser]->isActive = false;
+        }
+
+        $userWinner = ($numLostUser + 1) % 2;
+
+        foreach (T::SUPPORTED_LANGS as $lang) {
+            $this->addToLog(
+                ($pass
+                    ? T::S('gave up! Winner - ', null, $lang)
+                    : T::S('skipped 3 turns! Winner - ', null, $lang)
+                )
+                . $this->gameStatus->users[$userWinner]->usernameLangArray[$lang]
+                . T::S(' with score ', null, $lang)
+                . $this->gameStatus->users[$userWinner]->score,
+                $lang,
+                $numLostUser
+            );
+        }
+
+        return $this->gameStatus->users[$userWinner]->ID;
+    }
+
     private function getBriefRules(?string $lang = null): string
     {
         return VH::div(

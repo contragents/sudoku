@@ -762,7 +762,14 @@ class Game
     }
     */
 
-    public function lost3TurnsWinner($numLostUser, bool $pass = false): string
+    /**
+     * Один метод для пропустивших 3 хода и для сдавшихся.
+     * Пропустил 3 хода - Победитель определяется по наибольшему числу очков
+     * @param int $numLostUser Номер проигравшего (с 0)
+     * @param bool $pass
+     * @return string
+     */
+    public function lost3TurnsWinner(int $numLostUser, bool $pass = false): string
     {
         $maxres = 0;
         $userWinner = 0;
