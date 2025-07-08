@@ -247,6 +247,7 @@ class SudokuGame extends Game
                 DeskSudoku::CELL_VALUES,
                 $nums8
                 + DeskSudoku::getHorCellValues($cellToPick['j'], $desk)
+                + DeskSudoku::getVertCellValues($cellToPick['i'], $desk)
                 + DeskSudoku::getSquareCellValues($cellToPick['i'], $cellToPick['j'], $desk)
                 + ($mistakes[$cellToPick['i']][$cellToPick['j']] ?? [])
             );
