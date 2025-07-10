@@ -68,6 +68,10 @@ function isYandexFakeGlobal() {
     return false;
 }
 
+function isSteamGlobal() {
+    return window.location.href.indexOf('app=steam') > -1;
+}
+
 function isYandexAppGlobal() {
     if (document.location.href.match('yandex')) {
         return true;

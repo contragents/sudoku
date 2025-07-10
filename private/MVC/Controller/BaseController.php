@@ -7,6 +7,7 @@ use classes\FrontResource;
 use classes\Game;
 use classes\Response;
 use classes\StateMachine;
+use classes\Steam;
 use classes\T;
 use classes\Tg;
 use classes\UserProfile;
@@ -34,7 +35,9 @@ class BaseController
     const CHAT_TO_PARAM = 'chatTo';
     const GAME_ID_PARAM = 'game_id';
     const COMMON_ID_HASH_PARAM = 'common_id_hash';
+    const LANG_PARAM = 'lang';
     const USER_LANGUAGE_KEY = 'user.language_storage';
+
 
     public static ?BaseController $instance = null;
     public Game $Game;
@@ -42,6 +45,8 @@ class BaseController
     public static FrontResource $FR;
 
     public static $Request;
+    public static $Referer;
+
     const SUB_ACTION_PARAM = 'sub_action';
 
     const TG_ID_PARAM = 'tg_id';
@@ -67,6 +72,9 @@ class BaseController
         self::cors();
 
         static::$Request = $request;
+
+        self::$Referer = self::decodeRefererQuery();
+
         self::$User = $this->checkCookie();
 
         self::$commonId = Tg::$commonId // авторизован через Телеграм или...
@@ -84,6 +92,14 @@ class BaseController
     public static function saveGameStatus()
     {
         self::$instance->Game->storeGameStatus();
+    }
+
+    private static function decodeRefererQuery(): array
+    {
+        $refererParams = [];
+        parse_str(parse_url(urldecode($_SERVER['HTTP_REFERER'] ?? ''), PHP_URL_QUERY), $refererParams);
+
+        return $refererParams;
     }
 
     public function Run()
@@ -176,6 +192,12 @@ class BaseController
         if (Yandex::authorize()) {
             if (Yandex::$yandexUser) {
                 return Yandex::$yandexUser;
+            }
+        }
+
+        if (Steam::authorize()) {
+            if (Steam::$steamUser) {
+                return Steam::$steamUser;
             }
         }
 
@@ -378,20 +400,23 @@ class BaseController
     private static function setLanguage(): string
     {
         // Определение языка для Яндекс.игр - присылаем параметр lang из браузера
-        if (isset(self::$Request['lang']) && in_array(strtoupper(self::$Request['lang']), T::SUPPORTED_LANGS)) {
+        if (isset(self::$Request[self::LANG_PARAM]) && in_array(
+                strtoupper(self::$Request[self::LANG_PARAM]),
+                T::SUPPORTED_LANGS
+            )) {
             if (self::isYandexApp()) {
-                Cache::hset(self::USER_LANGUAGE_KEY, self::$User, strtoupper(self::$Request['lang']));
+                Cache::hset(self::USER_LANGUAGE_KEY, self::$User, strtoupper(self::$Request[self::LANG_PARAM]));
 
                 if (isset($_COOKIE[Cookie::COOKIE_NAME])) {
                     Cache::hset(
                         self::USER_LANGUAGE_KEY,
                         $_COOKIE[Cookie::COOKIE_NAME],
-                        strtoupper(self::$Request['lang'])
+                        strtoupper(self::$Request[self::LANG_PARAM])
                     );
                 }
             }
 
-            return strtoupper(self::$Request['lang']);
+            return strtoupper(self::$Request[self::LANG_PARAM]);
         }
 
         // Для Я.игр ищем язык пользователя в кеше
@@ -420,6 +445,15 @@ class BaseController
             asort($preferredLangPos);
 
             return strtoupper(key($preferredLangPos));
+        }
+
+        // SUD-63 todo почему язык по параметру lang=en используется только для index-файла, а не для mainScript.js????
+        if (Steam::isSteamApp()) {
+            if (!empty(self::$Referer[self::LANG_PARAM])
+                && in_array(strtoupper(self::$Request[self::LANG_PARAM]), T::SUPPORTED_LANGS)) {
+
+                return strtoupper(self::$Referer[self::LANG_PARAM]);
+            }
         }
 
         return (stripos($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '', 'ru') !== false)
@@ -483,7 +517,7 @@ class BaseController
         ];
     }
 
-    public static function isYandexApp()
+    public static function isYandexApp(): bool
     {
         if (isset($_SERVER['HTTP_REFERER']) && (strpos($_SERVER['HTTP_REFERER'], 'yandex') !== false)) {
             return true;

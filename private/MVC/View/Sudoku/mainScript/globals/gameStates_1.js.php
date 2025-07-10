@@ -614,7 +614,18 @@ var gameStates = {
 
                         },
                     },
-                    ...(!isTgBot()  && !isYandexAppGlobal() && {
+                    ...(isSteamGlobal() && {
+                        exit: {
+                            label: '<?= T::S('Exit') ?>',
+                            className: 'btn-tg',
+                            callback: function () {
+                                window.electronAPI.closeApp(true);
+
+                                return false;
+                            },
+                        },
+                    }),
+                    ...(!isTgBot()  && !isYandexAppGlobal() && !isSteamGlobal() && {
                         telegram: {
                             label: '<?= T::S('Play on') ?>',
                             className: 'btn-tg',
@@ -626,7 +637,7 @@ var gameStates = {
                             },
                         },
                     }),
-                    ...(isTgBot() && !isYandexAppGlobal() && {
+                    ...(isTgBot() && !isYandexAppGlobal() && !isSteamGlobal() && {
                         invite: {
                             label: '<?= T::S('Invite a friend') ?>',
                             className: 'btn-danger',
