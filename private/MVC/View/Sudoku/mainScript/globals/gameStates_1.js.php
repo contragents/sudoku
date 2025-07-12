@@ -617,7 +617,7 @@ var gameStates = {
                     ...(isSteamGlobal() && {
                         exit: {
                             label: '<?= T::S('Exit') ?>',
-                            className: 'btn-tg',
+                            className: 'btn-outline-success',
                             callback: function () {
                                 window.electronAPI.closeApp(true);
 

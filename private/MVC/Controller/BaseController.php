@@ -433,6 +433,14 @@ class BaseController
             return $lang;
         }
 
+        if (Steam::isSteamApp()) {
+            if (!empty(self::$Referer[self::LANG_PARAM])
+                && in_array(strtoupper(self::$Referer[self::LANG_PARAM]), T::SUPPORTED_LANGS)) {
+
+                return strtoupper(self::$Referer[self::LANG_PARAM]);
+            }
+        }
+
         $preferredLangPos = [];
         foreach (T::SUPPORTED_LANGS as $lang) {
             $langPos = strpos($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '', strtolower($lang));
@@ -445,15 +453,6 @@ class BaseController
             asort($preferredLangPos);
 
             return strtoupper(key($preferredLangPos));
-        }
-
-        // SUD-63 todo почему язык по параметру lang=en используется только для index-файла, а не для mainScript.js????
-        if (Steam::isSteamApp()) {
-            if (!empty(self::$Referer[self::LANG_PARAM])
-                && in_array(strtoupper(self::$Request[self::LANG_PARAM]), T::SUPPORTED_LANGS)) {
-
-                return strtoupper(self::$Referer[self::LANG_PARAM]);
-            }
         }
 
         return (stripos($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '', 'ru') !== false)

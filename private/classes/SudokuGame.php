@@ -153,10 +153,8 @@ class SudokuGame extends Game
                 }
             }
 
-            $candidateDigits = [];
-
             if (count($nums8) === 7 && $cellsToPick) {
-                return self::findCellAndDigit($cellsToPick, $desk, $newDesk, $mistakes, $nums8);
+                return self::findCellAndDigit($cellsToPick, $desk, $newDesk, $mistakes);
             }
         }
 
@@ -177,7 +175,7 @@ class SudokuGame extends Game
             }
 
             if (count($nums8) === 7 && $cellsToPick) {
-                return self::findCellAndDigit($cellsToPick, $desk, $newDesk, $mistakes, $nums8);
+                return self::findCellAndDigit($cellsToPick, $desk, $newDesk, $mistakes);
             }
         }
 
@@ -197,8 +195,8 @@ class SudokuGame extends Game
                     }
                 }
 
-                if (count($nums8) === 7 && $cellToPick) {
-                    return self::findCellAndDigit($cellsToPick, $desk, $newDesk, $mistakes, $nums8);
+                if (count($nums8) === 7 && $cellsToPick) {
+                    return self::findCellAndDigit($cellsToPick, $desk, $newDesk, $mistakes);
                 }
             }
         }
@@ -227,26 +225,50 @@ class SudokuGame extends Game
 
         // Сортируем массив количества вариантов цифр для свободных ячеек
         asort($freeValueCounts);
-        // Получаем $i, $j из первого элемента массива
-        [$i, $j] = explode('|', key($freeValueCounts));
+        unset($i, $j);
+
+        foreach ($freeValueCounts as $key => $freeValueCount) {
+            // SUD-64 игнорируем клетки с двумя вариантами цифр, чтобы повысить вероятность угадывания
+
+            if ($freeValueCount === 2) {
+                // Получаем $i, $j из текущего элемента массива
+                [$i, $j] = explode('|', $key);
+
+                continue;
+            } elseif ($freeValueCount > 3 && isset($i)) {
+                break;
+            } else {
+                // Получаем $i, $j из текущего элемента массива
+                [$i, $j] = explode('|', $key);
+
+                break;
+            }
+        }
 
         $newDesk[(int)$i][(int)$j][1] = array_rand($freeValues[(int)$i][(int)$j]);
 
         return $newDesk;
     }
 
+    /**
+     * Среди $cellsToPock (2 клетки) определяет ту, в которой меньше вариантов цифр и возвращает ее координаты и цифру для хода боту
+     * @param array $cellsToPick
+     * @param array $desk
+     * @param array $newDesk
+     * @param array $mistakes
+     * @param array $nums8
+     * @return array
+     */
     protected static function findCellAndDigit(
         array &$cellsToPick,
         array &$desk,
         array &$newDesk,
-        array &$mistakes,
-        array &$nums8
+        array &$mistakes
     ): array {
         foreach ($cellsToPick as $num => $cellToPick) {
             $candidateDigits[$num] = array_diff(
                 DeskSudoku::CELL_VALUES,
-                $nums8
-                + DeskSudoku::getHorCellValues($cellToPick['j'], $desk)
+                DeskSudoku::getHorCellValues($cellToPick['j'], $desk)
                 + DeskSudoku::getVertCellValues($cellToPick['i'], $desk)
                 + DeskSudoku::getSquareCellValues($cellToPick['i'], $cellToPick['j'], $desk)
                 + ($mistakes[$cellToPick['i']][$cellToPick['j']] ?? [])

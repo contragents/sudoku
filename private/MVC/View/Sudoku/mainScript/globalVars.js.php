@@ -73,7 +73,7 @@ const GROUND_FILE = '<?= T::PHRASES['ground_file'][T::$lang] ?>';
 
 const SUDOKU_PRICE = <?= MonetizationService::SUDOKU_PRICE ?>;
 const COMMON_TPL_DIR = 'tpl/common/';
-const PROFILE_TPL =  BASE_URL + COMMON_TPL_DIR + (!isYandexAppGlobal() ? 'profile-modal-tpl_1.html' : 'profile-modal-tpl_yandex.html');
+const PROFILE_TPL =  BASE_URL + COMMON_TPL_DIR + ((!isYandexAppGlobal() && !isSteamGlobal()) ? 'profile-modal-tpl_1.html' : 'profile-modal-tpl_yandex.html');
 const FAQ_TPL = BASE_URL + COMMON_TPL_DIR + 'faq-modal-tpl_';
 const STATS_TPL =  BASE_URL + COMMON_TPL_DIR + 'stats-modal-tpl.html';
 
