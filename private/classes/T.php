@@ -10,7 +10,8 @@ class T
 {
     const RU_LANG = 'RU';
     const EN_LANG = 'EN';
-    const SUPPORTED_LANGS = [self::EN_LANG, self::RU_LANG];
+    const TR_LANG = 'TR';
+    const SUPPORTED_LANGS = [self::EN_LANG, self::RU_LANG, self::TR_LANG];
 
     const PLURAL_PATTERN = '[[';
 
@@ -55,391 +56,499 @@ class T
     const PHRASES = [
         'Agreement' => [
             self::RU_LANG => 'Оферта',
+            self::TR_LANG => 'Anlaşma',
         ],
         'Empty value is forbidden' => [
             self::RU_LANG => 'Задано пустое значение',
+            self::TR_LANG => 'Boş değer yasaktır',
         ],
         'Forbidden' => [
             self::RU_LANG => 'Доступ запрещен',
+            self::TR_LANG => 'Yasak',
         ],
         'game_title' => [
             SudokuGame::GAME_NAME => [
                 self::EN_LANG => 'Sudoku Online with friends',
                 self::RU_LANG => 'Судоку онлайн с друзьями',
+                self::TR_LANG => 'Arkadaşlarla Online Sudoku',
             ],
             GomokuGame::GAME_NAME => [
                 self::EN_LANG => 'Gomoku online | X-0',
                 self::RU_LANG => 'Крестики-нолики онлайн с друзьями',
+                self::TR_LANG => '',
             ],
         ],
         'secret_prompt' => [
             self::EN_LANG => '&#42;Save this key for further account restoration in Telegram</a>',
             self::RU_LANG => '&#42;Сохраните ключ для восстановления аккаунта в Telegram</a>',
+            self::TR_LANG => 'Telegram\'da daha fazla hesap geri yüklemesi için bu anahtarı kaydedin',
 
             SudokuGame::GAME_NAME => [
                 self::EN_LANG => '&#42;Save this key for further account restoration in <a href="https://t.me/sudoku_app_bot">Telegram</a>',
-                self::RU_LANG => '&#42;Сохраните ключ для восстановления аккаунта в <a href="https://t.me/sudoku_app_bot">Telegram</a>'
+                self::RU_LANG => '&#42;Сохраните ключ для восстановления аккаунта в <a href="https://t.me/sudoku_app_bot">Telegram</a>',
+                self::TR_LANG => '<a href="https://t.me/sudoku_app_bot">Telegram\'da</a> daha fazla hesap geri yüklemesi için bu anahtarı kaydedin',
             ]
         ],
         'COIN Balance' => [
-            self::RU_LANG => 'Баланс монет'
+            self::RU_LANG => 'Баланс монет',
+            self::TR_LANG => 'Para bakiyesi',
         ],
         PaymentModel::INIT_STATUS => [
             self::EN_LANG => 'Started',
-            self::RU_LANG => 'Начата'
+            self::RU_LANG => 'Начата',
+            self::TR_LANG => 'Başladı',
         ],
         PaymentModel::BAD_CONFIRM_STATUS => [
             self::EN_LANG => 'Bad confirmation',
-            self::RU_LANG => 'Ошибка подтверждения'
+            self::RU_LANG => 'Ошибка подтверждения',
+            self::TR_LANG => 'Kötü onay',
         ],
         PaymentModel::COMPLETE_STATUS => [
             self::EN_LANG => 'Completed',
-            self::RU_LANG => 'Исполнена'
+            self::RU_LANG => 'Исполнена',
+            self::TR_LANG => 'Tamamlandı',
         ],
         PaymentModel::FAIL_STATUS => [
             self::EN_LANG => 'Failed',
-            self::RU_LANG => 'Ошибка'
+            self::RU_LANG => 'Ошибка',
+            self::TR_LANG => 'Başarısız',
         ],
         'Last transactions' => [
-            self::RU_LANG => 'Последние операции'
+            self::RU_LANG => 'Последние операции',
+            self::TR_LANG => 'Son işlemler',
         ],
         'Support in Telegram' => [
-            self::RU_LANG => 'Техподдержка в Telegram'
+            self::RU_LANG => 'Техподдержка в Telegram',
+            self::TR_LANG => 'Telegram\'da Destek',
         ],
         'Check_price' => [
             self::EN_LANG => 'Check price',
-            self::RU_LANG => 'Узнать<br>цену'
+            self::RU_LANG => 'Узнать<br>цену',
+            self::TR_LANG => 'Fiyat<br>kontrolü',
         ],
         'Replenish' => [
-            self::RU_LANG => 'Пополнить'
+            self::RU_LANG => 'Пополнить',
+            self::TR_LANG => 'Yenilemek',
         ],
         'SUDOKU_amount' => [
             self::EN_LANG => 'Coin quantity',
-            self::RU_LANG => 'Количество монет'
+            self::RU_LANG => 'Количество монет',
+            self::TR_LANG => 'Sikke miktarı',
         ],
         'enter_amount' => [
             self::EN_LANG => 'amount',
-            self::RU_LANG => ''
+            self::RU_LANG => '',
+            self::TR_LANG => 'fischgte',
         ],
         'Buy_SUDOKU' => [
             self::EN_LANG => 'Buy SUDOKU coins',
-            self::RU_LANG => 'Купить монеты' . '{{sudoku_icon_15}}'
+            self::RU_LANG => 'Купить монеты' . '{{sudoku_icon_15}}',
+            self::TR_LANG => 'Madeni Para Satın Alın' . '{{sudoku_icon_15}}',
         ],
         'The_price' => [
             self::EN_LANG => 'Price offer',
-            self::RU_LANG => 'Стоимость монет'
+            self::RU_LANG => 'Стоимость монет',
+            self::TR_LANG => 'Fiyat teklifi',
         ],
         'calc_price' => [
             self::EN_LANG => 'price',
-            self::RU_LANG => 'стоимость'
+            self::RU_LANG => 'стоимость',
+            self::TR_LANG => 'fiyat',
         ],
         'Pay' => [
             self::EN_LANG => 'Pay',
-            self::RU_LANG => 'Оплатить'
+            self::RU_LANG => 'Оплатить',
+            self::TR_LANG => 'Ödeme',
         ],
         'Congratulations to Player' => [
-            self::RU_LANG => 'Поздравляем игрока'
+            self::RU_LANG => 'Поздравляем игрока',
+            self::TR_LANG => 'Tebrik Ederiz Oyuncumuzu ',
         ],
         'Server sync lost' => [
-            self::RU_LANG => 'Потеря синхронизации с сервером'
+            self::RU_LANG => 'Потеря синхронизации с сервером',
+            self::TR_LANG => 'Sunucu ile senkronizasyon kaybı',
         ],
         'Server connecting error. Please try again' => [
-            self::RU_LANG => 'Ошибка связи с сервером. Пожалуйста, повторите'
+            self::RU_LANG => 'Ошибка связи с сервером. Пожалуйста, повторите',
+            self::TR_LANG => 'Sunucu bağlanma hatası. Lütfen tekrar deneyin',
         ],
         'Error changing settings. Try again later' => [
-            self::RU_LANG => 'Ошибка. Пожалуйста попробуйте позднее'
+            self::RU_LANG => 'Ошибка. Пожалуйста попробуйте позднее',
+            self::TR_LANG => 'Ayarları değiştirirken hata oluştu. Daha sonra tekrar deneyin',
         ],
         'invite_friend_prompt' => [
             SudokuGame::GAME_NAME => [
                 self::EN_LANG => 'Join the online game SUDOKU on Telegram! Get the maximum rating, earn coins and withdraw tokens to your wallet',
-                self::RU_LANG => 'Присоединяйся к онлайн игре SUDOKU в Telegram! Набери максимальный рейтинг, зарабатывай монеты и выводи токены на кошелек'
+                self::RU_LANG => 'Присоединяйся к онлайн игре SUDOKU в Telegram! Набери максимальный рейтинг, зарабатывай монеты и выводи токены на кошелек',
+                self::TR_LANG => 'Telegram\'da çevrimiçi oyun SUDOKU\'ya katılın! Maksimum puanı alın, jeton kazanın ve jetonları cüzdanınıza çekin',
             ],
 
             self::EN_LANG => 'Join the online game on Telegram! Get the maximum rating, earn coins and withdraw tokens to your wallet',
-            self::RU_LANG => 'Присоединяйся к нашей онлайн игре в Telegram! Набери максимальный рейтинг, зарабатывай монеты и выводи токены на кошелек'
+            self::RU_LANG => 'Присоединяйся к нашей онлайн игре в Telegram! Набери максимальный рейтинг, зарабатывай монеты и выводи токены на кошелек',
+            self::TR_LANG => 'Telegram\'daki çevrimiçi oyuna katılın! Maksimum puanı alın, jeton kazanın ve jetonları cüzdanınıza çekin',
         ],
         'game_bot_url' => [
             SudokuGame::GAME_NAME => [
                 self::EN_LANG => 'https://t.me/sudoku_app_bot',
-                self::RU_LANG => 'https://t.me/sudoku_app_bot'
+                self::RU_LANG => 'https://t.me/sudoku_app_bot',
+                self::TR_LANG => 'https://t.me/sudoku_app_bot',
             ],
             self::EN_LANG => 'https://t.me/sudoku_app_bot',
-            self::RU_LANG => 'https://t.me/sudoku_app_bot'
+            self::RU_LANG => 'https://t.me/sudoku_app_bot',
+            self::TR_LANG => 'https://t.me/sudoku_app_bot',
         ],
         'loading_text' => [
             self::EN_LANG => 'SUDOKU is loading...',
-            self::RU_LANG => 'Загружаем СУДОКУ...'
-        ],
-        'ground_file' => [
-            self::EN_LANG => 'field_source_scrabble.svg',
-            self::RU_LANG => 'field_source_nd_20.svg',//'field_source_nd_17.svg' //
+            self::RU_LANG => 'Загружаем СУДОКУ...',
+            self::TR_LANG => 'SUDOKU yükleniyor...',
         ],
         'switch_tg_button' => [
             self::EN_LANG => 'Switch to Telegram',
-            self::RU_LANG => 'Перейти на Telegram'
+            self::RU_LANG => 'Перейти на Telegram',
+            self::TR_LANG => 'Telegram\'a geç',
         ],
         'Invite a friend' => [
-            self::RU_LANG => 'Пригласить друга'
+            self::RU_LANG => 'Пригласить друга',
+            self::TR_LANG => 'Arkadaş davet et',
         ],
         'you_lost' => [
             self::EN_LANG => 'You lost!',
-            self::RU_LANG => 'Вы проиграли!'
+            self::RU_LANG => 'Вы проиграли!',
+            self::TR_LANG => 'Kaybettiniz!',
         ],
         'you_won' => [
             self::EN_LANG => 'You won!',
-            self::RU_LANG => 'Вы выиграли!'
+            self::RU_LANG => 'Вы выиграли!',
+            self::TR_LANG => 'Sen kazandın!',
         ],
         '[[Player]] won!' => [
-            self::RU_LANG => '[[Player]] выиграл!'
+            self::RU_LANG => '[[Player]] выиграл!',
+            self::TR_LANG => '[[Player]] kazandı',
         ],
         'start_new_game' => [
             self::EN_LANG => 'Start a new game',
-            self::RU_LANG => 'Начните новую игру'
+            self::RU_LANG => 'Начните новую игру',
+            self::TR_LANG => 'Yeni bir oyun başlatın',
         ],
         'rating_changed' => [
             self::EN_LANG => 'Rating change: ',
-            self::RU_LANG => 'Изменение рейтинга: '
+            self::RU_LANG => 'Изменение рейтинга: ',
+            self::TR_LANG => 'Reyting değişikliği:',
         ],
         'Authorization error' => [
-            self::RU_LANG => 'Ошибка авторизации'
+            self::RU_LANG => 'Ошибка авторизации',
+            self::TR_LANG => 'Yetkilendirme Hatası',
         ],
         'Error sending message' => [
-            self::RU_LANG => 'Ошибка отправки сообщения'
+            self::RU_LANG => 'Ошибка отправки сообщения',
+            self::TR_LANG => 'Mesaj gönderilirken hata oluştu',
         ],
         // Рекорды
         'Got reward' => [
-            self::RU_LANG => 'Получена награда'
+            self::RU_LANG => 'Получена награда',
+            self::TR_LANG => 'Bir ödül alındı',
         ],
         'Your passive income' => [
-            self::RU_LANG => 'Пассивный заработок'
+            self::RU_LANG => 'Пассивный заработок',
+            self::TR_LANG => 'Pasif geliriniz',
         ],
         'will go to the winner' => [
-            self::RU_LANG => 'достанется победителю'
+            self::RU_LANG => 'достанется победителю',
+            self::TR_LANG => 'kazanana gidecek',
         ],
         'Effect lasts until beaten' => [
-            self::RU_LANG => 'Начисляется, пока не перебито'
+            self::RU_LANG => 'Начисляется, пока не перебито',
+            self::TR_LANG => 'Etki dövülene kadar sürer',
         ],
         'per_hour' => [
             self::EN_LANG => 'hour',
             self::RU_LANG => 'час',
+            self::TR_LANG => 'saat',
         ],
         'rank position' => [
-            self::RU_LANG => 'место в рейтинге'
+            self::RU_LANG => 'место в рейтинге',
+            self::TR_LANG => 'rütbe konum',
         ],
         'record of the year' => [
-            self::RU_LANG => 'рекорд года'
+            self::RU_LANG => 'рекорд года',
+            self::TR_LANG => 'yılın rekoru',
         ],
         'record of the month' => [
-            self::RU_LANG => 'рекорд месяца'
+            self::RU_LANG => 'рекорд месяца',
+            self::TR_LANG => 'ayın rekoru',
         ],
         'record of the week' => [
-            self::RU_LANG => 'рекорд недели'
+            self::RU_LANG => 'рекорд недели',
+            self::TR_LANG => 'haftanin rekoru',
         ],
         'record of the day' => [
-            self::RU_LANG => 'рекорд дня'
+            self::RU_LANG => 'рекорд дня',
+            self::TR_LANG => 'günün rekoru',
         ],
         'game_price' => [
             self::EN_LANG => 'game points',
-            self::RU_LANG => 'очки за игру'
+            self::RU_LANG => 'очки за игру',
+            self::TR_LANG => 'oyun puanları',
         ],
         'games_played' => [
             self::EN_LANG => 'games played',
-            self::RU_LANG => 'сыграно партий'
+            self::RU_LANG => 'сыграно партий',
+            self::TR_LANG => 'oynanan oyunlar',
         ],
         'Games Played' => [
-            self::RU_LANG => 'Партии'
+            self::RU_LANG => 'Партии',
+            self::TR_LANG => 'Partiler',
         ],
         'top' => [
-            self::RU_LANG => 'топ'
+            self::RU_LANG => 'топ',
+            self::TR_LANG => 'üst',
         ],
         'turn_price' => [
             self::EN_LANG => 'turn points',
-            self::RU_LANG => 'очки за ход'
+            self::RU_LANG => 'очки за ход',
+            self::TR_LANG => 'ciro puanları',
         ],
         'word_len' => [
             self::EN_LANG => 'word length',
-            self::RU_LANG => 'длинное слово'
+            self::RU_LANG => 'длинное слово',
+            self::TR_LANG => 'uzun kelime',
         ],
         'word_price' => [
             self::EN_LANG => 'word points',
-            self::RU_LANG => 'очки за слово'
+            self::RU_LANG => 'очки за слово',
+            self::TR_LANG => 'kelime puanları',
         ],
         UserModel::BALANCE_HIDDEN_FIELD => [
             self::EN_LANG => 'User hidden',
-            self::RU_LANG => 'Пользователь скрыт'
+            self::RU_LANG => 'Пользователь скрыт',
+            self::TR_LANG => 'Kullanıcı gizli',
         ],
         'top_year' => [
             self::EN_LANG => 'TOP 1',
-            self::RU_LANG => 'ТОП 1'
+            self::RU_LANG => 'ТОП 1',
+            self::TR_LANG => 'İLK 1',
         ],
         'top_month' => [
             self::EN_LANG => 'TOP 2',
-            self::RU_LANG => 'ТОП 2'
+            self::RU_LANG => 'ТОП 2',
+            self::TR_LANG => 'İLK 2',
         ],
         'top_week' => [
             self::EN_LANG => 'TOP 3',
-            self::RU_LANG => 'ТОП 3'
+            self::RU_LANG => 'ТОП 3',
+            self::TR_LANG => 'İLK 3',
         ],
         'top_day' => [
             self::EN_LANG => 'BEST 10',
-            self::RU_LANG => 'В десятке лучших'
+            self::RU_LANG => 'В десятке лучших',
+            self::TR_LANG => 'İlk onda',
         ],
         // Рекорды конец
         'Return to fullscreen mode?' => [
-            self::RU_LANG => 'Вернуться в полноэкранный режим?'
+            self::RU_LANG => 'Вернуться в полноэкранный режим?',
+            self::TR_LANG => 'Tam ekran moduna dönmek mi?',
         ],
         // Профиль игрока
         'Choose file' => [
-            self::RU_LANG => 'Выберите файл'
+            self::RU_LANG => 'Выберите файл',
+            self::TR_LANG => 'Dosya seçin',
         ],
         'Back' => [
-            self::RU_LANG => 'Назад'
+            self::RU_LANG => 'Назад',
+            self::TR_LANG => 'Geri dön',
         ],
         'Wallet' => [
-            self::RU_LANG => 'Кошелек'
+            self::RU_LANG => 'Кошелек',
+            self::TR_LANG => 'Çanta',
         ],
         'Referrals' => [
-            self::RU_LANG => 'Рефералы'
+            self::RU_LANG => 'Рефералы',
+            self::TR_LANG => 'Sevkler',
         ],
         'Player ID' => [
-            self::RU_LANG => 'Номер игрока'
+            self::RU_LANG => 'Номер игрока',
+            self::TR_LANG => 'Oyuncu Kimliği',
         ],
         // complaints
         'Player is unbanned' => [
-            self::RU_LANG => 'Игрок разблокирован'
+            self::RU_LANG => 'Игрок разблокирован',
+            self::TR_LANG => 'Oyuncu engelsiz',
         ],
         'Player`s ban not found' => [
-            self::RU_LANG => 'Бан пользователя не найден'
+            self::RU_LANG => 'Бан пользователя не найден',
+            self::TR_LANG => 'Kullanıcı yasağı bulunamadı',
         ],
         'Player not found' => [
-            self::RU_LANG => 'Пользователь не найден'
+            self::RU_LANG => 'Пользователь не найден',
+            self::TR_LANG => 'Kullanıcı bulunamadı',
         ],
         // end complaints
         'Save' => [
-            self::RU_LANG => 'Сохранить'
+            self::RU_LANG => 'Сохранить',
+            self::TR_LANG => 'Kaydet',
         ],
         'new nickname' => [
-            self::RU_LANG => 'новый Ник'
+            self::RU_LANG => 'новый Ник',
+            self::TR_LANG => 'yeni takma ad',
         ],
         'Input new nickname' => [
-            self::RU_LANG => 'Задайте новый ник'
+            self::RU_LANG => 'Задайте новый ник',
+            self::TR_LANG => 'Yeni takma ad girin',
         ],
         'Your rank' => [
-            self::RU_LANG => 'Ваш Рейтинг'
+            self::RU_LANG => 'Ваш Рейтинг',
+            self::TR_LANG => 'Rütbeniz',
         ],
         'Ranking number' => [
-            self::RU_LANG => 'Позиция в ТОП'
+            self::RU_LANG => 'Позиция в ТОП',
+            self::TR_LANG => 'ÜST pozisyon',
         ],
         'Balance' => [
-            self::RU_LANG => 'Баланс'
+            self::RU_LANG => 'Баланс',
+            self::TR_LANG => 'Denge',
         ],
         'Rating by coins' => [
-            self::RU_LANG => 'Рейтинг по монетам'
+            self::RU_LANG => 'Рейтинг по монетам',
+            self::TR_LANG => 'Sikke sıralaması',
         ],
         'Secret key' => [
             self::EN_LANG => 'Secret key&#42;',
-            self::RU_LANG => 'Ключ&#42; восстановления'
+            self::RU_LANG => 'Ключ&#42; восстановления',
+            self::TR_LANG => 'Gizli anahtar&#42;',
         ],
         'Link' => [
-            self::RU_LANG => 'Привязать'
+            self::RU_LANG => 'Привязать',
+            self::TR_LANG => 'Bağlama',
         ],
         'Bonuses accrued' => [
-            self::RU_LANG => 'Начислено бонусов'
+            self::RU_LANG => 'Начислено бонусов',
+            self::TR_LANG => 'Tahakkuk eden primler',
         ],
         'SUDOKU Balance' => [
-            self::RU_LANG => 'Баланс SUDOKU'
+            self::RU_LANG => 'Баланс SUDOKU',
+            self::TR_LANG => 'SUDOKU bilançosu',
         ],
         'Claim' => [
-            self::RU_LANG => 'Забрать'
+            self::RU_LANG => 'Забрать',
+            self::TR_LANG => 'İddia',
         ],
         'Name' => [
-            self::RU_LANG => 'Имя'
+            self::RU_LANG => 'Имя',
+            self::TR_LANG => 'İsim',
         ],
         // Профиль игрока конец
 
         'Nickname updated' => [
             self::RU_LANG => 'Ник пользователя сохранен',
+            self::TR_LANG => 'Takma ad güncellendi',
         ],
         'Stats getting error' => [
             self::RU_LANG => 'Ошибка загрузки статистики',
+            self::TR_LANG => 'İstatistikler yüklenirken hata oluştu',
         ],
         'Error saving Nick change' => [
             self::RU_LANG => 'Ошибка сохранения Ника!',
+            self::TR_LANG => 'Nick\'in kurtarma hatası',
         ],
         'Play at least one game to view statistics' => [
             self::RU_LANG => 'Для просмотра статистики сыграйте хотя бы одну партию',
+            self::TR_LANG => 'İstatistikleri görüntülemek için en az bir oyun oynayın',
         ],
         'Lost server synchronization' => [
             'Потеря синхронизации с сервером',
+            self::TR_LANG => 'Kayıp sunucu senkronizasyonu',
         ],
         'Closed game window' => [
-            self::RU_LANG => 'Закрыл вкладку с игрой'
+            self::RU_LANG => 'Закрыл вкладку с игрой',
+            self::TR_LANG => 'Kapalı oyun penceresi',
         ],
         'You closed the game window and became inactive!' => [
-            self::RU_LANG => 'Вы закрыли вкладку с игрой и стали Неактивным!'
+            self::RU_LANG => 'Вы закрыли вкладку с игрой и стали Неактивным!',
+            self::TR_LANG => 'Oyun penceresini kapattınız ve devre dışı kaldınız!',
         ],
         'Request denied. Game is still ongoing' => [
-            self::RU_LANG => 'Запрос отклонен. Игра еще продолжается'
+            self::RU_LANG => 'Запрос отклонен. Игра еще продолжается',
+            self::TR_LANG => 'Talep reddedildi. Oyun hala devam ediyor',
         ],
         'Request rejected' => [
-            self::RU_LANG => 'Запрос отклонен'
+            self::RU_LANG => 'Запрос отклонен',
+            self::TR_LANG => 'Talep reddedildi',
         ],
         'No messages yet' => [
-            self::RU_LANG => 'Сообщений пока нет'
+            self::RU_LANG => 'Сообщений пока нет',
+            self::TR_LANG => 'Henüz mesaj yok',
         ],
         'New game request sent' => [
-            self::RU_LANG => 'Запрос на новую игру отправлен'
+            self::RU_LANG => 'Запрос на новую игру отправлен',
+            self::TR_LANG => 'Yeni bir oyun için talep gönderildi',
         ],
         'Your new game request awaits players response' => [
-            self::RU_LANG => 'Ваш запрос на новую игру ожидает ответа игроков'
+            self::RU_LANG => 'Ваш запрос на новую игру ожидает ответа игроков',
+            self::TR_LANG => 'Yeni oyun talebiniz oyuncuların yanıtını bekliyor',
         ],
-        "Request was aproved! Starting new game" => [
-            self::RU_LANG => 'Запрос принят! Начинаем новую игру'
+        'Request was aproved! Starting new game' => [
+            self::RU_LANG => 'Запрос принят! Начинаем новую игру',
+            self::TR_LANG => 'İstek onaylandı! Yeni oyuna başlıyorum',
         ],
         'Default avatar is used' => [
-            self::RU_LANG => 'Используется аватар по умолчанию'
+            self::RU_LANG => 'Используется аватар по умолчанию',
+            self::TR_LANG => 'Varsayılan avatar kullanılır',
         ],
-        "Avatar by provided link" => [
-            self::RU_LANG => "Аватар по предоставленной ссылке"
+        'Avatar by provided link' => [
+            self::RU_LANG => "Аватар по предоставленной ссылке",
+            self::TR_LANG => 'Verilen bağlantıya göre avatar',
         ],
-        "Set" => [
-            self::RU_LANG => 'Задать'
+        'Set' => [
+            self::RU_LANG => 'Задать',
+            self::TR_LANG => 'Ayarla',
         ],
-        "Avatar loading" => [
-            self::RU_LANG => 'Загрузка Аватара'
+        'Avatar loading' => [
+            self::RU_LANG => 'Загрузка Аватара',
+            self::TR_LANG => 'Avatar yükleniyor',
         ],
         'Send' => [
-            self::RU_LANG => 'Отправить'
+            self::RU_LANG => 'Отправить',
+            self::TR_LANG => 'Gönder',
         ],
         'Avatar URL' => [
-            self::RU_LANG => 'URL аватара'
+            self::RU_LANG => 'URL аватара',
+            self::TR_LANG => 'Avatar URL\'si',
         ],
         'Apply' => [
-            self::RU_LANG => 'Применить'
+            self::RU_LANG => 'Применить',
+            self::TR_LANG => 'Başvurmak',
         ],
-        "Account key" => [
-            self::RU_LANG => 'Ключ учетной записи'
+        'Account key' => [
+            self::RU_LANG => 'Ключ учетной записи',
+            self::TR_LANG => 'Hesap anahtarı',
         ],
-        "Main account key" => [
-            self::RU_LANG => 'Ключ основного аккаунта'
+        'Main account key' => [
+            self::RU_LANG => 'Ключ основного аккаунта',
+            self::TR_LANG => 'Birincil hesap anahtarı',
         ],
-        "old account saved key" => [
-            self::RU_LANG => 'сохраненный ключ от старого аккаунта'
+        'old account saved key' => [
+            self::RU_LANG => 'сохраненный ключ от старого аккаунта',
+            self::TR_LANG => 'eski hesaptan kaydedilmiş anahtar',
         ],
         'Key transcription error' => [
-            self::RU_LANG => 'Ошибка расшифровки ключа'
+            self::RU_LANG => 'Ошибка расшифровки ключа',
+            self::TR_LANG => 'Anahtar şifre çözme hatası',
         ],
         "Player's ID NOT found by key" => [
-            self::RU_LANG => 'ID игрока по ключу НЕ найден'
+            self::RU_LANG => 'ID игрока по ключу НЕ найден',
+            self::TR_LANG => 'Anahtara göre oyuncu kimliği bulunamadı',
         ],
         'Accounts linked' => [
-            self::RU_LANG => 'Учетные записи связаны'
+            self::RU_LANG => 'Учетные записи связаны',
+            self::TR_LANG => 'Hesaplar birbirine bağlıdır',
         ],
         'Accounts are already linked' => [
-            self::RU_LANG => 'Аккаунты уже связаны'
+            self::RU_LANG => 'Аккаунты уже связаны',
+            self::TR_LANG => 'Hesaplar zaten bağlı',
         ],
         'Game is not started' => [
-            self::RU_LANG => 'Игра не начата'
+            self::RU_LANG => 'Игра не начата',
+            self::TR_LANG => 'Oyun başlatılmadı',
         ],
         'Click to expand the image' => [
             self::RU_LANG => 'Кликните для увеличения изображения'
@@ -922,7 +1031,7 @@ class T
         'Gain/loss<br>in ranking' => [
             self::RU_LANG => 'Прибавка/потеря<br>в рейтинге',
         ],
-         '% Wins' => [
+        '% Wins' => [
             self::RU_LANG => '% Побед',
         ],
         'Games in total' => [
@@ -1043,14 +1152,14 @@ class T
             self::RU_LANG => 'Ошибка сохранения нового URL'
         ],
         'A player may open more than one cell and more than one KEY in one turn. Use the CASCADES rule' => [
-          self::RU_LANG => 'За один ход игрок может открыть несколько ячеек и несколько КЛЮЧЕЙ. Пользуйтесь правилом КАСКАДОВ'
+            self::RU_LANG => 'За один ход игрок может открыть несколько ячеек и несколько КЛЮЧЕЙ. Пользуйтесь правилом КАСКАДОВ'
         ],
         'If after the automatic opening of a number, new blocks of EIGHT open cells are formed on the field, such blocks are also opened by CASCADE' => [
             self::RU_LANG => 'Если после автоматического открытия числа на поле образуются новые блоки из ВОСЬМИ открытых ячеек, то такие блоки также открываются КАСКАДОМ'
         ],
         'If a player has opened a cell (solved a number in it) and there is only ONE closed digit left in the block, this digit is opened automatically' => [
-        self::RU_LANG => 'Если игрок открыл ячейку (разгадал число в ней) и в блоке осталась только ОДНА закрытая цифра, то такая цифра открывается автоматически'
-            ],
+            self::RU_LANG => 'Если игрок открыл ячейку (разгадал число в ней) и в блоке осталась только ОДНА закрытая цифра, то такая цифра открывается автоматически'
+        ],
         'is awarded for solved empty cell' => [
             self::RU_LANG => 'начисляется за открытую цифру'
         ],
@@ -1060,7 +1169,7 @@ class T
         "The players' task is to take turns making moves and accumulating points to open black squares" => [
             self::RU_LANG => 'Задача игроков - делая ходы по очереди и накапливая очки, открывать черные квадраты'
         ],
-        'The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated'=> [
+        'The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated' => [
             self::RU_LANG => 'Действуют классические правила СУДОКУ - в блоке из девяти ячеек (по вертикали, по горизонтали и в квадрате 3х3) цифры не должны повторяться'
         ],
         'faq_rules' => [
@@ -1270,7 +1379,8 @@ class T
         ],
         'Player' => [
             self::EN_LANG => [1 => 'Player1', 2 => 'Player2', 3 => 'Player3', 4 => 'Player4'],
-            self::RU_LANG => [1 => 'Игрок1', 2 => 'Игрок2', 3 => 'Игрок3', 4 => 'Игрок4']
+            self::RU_LANG => [1 => 'Игрок1', 2 => 'Игрок2', 3 => 'Игрок3', 4 => 'Игрок4'],
+            self::TR_LANG => [1 => 'Oyuncu1', 2 => 'Oyuncu2', 3 => 'Oyuncu3', 4 => 'Oyuncu1'],
         ],
     ];
 
