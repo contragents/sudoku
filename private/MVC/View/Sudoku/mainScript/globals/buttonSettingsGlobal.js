@@ -2,8 +2,8 @@
 var topButtons = {
     newGameButton: {displayWidth: 0},
     instructButton: {displayWidth: 0},
+    prizesButton: {displayWidth: 0},
     ...(!isYandexAppGlobal() && {
-        prizesButton: {displayWidth: 0}, // todo SUD-65 убрать условие
         inviteButton: {displayWidth: 0}
     }),
 };
@@ -40,19 +40,20 @@ var buttons = {
             btnFAQClickHandler(false);
         }
     },
-    ...(!isYandexAppGlobal() && { // todo SUD-65 убрать условие
-        prizesButton: {
-            filename: 'prizes2',
-            modes: [OTJAT_MODE, 'Navedenie', 'Najatie'],
-            x: (topXY.x + knopkiWidth) / 2,
-            y: (topXY.y + topHeight) / 2,
-            caption: 'Prizes',
-            width: buttonWidth / 2,
-            //height: topHeight,
-            object: false,
-            svgObject: false,
-            pointerupFunction: prizesButtonHandler,
-        },
+    prizesButton: {
+        filename: 'prizes2',
+        modes: [OTJAT_MODE, 'Navedenie', 'Najatie'],
+        x: (topXY.x + knopkiWidth) / 2,
+        y: (topXY.y + topHeight) / 2,
+        caption: 'Prizes',
+        width: buttonWidth / 2,
+        //height: topHeight,
+        object: false,
+        svgObject: false,
+        pointerupFunction: prizesButtonHandler,
+    },
+    ...(!isYandexAppGlobal() && {
+
         inviteButton: {
             filename: 'invite2',
             modes: [OTJAT_MODE, 'Navedenie', 'Najatie'],

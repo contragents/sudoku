@@ -4,6 +4,7 @@ namespace classes;
 
 use PaymentModel;
 use BaseController as BC;
+use UserModel;
 
 class T
 {
@@ -262,6 +263,10 @@ class T
         'word_price' => [
             self::EN_LANG => 'word points',
             self::RU_LANG => 'очки за слово'
+        ],
+        UserModel::BALANCE_HIDDEN_FIELD => [
+            self::EN_LANG => 'User hidden',
+            self::RU_LANG => 'Пользователь скрыт'
         ],
         'top_year' => [
             self::EN_LANG => 'TOP 1',
