@@ -3,6 +3,16 @@
 use classes\DB;
 use classes\ORM;
 
+
+/**
+ * Class CommonIdRatingModel
+ * @property int $_id;
+ * @property int $_rating_erudit
+ * @property int $_rating_scrabble
+ * @property int $_rating_sudoku
+ */
+
+
 class CommonIdRatingModel extends BaseModel
 {
     const TABLE_NAME = 'common_id_rating';
@@ -11,6 +21,10 @@ class CommonIdRatingModel extends BaseModel
     const RATING_FIELD_PREFIX = 'rating_';
 
     const INITIAL_RATING = 1700;
+
+    public ?int $_rating_erudit = null;
+    public ?int $_rating_scrabble = null;
+    public ?int $_rating_sudoku = null;
 
     public static function changeUserRating(int $commonId, int $newRating, string $gameName): bool
     {
@@ -93,5 +107,28 @@ class CommonIdRatingModel extends BaseModel
         }
 
         return $resultRatings;
+    }
+
+    /**
+     * @param string $gameName
+     * @param int $top
+     * @param int|null $topMax
+     * @return self[][]
+     */
+    public static function
+    getTopPlayersO(string $gameName, int $top, ?int $topMax = null): array
+    {
+        $rows1 = self::getTopPlayers($gameName, $top, $topMax);
+
+        $res = [];
+
+        foreach ($rows1 as $top => $rows2) {
+            $res[$top] = [];
+            foreach($rows2 as $row) {
+                $res[$top][] = self::arrayToObject($row);
+            }
+        }
+
+        return $res;
     }
 }

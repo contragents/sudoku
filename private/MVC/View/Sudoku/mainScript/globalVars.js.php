@@ -97,6 +97,7 @@ const SET_PLAYER_NAME_SCRIPT = 'players/saveUserName';
 const AVATAR_UPLOAD_SCRIPT = 'players/avatarUpload';
 
 const STATS_URL = 'stats/viewV2'
+const PRIZES_SCRIPT_URL = 'stats/leaders'
 const NEW_GAME_SCRIPT = 'newGame';
 const INVITE_SCRIPT = 'inviteToNewGame';
 

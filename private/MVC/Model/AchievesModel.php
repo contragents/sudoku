@@ -7,9 +7,37 @@ use classes\T;
 use classes\ViewHelper;
 use BaseController as BC;
 
+
+/**
+* @property int $_id
+* @property int $_common_id
+* @property string $_date_achieved
+* @property string $_event_type
+* @property string $_event_period
+* @property string $_word
+* @property string $_event_value
+* @property bool $_is_active
+* @property float $_reward
+* @property float $_income
+* @property int $_game_name_id
+*/
+
+
 class AchievesModel extends BaseModel
 {
     const TABLE_NAME = 'achieves';
+
+    public ?int $_id = null;
+    public ?int $_common_id = null;
+    public ?string $_date_achieved = null;
+    public ?string $_event_type = null;
+    public ?string $_event_period = null;
+    public ?string $_word = null;
+    public ?string $_event_value = null;
+    public bool $_is_active = false;
+    public ?float $_reward = null;
+    public ?float $_income = null;
+    public ?int $_game_name_id = null;
 
     const LIMIT = 10;
 
@@ -49,6 +77,28 @@ class AchievesModel extends BaseModel
         'wins' => 'Winning count',
         'delta_rating' => 'Increase/loss in rating',
         'win_percent' => '% of wins',
+    ];
+
+    const GOLD_ACHIEVE_TYPE = 'gold';
+    const SILVER_ACHIEVE_TYPE = 'silver';
+    const BRONZE_ACHIEVE_TYPE = 'bronze';
+    const STONE_ACHIEVE_TYPE = 'stone';
+
+    const TOP_TYPES = [
+        1 => self::GOLD_ACHIEVE_TYPE,
+        2 => self::SILVER_ACHIEVE_TYPE,
+        3 => self::BRONZE_ACHIEVE_TYPE,
+        4 => self::STONE_ACHIEVE_TYPE,
+        5 => self::STONE_ACHIEVE_TYPE,
+        6 => self::STONE_ACHIEVE_TYPE,
+        7 => self::STONE_ACHIEVE_TYPE,
+        8 => self::STONE_ACHIEVE_TYPE,
+        9 => self::STONE_ACHIEVE_TYPE,
+        10 => self::STONE_ACHIEVE_TYPE,
+        self::YEAR_PERIOD => self::GOLD_ACHIEVE_TYPE,
+        self::MONTH_PERIOD => self::SILVER_ACHIEVE_TYPE,
+        self::WEEK_PERIOD => self::BRONZE_ACHIEVE_TYPE,
+        self::DAY_PERIOD => self::STONE_ACHIEVE_TYPE,
     ];
 
     public const DAY_PERIOD = 'day';
@@ -515,5 +565,23 @@ class AchievesModel extends BaseModel
             . ($type ? ORM::andWhere(self::EVENT_TYPE_FIELD, '=', $type) : '')
             . ($period ? ORM::andWhere(self::EVENT_PERIOD_FIELD, '=', $period) : '')
         ) ?: [];
+    }
+
+    /**
+     * @param string $gameName
+     * @param string $type
+     * @param string $period
+     * @return self[]
+     */
+    public static function getActiveO(string $gameName, string $type = '', string $period = ''): array
+    {
+        $rows = self::getActive($gameName, $type, $period);
+        $res = [];
+
+        foreach ($rows as $row) {
+            $res[] = self::arrayToObject($row);
+        }
+
+        return $res;
     }
 }

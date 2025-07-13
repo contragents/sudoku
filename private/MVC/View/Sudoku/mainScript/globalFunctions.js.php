@@ -3,6 +3,13 @@
 use classes\T;
 ?>
 
+function closeDialogs() {
+    bootbox.hideAll();
+    canOpenDialog = true;
+    canCloseDialog = true;
+    dialog = false;
+}
+
 function initNewGameVarsGlobal() {
     gameLog = [];
     isInviteGameWaiting = false;

@@ -3,7 +3,7 @@ var topButtons = {
     newGameButton: {displayWidth: 0},
     instructButton: {displayWidth: 0},
     ...(!isYandexAppGlobal() && {
-        prizesButton: {displayWidth: 0},
+        prizesButton: {displayWidth: 0}, // todo SUD-65 убрать условие
         inviteButton: {displayWidth: 0}
     }),
 };
@@ -40,7 +40,7 @@ var buttons = {
             btnFAQClickHandler(false);
         }
     },
-    ...(!isYandexAppGlobal() && {
+    ...(!isYandexAppGlobal() && { // todo SUD-65 убрать условие
         prizesButton: {
             filename: 'prizes2',
             modes: [OTJAT_MODE, 'Navedenie', 'Najatie'],
@@ -51,13 +51,7 @@ var buttons = {
             //height: topHeight,
             object: false,
             svgObject: false,
-            pointerupFunction: function () {
-                if (bootBoxIsOpenedGlobal()) {
-                    return;
-                }
-
-                return;
-            }
+            pointerupFunction: prizesButtonHandler,
         },
         inviteButton: {
             filename: 'invite2',
