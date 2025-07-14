@@ -19,11 +19,17 @@ class T
 
     public static function S($keyPhrase, ?array $params = null, ?string $forceLang = null): string
     {
-        if (BC::$instance->gameName && isset(self::PHRASES[$keyPhrase][BC::$instance->gameName])) {
-            $res = self::PHRASES[$keyPhrase][BC::$instance->gameName][$forceLang ?? self::$lang]
-                ?? (self::PHRASES[$keyPhrase][$forceLang ?? self::$lang] ?? $keyPhrase);
+        $lang = $forceLang ?? self::$lang;
+
+        if (isset(self::PHRASES[$keyPhrase][BC::gameName()][$lang]) || isset(self::PHRASES[$keyPhrase][$lang])) {
+            $res = self::PHRASES[$keyPhrase][BC::gameName()][$lang]
+                ?? (self::PHRASES[$keyPhrase][$lang] ?? $keyPhrase);
+        } elseif (class_exists(self::class . '_' . $lang)) {
+            $classLang = self::class . '_' . $lang;
+
+            $res = $$classLang::PHRASES[$keyPhrase][BC::gameName()] ?? ($$classLang::PHRASES[$keyPhrase] ?? $keyPhrase);
         } else {
-            $res = self::PHRASES[$keyPhrase][$forceLang ?? self::$lang] ?? $keyPhrase;
+            $res = $keyPhrase;
         }
 
         if (strpos($res, Macros::PATTERN) !== false) {
@@ -31,7 +37,7 @@ class T
         }
 
         if (strpos($res, self::PLURAL_PATTERN) !== false && $params) {
-            return self::applyPlurals($res, $params, $forceLang ?? self::$lang);
+            return self::applyPlurals($res, $params, $lang);
         }
 
         return $res;

@@ -144,7 +144,7 @@ class T_TR
         'is the only one left in the game - Victory!' => 'Oyunda bir kişi kaldı - Zafer!',
         'left game' => 'oyunu terk etti',
         'has left the game' => 'oyunu terk etti',
-        'is the only one left in the game! Start a new game' =>'oyunda yalnız kaldı! Yeni bir oyun başlatın',
+        'is the only one left in the game! Start a new game' => 'oyunda yalnız kaldı! Yeni bir oyun başlatın',
         'Time for the turn ran out' => 'Çalışma süresi sona erdi',
         "is left without any pieces! Winner - " => 'cipsi bitmiş! Kazanan: ',
         ' with score ' => 'skor ile',
@@ -168,7 +168,8 @@ class T_TR
         'Status' => 'Durum',
         'Type' => 'Tip',
         'Period' => 'Dönem',
-        'Word' => 'Kelime','Puanlar/harfler',
+        'Word' => 'Kelime',
+        'Puanlar/harfler',
         'Result' => 'Sonuç',
         'Opponents' => 'Muhalifler',
         'Games<br>total' => 'Oyunlar<br>toplam',
@@ -201,321 +202,184 @@ class T_TR
         "GAMES played - Day Record!" => 'Çalınan Parçalar - Günün Kaydı!',
         "Victory" => 'Zafer',
         'Losing' => 'Kaybetmek',
-        "Go to player's stats" => [
-            self::RU_LANG => 'Перейти к статистике игрока'
-        ],
-        'Filter by player' => [
-            self::RU_LANG => 'Фильтровать по игроку'
-        ],
-        'Apply filter' => [
-            self::RU_LANG => 'Фильтровать'
-        ],
-        'against' => [
-            self::RU_LANG => 'против игрока'
-        ],
-        "File loading error!" => [
-            self::RU_LANG => 'Ошибка загрузки файла!'
-        ],
-        "Check:" => [
-            self::RU_LANG => 'Проверьте:'
-        ],
-        "file size (less than " => [
-            self::RU_LANG => 'размер файла (не более '
-        ],
-        "resolution - " => [
-            self::RU_LANG => 'разрешение - '
-        ],
-        "Incorrect URL format!" => [
-            self::RU_LANG => 'Неверный формат URL!'
-        ],
-        "Must begin with " => [
-            self::RU_LANG => 'Должно начинаться с '
-        ],
-        'Error! Choose image file with the size not more than' => [
-            self::RU_LANG => 'Ошибка! Выберите файл-картинку размером не более'
-        ],
-        'Avatar updated' => [
-            self::RU_LANG => 'Аватар обновлен'
-        ],
-        "Error saving new URL" => [
-            self::RU_LANG => 'Ошибка сохранения нового URL'
-        ],
-        'A player may open more than one cell and more than one KEY in one turn. Use the CASCADES rule' => [
-            self::RU_LANG => 'За один ход игрок может открыть несколько ячеек и несколько КЛЮЧЕЙ. Пользуйтесь правилом КАСКАДОВ'
-        ],
-        'If after the automatic opening of a number, new blocks of EIGHT open cells are formed on the field, such blocks are also opened by CASCADE' => [
-            self::RU_LANG => 'Если после автоматического открытия числа на поле образуются новые блоки из ВОСЬМИ открытых ячеек, то такие блоки также открываются КАСКАДОМ'
-        ],
-        'If a player has opened a cell (solved a number in it) and there is only ONE closed digit left in the block, this digit is opened automatically' => [
-            self::RU_LANG => 'Если игрок открыл ячейку (разгадал число в ней) и в блоке осталась только ОДНА закрытая цифра, то такая цифра открывается автоматически'
-        ],
-        'is awarded for solved empty cell' => [
-            self::RU_LANG => 'начисляется за открытую цифру'
-        ],
-        'by calculating all of other 8 digits in a block - vertically OR horizontally OR in a 3x3 square' => [
-            self::RU_LANG => ', вычислив все остальные 8 цифр в блоке - по вертикали ИЛИ по горизонтали ИЛИ в квадрате 3х3'
-        ],
-        "The players' task is to take turns making moves and accumulating points to open black squares" => [
-            self::RU_LANG => 'Задача игроков - делая ходы по очереди и накапливая очки, открывать черные квадраты'
-        ],
-        'The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated' => [
-            self::RU_LANG => 'Действуют классические правила СУДОКУ - в блоке из девяти ячеек (по вертикали, по горизонтали и в квадрате 3х3) цифры не должны повторяться'
-        ],
+        "Go to player's stats" => 'Oyuncu istatistiklerine git',
+        'Filter by player' => 'Oyuncuya göre filtrele',
+        'Apply filter' => 'Filtre uygula',
+        'against' => 'bir oyuncuya karşı',
+        "File loading error!" => 'Dosya yükleme hatası!',
+        "Check:" => 'Şuna bir bak:',
+        "file size (less than " => 'dosya boyutu (maks ',
+        "resolution - " => 'çözünürlük - ',
+        "Incorrect URL format!" => 'Yanlış URL biçimi!',
+        "Must begin with " => 'Şununla başlamalıdır: ',
+        'Error! Choose image file with the size not more than' => 'Hata! Boyutundan daha büyük olmayan bir resim dosyası seçin:',
+        'Avatar updated' => 'Avatar güncellendi',
+        "Error saving new URL" => 'Yeni URL kaydedilirken hata oluştu',
+        'A player may open more than one cell and more than one KEY in one turn. Use the CASCADES rule' => 'Bir oyuncu bir turda birden fazla hücre ve birden fazla ANAHTAR açabilir. CASCADES kuralını kullanın',
+        'If after the automatic opening of a number, new blocks of EIGHT open cells are formed on the field, such blocks are also opened by CASCADE' => 'Bir sayının otomatik olarak açılmasından sonra, alanda SEKİZ açık hücreden oluşan yeni bloklar oluşursa, bu bloklar da CASCADE ile açılır',
+        'If a player has opened a cell (solved a number in it) and there is only ONE closed digit left in the block, this digit is opened automatically' => 'Bir oyuncu bir hücreyi açmışsa (içindeki bir sayıyı çözmüşse) ve blokta sadece BİR kapalı rakam kalmışsa, bu rakam otomatik olarak açılır',
+        'is awarded for solved empty cell' => '- açık bir rakam için verilir',
+        'by calculating all of other 8 digits in a block - vertically OR horizontally OR in a 3x3 square' => 'açmak için puan toplamaktır - dikey VEYA yatay VEYA 3x3 karede',
+        "The players' task is to take turns making moves and accumulating points to open black squares" => 'Oyuncuların görevi sırayla hamle yapmak ve bir bloktaki diğer 8 rakamın tümünü hesaplayarak siyah kareleri',
+        'The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated' => 'Klasik SUDOKU kuralları geçerlidir - dokuz hücreli bir blokta (dikey, yatay ve 3x3\'lük bir karede) sayılar tekrarlanmamalıdır',
         'faq_rules' => [
-            SudokuGame::GAME_NAME => [
-                self::EN_LANG => Faq::RULES[self::EN_LANG],
-                self::RU_LANG => Faq::RULES[self::RU_LANG],
-            ],
+            SudokuGame::GAME_NAME => <<<TR
+
+<h2 id="nav1">Oyun hakkında</h2>
+Klasik SUDOKU kuralları geçerlidir - dokuz hücreli bir blokta (dikey, yatay ve 3x3 karede) sayılar tekrarlanmamalıdır
+<br><br>
+Oyuncuların görevi sırayla hamle yapmak ve siyah kareleri açmak için puan toplamaktır (<span style="color: #0f0">+10 puan</span>) bir bloktaki diğer 8 rakamın tümünü hesaplayarak - dikey VEYA yatay VEYA 3x3 kare içinde
+<br><br>
+A <span style="color: #0f0">+1 puan</span> verilir
+<br><br>
+Zafer, tüm olası puanların %50'sini alan oyuncuya gider +1 puan
+<br><br>
+Bir oyuncu bir hücreyi açmışsa (içindeki bir sayıyı çözmüşse) ve blokta sadece BİR kapalı rakam kalmışsa, bu rakam otomatik olarak açılır
+<br><br>
+Bir rakamın otomatik olarak açılmasından sonra, sahada SEKİZ açık hücreden oluşan yeni bloklar oluşursa, bu bloklar da KASA ile açılır
+<br><br>
+Bir oyuncu bir turda birden fazla hücre ve birden fazla ANAHTAR açabilir. CASCADES kuralını kullanın
+<br><br>
+Hatalı bir hamle durumunda - hücredeki rakam yanlıştır - bu hücrede her iki oyuncu tarafından görülebilen küçük kırmızı bir hata rakamı belirir. Bu rakam bir daha bu hücreye yerleştirilemez
+<br><br>
+Kontrol düğmesini kullanarak oyuncu bir işaret yapabilir - hücreye küçük yeşil bir sayı koyabilir. Bu, oyuncunun emin olduğu hesaplanmış bir rakam veya sadece bir tahmin olabilir. Notları normal bir SUDOKU'da olduğu gibi kullanın - diğer oyuncu bunları göremez
+TR
+            ,
         ],
-        'faq_rating' => [
-            self::EN_LANG => Faq::RATING[self::EN_LANG],
-            self::RU_LANG => Faq::RATING[self::RU_LANG],
-        ],
+        'faq_rating' => <<<TR
+Elo reytingi
+<br><br>
+Elo reyting sistemi, Elo katsayısı - oyunlarda oyuncuların göreceli gücünü hesaplama yöntemi, 
+iki oyunculu oyunlarda (örneğin satranç, dama veya shogi, go). 
+<br>
+Bu derecelendirme sistemi Macar asıllı Amerikalı fizik profesörü Arpad Elo (Macarca: Élő Árpád; 1903-1992) tarafından geliştirilmiştir
+<br><br>
+Oyuncular arasındaki derecelendirme farkı ne kadar büyükse, güçlü oyuncu kazanırken derecesine o kadar az puan eklenecektir.
+<br> 
+Tersine, daha zayıf bir oyuncu daha güçlü bir oyuncuyu yenerse reytingine daha fazla puan eklenecektir.
+<br><br>
+Bu nedenle, güçlü bir oyuncu için eşit oyuncularla oynamak daha avantajlıdır - kazanırsanız daha fazla puan alırsınız ve kaybederseniz çok fazla puan kaybetmezsiniz.
+<br><br>
+Yeni başlayan birinin deneyimli bir ustayla dövüşmesi güvenlidir.
+<br>Eğer kaybederseniz sıralama kaybı küçük olacaktır.
+<br>Ancak, zafer durumunda, usta rütbe puanlarını cömertçe paylaşacaktır.
+TR
+        ,
         'faq_rewards' => [
-            self::EN_LANG => Faq::REWARDS[self::EN_LANG],
-            self::RU_LANG => Faq::REWARDS[self::RU_LANG],
+            SudokuGame::GAME_NAME => <<<TR
+Oyuncular belirli başarılar (rekorlar) için ödüllendirilir.
+<br><br>
+Oyuncunun ödülleri, “STATS” bölümünde şu adaylıklar altında gösterilir: altın/gümüş/bronz/taş.
+<br><br>
+Ödül kartı aldığında, oyuncu SUDOKU coinleri {{sudoku_icon}}<br> bonus olarak alır.
+Coinler özel oyun modu “ON Coins”da kullanılabilir, oyun içi cüzdanınızı doldurabilir,
+oyundan coin çekebilirsiniz - daha fazla bilgi için “Coin Oyun Modu” sekmesine bakın.
+<br><br>
+Bir oyuncunun rekoru başka bir oyuncu tarafından kırılmadığı sürece, ödül kartı o oyuncu için “İSTATİSTİKLER” bölümünün “AKTİF ÖDÜLLER” sekmesinde gösterilir.
+<br><br>
+Her saat başı verilen her bir “ACTIVE Reward” ek “kar” olarak coin kazandırır.
+<br><br>
+Bir rekor başka bir oyuncu tarafından kırılırsa, rekorun önceki sahibinin ödül kartı “GEÇMİŞ ÖDÜLLER” sekmesine taşınır ve pasif gelir getirmeyi durdurur. 
+<br><br>
+Alınan toplam coin sayısı (tek seferlik bonuslar ve ek kar), “PROFİL” bölümündeki ‘Cüzdan’ sekmesinde sırasıyla “SUDOKU bakiyesi” ve “Biriken bonuslar” alanlarında görüntülenebilir.
+<br><br>
+“OYNANAN PARTİLER” başarılarında kendi rekorunu aşan oyuncuya yeni bir ödül kartı veya para verilmez.
+Rekor değeri (oyun sayısı / arkadaş sayısı) ödül kartında güncellenir.
+<br><br>
+Örneğin, bir oyuncu daha önce 10.000 oyun için “OYNANAN OYUNLAR”
+(altın) başarısını elde etmişse, bu oyuncunun oyun sayısı 10.001'e değiştiğinde, rekor sahibine artık ödül kartı verilmeyecektir.<br>
+TR
+            ,
         ],
-        'Reward' => [
-            self::RU_LANG => 'Награда'
-        ],
+        'Reward' => 'Ödül',
         'faq_coins' => [
-            self::EN_LANG => Faq::COINS[self::EN_LANG],
-            self::RU_LANG => Faq::COINS[self::RU_LANG],
+            SudokuGame::GAME_NAME => <<<TR
+Coin <strong>SUDOKU</strong> {{sudoku_icon}}{{yandex_exclude}}{{ , <strong>Scrabble, Sudoku</strong> gibi oyunlardan oluşan bir oyun ağında kullanılan oyun içi para birimidir<br><br>
+Tüm oyunlar için tek bir hesap, tek bir para birimi, tek bir cüzdan}}
+<br><br>
+{{yandex_exclude}}{{Kripto dünyasında, bu coin SUDOKU olarak da adlandırılır. Yakında, oyun içi cüzdanınızdan TON (Telegram) ağındaki harici bir cüzdana istediğiniz sayıda SUDOKU coinini çekebilmeniz mümkün olacak.
+<br><br>}}
+Bu arada, “Madeni paralar” modunu seçerek oyunda mümkün olduğunca çok para kazanmaya çalışıyoruz.<br><br>
+
+Bu modda oyuncu sıralamaları da dikkate alınır ve puanlanır.<br>
+Ancak, oyunun sonuçlarına göre kazanılan jetonlar artık cüzdanınıza yatırılır (kaybederseniz ise cüzdanınızdan düşülür).
+<br><br>
+Cüzdanınızdaki mevcut jeton bakiyesine bağlı olarak, 1, 5, 10 vb. jetonlarla oynamak için teklif edilir - listeden istediğiniz miktarı seçin.
+<br><br>
+“Başlat” (Start) düğmesine bastıktan sonra, belirtilen miktarı bahis yapmaya hazır olan bir rakip aranmaya başlanacaktır.
+<br><br> 
+Örneğin, bahis miktarınızı 5 jeton olarak belirlediniz ve yeni bir oyuna başlayanlar arasında sadece 1 jeton bahis yapmak isteyenler var.
+<br>
+O zaman hem sizin hem de bu tür bir oyuncunun bahsi 1 jeton olacaktır - iki seçenekten daha düşük olanı.
+<br><br>
+10 jeton için mücadele etmeye istekli biri varsa, sizin bahsiniz olan 5 jeton seçilecek ve oyun 10 jetonluk bir banka ile başlayacaktır - 5+5.
+<br><br>
+İki kişilik bir oyunda, kazanan tüm potu alır - kendi bahsi ve rakibinin bahsi.
+<br><br>
+Üçlü oyunda, kazanan kendi bahsini ve son oyuncunun (en az puana sahip oyuncu) bahsini alır.
+Ortadaki oyuncu (ikinci olan) kendi bahsini geri alır ve paralarını elinde tutar.
+<br><br>
+Dört oyunculu bir oyunda, pot 1. ve 4. sıradaki oyuncular arasında bölünür (ilk oyuncu her iki bahsi de alır) 
+ve 2. ve 3. sıradaki oyuncular arasında bölünür (ikinci oyuncu her iki bahsi de alır).
+<br><br>
+Böylece, üç ve dört oynamak, jeton biriktirme açısından daha az riskli hale gelir.
+<br><br>
+Tüm kaybeden oyuncuların puanları aynı ise, kazanan oyuncu tüm bahisleri alır.
+<br><br>
+Dörtlü oyunda, 2. ve 3. oyuncular eşit sayıda puan alırlarsa, bahislerini geri alırlar ve bahislerini korurlar.
+<br><br>
+Yeni Sıralama her durumda her zamanki gibi hesaplanır - “Sıralama” sekmesine bakın.
+<br><br>
+<h2>Cüzdanınızı nasıl doldurabilirsiniz</h2>
+<ol>
+<li>
+Her yeni oyuncu, bakiyesine {{stone_reward}} {{yandex_exclude}}{{SUDOKU }}hoş geldin jetonu alır ve hemen büyük kazançlar için yarışa katılabilir.
+</li>
+<li>
+Referans bağlantınızı kullanarak oyuna gelen her arkadaşınız için {{stone_reward}} jeton kazanacaksınız.
+Ayrıca, davet edilen kişi sayısında (günlük, haftalık, aylık, yıllık) rekor kırarak ödül kazanacaksınız. Bir kullanıcıyı davet etmek için Telegram üzerinden oyuna giriş yapmanız gerekir.
+</li>
+<li>
+Oyundaki başarılar için madeni paralar verilir (oyun başına puan, hamle başına puan, kelime başına puan, oyun sayısı, davet edilen kişi sayısı, sıralamadaki yer #1'den #10'a kadar).
+</li>
+<li>
+Her 100 oyun için {{stone_reward}} jeton verilir
+</li>
+</ol>
+
+<br>
+Her başarı için verilen jeton sayısı zaman içinde aşağı veya yukarı doğru değişebilir. Gerçek ödül, başarı kartına yansıtılır.
+<br><br>
+<h2>Kazandığınız paralarla neler yapabilirsiniz</h2>
+<ol>
+<li>
+Oyunlarımızı oynayın, bahisleri artırın, en sevdiğiniz eğlenceye heyecan ve ilgi katın
+</li>
+<li>
+Başka bir oyuncuya cüzdanınızdan istediğiniz sayıda jeton göndererek hediye verin (çok yakında)
+</li>  
+</ol>
+<br>
+Cüzdan bakiyenizin ayrıntılarını “PROFİL” menüsünün “Cüzdan” sekmesinden öğrenebilirsiniz.
+<br><br>
+<strong>Tahakkuk eden bonuslar</strong> - oyuncunun başarılarına bağlı olarak her saat tahakkuk eden pasif kazançların sonucu (“İSTATİSTİKLER” menüsü, “Ödüller” bölümü).
+<br>Bonuslar “Olsun” düğmesine basılarak bakiyeye aktarılabilir
+<br><br>
+<strong>SUDOKU Bakiyesi</strong> - bonuslar olmadan mevcut jeton bakiyesi. Jetonlar oyunun sonuçlarına göre düşülür / yatırılır
+<br><br>
+Madalyalara benzeyen başarı kartları, başarınızın bir göstergesidir. 
+<br>Bunlar başarının adını, dönemi (yıl, gün, hafta, ay), puan sayısını (derecelendirme, kelime uzunluğu, arkadaş sayısı) ve jeton sayısını içerir 
+<br><br>
+Rekorunuz başka bir oyuncu tarafından kırıldığında pasif para kazanımı durur
+TR,
         ],
-        '[[Player]] opened [[number]] [[cell]]' => [
-            self::RU_LANG => '[[Player]] открыл [[number]] [[cell]]'
-        ],
-        ' (including [[number]] [[key]])' => [
-            self::RU_LANG => ' (включая [[number]] [[key]])'
-        ],
-        '[[Player]] made a mistake' => [
-            self::RU_LANG => '[[Player]] ошибся'
-        ],
-        'You made a mistake!' => [
-            self::RU_LANG => 'Вы допустили ошибку!'
-        ],
-        'Your opponent made a mistake' => [
-            self::RU_LANG => 'Ваш оппонент допустил ошибку'
-        ],
-        '[[Player]] gets [[number]] [[point]]' => [
-            self::RU_LANG => '[[Player]] получает [[number]] [[point]]'
-        ],
-        'You got [[number]] [[point]]' => [
-            self::RU_LANG => 'Вы заработали [[number]] [[point]]!'
-        ],
-        'Your opponent got [[number]] [[point]]' => [
-            self::RU_LANG => 'Ваш противник заработал [[number]] [[point]]'
-        ],
+        '[[Player]] opened [[number]] [[cell]]' => '[[Player]] [[number]] kare açtı',
+        ' (including [[number]] [[key]])' => ' ([[number]] anahtar dahil)',
+        '[[Player]] made a mistake' => '[[Player]] bir hata yaptı',
+        'You made a mistake!' => 'Bir hata yaptın!',
+        'Your opponent made a mistake' => 'Rakibiniz bir hata yaptı',
+        '[[Player]] gets [[number]] [[point]]' => '[[Player]] [[number]] puan alır',
+        'You got [[number]] [[point]]' => '[[number]] puan alırsın',
+        'Your opponent got [[number]] [[point]]' => 'Rakibin [[number]] puan aldı',
     ];
-
-    public static function translit(string $text, bool $fromRU = true)
-    {
-        $cyr = [
-            'а',
-            'б',
-            'в',
-            'г',
-            'д',
-            'е',
-            'ё',
-            'ж',
-            'з',
-            'и',
-            'й',
-            'к',
-            'л',
-            'м',
-            'н',
-            'о',
-            'п',
-            'р',
-            'с',
-            'т',
-            'у',
-            'ф',
-            'х',
-            'ц',
-            'ч',
-            'ш',
-            'щ',
-            'ъ',
-            'ы',
-            'ь',
-            'э',
-            'ю',
-            'я',
-            'А',
-            'Б',
-            'В',
-            'Г',
-            'Д',
-            'Е',
-            'Ё',
-            'Ж',
-            'З',
-            'И',
-            'Й',
-            'К',
-            'Л',
-            'М',
-            'Н',
-            'О',
-            'П',
-            'Р',
-            'С',
-            'Т',
-            'У',
-            'Ф',
-            'Х',
-            'Ц',
-            'Ч',
-            'Ш',
-            'Щ',
-            'Ъ',
-            'Ы',
-            'Ь',
-            'Э',
-            'Ю',
-            'Я'
-        ];
-        $lat = [
-            'a',
-            'b',
-            'v',
-            'g',
-            'd',
-            'e',
-            'io',
-            'zh',
-            'z',
-            'i',
-            'y',
-            'k',
-            'l',
-            'm',
-            'n',
-            'o',
-            'p',
-            'r',
-            's',
-            't',
-            'u',
-            'f',
-            'h',
-            'ts',
-            'ch',
-            'sh',
-            'sht',
-            'a',
-            'i',
-            'y',
-            'e',
-            'yu',
-            'ya',
-            'A',
-            'B',
-            'V',
-            'G',
-            'D',
-            'E',
-            'Io',
-            'Zh',
-            'Z',
-            'I',
-            'Y',
-            'K',
-            'L',
-            'M',
-            'N',
-            'O',
-            'P',
-            'R',
-            'S',
-            'T',
-            'U',
-            'F',
-            'H',
-            'Ts',
-            'Ch',
-            'Sh',
-            'Sht',
-            'A',
-            'I',
-            'Y',
-            'e',
-            'Yu',
-            'Ya'
-        ];
-        if ($fromRU) {
-            $text = str_replace($cyr, $lat, $text);
-        }
-
-        return $text;
-    }
-
-    const PLURALS = [
-        'point' => [
-            self::EN_LANG => [0 => 'points', 1 => 'point', 2 => 'points'],
-            self::RU_LANG => [0 => 'очков', 1 => 'очко', 2 => 'очка', 5 => 'очков']
-        ],
-        'cell' => [
-            self::EN_LANG => [0 => 'cells', 1 => 'cell', 2 => 'cells'],
-            self::RU_LANG => [0 => 'клеток', 1 => 'клетку', 2 => 'клетки', 5 => 'клеток']
-        ],
-        'key' => [
-            self::EN_LANG => [0 => 'keys', 1 => 'key', 2 => 'keys'],
-            self::RU_LANG => [0 => 'ключей', 1 => 'ключ', 2 => 'ключа', 5 => 'ключей']
-        ],
-        'Player' => [
-            self::EN_LANG => [1 => 'Player1', 2 => 'Player2', 3 => 'Player3', 4 => 'Player4'],
-            self::RU_LANG => [1 => 'Игрок1', 2 => 'Игрок2', 3 => 'Игрок3', 4 => 'Игрок4'],
-            self::TR_LANG => [1 => 'Oyuncu1', 2 => 'Oyuncu2', 3 => 'Oyuncu3', 4 => 'Oyuncu1'],
-        ],
-    ];
-
-    /**
-     * @param string $res
-     * @param array $params
-     * @param string $lang Язык указываем явно для комментов пользователям на разных языках
-     * @return string
-     */
-    private static function applyPlurals(string $res, array $params, string $lang): string
-    {
-        preg_match_all('/\[\[([a-zA-Z]+)]]/', $res, $matches);
-
-        try {
-            foreach ($matches[1] as $num => $value) {
-                if (is_callable([self::class, $value . 'Plural'])) {
-                    $wordReplace = call_user_func([self::class, $value . 'Plural'], $params[$num]);
-                } else {
-                    // Для разных языков и количества делаем отдельную поправку на расчетное количество
-                    $numPlural = $lang === self::EN_LANG
-                        ? $params[$num]
-                        : (
-                        ($params[$num] % 100) < 20
-                            ? ($params[$num] % 20)
-                            : ($params[$num] % 10)
-                        );
-                    for ($i = $numPlural; $i >= 0; $i--) {
-                        if (isset(self::PLURALS[$value][$lang][$i])) {
-                            $wordReplace = self::PLURALS[$value][$lang][$i];
-
-                            break;
-                        }
-                    }
-                }
-
-                $res = str_replace("[[$value]]", $wordReplace ?? $value, $res);
-            }
-        } catch (\Throwable $e) {
-            $res = $e->__toString();
-        }
-
-        return $res;
-    }
-
-    protected static function numberPlural(int $number): string
-    {
-        return (string)$number;
-    }
 }
