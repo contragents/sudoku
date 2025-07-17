@@ -134,12 +134,12 @@ const btnFAQClickHandler = (backButton = true) => {
         dialog = bootbox
             .dialog({
                 message: html,
-                locale: lang === 'RU' ? 'ru' : 'en',
+                locale: lang === 'RU' ? 'ru' : (lang === 'TR' ? 'tr' : 'en'),
                 className: 'modal-settings  modal-faq',
                 closeButton: false,
                 buttons: {
                     ok: {
-                        label: backButton ? '<?= T::S('Back')?>' : 'OK',
+                        label: backButton ? '<?= T::S('Back')?>' : '<?= T::S('OK') ?>',
                         className: 'btn-sm ml-auto mr-0',
                         callback: function() {
                             if(backButton) {

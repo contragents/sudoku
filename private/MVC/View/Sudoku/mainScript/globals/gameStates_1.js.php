@@ -838,7 +838,7 @@ var gameStates = {
                 dialog.modal('hide');
             var okButtonCaption = '<?= T::S('Refuse') ?>';
             if ('inviteStatus' in data && data['inviteStatus'] == 'waiting') {
-                var okButtonCaption = 'OK';
+                okButtonCaption = '<?= T::S('OK') ?>';
             }
 
             if (!('comments' in data && !!data.comments)) {
@@ -1243,7 +1243,7 @@ function commonCallback(data) {
                             className: 'modal-settings modal-profile text-white',
                             buttons: {
                                 confirm: {
-                                    label: 'OK',
+                                    label: '<?= T::S('OK') ?>',
                                     className: 'btn-primary'
                                 },
                                 cancel: {
