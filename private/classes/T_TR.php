@@ -2,15 +2,11 @@
 
 namespace classes;
 
-use PaymentModel;
-use BaseController as BC;
-use UserModel;
 
 class T_TR
 {
-
-
     const PHRASES = [
+        'OK' => 'Tamam',
         'Click to expand the image' => 'Resmi büyütmek için tıklayın',
         'Report sent' => 'Rapor gönderildi',
         'Report declined! Please choose a player from the list' => 'Rapor reddedildi! Lütfen listeden bir oyuncu seçin',
@@ -101,7 +97,7 @@ class T_TR
         'The bank of' => '',
         'goes to you' => 'bankası size gidiyor',
         'is taken by the opponent' => 'bankası rakip tarafından alınmıştır',
-        'Bid' => 'Teklif\'',
+        'Bid' => 'Teklif&#39;',
         'No coins' => 'Sikke yok',
         'Any' => 'Kimse',
         'online' => 'çevrimiçi',
@@ -221,7 +217,7 @@ class T_TR
         'is awarded for solved empty cell' => '- açık bir rakam için verilir',
         'by calculating all of other 8 digits in a block - vertically OR horizontally OR in a 3x3 square' => 'açmak için puan toplamaktır - dikey VEYA yatay VEYA 3x3 karede',
         "The players' task is to take turns making moves and accumulating points to open black squares" => 'Oyuncuların görevi sırayla hamle yapmak ve bir bloktaki diğer 8 rakamın tümünü hesaplayarak siyah kareleri',
-        'The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated' => 'Klasik SUDOKU kuralları geçerlidir - dokuz hücreli bir blokta (dikey, yatay ve 3x3\'lük bir karede) sayılar tekrarlanmamalıdır',
+        'The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated' => 'Klasik SUDOKU kuralları geçerlidir - dokuz hücreli bir blokta (dikey, yatay ve 3x3&#39;lük bir karede) sayılar tekrarlanmamalıdır',
         'faq_rules' => [
             SudokuGame::GAME_NAME => <<<TR
 

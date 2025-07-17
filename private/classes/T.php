@@ -27,7 +27,7 @@ class T
         } elseif (class_exists(self::class . '_' . $lang)) {
             $classLang = self::class . '_' . $lang;
 
-            $res = $$classLang::PHRASES[$keyPhrase][BC::gameName()] ?? ($$classLang::PHRASES[$keyPhrase] ?? $keyPhrase);
+            $res = $classLang::PHRASES[$keyPhrase][BC::gameName()] ?? ($classLang::PHRASES[$keyPhrase] ?? $keyPhrase);
         } else {
             $res = $keyPhrase;
         }
@@ -87,12 +87,12 @@ class T
         'secret_prompt' => [
             self::EN_LANG => '&#42;Save this key for further account restoration in Telegram</a>',
             self::RU_LANG => '&#42;Сохраните ключ для восстановления аккаунта в Telegram</a>',
-            self::TR_LANG => 'Telegram\'da daha fazla hesap geri yüklemesi için bu anahtarı kaydedin',
+            self::TR_LANG => 'Telegram&#39;da daha fazla hesap geri yüklemesi için bu anahtarı kaydedin',
 
             SudokuGame::GAME_NAME => [
                 self::EN_LANG => '&#42;Save this key for further account restoration in <a href="https://t.me/sudoku_app_bot">Telegram</a>',
                 self::RU_LANG => '&#42;Сохраните ключ для восстановления аккаунта в <a href="https://t.me/sudoku_app_bot">Telegram</a>',
-                self::TR_LANG => '<a href="https://t.me/sudoku_app_bot">Telegram\'da</a> daha fazla hesap geri yüklemesi için bu anahtarı kaydedin',
+                self::TR_LANG => '<a href="https://t.me/sudoku_app_bot">Telegram&#39;da</a> daha fazla hesap geri yüklemesi için bu anahtarı kaydedin',
             ]
         ],
         'COIN Balance' => [
@@ -125,7 +125,7 @@ class T
         ],
         'Support in Telegram' => [
             self::RU_LANG => 'Техподдержка в Telegram',
-            self::TR_LANG => 'Telegram\'da Destek',
+            self::TR_LANG => 'Telegram&#39;da Destek',
         ],
         'Check_price' => [
             self::EN_LANG => 'Check price',
@@ -186,12 +186,12 @@ class T
             SudokuGame::GAME_NAME => [
                 self::EN_LANG => 'Join the online game SUDOKU on Telegram! Get the maximum rating, earn coins and withdraw tokens to your wallet',
                 self::RU_LANG => 'Присоединяйся к онлайн игре SUDOKU в Telegram! Набери максимальный рейтинг, зарабатывай монеты и выводи токены на кошелек',
-                self::TR_LANG => 'Telegram\'da çevrimiçi oyun SUDOKU\'ya katılın! Maksimum puanı alın, jeton kazanın ve jetonları cüzdanınıza çekin',
+                self::TR_LANG => 'Telegram&#39;da çevrimiçi oyun SUDOKU&#39;ya katılın! Maksimum puanı alın, jeton kazanın ve jetonları cüzdanınıza çekin',
             ],
 
             self::EN_LANG => 'Join the online game on Telegram! Get the maximum rating, earn coins and withdraw tokens to your wallet',
             self::RU_LANG => 'Присоединяйся к нашей онлайн игре в Telegram! Набери максимальный рейтинг, зарабатывай монеты и выводи токены на кошелек',
-            self::TR_LANG => 'Telegram\'daki çevrimiçi oyuna katılın! Maksimum puanı alın, jeton kazanın ve jetonları cüzdanınıza çekin',
+            self::TR_LANG => 'Telegram&#39;daki çevrimiçi oyuna katılın! Maksimum puanı alın, jeton kazanın ve jetonları cüzdanınıza çekin',
         ],
         'game_bot_url' => [
             SudokuGame::GAME_NAME => [
@@ -211,7 +211,7 @@ class T
         'switch_tg_button' => [
             self::EN_LANG => 'Switch to Telegram',
             self::RU_LANG => 'Перейти на Telegram',
-            self::TR_LANG => 'Telegram\'a geç',
+            self::TR_LANG => 'Telegram&#39;a geç',
         ],
         'Invite a friend' => [
             self::RU_LANG => 'Пригласить друга',
@@ -454,7 +454,7 @@ class T
         ],
         'Error saving Nick change' => [
             self::RU_LANG => 'Ошибка сохранения Ника!',
-            self::TR_LANG => 'Nick\'in kurtarma hatası',
+            self::TR_LANG => 'Nick&#39;in kurtarma hatası',
         ],
         'Play at least one game to view statistics' => [
             self::RU_LANG => 'Для просмотра статистики сыграйте хотя бы одну партию',
@@ -518,7 +518,7 @@ class T
         ],
         'Avatar URL' => [
             self::RU_LANG => 'URL аватара',
-            self::TR_LANG => 'Avatar URL\'si',
+            self::TR_LANG => 'Avatar URL&#39;si',
         ],
         'Apply' => [
             self::RU_LANG => 'Применить',
