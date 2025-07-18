@@ -211,7 +211,7 @@ class PlayerModel extends BaseModel
 
             return T::translit(
                 $config['botNames'][str_replace('botV3#', '', $user->ID)] ?? 'John Doe',
-                T::$lang === T::EN_LANG
+                T::$lang !== T::RU_LANG
             );
         }
 
@@ -271,7 +271,7 @@ class PlayerModel extends BaseModel
             }
 
             // Перевести автогенеренные ники на латиницу
-            $letterName = T::translit($letterName, T::$lang === T::EN_LANG);
+            $letterName = T::translit($letterName, T::$lang !== T::RU_LANG);
 
             return mb_strtoupper(mb_substr($letterName, 0, 1), 'UTF-8') . mb_substr($letterName, 1);
         }

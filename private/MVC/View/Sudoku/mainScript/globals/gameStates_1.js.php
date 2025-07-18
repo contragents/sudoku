@@ -1339,11 +1339,14 @@ function commonCallback(data) {
 
         preloaderObject.load.reset();
 
-        let ruModifier = (gameBank < 1000 && isYandexAppGlobal() && lang === 'RU')
-            ? '_ru'
+        let langModifier = (gameBank < 1000 && lang !== 'EN')
+            ?  (lang in SUPPORTED_LANGS
+                ? ('_' + lang.toLowerCase())
+                : ''
+            )
             : '';
 
-        preloaderObject.load.svg(resourceName + OTJAT_MODE, `img/otjat/${players.bankBlock.filename}${gameBankString}${ruModifier}.svg`,
+        preloaderObject.load.svg(resourceName + OTJAT_MODE, `img/otjat/${players.bankBlock.filename}${gameBankString}${langModifier}.svg`,
             {
                 ...('width' in players.bankBlock && {
                     'width': players.bankBlock.width,

@@ -7,6 +7,8 @@ use classes\T;
 
 var lang = '<?= T::$lang ?>';
 
+const SUPPORTED_LANGS = <?= T::getSupportedLangsForJS() ?> ;
+
 const BASE_URL = '<?= SudokuController::GAME_URL ?>';
 
 const chooseFile = "'<?= T::S('Choose file') ?>'";

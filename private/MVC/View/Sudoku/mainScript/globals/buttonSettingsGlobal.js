@@ -12,7 +12,7 @@ var modes = [OTJAT_MODE, ALARM_MODE, 'Inactive', 'Navedenie', 'Najatie'];
 
 var buttons = {
     newGameButton: {
-        filename: 'new_game2' +  (lang === 'RU' ? '_ru' : ''),
+        filename: 'new_game2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang.toLowerCase()) : ''),
         x: topXY.x + lotokX + buttonWidth / 2 - lotokCellStep / 2 + 5,
         y: (topXY.y + topHeight) / 2,
         caption: 'New#Game',
@@ -24,7 +24,7 @@ var buttons = {
         enabled: {myTurn: 1, preMyTurn: 1, otherTurn: 1, gameResults: 1},
     },
     instructButton: {
-        filename: 'instrukt2' + ((isYandexAppGlobal() && lang === 'RU') ? '_ru' : ''),
+        filename: 'instrukt2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang.toLowerCase()) : ''),
         x: topXY.x + lotokX + buttonWidth / 2 - lotokCellStep / 2 + 5 + buttonWidth,
         y: (topXY.y + topHeight) / 2,
         caption: 'инструкция',
@@ -77,7 +77,7 @@ var buttons = {
         },
     }),
     submitButton: {
-        filename: 'otpravit2' +  (lang === 'RU' ? '_ru' : ''),
+        filename: 'otpravit2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang.toLowerCase()) : ''),
         x: botXY.x + knopkiWidth - buttonWidth / 2 - buttonStepX,
         y: botXY.y + botHeight * 0.125,
         caption: 'send',
@@ -86,16 +86,16 @@ var buttons = {
         pointerupFunction: function () {
             submitButtonFunction();
         },
-        setEnabled: function() {
-            if(this.svgObject === false) {
+        setEnabled: function () {
+            if (this.svgObject === false) {
                 return;
             }
 
             this.svgObject.setInteractive();
             this.svgObject.bringToTop(this.svgObject.getByName('submitButton' + OTJAT_MODE));
         },
-        setDisabled: function() {
-            if(this.svgObject === false) {
+        setDisabled: function () {
+            if (this.svgObject === false) {
                 return;
             }
 
@@ -104,7 +104,7 @@ var buttons = {
         }
     },
     resetButton: {
-        filename: 'steret2' +  (lang === 'RU' ? '_ru' : ''),
+        filename: 'steret2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang.toLowerCase()) : ''),
         x: botXY.x + knopkiWidth - buttonWidth / 2 - buttonStepX,
         y: botXY.y + botHeight * (0.25 + 0.125),
         caption: 'clear',
@@ -128,7 +128,7 @@ var buttons = {
         }
     },
     checkButton: {
-        filename: 'proveryt2' +  (lang === 'RU' ? '_ru' : ''),
+        filename: 'proveryt2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang.toLowerCase()) : ''),
         x: botXY.x + knopkiWidth / 2,
         y: botXY.y + botHeight * 0.125,
         caption: 'check',
@@ -139,16 +139,16 @@ var buttons = {
         pointerupFunction: function () {
             checkButtonFunction();
         },
-        setEnabled: function() {
-            if(this.svgObject === false) {
+        setEnabled: function () {
+            if (this.svgObject === false) {
                 return;
             }
 
             this.svgObject.setInteractive();
             this.svgObject.bringToTop(this.svgObject.getByName('checkButton' + OTJAT_MODE));
         },
-        setDisabled: function() {
-            if(this.svgObject === false) {
+        setDisabled: function () {
+            if (this.svgObject === false) {
                 return;
             }
 
@@ -157,21 +157,21 @@ var buttons = {
         }
     },
     ...(!isYandexAppGlobal() && {
-    chatButton: {
-        filename: 'chat2',
-        x: botXY.x + knopkiWidth / 2,
-        y: botXY.y + botHeight * (0.75 + 0.125),
-        caption: 'chat',
-        width: buttonWidth / 2,
-        object: false,
-        svgObject: false,
-        pointerupFunction: function () {
-            chatButtonFunction();
+        chatButton: {
+            filename: 'chat2',
+            x: botXY.x + knopkiWidth / 2,
+            y: botXY.y + botHeight * (0.75 + 0.125),
+            caption: 'chat',
+            width: buttonWidth / 2,
+            object: false,
+            svgObject: false,
+            pointerupFunction: function () {
+                chatButtonFunction();
+            },
         },
-    },
     }),
     logButton: {
-        filename: 'log2' + ((isYandexAppGlobal() && lang === 'RU') ? '_ru' : ''),
+        filename: 'log2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang.toLowerCase()) : ''),
         modes: [OTJAT_MODE, 'Inactive', 'Navedenie', 'Najatie'],
         x: botXY.x + buttonStepX + buttonWidth / 2,
         y: botXY.y + botHeight * (0.75 + 0.125),
@@ -249,7 +249,7 @@ var modesColors = {
 
 var players = {
     youBlock: {
-        filename: 'you' +  (lang === 'RU' ? '_ru' : ''),
+        filename: 'you' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang.toLowerCase()) : ''),
         x: botXY.x + buttonStepX + buttonWidth / 2,
         y: botXY.y + botHeight * 0.75 * 0.1,
         width: buttonWidth,
@@ -258,7 +258,7 @@ var players = {
         numbers: true,
     },
     player1Block: {
-        filename: 'player1' +  (lang === 'RU' ? '_ru' : ''),
+        filename: 'player1' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang.toLowerCase()) : ''),
         x: botXY.x + buttonStepX + buttonWidth / 2,
         y: botXY.y + botHeight * 0.75 * 0.1,
         width: buttonWidth,
@@ -267,7 +267,7 @@ var players = {
         numbers: true,
     },
     player2Block: {
-        filename: 'player2' +  (lang === 'RU' ? '_ru' : ''),
+        filename: 'player2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang.toLowerCase()) : ''),
         x: botXY.x + buttonStepX + buttonWidth / 2,
         y: botXY.y + botHeight * 0.75 * (0.2 + 0.1),
         width: buttonWidth,
@@ -354,8 +354,7 @@ function displayScoreGlobal(score, blockName, isActive = false) {
     }
 }
 
-function displayTimeGlobal(time, forceShowAll = false)
-{
+function displayTimeGlobal(time, forceShowAll = false) {
     let mode = (time < 20) ? ALARM_MODE : OTJAT_MODE;
     let disabledMode = (!(time < 20)) ? ALARM_MODE : OTJAT_MODE;
 
@@ -374,17 +373,17 @@ function displayTimeGlobal(time, forceShowAll = false)
         container.getByName(disabledMode + '_' + 'dvoetoch').setVisible(false);
     }
 
-    if(thirdDigit !== timerState.digit3 || mode !== timerState.mode || forceShowAll) {
+    if (thirdDigit !== timerState.digit3 || mode !== timerState.mode || forceShowAll) {
         container.getByName(timerState.mode + '_' + timerState.digit3 + '_' + '3').setVisible(false);
         container.getByName(mode + '_' + thirdDigit + '_3').setVisible(true);
     }
 
-    if(secondDigit !== timerState.digit2 || mode !== timerState.mode || forceShowAll) {
+    if (secondDigit !== timerState.digit2 || mode !== timerState.mode || forceShowAll) {
         container.getByName(timerState.mode + '_' + timerState.digit2 + '_' + '2').setVisible(false);
         container.getByName(mode + '_' + secondDigit + '_2').setVisible(true);
     }
 
-    if(firstDigit !== timerState.digit1 || mode !== timerState.mode || forceShowAll) {
+    if (firstDigit !== timerState.digit1 || mode !== timerState.mode || forceShowAll) {
         container.getByName(timerState.mode + '_' + timerState.digit1 + '_' + '1').setVisible(false);
         container.getByName(mode + '_' + firstDigit + '_1').setVisible(true);
     }
@@ -395,8 +394,7 @@ function displayTimeGlobal(time, forceShowAll = false)
     timerState.digit1 = firstDigit;
 }
 
-function buttonSetModeGlobal(objectSet, objectName, mode)
-{
+function buttonSetModeGlobal(objectSet, objectName, mode) {
     let svgObject = objectSet[objectName].svgObject;
     svgObject.bringToTop(svgObject.getByName(objectName + mode));
 
