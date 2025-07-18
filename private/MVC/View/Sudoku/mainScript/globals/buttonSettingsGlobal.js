@@ -12,7 +12,7 @@ var modes = [OTJAT_MODE, ALARM_MODE, 'Inactive', 'Navedenie', 'Najatie'];
 
 var buttons = {
     newGameButton: {
-        filename: 'new_game2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang.toLowerCase()) : ''),
+        filename: 'new_game2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang) : ''),
         x: topXY.x + lotokX + buttonWidth / 2 - lotokCellStep / 2 + 5,
         y: (topXY.y + topHeight) / 2,
         caption: 'New#Game',
@@ -24,7 +24,7 @@ var buttons = {
         enabled: {myTurn: 1, preMyTurn: 1, otherTurn: 1, gameResults: 1},
     },
     instructButton: {
-        filename: 'instrukt2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang.toLowerCase()) : ''),
+        filename: 'instrukt2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang) : ''),
         x: topXY.x + lotokX + buttonWidth / 2 - lotokCellStep / 2 + 5 + buttonWidth,
         y: (topXY.y + topHeight) / 2,
         caption: 'инструкция',
@@ -77,7 +77,7 @@ var buttons = {
         },
     }),
     submitButton: {
-        filename: 'otpravit2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang.toLowerCase()) : ''),
+        filename: 'otpravit2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang) : ''),
         x: botXY.x + knopkiWidth - buttonWidth / 2 - buttonStepX,
         y: botXY.y + botHeight * 0.125,
         caption: 'send',
@@ -104,7 +104,7 @@ var buttons = {
         }
     },
     resetButton: {
-        filename: 'steret2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang.toLowerCase()) : ''),
+        filename: 'steret2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang) : ''),
         x: botXY.x + knopkiWidth - buttonWidth / 2 - buttonStepX,
         y: botXY.y + botHeight * (0.25 + 0.125),
         caption: 'clear',
@@ -128,7 +128,7 @@ var buttons = {
         }
     },
     checkButton: {
-        filename: 'proveryt2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang.toLowerCase()) : ''),
+        filename: 'proveryt2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang) : ''),
         x: botXY.x + knopkiWidth / 2,
         y: botXY.y + botHeight * 0.125,
         caption: 'check',
@@ -171,7 +171,7 @@ var buttons = {
         },
     }),
     logButton: {
-        filename: 'log2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang.toLowerCase()) : ''),
+        filename: 'log2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang) : ''),
         modes: [OTJAT_MODE, 'Inactive', 'Navedenie', 'Najatie'],
         x: botXY.x + buttonStepX + buttonWidth / 2,
         y: botXY.y + botHeight * (0.75 + 0.125),
@@ -249,7 +249,7 @@ var modesColors = {
 
 var players = {
     youBlock: {
-        filename: 'you' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang.toLowerCase()) : ''),
+        filename: 'you' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang) : ''),
         x: botXY.x + buttonStepX + buttonWidth / 2,
         y: botXY.y + botHeight * 0.75 * 0.1,
         width: buttonWidth,
@@ -258,7 +258,7 @@ var players = {
         numbers: true,
     },
     player1Block: {
-        filename: 'player1' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang.toLowerCase()) : ''),
+        filename: 'player1' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang) : ''),
         x: botXY.x + buttonStepX + buttonWidth / 2,
         y: botXY.y + botHeight * 0.75 * 0.1,
         width: buttonWidth,
@@ -267,7 +267,7 @@ var players = {
         numbers: true,
     },
     player2Block: {
-        filename: 'player2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang.toLowerCase()) : ''),
+        filename: 'player2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang) : ''),
         x: botXY.x + buttonStepX + buttonWidth / 2,
         y: botXY.y + botHeight * 0.75 * (0.2 + 0.1),
         width: buttonWidth,
