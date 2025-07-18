@@ -173,11 +173,7 @@ document.addEventListener("visibilitychange", function () {
 function onVisibilityChange() {
     reportVisibilityChangeYandex();
 
-    if (gameState == 'myTurn'
-        || gameState == 'preMyTurn'
-        || gameState == 'otherTurn'
-        || gameState == 'initGame'
-        || gameState == 'initRatingGame') {
+    if ([MY_TURN_STATE, PRE_MY_TURN_STATE, OTHER_TURN_STATE, INIT_GAME_STATE, INIT_RATING_GAME_STATE].indexOf(gameState) >= 0) {
         if (pageActive === 'hidden') {
             fetchGlobal(STATUS_CHECKER_SCRIPT)
                 .then((data) => {

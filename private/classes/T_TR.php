@@ -500,6 +500,7 @@ TR,
         'You made a mistake!' => 'Bir hata yaptın!',
         'Your opponent made a mistake' => 'Rakibiniz bir hata yaptı',
         '[[Player]] gets [[number]] [[point]]' => '[[Player]] [[number]] puan alır',
+        '[[number]] [[point]]' => '[[number]] puan topla',
         'You got [[number]] [[point]]' => '[[number]] puan alırsın',
         'Your opponent got [[number]] [[point]]' => 'Rakibin [[number]] puan aldı',
     ];

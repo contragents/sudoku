@@ -35,7 +35,7 @@ function (time, delta) {
         }
     }
 
-    if (gameState == 'myTurn' || gameState == 'preMyTurn' || gameState == 'otherTurn' || gameState == 'startGame') {
+    if ([MY_TURN_STATE, PRE_MY_TURN_STATE, OTHER_TURN_STATE, START_GAME_STATE].indexOf(gameState) >= 0) {
         if (flor > lastTimeCorrection) {
             lastTimeCorrection = flor;
             if ((vremiaMinutes > 0) || (vremiaSeconds > 0)) {

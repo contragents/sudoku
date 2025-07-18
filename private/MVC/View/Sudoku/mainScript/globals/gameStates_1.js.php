@@ -65,8 +65,8 @@ var gameStates = {
         action: function (data) {
             buttons.submitButton.setDisabled();
 
-            gameStates['myTurn']['from_noGame'](data);
-            gameStates['gameResults']['action'](data);
+            gameStates.myTurn.from_noGame(data);
+            gameStates.gameResults.action(data);
         },
         from_initGame: function () {
             while (fixedContainer.length)
@@ -76,10 +76,10 @@ var gameStates = {
             initCellsGlobal();
         },
         from_initRatingGame: function () {
-            gameStates['startGame']['from_initGame']();
+            gameStates[START_GAME_STATE]['from_initGame']();
         },
         from_initCoinGame: function () {
-            gameStates['startGame']['from_initGame']();
+            gameStates[START_GAME_STATE]['from_initGame']();
         }
     },
     chooseGame: {
@@ -709,20 +709,20 @@ var gameStates = {
             setCheckButtonState();
         },
         from_inviteGame: function (data) {
-            gameStates['startGame']['from_initGame']();
-            gameStates['myTurn']['from_noGame'](data);
+            gameStates.startGame.from_initGame();
+            gameStates.myTurn.from_noGame(data);
         },
         from_initRatingGame: function (data) {
-            gameStates['startGame']['from_initGame']();
-            gameStates['myTurn']['from_noGame'](data);
+            gameStates.startGame.from_initGame();
+            gameStates.myTurn.from_noGame(data);
         },
         from_initCoinGame: function (data) {
-            gameStates['startGame']['from_initGame']();
-            gameStates['myTurn']['from_noGame'](data);
+            gameStates.startGame.from_initGame();
+            gameStates.myTurn.from_noGame(data);
         },
         from_initGame: function (data) {
-            gameStates['startGame']['from_initGame']();
-            gameStates['myTurn']['from_noGame'](data);
+            gameStates.startGame.from_initGame();
+            gameStates.myTurn.from_noGame(data);
         },
         from_noGame: function (data) {
             placeFishki();
@@ -731,15 +731,15 @@ var gameStates = {
             placeFishki();
         },
         from_gameResults: function () {
-            gameStates['startGame']['from_initGame']();
+            gameStates.startGame.from_initGame();
         },
         from_preMyTurn: function () {
             resetButtonFunction(true);
-            gameStates['startGame']['from_initGame']();
+            gameStates.startGame.from_initGame();
         },
         from_startGame: function () {
             resetButtonFunction(true);
-            gameStates['startGame']['from_initGame']();
+            gameStates.startGame.from_initGame();
         }
     },
     preMyTurn: {
@@ -747,40 +747,40 @@ var gameStates = {
         message: '<?= T::S('Get ready - your turn is next!') ?>',
         refresh: 5,
         action: function (data) {
-            gameStates['gameResults']['action'](data, false);
+            gameStates.gameResults.action(data, false);
             setCheckButtonState();
             buttons.submitButton.setDisabled();
         },
         from_inviteGame: function (data) {
-            gameStates['startGame']['from_initGame']();
-            gameStates['myTurn']['from_noGame'](data);
+            gameStates.startGame.from_initGame();
+            gameStates.myTurn.from_noGame(data);
         },
         from_desync: function (data) {
             placeFishki();
         },
         from_initRatingGame: function (data) {
-            gameStates['startGame']['from_initGame']();
-            gameStates['myTurn']['from_noGame'](data);
+            gameStates.startGame.from_initGame();
+            gameStates.myTurn.from_noGame(data);
         },
         from_initCoinGame: function (data) {
-            gameStates['startGame']['from_initGame']();
-            gameStates['myTurn']['from_noGame'](data);
+            gameStates.startGame.from_initGame();
+            gameStates.myTurn.from_noGame(data);
         },
         from_initGame: function (data) {
-            gameStates['startGame']['from_initGame']();
-            gameStates['myTurn']['from_noGame'](data);
+            gameStates.startGame.from_initGame();
+            gameStates.myTurn.from_noGame(data);
         },
         from_noGame: function (data) {
-            gameStates['myTurn']['from_noGame'](data)
+            gameStates.myTurn.from_noGame(data)
         },
         from_myTurn: function (data) {
-            gameStates['myTurn']['from_noGame'](data)
+            gameStates.myTurn.from_noGame(data)
         },
         from_otherTurn: function (data) {
-            gameStates['myTurn']['from_noGame'](data)
+            gameStates.myTurn.from_noGame(data)
         },
         from_gameResults: function () {
-            gameStates['startGame']['from_initGame']()
+            gameStates.startGame.from_initGame()
         },
     },
     otherTurn: {
@@ -788,30 +788,30 @@ var gameStates = {
         message: '<?= T::S('Take a break - your move in one') ?>',
         refresh: 5,
         action: function (data) {
-            gameStates['gameResults']['action'](data);
+            gameStates.gameResults.action(data);
 
-            gameStates['myTurn']['from_noGame'](data);
+            gameStates.myTurn.from_noGame(data);
             buttons.submitButton.setDisabled();
             setCheckButtonState();
         },
         from_inviteGame: function (data) {
-            gameStates['startGame']['from_initGame']();
-            gameStates['myTurn']['from_noGame'](data);
+            gameStates.startGame.from_initGame();
+            gameStates.myTurn.from_noGame(data);
         },
         from_desync: function (data) {
             placeFishki();
         },
         from_initRatingGame: function (data) {
-            gameStates['startGame']['from_initGame']();
+            gameStates.startGame.from_initGame();
         },
         from_initCoinGame: function (data) {
-            gameStates['startGame']['from_initGame']();
+            gameStates.startGame.from_initGame();
         },
         from_initGame: function (data) {
-            gameStates['startGame']['from_initGame']();
+            gameStates.startGame.from_initGame();
         },
         from_gameResults: function () {
-            gameStates['startGame']['from_initGame']();
+            gameStates.startGame.from_initGame();
         }
     },
     gameResults: {
@@ -1047,7 +1047,7 @@ function commonCallback(data) {
         soundPlayed = false;
     }
 
-    if (gameState == 'myTurn') {
+    if (gameState === MY_TURN_STATE) {
         if (pageActive == 'hidden') {
             if(!isYandexAppGlobal()) {snd.play();}
             soundPlayed = true;

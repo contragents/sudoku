@@ -3,7 +3,7 @@ var topButtons = {
     newGameButton: {displayWidth: 0},
     instructButton: {displayWidth: 0},
     prizesButton: {displayWidth: 0},
-    ...(!isYandexAppGlobal() && {
+    ...(!isYandexAppGlobal() && !isSteamGlobal() && {
         inviteButton: {displayWidth: 0}
     }),
 };
@@ -52,7 +52,7 @@ var buttons = {
         svgObject: false,
         pointerupFunction: prizesButtonHandler,
     },
-    ...(!isYandexAppGlobal() && {
+    ...(!isYandexAppGlobal() && !isSteamGlobal() && {
 
         inviteButton: {
             filename: 'invite2',

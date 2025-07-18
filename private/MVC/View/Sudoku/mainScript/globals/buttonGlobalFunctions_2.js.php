@@ -102,6 +102,12 @@ function checkButtonFunction() {
     buttons.checkButton.setEnabled();
 }
 
+let cancelCallback = function() {
+    buttons.newGameButton.svgObject.setInteractive();
+
+    return true;
+};
+
 function newGameButtonFunction(ignoreDialog = false) {
     if (!ignoreDialog && bootBoxIsOpenedGlobal()) {
         return;
@@ -109,7 +115,7 @@ function newGameButtonFunction(ignoreDialog = false) {
 
     buttons.newGameButton.svgObject.disableInteractive();
 
-    if (gameState == 'myTurn' || gameState == 'preMyTurn' || gameState == 'otherTurn' || gameState == 'startGame') {
+    if ([MY_TURN_STATE, PRE_MY_TURN_STATE, OTHER_TURN_STATE, START_GAME_STATE].indexOf(gameState) >= 0) {
 
         bootbox.hideAll();
 
@@ -118,14 +124,16 @@ function newGameButtonFunction(ignoreDialog = false) {
             message: '<?= T::S('You will lose if you quit the game! CONTINUE?') ?>',
             size: 'medium',
             className: 'modal-settings modal-profile text-white',
-            // onEscape: false,
-            closeButton: true,
+            closeButton: false,
+            onEscape: function() {
+                return cancelCallback();
+            },
             buttons: {
                 cancel: {
                     label: '<?= T::S('Cancel') ?>',
                     className: 'btn-outline-success',
                     callback: function () {
-                        return true;
+                        return cancelCallback();
                     }
                 },
                 confirm: {
@@ -138,9 +146,7 @@ function newGameButtonFunction(ignoreDialog = false) {
                                 commonCallback(data);
                             });
 
-                        buttons.newGameButton.svgObject.setInteractive();
-
-                        return true;
+                        return cancelCallback();
                     }
                 },
                 invite: {
@@ -149,8 +155,6 @@ function newGameButtonFunction(ignoreDialog = false) {
                     callback: function () {
                         setTimeout(function () {
                             isInviteGameWaiting = true;
-                            //initNewGameVarsGlobal();
-                            //gameStates.initGame.action({});
 
                             fetchGlobal(INVITE_SCRIPT, '', 'gameState=' + gameState)
                                 .then((dataInvite) => {
