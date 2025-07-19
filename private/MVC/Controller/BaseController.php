@@ -406,6 +406,12 @@ class BaseController
                 && in_array(strtoupper(self::$Referer[self::REF_LANG_PARAM]), T::SUPPORTED_LANGS)) {
                 return strtoupper(self::$Referer[self::REF_LANG_PARAM]);
             }
+
+            // При отдате indexView ищем параметр в Реквесте, а не в Реферере
+            if (!empty(self::$Request[self::REF_LANG_PARAM])
+                && in_array(strtoupper(self::$Request[self::REF_LANG_PARAM]), T::SUPPORTED_LANGS)) {
+                return strtoupper(self::$Request[self::REF_LANG_PARAM]);
+            }
         }
 
         // Определение языка для Яндекс.игр - присылаем параметр lang из браузера
