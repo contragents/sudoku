@@ -36,6 +36,7 @@ class BaseController
     const GAME_ID_PARAM = 'game_id';
     const COMMON_ID_HASH_PARAM = 'common_id_hash';
     const LANG_PARAM = 'lang';
+    const REF_LANG_PARAM = 'l';
     const USER_LANGUAGE_KEY = 'user.language_storage';
 
 
@@ -399,6 +400,14 @@ class BaseController
 
     private static function setLanguage(): string
     {
+        // Главный приоритет выбора языка - параметр "l" в адресе браузера (реферере)
+        if (true || Steam::isSteamApp()) {
+            if (!empty(self::$Referer[self::REF_LANG_PARAM])
+                && in_array(strtoupper(self::$Referer[self::REF_LANG_PARAM]), T::SUPPORTED_LANGS)) {
+                return strtoupper(self::$Referer[self::REF_LANG_PARAM]);
+            }
+        }
+
         // Определение языка для Яндекс.игр - присылаем параметр lang из браузера
         if (isset(self::$Request[self::LANG_PARAM]) && in_array(
                 strtoupper(self::$Request[self::LANG_PARAM]),
@@ -433,13 +442,6 @@ class BaseController
             return $lang;
         }
 
-        if (Steam::isSteamApp()) {
-            if (!empty(self::$Referer[self::LANG_PARAM])
-                && in_array(strtoupper(self::$Referer[self::LANG_PARAM]), T::SUPPORTED_LANGS)) {
-
-                return strtoupper(self::$Referer[self::LANG_PARAM]);
-            }
-        }
 
         $preferredLangPos = [];
         foreach (T::SUPPORTED_LANGS as $lang) {
