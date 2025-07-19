@@ -1076,6 +1076,9 @@ class T
             self::EN_LANG => Faq::RATING[self::EN_LANG],
             self::RU_LANG => Faq::RATING[self::RU_LANG],
         ],
+        'FAQ' => [
+            self::RU_LANG => 'ЧАВО',
+        ],
         'faq_rewards' => [
             self::EN_LANG => Faq::REWARDS[self::EN_LANG],
             self::RU_LANG => Faq::REWARDS[self::RU_LANG],

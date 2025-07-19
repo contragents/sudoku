@@ -330,7 +330,7 @@ var gameStates = {
 
                                 <span><?= T::S('CHOOSE GAME OPTIONS') ?></span>
 
-                                <div class="ml-auto"><a href="#" id="btn-faq" class="btn">${(isYandexAppGlobal() && lang === 'RU') ? 'ЧАВО' : 'FAQ'}</a>
+                                <div class="ml-auto"><a href="#" id="btn-faq" class="btn"><?= T::S('FAQ') ?></a>
                                 </div>
                             </div>
                         </div>
@@ -523,7 +523,7 @@ var gameStates = {
                     //})
                     ,
                     instruction: {
-                        label: (isYandexAppGlobal() && lang === 'RU') ? 'ЧАВО' : 'FAQ',
+                        label: '<?= T::S('FAQ') ?>',
                         className: 'btn-outline-success d-none',
                         callback: function () {
                             dialog = bootbox

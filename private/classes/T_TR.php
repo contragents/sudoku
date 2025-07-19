@@ -9,6 +9,7 @@ use UserModel;
 class T_TR
 {
     const PHRASES = [
+        'FAQ' => 'SSS',
         'Agreement' => 'Anlaşma',
         'Empty value is forbidden' => 'Boş değer yasaktır',
         'Forbidden' => 'Yasak',

@@ -3,7 +3,6 @@ use classes\Cookie;
 use classes\MonetizationService;
 use classes\T;
 ?>
-//<?php $lang = T::$lang ?>
 
 var lang = '<?= T::$lang ?>';
 

@@ -26,6 +26,7 @@ if (isYandexAppGlobal() && typeof YaGames != 'undefined') {
 
             ysdk.on('game_api_pause', pauseCallback);
             ysdk.on('game_api_resume', resumeCallback);
+
             lang = ysdk.environment.i18n.lang.toUpperCase();
         });
 }
@@ -102,6 +103,10 @@ async function reportGameIsReadyYandex() {
         return;
     }
 
+    if(typeof YaGames == 'undefined') {
+        return;
+    }
+
     if (!!ysdk) {
         ysdk.features.LoadingAPI?.ready();
     } else {
@@ -111,6 +116,10 @@ async function reportGameIsReadyYandex() {
 
 function reportGameStartYandex() {
     if (!isYandexAppGlobal()) {
+        return;
+    }
+
+    if(typeof YaGames == 'undefined') {
         return;
     }
 
@@ -146,8 +155,6 @@ const pauseCallback = () => {
     onVisibilityChange();
     console.log('GAME PAUSED');
 };
-
-
 
 const resumeCallback = () => {
     pageActive = 'visible';
