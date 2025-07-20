@@ -309,7 +309,7 @@ class DeskSudoku extends Desk
             // Проверяем по горизонтали
             $cellValues = self::CELL_VALUES;
             foreach ($this->solution[$cell['i']] as $j => $value) {
-                unset($cellValues[$this->solution[$cell['j']][$j]]);
+                unset($cellValues[$this->solution[$cell['i']][$j]]);
             }
 
             if (count($cellValues) !== 0) {
@@ -430,6 +430,13 @@ class DeskSudoku extends Desk
         return $res;
     }
 
+    /**
+     * Проверяет координаты i, j и присланную цифру value на правильность
+     * @param int $i
+     * @param int $j
+     * @param int $value
+     * @return bool
+     */
     public function checkij(int $i, int $j, int $value): bool
     {
         return ((int)$this->solution[$i][$j]) === $value;
