@@ -2,9 +2,11 @@
 use classes\Cookie;
 use classes\MonetizationService;
 use classes\T;
+use BaseController as BC;
 ?>
 
 var lang = '<?= T::$lang ?>';
+var version = '<?= BC::$version ?>';
 
 const SUPPORTED_LANGS = <?= T::getSupportedLangsForJS() ?> ;
 

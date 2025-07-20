@@ -416,7 +416,7 @@ var gameStates = {
                                     }
 
                                     function getProfileModal(profileData) {
-                                        return fetch(PROFILE_TPL + version(true))
+                                        return fetch(PROFILE_TPL + randVersion(true))
                                             .then((response) => response.text())
                                             .then((template) => {
                                                 let message = template
@@ -654,7 +654,7 @@ var gameStates = {
                             className: 'btn-outline-success',
                             callback: function () {
                                 async function getOfertaModal() {
-                                    return fetch(BASE_URL + `tpl/common/oferta_${lang}.html` + version(true))
+                                    return fetch(BASE_URL + `tpl/common/oferta_${lang}.html` + randVersion(true))
                                         .then((response) => response.text());
                                 };
                                 getOfertaModal().then((html) => {
@@ -1341,7 +1341,7 @@ function commonCallback(data) {
 
         let langModifier = (gameBank < 1000 && lang !== 'EN')
             ?  (lang in SUPPORTED_LANGS
-                ? ('_' + lang)
+                ? ('_' + (version > '1.0.0.2' ? lang : lang.toLowerCase()))
                 : ''
             )
             : '';

@@ -330,7 +330,7 @@ function refreshId(element_id, url) {
     });
 }
 
-function version(firstKey = false) {
+function randVersion(firstKey = false) {
     return (firstKey ? '?' : '&') + 'ver=' + Math.floor(Date.now());
 }
 
@@ -339,7 +339,7 @@ function langParam(firstKey = false) {
 }
 
 async function getStatPageGlobal(userId = commonId) {
-    let url = BASE_URL + STATS_URL + '?common_id=' + userId + version() + langParam();
+    let url = BASE_URL + STATS_URL + '?common_id=' + userId + randVersion() + langParam();
     let respMessage = STATS_GET_ERROR;
 
     if (userId) {

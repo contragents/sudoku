@@ -37,8 +37,11 @@ class BaseController
     const COMMON_ID_HASH_PARAM = 'common_id_hash';
     const LANG_PARAM = 'lang';
     const REF_LANG_PARAM = 'l';
+    const VERSION_PARAM = 'version';
     const USER_LANGUAGE_KEY = 'user.language_storage';
 
+    const VERSION_DEFAULT_YANDEX = '1.0.0.2'; //Версия для яндекса для совместимости до модерации
+    const VERSION_DEFAULT = '1.0.0.3'; // Версия для остальных
 
     public static ?BaseController $instance = null;
     public Game $Game;
@@ -47,6 +50,7 @@ class BaseController
 
     public static $Request;
     public static $Referer;
+    public static string $version = self::VERSION_DEFAULT;
 
     const SUB_ACTION_PARAM = 'sub_action';
 
@@ -74,7 +78,17 @@ class BaseController
 
         static::$Request = $request;
 
+
         self::$Referer = self::decodeRefererQuery();
+
+        self::$version = self::$Request[self::VERSION_PARAM]
+            ?? (self::$Referer[self::VERSION_PARAM]
+                ?? (
+                self::isYandexApp()
+                    ? self::VERSION_DEFAULT_YANDEX
+                    : self::VERSION_DEFAULT
+                )
+            );
 
         self::$User = $this->checkCookie();
 

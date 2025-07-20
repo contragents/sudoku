@@ -67,7 +67,7 @@ class T_TR
         'record of the day' => 'günün rekoru',
         'game_price' => 'oyun puanları',
         'games_played' => 'oynanan oyunlar',
-        'Games Played' => 'Partiler',
+        'Games Played' => 'Oyunlar',
         'top' => 'üst',
         'turn_price' => 'ciro puanları',
         'word_len' => 'uzun kelime',

@@ -637,7 +637,7 @@ function onImagesLoaded(container, event) {
 }
 
 function getInstructions(lang) {
-    const url = BASE_URL + 'faq/getAll' + version(true) + langParam();
+    const url = BASE_URL + 'faq/getAll' + randVersion(true) + langParam();
 
     return fetch(url, {
         method: 'GET',
@@ -658,7 +658,7 @@ function getInstructions(lang) {
 }
 
 function getFAQModal() {
-    return fetch(FAQ_TPL + lang + '.html' + version(true))
+    return fetch(FAQ_TPL + lang + '.html' + randVersion(true))
         .then(response => response.text())
         .then(template => {
 
