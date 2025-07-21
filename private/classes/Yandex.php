@@ -9,6 +9,10 @@ class Yandex
     private const USER_ID_PARAM = 'yandex_user_id';
     private const YANDEX_AUTHORIZED_PARAM = 'yandex_authorized';
 
+    const METRIKA_COUNTERS = [
+        SudokuGame::GAME_NAME => '102483438', // Счетчик для игры Судоку
+    ];
+
     public static ?string $yandexUser = null;
     public static ?int $commonId = null;
 

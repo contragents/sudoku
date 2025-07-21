@@ -4,6 +4,8 @@
 namespace classes;
 
 
+use BaseController as BC;
+
 class FrontResourceSudoku extends FrontResource
 {
     const NUMBER_TYPES = ['red', 'key', 'rose', 'white', 'black', 'button'];
@@ -30,7 +32,9 @@ class FrontResourceSudoku extends FrontResource
                 ],
                 'black_0' => [
                     'type' => 'image',
-                    'url' => 'img/sudoku/number_icons/0_black.png',
+                    'url' => BC::$version > '1.0.0.3'
+                        ? 'img/sudoku/number_icons/0_black_locker.png'
+                        : 'img/sudoku/number_icons/0_black.png',
                 ],
             ]
             + parent::getImgsPreload();

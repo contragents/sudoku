@@ -8,6 +8,7 @@
  */
 
 use classes\T;
+use BaseController as BC;
 
 ?>
 <!DOCTYPE html>
@@ -65,36 +66,8 @@ use classes\T;
         head.appendChild(script);
     }
 
-    loader.importJS('<?= BaseController::$instance::GAME_URL ?>mainScript?ver=' + Date.now());
+    loader.importJS('<?= BC::$instance::GAME_URL ?>mainScript?ver=' + Date.now());
 </script>
 <div id="ss" style="display:none;"></div>
-
-<!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-    (function (m, e, t, r, i, k, a) {
-        m[i] = m[i] || function () {
-            (m[i].a = m[i].a || []).push(arguments)
-        };
-        m[i].l = 1 * new Date();
-        k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
-    })
-    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-    ym(66170950, "init", {
-        clickmap: true,
-        trackLinks: true,
-        accurateTrackBounce: true
-    });
-</script>
-<noscript>
-    <div><img src="https://mc.yandex.ru/watch/66170950" style="position:absolute; left:-9999px;" alt=""/></div>
-</noscript>
-<!-- /Yandex.Metrika counter -->
-
-<div style="display:none">
-    <iframe id="beeper" src="" width="0" height="0">
-    </iframe>
-</div>
-
 </body>
 </html>

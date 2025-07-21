@@ -49,4 +49,4 @@ document.oncontextmenu = noselect;
 // запрет на выведение контекстного меню
 function noselect() {return false;}
 
-//<?php include(ROOT_DIR . '/js/common_functions/ysdk_4.js')?>
+//<?php include(ROOT_DIR . '/js/common_functions/ysdk_4.js.php')?>

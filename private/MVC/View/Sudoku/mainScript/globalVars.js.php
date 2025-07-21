@@ -70,8 +70,6 @@ const sudokuSet3Column = new Set([3,6,9]);
 const sudoku1RowCorrectionLower = new Set([3,4,5,6,7]);
 var sudokuMistakesContainer = [];
 var sudokuChecksContainer = [];
-
-const yandexCounterId = 102483438;
 // SUDOKU VARS END
 
 const SUDOKU_PRICE = <?= MonetizationService::SUDOKU_PRICE ?>;
