@@ -65,13 +65,13 @@ class PlayersController extends BaseSubController
             return json_encode(
                 [
                     'result' => $status,
-                    'message' => '<strong>Ошибка загрузки файла!</strong><br /> Проверьте:<br /> <ul><li>размер файла (не более <strong>'
+                    'message' => T::S('<strong>File upload error!</strong><br /> Please review:<br /> <ul><li>file size (no more than <strong>')
                         . round(
                             self::MAX_UPLOAD_SIZE / 1024 / 1024,
                             1
                         )
-                        . 'MB</strong>)</li><li>разрешение - <strong>'
-                        . implode('</strong> или <strong>', self::ENABLE_UPLOAD_EXT)
+                        . T::S('MB</strong>)</li><li>resolution -<strong>')
+                        . implode(T::S('</strong> or <strong>'), self::ENABLE_UPLOAD_EXT)
                         . '</strong></li></ul>'
                 ]
             );
@@ -95,7 +95,7 @@ class PlayersController extends BaseSubController
             return json_encode(
                 [
                     'result' => 'error',
-                    'message' => 'Неверный формат URL! <br />Должно начинаться с <strong>http(s)://</strong>'
+                    'message' => T::S('Invalid URL format! <br />It must begin with <strong>http(s)://</strong>'),
                 ]
             );
         }
@@ -116,7 +116,7 @@ class PlayersController extends BaseSubController
             return json_encode(
                 [
                     'result' => 'error',
-                    'message' => 'Ошибка сохранения нового URL'
+                    'message' => T::S('Error saving new URL'),
                 ],
                 JSON_UNESCAPED_UNICODE
             );
@@ -125,7 +125,7 @@ class PlayersController extends BaseSubController
 
     public static function getBaseUploadFileURL()
     {
-        return Config::BASE_URL . Game::GAME_NAME . '/img/upload/'; // один адрес для всех аватаров игр - sudoku
+        return Config::BASE_URL . Game::GAME_NAME . self::UPLOAD_DIR; // один адрес для всех аватаров игр - sudoku
     }
 
     public function saveUserNameAction()

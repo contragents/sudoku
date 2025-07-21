@@ -134,7 +134,6 @@ const btnFAQClickHandler = (backButton = true) => {
         dialog = bootbox
             .dialog({
                 message: html,
-                locale: lang === 'RU' ? 'ru' : (lang === 'TR' ? 'tr' : 'en'),
                 className: 'modal-settings  modal-faq',
                 closeButton: false,
                 buttons: {
@@ -926,7 +925,6 @@ function PlayersPage(json) {
             getStatPageGlobal(userId).then(data => {
                 dialog = bootbox.dialog({
                     message: data.message,
-                    locale: lang === 'RU' ? 'ru' : 'en',
                     className: 'modal-settings modal-stats',
                     callback: function () {
                         console.log('stats loaded');
@@ -1028,12 +1026,11 @@ function prizesButtonHandler() {
             dialog = bootbox.alert({
                 title: '',
                 message: html,
-                // locale: 'ru',
                 closeButton: false,
                 className: 'modal-settings modal-leaderboard  modal--footer-compact',
                 buttons: {
                     ok: {
-                        label: '<?= T::S('Back') ?>', // lang === 'RU' ? 'Назад' : 'Back',
+                        label: '<?= T::S('Back') ?>',
                         className: 'btn-sm ml-auto mr-0',
                     },
                 },

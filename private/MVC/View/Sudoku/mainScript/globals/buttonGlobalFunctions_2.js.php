@@ -165,12 +165,11 @@ function newGameButtonFunction(ignoreDialog = false) {
 
                                     dialogResponse = bootbox.alert({
                                         message: responseText,
-                                        locale: 'ru',
                                         size: 'small',
                                         className: 'modal-settings modal-profile text-white',
                                         callback: function () {
                                             dialogResponse.modal('hide');
-                                            gameStates['gameResults']['results'](dataInvite);
+                                            gameStates.gameResults.results(dataInvite);
                                         }
                                     });
 
@@ -278,7 +277,6 @@ function chatButtonFunction() {
             + '">Telegram</a> </h6>'
             + '<h5><?= T::S('Send an in-game message') ?>',
         message: '<form onsubmit="return false" id="myChatForm">' + radioButtons + textInput + '</form>',
-        locale: 'ru',
         size: 'large',
         className: 'modal-settings modal-profile text-white',
         closeButton: false,
@@ -290,13 +288,13 @@ function chatButtonFunction() {
                     canOpenDialog = true;
                     canCloseDialog = true;
 
-                    buttons['chatButton']['svgObject'].bringToTop(buttons['chatButton']['svgObject'].getByName('chatButton' + OTJAT_MODE));
-                    buttons['chatButton']['svgObject'].getByName('chatButton' + ALARM_MODE).setData('alarm', false);
+                    buttons.chatButton.svgObject.bringToTop(buttons.chatButton.svgObject.getByName('chatButton' + OTJAT_MODE));
+                    buttons.chatButton.svgObject.getByName('chatButton' + ALARM_MODE).setData('alarm', false);
 
                     if ($(".bootbox-body #chattext").val() != '') {
 
-                        buttons['chatButton']['svgObject'].disableInteractive();
-                        buttons['chatButton']['svgObject'].bringToTop(buttons['chatButton']['svgObject'].getByName('chatButton' + 'Inactive'));
+                        buttons.chatButton.svgObject.disableInteractive();
+                        buttons.chatButton.svgObject.bringToTop(buttons.chatButton.svgObject.getByName('chatButton' + 'Inactive'));
 
                         fetchGlobal(CHAT_SCRIPT, '', $(".bootbox-body #myChatForm").serialize())
                             .then((data) => {
@@ -422,7 +420,7 @@ function logButtonFunction() {
                 }
             },*/
             confirm: {
-                label: "OK",
+                label: '<?= T::S('OK') ?>',
                 className: 'btn-primary',
                 callback: function () {
                     activateFullScreenForMobiles();
@@ -488,11 +486,9 @@ function playersButtonFunction() {
                 else
                     var responseText = JSON.stringify(data);
 
-
                 const p = PlayersPage(data);
                 const html = p.buildHtml();
                 const onLoad = p.onLoad;
-
 
                 dialog = bootbox.alert({
                     title: '',
@@ -500,7 +496,7 @@ function playersButtonFunction() {
                     className: 'modal-settings modal-players',
                     buttons: {
                         ok: {
-                            label: lang === 'RU' ? 'Назад' : 'Back',
+                            label: '<?= T::S('Back') ?>',
                             className: 'btn btn-sm ml-auto mr-0',
                         },
                     },

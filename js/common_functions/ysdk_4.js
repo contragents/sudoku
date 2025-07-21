@@ -28,6 +28,7 @@ if (isYandexAppGlobal() && typeof YaGames != 'undefined') {
             ysdk.on('game_api_resume', resumeCallback);
 
             lang = ysdk.environment.i18n.lang.toUpperCase();
+            bootbox.setLocale(convertLang2Bootbox());
         });
 }
 

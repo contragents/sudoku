@@ -100,3 +100,11 @@ function isIOSDevice() {
 
     return false;
 }
+
+function convertLang2Bootbox() {
+    let parts = lang.split('-');
+    const part1 = parts[0].toLowerCase();
+    const part2 = 1 in parts ? parts[1].toUpperCase() : false;
+
+    return part1 + (part2 ? ('-' + part2) : '');
+}

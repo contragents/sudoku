@@ -6,6 +6,8 @@ use BaseController as BC;
 ?>
 
 var lang = '<?= T::$lang ?>';
+bootbox.setLocale(convertLang2Bootbox());
+
 var version = '<?= BC::$version ?>';
 
 const SUPPORTED_LANGS = <?= T::getSupportedLangsForJS() ?> ;

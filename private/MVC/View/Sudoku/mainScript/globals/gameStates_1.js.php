@@ -353,7 +353,7 @@ var gameStates = {
             reportGameStopYandex();
 
             dialog = bootbox.dialog({
-                title: gameStates['chooseGame']['message'],
+                title: gameStates.chooseGame.message,
                 message: gameform,
                 className: 'modal-settings',
                 size: 'medium',
@@ -498,7 +498,6 @@ var gameStates = {
                                         dialog = bootbox.alert({
                                             title: '',
                                             message: html,
-                                            locale: 'ru',
                                             className: 'modal-settings modal-profile',
                                             buttons: {
                                                 ok: {
@@ -529,7 +528,6 @@ var gameStates = {
                             dialog = bootbox
                                 .alert({
                                     message: instruction,
-                                    locale: 'ru',
                                 })
                                 .off('shown.bs.modal');
 
@@ -568,7 +566,6 @@ var gameStates = {
                                 dialog = bootbox
                                     .dialog({
                                         message: data.message,
-                                        locale: lang === 'RU' ? 'ru' : 'en',
                                         className: 'modal-settings  modal-stats',
                                         callback: function () {
                                             console.log('stats loaded');
@@ -661,7 +658,6 @@ var gameStates = {
                                     dialog = bootbox.alert({
                                         title: '',
                                         message: html,
-                                        locale: 'ru',
                                         className: 'modal-settings modal-profile',
                                         buttons: {
                                             ok: {
@@ -880,7 +876,6 @@ var gameStates = {
                                         }
                                         dialogResponse = bootbox.alert({
                                             message: responseText,
-                                            locale: 'ru',
                                             size: 'small',
                                             className: 'modal-settings modal-profile text-white',
                                             callback: function () {
@@ -962,7 +957,6 @@ var gameStates = {
                                         }
                                         dialogResponse = bootbox.alert({
                                             message: responseText,
-                                            locale: 'ru',
                                             size: 'small',
                                             className: 'modal-settings modal-profile text-white',
                                             callback: function () {
@@ -1057,12 +1051,9 @@ function commonCallback(data) {
         }
     }
 
-    if ('lang' in data && data['lang'] != lang) {
+    if ('lang' in data && data.lang !== lang) {
         lang = data['lang'];
-        /*if (lang === 'EN') {
-            // ToDo not working under Yandex
-            asyncCSS('/css/choose_css.css');
-        }*/
+        bootbox.setLocale(convertLang2Bootbox());
     }
 
     if ('common_id' in data && !commonId) {

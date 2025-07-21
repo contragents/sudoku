@@ -60,6 +60,25 @@ class T
     }
 
     const PHRASES = [
+        'Invalid URL format! <br />It must begin with <strong>http(s)://</strong>' => [
+            self::RU_LANG => 'Неверный формат URL! <br />Должно начинаться с <strong>http(s)://</strong>',
+            self::TR_LANG => 'Geçersiz URL biçimi! <br /><strong>http(s)://</strong> ile başlamalıdır.',
+        ],
+        '</strong> or <strong>' => [
+            self::RU_LANG => '</strong> или <strong>',
+            self::TR_LANG => '</strong> veya <strong>',
+        ],
+        'MB</strong>)</li><li>resolution -<strong>' => [
+            self::RU_LANG => 'MB</strong>)</li><li>разрешение - <strong>',
+            self::TR_LANG => 'megabayt</strong>)</li><li>çözünürlüğü -<strong>',
+        ],
+        '<strong>File upload error!</strong><br /> Please review:<br /> <ul><li>file size (no more than <strong>' => [
+            self::RU_LANG => '<strong>Ошибка загрузки файла!</strong><br /> Проверьте:<br /> <ul><li>размер файла (не более <strong>',
+            self::TR_LANG => '<strong>Dosya yükleme hatası!</strong><br /> Lütfen inceleyin:<br /> <ul><li>dosya boyutu (en fazla <strong>'
+            ],
+        'Error creating new payment' => [
+            self::RU_LANG => 'Ошибка создания нового платежа',
+        ],
         'Agreement' => [
             self::RU_LANG => 'Оферта',
         ],
@@ -1042,7 +1061,7 @@ class T
         'Avatar updated' => [
             self::RU_LANG => 'Аватар обновлен'
         ],
-        "Error saving new URL" => [
+        'Error saving new URL' => [
             self::RU_LANG => 'Ошибка сохранения нового URL'
         ],
         'A player may open more than one cell and more than one KEY in one turn. Use the CASCADES rule' => [

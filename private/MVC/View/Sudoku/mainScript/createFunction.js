@@ -5,13 +5,8 @@ function () {
 
     var frames = atlasTexture.getFrameNames();
 
-
     noNetworkImg = this.add.image(200, 200, 'no_network');
     noNetworkImgOpponent = this.add.image(200, 200, 'no_network');
-
-    //var back = this.add.sprite(gameWidth / 2, gameHeight / 2, 'back');
-    //back.displayWidth = this.sys.canvas.width;
-    //back.displayHeight = this.sys.canvas.height;
 
     WebView.postEvent('web_app_set_header_color', false, {
         color: '#2C3C6C',

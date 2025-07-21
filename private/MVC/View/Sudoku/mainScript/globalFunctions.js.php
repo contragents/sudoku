@@ -52,7 +52,6 @@ document.addEventListener("fullscreenchange", function() {
         bootbox.confirm({
             size: 'small',
             message: '<?= T::S('Return to fullscreen mode?') ?>',
-            locale: '<?= strtolower(T::$lang) ?>',
             callback: function(result) {
                 if(result) {
                     document.body.requestFullscreen();
@@ -229,7 +228,6 @@ function showCabinetActionResult(response) {
         cabinetAlert = bootbox.alert({
             message: response['message'],
             className: 'modal-settings modal-profile text-white',
-            locale: 'ru',
             size: 'small',
             closeButton: false,
             centerVertical: true

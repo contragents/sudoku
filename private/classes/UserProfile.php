@@ -12,6 +12,7 @@ use CommonIdRatingModel;
 use IncomeModel;
 use PaymentModel;
 use PlayerModel;
+use PlayersController;
 use RefModel;
 use classes\ViewHelper as VH;
 use UserModel;
@@ -115,7 +116,7 @@ class UserProfile
             'prompt' => '',
             'type' => 'hidden',
             'inputName' => 'MAX_FILE_SIZE',
-            'value' => Players::MAX_UPLOAD_SIZE,
+            'value' => PlayersController::MAX_UPLOAD_SIZE,
         ];
         $message['form'][] = Hints::IsNotAndroidApp()
             ? [

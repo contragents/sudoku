@@ -57,7 +57,7 @@ class PayController extends BaseSubController
      */
     public function payAction()
     {
-        $badResult = ['result' => 'error', 'message' => T::S('Ошибка создания нового платежа')];
+        $badResult = ['result' => 'error', 'message' => T::S('Error creating new payment')];
         $summ = self::$Request[self::SUMM_PARAM];
         $commonId = self::$Request[self::COMMON_ID_PARAM];
 

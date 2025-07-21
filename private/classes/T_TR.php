@@ -9,6 +9,7 @@ use UserModel;
 class T_TR
 {
     const PHRASES = [
+        'Error creating new payment' => 'Yeni ödeme oluştururken hata oluştu',
         'FAQ' => 'SSS',
         'Agreement' => 'Anlaşma',
         'Empty value is forbidden' => 'Boş değer yasaktır',
