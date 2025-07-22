@@ -70,7 +70,7 @@ class PlayersController extends BaseSubController
                             self::MAX_UPLOAD_SIZE / 1024 / 1024,
                             1
                         )
-                        . T::S('MB</strong>)</li><li>resolution -<strong>')
+                        . T::S('MB</strong>)</li><li>extension -<strong>')
                         . implode(T::S('</strong> or <strong>'), self::ENABLE_UPLOAD_EXT)
                         . '</strong></li></ul>'
                 ]

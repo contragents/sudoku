@@ -11,7 +11,8 @@ class T
     const RU_LANG = 'RU';
     const EN_LANG = 'EN';
     const TR_LANG = 'TR';
-    const SUPPORTED_LANGS = [self::EN_LANG, self::RU_LANG, self::TR_LANG];
+    const FR_LANG = 'FR';
+    const SUPPORTED_LANGS = [self::EN_LANG, self::RU_LANG, self::TR_LANG, self::FR_LANG];
 
     const PLURAL_PATTERN = '[[';
 
@@ -62,19 +63,15 @@ class T
     const PHRASES = [
         'Invalid URL format! <br />It must begin with <strong>http(s)://</strong>' => [
             self::RU_LANG => 'Неверный формат URL! <br />Должно начинаться с <strong>http(s)://</strong>',
-            self::TR_LANG => 'Geçersiz URL biçimi! <br /><strong>http(s)://</strong> ile başlamalıdır.',
         ],
         '</strong> or <strong>' => [
             self::RU_LANG => '</strong> или <strong>',
-            self::TR_LANG => '</strong> veya <strong>',
         ],
-        'MB</strong>)</li><li>resolution -<strong>' => [
-            self::RU_LANG => 'MB</strong>)</li><li>разрешение - <strong>',
-            self::TR_LANG => 'megabayt</strong>)</li><li>çözünürlüğü -<strong>',
+        'MB</strong>)</li><li>extension -<strong>' => [
+            self::RU_LANG => 'MB</strong>)</li><li>расширение - <strong>',
         ],
         '<strong>File upload error!</strong><br /> Please review:<br /> <ul><li>file size (no more than <strong>' => [
             self::RU_LANG => '<strong>Ошибка загрузки файла!</strong><br /> Проверьте:<br /> <ul><li>размер файла (не более <strong>',
-            self::TR_LANG => '<strong>Dosya yükleme hatası!</strong><br /> Lütfen inceleyin:<br /> <ul><li>dosya boyutu (en fazla <strong>'
             ],
         'Error creating new payment' => [
             self::RU_LANG => 'Ошибка создания нового платежа',
@@ -1297,6 +1294,7 @@ class T
             self::EN_LANG => [1 => 'Player1', 2 => 'Player2', 3 => 'Player3', 4 => 'Player4'],
             self::RU_LANG => [1 => 'Игрок1', 2 => 'Игрок2', 3 => 'Игрок3', 4 => 'Игрок4'],
             self::TR_LANG => [1 => 'Oyuncu1', 2 => 'Oyuncu2', 3 => 'Oyuncu3', 4 => 'Oyuncu1'],
+            self::FR_LANG => [1 => 'Joueur1', 2=> 'Joueur2', 3=> 'Joueur3', 4 => 'Joueur4']
         ],
     ];
 

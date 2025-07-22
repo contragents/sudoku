@@ -368,14 +368,70 @@ class DeskSudoku extends Desk
     {
         foreach ($newDesk as $i => $column) {
             foreach ($column as $j => $cell) {
+                // Проверяем корректность ключей присланной доски
+                if (!(
+                        $i === 0
+                        || $i === 1
+                        || $i === 2
+                        || $i === 3
+                        || $i === 4
+                        || $i === 5
+                        || $i === 6
+                        || $i === 7
+                        || $i === 8)
+                    || !(
+                        $j === 0
+                        || $j === 1
+                        || $j === 2
+                        || $j === 3
+                        || $j === 4
+                        || $j === 5
+                        || $j === 6
+                        || $j === 7
+                        || $j === 8
+                    )) {
+                    // Какойто ключ неправильный - Удаляем newEntity
+                    unset($this->newEntity, $this->newEntityI, $this->newEntityJ);
+
+                    return false;
+                }
+
                 if ($this->desk[$i][$j] === 0 && $cell[1] !== 0) {
                     // Прислали измененную ячейку ключа
+
+                    // Удаляем newEntity
+                    unset($this->newEntity, $this->newEntityI, $this->newEntityJ);
+
+                    return false;
+                }
+
+                // Проверим, что присланная цифра СТРОГО от 1 до 9
+                if (
+                    $cell[1] !== $this->desk[$i][$j]
+                    && !(
+                        $cell[1] === 1
+                        || $cell[1] === 2
+                        || $cell[1] === 3
+                        || $cell[1] === 4
+                        || $cell[1] === 5
+                        || $cell[1] === 6
+                        || $cell[1] === 7
+                        || $cell[1] === 8
+                        || $cell[1] === 9
+                    )
+                ) {
+                    // Удаляем newEntity
+                    unset($this->newEntity, $this->newEntityI, $this->newEntityJ);
+
                     return false;
                 }
 
                 if (!$this->equivalentCells($cell, $this->desk[$i][$j])) {
                     // Проверяем, что новая цифра одна и только одна - иначе вернуть фалз
                     if (isset($this->newEntity)) {
+                        // Удаляем newEntity
+                        unset($this->newEntity, $this->newEntityI, $this->newEntityJ);
+
                         return false;
                     }
 
@@ -396,8 +452,11 @@ class DeskSudoku extends Desk
      * @param int $cellOld
      * @return bool
      */
-    protected function equivalentCells($cellNew, $cellOld): bool
-    {
+    protected
+    function equivalentCells(
+        $cellNew,
+        $cellOld
+    ): bool {
         return $cellNew[1] == $cellOld;
     }
 
@@ -406,8 +465,10 @@ class DeskSudoku extends Desk
      * @param int $numCellsSolved
      * @return string
      */
-    public function checkNewDigit(int &$numCellsSolved): string
-    {
+    public
+    function checkNewDigit(
+        int &$numCellsSolved
+    ): string {
         $res = self::TURN_MISTAKE_RESPONSE;
 
         if ($this->checkij($this->newEntityI, $this->newEntityJ, $this->newEntity)) {
@@ -437,12 +498,17 @@ class DeskSudoku extends Desk
      * @param int $value
      * @return bool
      */
-    public function checkij(int $i, int $j, int $value): bool
-    {
+    public
+    function checkij(
+        int $i,
+        int $j,
+        int $value
+    ): bool {
         return ((int)$this->solution[$i][$j]) === $value;
     }
 
-    private function genKeys()
+    private
+    function genKeys()
     {
         $numOpen = 0;
         foreach ($this->desk as $column) {
@@ -483,8 +549,11 @@ class DeskSudoku extends Desk
      * @param $j
      * @return array
      */
-    public static function getSquareCells($i, $j): array
-    {
+    public
+    static function getSquareCells(
+        $i,
+        $j
+    ): array {
         $iSquare = floor($i / 3);
         $jSquare = floor($j / 3);
 
