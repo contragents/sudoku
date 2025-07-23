@@ -4,6 +4,7 @@ namespace classes;
 
 use PlayerModel;
 use UserModel;
+use BaseController as BC;
 
 class Steam
 {
@@ -67,6 +68,10 @@ class Steam
 
     public static function isSteamApp(): bool
     {
+        if(($_GET[BC::APP_PARAM] ?? false) === 'steam') {
+            return true;
+        }
+
         return isset($_SERVER['HTTP_REFERER']) && (strpos($_SERVER['HTTP_REFERER'], 'app=steam') !== false);
     }
 

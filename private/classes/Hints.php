@@ -51,19 +51,5 @@ class Hints
 
         return false;
     }
-
-    public static function isYandexApp()
-    {
-        if (isset($_SERVER['HTTP_REFERER']) && (strpos($_SERVER['HTTP_REFERER'], 'games.s3.yandex') !== false)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public static function isClubApp()
-    {
-        return !(self::isAndroidApp() || self::isVkApp() || self::isYandexApp());
-    }
 }
 

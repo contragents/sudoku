@@ -65,4 +65,13 @@ class Yandex
 
         return false;
     }
+
+    public static function isYandexApp(): bool
+    {
+        if (isset($_SERVER['HTTP_REFERER']) && (strpos($_SERVER['HTTP_REFERER'], 'yandex') !== false)) {
+            return true;
+        }
+
+        return false;
+    }
 }

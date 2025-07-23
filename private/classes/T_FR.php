@@ -253,261 +253,273 @@ class T_FR
         'costs' => 'frais',
         '+15 for all pieces used' => '+15 pour toutes les pièces utilisées',
         'TOTAL' => 'TOTAL',
-        'You did not make any word' => 'Tek bir kelime bile uydurmadın.',
-        'is attempting to make a turn out of his turn (turn #' => 'kendi dönüşü dışında bir dönüş yapmaya çalışıyor (dönüş #',
-        'Data processing error!' => 'Veri işleme hatası!',
-        ' - turn processing error (turn #' => ' - dönüş işleme hatası (dönüş #',
-        "didn't make any word (turn #" => 'herhangi bir kelime yapmadı (dönüş #',
-        'set word lenght record for' => 'için en uzun kelime rekorunu kırdı',
-        'set word cost record for' => 'başına kelime değeri için bir kayıt ayarlayın',
-        'set record for turn cost for' => 'bir taşınma maliyeti için rekor kırdı',
-        'gets' => 'alır',
-        'for turn #' => 'dönüş için #',
-        'For all pieces' => 'Tüm cipsler için',
-        'Wins with score ' => 'Bir puan farkla kazanarak',
-        'set record for gotten points in the game for' => 'bir maçta en çok sayı atan oyuncu rekorunu kırdı',
-        'out of chips - end of game!' => 'fişler bitti, oyun bitti!',
-        'set record for number of games played for' => 'bir sezonda oynanan en fazla oyun rekorunu kırdı.',
-        'is the only one left in the game - Victory!' => 'Oyunda bir kişi kaldı - Zafer!',
-        'left game' => 'oyunu terk etti',
-        'has left the game' => 'oyunu terk etti',
-        'is the only one left in the game! Start a new game' => 'oyunda yalnız kaldı! Yeni bir oyun başlatın',
-        'Time for the turn ran out' => 'Çalışma süresi sona erdi',
-        "is left without any pieces! Winner - " => 'cipsi bitmiş! Kazanan: ',
-        ' with score ' => 'skor ile',
-        "is left without any pieces! You won with score " => 'fişler bitti! Şu skorla kazandın:',
-        "gave up! Winner - " => 'teslim oldu. Kazanan: ',
-        'skipped 3 turns! Winner - ' => 'üç hamle kaçırdı! Kazanan: ',
-        'New game has started!' => 'Yeni oyun başladı!',
-        'New game' => 'Yeni oyun',
-        'Accept invitation' => 'Daveti kabul et',
-        'Get' => '',
-        'score points' => 'puan kazan',
-
-        "Asking for adversaries' approval." => 'Rakiplerin onaylanması isteniyor.',
-        'Remaining in the game:' => 'Oyun içi artıklar:',
-        "You got invited for a rematch! - Accept?" => 'Rövanş maçına davet edildiniz - Kabul mü?',
-        'All players have left the game' => 'Tüm oyuncular oyunu terk etti',
-        "Your score" => 'Sizin puanınız',
-        'Turn time' => 'Dönüş süresi',
-        'Date' => 'Tarih',
-        'Price' => 'Miktar',
-        'Status' => 'Durum',
-        'Type' => 'Tip',
-        'Period' => 'Dönem',
-        'Word' => 'Kelime',
-        'Puanlar/harfler',
-        'Result' => 'Sonuç',
-        'Opponents' => 'Muhalifler',
-        'Games<br>total' => 'Oyunlar<br>toplam',
-        'Wins<br>total' => 'Kazanır<br>toplam',
-        'Gain/loss<br>in ranking' => 'Sıralamada<br>kazanç/kayıp',
-        '% Wins' => '% Kazanma',
-        'Games in total' => 'Toplam oyun sayısı',
-        'Winnings count' => 'Kazançlar sayılır',
-        'Increase/loss in rating' => 'Reyting artışı/kaybı',
-        '% of wins' => 'Kazanma yüzdesi',
-        "GAME points - Year Record!" => 'OYUN puanları - Yıl Rekoru!',
-        "GAME points - Month Record!" => 'OYUN puanları - Ay Rekoru!',
-        "GAME points - Week Record!" => 'OYUN puanları - Hafta Rekoru!',
-        "GAME points - Day Record!" => 'OYUN puanları - Gün Rekoru!',
-        "TURN points - Year Record!" => 'TURN puanları - Yıl Rekoru!',
-        "TURN points - Month Record!" => 'TURN puanları - Ay Rekoru!',
-        "TURN points - Week Record!" => 'TURN puanları - Hafta Rekoru!',
-        "TURN points - Day Record!" => 'TURN noktaları - Gün Rekoru!',
-        "WORD points - Year Record!" => 'KELİME puanları - Yıl Rekoru!',
-        "WORD points - Month Record!" => 'KELİME puanları - Ay Rekoru!',
-        "WORD points - Week Record!" => 'KELİME puanları - Hafta Rekoru!',
-        "WORD points - Day Record!" => 'KELİME puanları - Gün Rekoru!',
-        "Longest WORD - Year Record!" => 'En Uzun KELİME - Yıl Rekoru!',
-        "Longest WORD - Month Record!" => 'En Uzun KELİME - Ay Rekoru!',
-        "Longest WORD - Week Record!" => 'En Uzun Sözcük - Hafta Rekoru!',
-        "Longest WORD - Day Record!" => 'En Uzun Sözcük - Gün Rekoru!',
-        "GAMES played - Year Record!" => 'Çalınan Parçalar - Yıl Rekoru!',
-        "GAMES played - Month Record!" => 'Çalınan Parçalar - Ayın Kaydı!',
-        "GAMES played - Week Record!" => 'Çalınan Parçalar - Haftanın Kaydı!',
-        "GAMES played - Day Record!" => 'Çalınan Parçalar - Günün Kaydı!',
-        "Victory" => 'Zafer',
-        'Losing' => 'Kaybetmek',
-        "Go to player's stats" => 'Oyuncu istatistiklerine git',
-        'Filter by player' => 'Oyuncuya göre filtrele',
-        'Apply filter' => 'Filtre uygula',
-        'against' => 'bir oyuncuya karşı',
-        "File loading error!" => 'Dosya yükleme hatası!',
-        "Check:" => 'Şuna bir bak:',
-        "file size (less than " => 'dosya boyutu (maks ',
-        "resolution - " => 'çözünürlük - ',
-        "Incorrect URL format!" => 'Yanlış URL biçimi!',
-        "Must begin with " => 'Şununla başlamalıdır: ',
-        'Error! Choose image file with the size not more than' => 'Hata! Boyutundan daha büyük olmayan bir resim dosyası seçin:',
-        'Avatar updated' => 'Avatar güncellendi',
-        "Error saving new URL" => 'Yeni URL kaydedilirken hata oluştu',
-        'A player may open more than one cell and more than one KEY in one turn. Use the CASCADES rule' => 'Bir oyuncu bir turda birden fazla hücre ve birden fazla ANAHTAR açabilir. CASCADES kuralını kullanın',
-        'If after the automatic opening of a number, new blocks of EIGHT open cells are formed on the field, such blocks are also opened by CASCADE' => 'Bir sayının otomatik olarak açılmasından sonra, alanda SEKİZ açık hücreden oluşan yeni bloklar oluşursa, bu bloklar da CASCADE ile açılır',
-        'If a player has opened a cell (solved a number in it) and there is only ONE closed digit left in the block, this digit is opened automatically' => 'Bir oyuncu bir hücreyi açmışsa (içindeki bir sayıyı çözmüşse) ve blokta sadece BİR kapalı rakam kalmışsa, bu rakam otomatik olarak açılır',
-        'is awarded for solved empty cell' => '- açık bir rakam için verilir',
-        'by calculating all of other 8 digits in a block - vertically OR horizontally OR in a 3x3 square' => 'açmak için puan toplamaktır - dikey VEYA yatay VEYA 3x3 karede',
-        "The players' task is to take turns making moves and accumulating points to open black squares" => 'Oyuncuların görevi sırayla hamle yapmak ve bir bloktaki diğer 8 rakamın tümünü hesaplayarak siyah kareleri',
-        'The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated' => 'Klasik SUDOKU kuralları geçerlidir - dokuz hücreli bir blokta (dikey, yatay ve 3x3&#39;lük bir karede) sayılar tekrarlanmamalıdır',
+        'You did not make any word' => 'Vous n&#39;avez pas prononcé un mot.',
+        'is attempting to make a turn out of his turn (turn #' => 'tente d&#39;effectuer un tour en dehors de son tour (tour n°',
+        'Data processing error!' => 'Erreur de traitement des données !',
+        ' - turn processing error (turn #' => ' - erreur de traitement du tour (tour n°',
+        "didn't make any word (turn #" => 'n&#39;a pas prononcé un mot (tour n°',
+        'set word lenght record for' => 'définir la longueur maximale des mots pour',
+        'set word cost record for' => 'définir le coût par mot pour',
+        'set record for turn cost for' => 'établir un record pour le coût du tour pour',
+        'gets' => 'reçu',
+        'for turn #' => 'pour le tour n°',
+        'For all pieces' => 'Pour toutes les pièces',
+        'Wins with score ' => 'Victoires avec un score de ',
+        'set record for gotten points in the game for' => 'a établi un record du nombre de points marqués dans le jeu pour',
+        'out of chips - end of game!' => 'plus de jetons - fin de la partie !',
+        'set record for number of games played for' => 'a établi un record du nombre de matchs disputés pour',
+        'is the only one left in the game - Victory!' => 'est le seul qui reste dans le jeu - Victoire !',
+        'left game' => 'a quitté la partie',
+        'has left the game' => 'a quitté la partie',
+        'is the only one left in the game! Start a new game' => 'est le seul à rester dans le jeu ! Commencez une nouvelle partie.',
+        'Time for the turn ran out' => 'Le temps imparti pour le tour est écoulé.',
+        "is left without any pieces! Winner - " => 'se retrouve sans aucune pièce ! Vainqueur - ',
+        ' with score ' => ' avec score ',
+        "is left without any pieces! You won with score " => 'n&#39;a plus aucune pièce ! Vous avez gagné avec un score de ',
+        "gave up! Winner - " => 'a abandonné ! Vainqueur - ',
+        'skipped 3 turns! Winner - ' => 'a sauté 3 tours ! Vainqueur - ',
+        'New game has started!' => 'Une nouvelle partie a commencé !',
+        'New game' => 'Nouveau jeu',
+        'Accept invitation' => 'Accepter l&#39;invitation',
+        'Get' => 'Obtenez',
+        'score points' => 'marquer des points',
+        "Asking for adversaries' approval." => 'Demander l&#39;approbation des adversaires.',
+        'Remaining in the game:' => 'Rester dans la course :',
+        "You got invited for a rematch! - Accept?" => 'Tu as été invité à une revanche ! - Tu acceptes ?',
+        'All players have left the game' => 'Tous les joueurs ont quitté la partie.',
+        "Your score" => 'Votre score',
+        'Turn time' => 'Temps de rotation',
+        'Date' => 'Date',
+        'Price' => 'Prix',
+        'Status' => 'Statut',
+        'Type' => 'Type',
+        'Period' => 'Période',
+        'Word' => 'Mot',
+        'Points/letters' => 'Points/lettres',
+        'Result' => 'Résultat',
+        'Opponents' => 'Adversaires',
+        'Games<br>total' => 'Jeux<br>total',
+        'Wins<br>total' => 'Victoires<br>total',
+        'Gain/loss<br>in ranking' => 'Gain/perte<br>dans le classement',
+        '% Wins' => '% de victoires',
+        'Games in total' => 'Total des jeux',
+        'Winnings count' => 'Les gains comptent',
+        'Increase/loss in rating' => 'Augmentation/perte de notation',
+        '% of wins' => '% de victoires',
+        "GAME points - Year Record!" => 'Points DE JEU - Record annuel !',
+        "GAME points - Month Record!" => 'Points DE JEU - Record du mois !',
+        "GAME points - Week Record!" => 'Points DE JEU - Record semaine !',
+        "GAME points - Day Record!" => 'Points DE JEU - Record du jour !',
+        "TURN points - Year Record!" => 'Points TURN - Record annuel !',
+        "TURN points - Month Record!" => 'Points TURN - Record du mois !',
+        "TURN points - Week Record!" => 'Points TURN - Record semaine !',
+        "TURN points - Day Record!" => 'Points TURN - Record du jour !',
+        "WORD points - Year Record!" => 'Points WORD - Record annuel !',
+        "WORD points - Month Record!" => 'Points WORD - Record du mois !',
+        "WORD points - Week Record!" => 'Points WORD - Record semaine !',
+        "WORD points - Day Record!" => 'Points WORD - Record du jour !',
+        "Longest WORD - Year Record!" => 'Le mot le plus long - Record annuel !',
+        "Longest WORD - Month Record!" => 'Le mot le plus long - Record du mois !',
+        "Longest WORD - Week Record!" => 'Le mot le plus long - Record de la semana !',
+        "Longest WORD - Day Record!" => 'Le mot le plus long - Record du jour !',
+        "GAMES played - Year Record!" => 'JEUX joués - Record annuel !',
+        "GAMES played - Month Record!" => 'JEUX joués - Record du mois !',
+        "GAMES played - Week Record!" => 'MATCHS joués - Record de la semaine !',
+        "GAMES played - Day Record!" => 'JEUX joués - Record de la journée !',
+        "Victory" => 'Victoire',
+        'Losing' => 'Perdre',
+        "Go to player's stats" => 'Accéder aux statistiques du joueur',
+        'Filter by player' => 'Filtrer par joueur',
+        'Apply filter' => 'Appliquer le filtre',
+        'against' => 'contre',
+        "File loading error!" => 'Erreur de chargement du fichier !',
+        "Check:" => 'Vérifier :',
+        "file size (less than " => 'taille du fichier (moins de',
+        "Incorrect URL format!" => 'Format d&#39;URL incorrect !',
+        "Must begin with " => 'Doit commencer par ',
+        'Error! Choose image file with the size not more than' => 'Erreur ! Choisissez un fichier image dont la taille ne dépasse pas',
+        'Avatar updated' => 'Avatar mis à jour',
+        "Error saving new URL" => 'Erreur lors de l&#39;enregistrement de la nouvelle URL',
+        'A player may open more than one cell and more than one KEY in one turn. Use the CASCADES rule'
+        => 'Un joueur peut ouvrir plusieurs cases et plusieurs CLÉS en un seul tour. Utilisez la règle CASCADES.',
+        'If after the automatic opening of a number, new blocks of EIGHT open cells are formed on the field, such blocks are also opened by CASCADE'
+        => 'Si, après l&#39;ouverture automatique d&#39;un numéro, de nouveaux blocs de HUIT cases ouvertes se forment sur le champ, ces blocs sont également ouverts par CASCADE.',
+        'If a player has opened a cell (solved a number in it) and there is only ONE closed digit left in the block, this digit is opened automatically'
+        => 'Si un joueur a ouvert une case (résolu un nombre qui s&#39;y trouvait) et qu&#39;il ne reste qu&#39;UN SEUL chiffre fermé dans le bloc, ce chiffre est automatiquement ouvert.',
+        'is awarded for solved empty cell' => 'est attribué pour une cellule vide résolue',
+        'by calculating all of other 8 digits in a block - vertically OR horizontally OR in a 3x3 square'
+        => 'en calculant tous les autres 8 chiffres d&#39;un bloc - verticalement OU horizontalement OU dans un carré 3x3',
+        "The players' task is to take turns making moves and accumulating points to open black squares"
+        => 'La tâche des joueurs consiste à jouer à tour de rôle et à accumuler des points pour ouvrir les cases noires.',
+        'The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated'
+        => 'Les règles classiques du SUDOKU s&#39;appliquent : dans un bloc de neuf cases (verticalement, horizontalement et dans un carré 3x3), les chiffres ne doivent pas se répéter.',
         'faq_rules' => [
-            SudokuGame::GAME_NAME => <<<TR
-
-<h2 id="nav1">Oyun hakkında</h2>
-Klasik SUDOKU kuralları geçerlidir - dokuz hücreli bir blokta (dikey, yatay ve 3x3 karede) sayılar tekrarlanmamalıdır
+            SudokuGame::GAME_NAME => <<<FR
+<h2 id="nav1">À propos du jeu</h2>
+Les règles classiques du SUDOKU s'appliquent : dans un bloc de neuf cases (verticalement, horizontalement et dans un carré 3x3), les chiffres ne doivent pas se répéter.
 <br><br>
-Oyuncuların görevi sırayla hamle yapmak ve siyah kareleri açmak için puan toplamaktır (<span style="color: #0f0">+10 puan</span>) bir bloktaki diğer 8 rakamın tümünü hesaplayarak - dikey VEYA yatay VEYA 3x3 kare içinde
+La tâche des joueurs consiste à jouer à tour de rôle et à accumuler des points pour ouvrir les cases noires (<span style="color:#0f0">+10 points</span>) en calculant les 8 autres chiffres d'un bloc - verticalement OU horizontalement OU dans un carré 3x3.
 <br><br>
-A <span style="color: #0f0">+1 puan</span> verilir
+Un <span style="color:#0f0">point +1</span> est attribué pour chaque cellule vide résolue.
 <br><br>
-Zafer, tüm olası puanların %50'sini alan oyuncuya gider +1 puan
+La victoire revient au joueur qui marque 50 % de tous les points possibles + 1 point.
 <br><br>
-Bir oyuncu bir hücreyi açmışsa (içindeki bir sayıyı çözmüşse) ve blokta sadece BİR kapalı rakam kalmışsa, bu rakam otomatik olarak açılır
+Si un joueur a ouvert une case (résolu un nombre qui s'y trouvait) et qu'il ne reste qu'UN SEUL chiffre fermé dans le bloc, ce chiffre est automatiquement ouvert.
 <br><br>
-Bir rakamın otomatik olarak açılmasından sonra, sahada SEKİZ açık hücreden oluşan yeni bloklar oluşursa, bu bloklar da KASA ile açılır
+Si, après l'ouverture automatique d'un numéro, de nouveaux blocs de HUIT cases ouvertes se forment sur le champ, ces blocs sont également ouverts par CASCADE.
 <br><br>
-Bir oyuncu bir turda birden fazla hücre ve birden fazla ANAHTAR açabilir. CASCADES kuralını kullanın
+Un joueur peut ouvrir plusieurs cases et plusieurs CLÉS en un seul tour. Utilisez la règle CASCADES.
 <br><br>
-Hatalı bir hamle durumunda - hücredeki rakam yanlıştır - bu hücrede her iki oyuncu tarafından görülebilen küçük kırmızı bir hata rakamı belirir. Bu rakam bir daha bu hücreye yerleştirilemez
+En cas de déplacement erroné (le chiffre dans la case est incorrect), un petit chiffre rouge apparaît sur cette case, visible par les deux joueurs. Ce chiffre ne peut plus être placé sur cette case.
 <br><br>
-Kontrol düğmesini kullanarak oyuncu bir işaret yapabilir - hücreye küçük yeşil bir sayı koyabilir. Bu, oyuncunun emin olduğu hesaplanmış bir rakam veya sadece bir tahmin olabilir. Notları normal bir SUDOKU'da olduğu gibi kullanın - diğer oyuncu bunları göremez
-TR
+En utilisant le bouton « Vérifier », le joueur peut faire une marque, c'est-à-dire inscrire un petit chiffre vert dans la case. Il peut s'agir d'un chiffre calculé dont le joueur est sûr, ou simplement d'une supposition. Utilisez des notes comme dans un SUDOKU normal : l'autre joueur ne peut pas les voir.
+FR
             ,
         ],
-        'faq_rating' => <<<TR
-Elo reytingi
+        'faq_rating' => <<<FR
+Classement Elo
 <br><br>
-Elo reyting sistemi, Elo katsayısı - oyunlarda oyuncuların göreceli gücünü hesaplama yöntemi, 
-iki oyunculu oyunlarda (örneğin satranç, dama veya shogi, go). 
+Système de classement Elo, coefficient Elo - méthode de calcul de la force relative des joueurs dans les jeux impliquant deux joueurs (par exemple, les échecs, les dames ou le shogi, le go).
 <br>
-Bu derecelendirme sistemi Macar asıllı Amerikalı fizik profesörü Arpad Elo (Macarca: Élő Árpád; 1903-1992) tarafından geliştirilmiştir
+Ce système de classement a été développé par le professeur de physique américain d'origine hongroise Arpad Elo (en hongrois : Élő Árpád ; 1903-1992).
 <br><br>
-Oyuncular arasındaki derecelendirme farkı ne kadar büyükse, güçlü oyuncu kazanırken derecesine o kadar az puan eklenecektir.
+Plus la différence de classement entre les joueurs est grande, moins le joueur le plus fort obtiendra de points lorsqu'il gagnera.
 <br> 
-Tersine, daha zayıf bir oyuncu daha güçlü bir oyuncuyu yenerse reytingine daha fazla puan eklenecektir.
+À l'inverse, un joueur plus faible obtiendra plus de points pour son classement s'il bat un joueur plus fort.
 <br><br>
-Bu nedenle, güçlü bir oyuncu için eşit oyuncularla oynamak daha avantajlıdır - kazanırsanız daha fazla puan alırsınız ve kaybederseniz çok fazla puan kaybetmezsiniz.
+Ainsi, il est plus avantageux pour un joueur fort de jouer avec des adversaires de même niveau : si vous gagnez, vous obtenez plus de points, et si vous perdez, vous ne perdez pas beaucoup de points.
 <br><br>
-Yeni başlayan birinin deneyimli bir ustayla dövüşmesi güvenlidir.
-<br>Eğer kaybederseniz sıralama kaybı küçük olacaktır.
-<br>Ancak, zafer durumunda, usta rütbe puanlarını cömertçe paylaşacaktır.
-TR
+Un débutant peut sans danger affronter un maître expérimenté.
+<br>La perte de classement en cas de défaite sera minime.
+<br>Mais, en cas de victoire, le maître partagera généreusement les points de classement.
+FR
         ,
         'faq_rewards' => [
-            SudokuGame::GAME_NAME => <<<TR
-Oyuncular belirli başarılar (rekorlar) için ödüllendirilir.
+            SudokuGame::GAME_NAME => <<<FR
+Les joueurs sont récompensés pour certaines réalisations (records).
 <br><br>
-Oyuncunun ödülleri, “STATS” bölümünde şu adaylıklar altında gösterilir: altın/gümüş/bronz/taş.
+Les récompenses du joueur sont indiquées dans la section « STATS » dans les catégories suivantes : or/argent/bronze/pierre.
 <br><br>
-Ödül kartı aldığında, oyuncu SUDOKU coinleri {{sudoku_icon}}<br> bonus olarak alır.
-Coinler özel oyun modu “ON Coins”da kullanılabilir, oyun içi cüzdanınızı doldurabilir,
-oyundan coin çekebilirsiniz - daha fazla bilgi için “Coin Oyun Modu” sekmesine bakın.
+Lorsqu'il reçoit une carte de récompense, le joueur reçoit un bonus de pièces SUDOKU {{sudoku_icon}}<br> 
+Les pièces peuvent être utilisées dans un mode de jeu spécial dédié "AUX PIÈCES". Vous pouvez recharger votre portefeuille dans le jeu 
+et retirer des pièces du jeu. Pour en savoir plus, consultez l'onglet « Mode de jeu avec pièces ».
 <br><br>
-Bir oyuncunun rekoru başka bir oyuncu tarafından kırılmadığı sürece, ödül kartı o oyuncu için “İSTATİSTİKLER” bölümünün “AKTİF ÖDÜLLER” sekmesinde gösterilir.
+Tant que le record d'un joueur n'a pas été battu par un autre joueur, la carte de récompense est affichée pour ce joueur dans l'onglet « RÉCOMPENSES ACTIVES » de la section « STATISTIQUES ».
 <br><br>
-Her saat başı verilen her bir “ACTIVE Reward” ek “kar” olarak coin kazandırır.
+Chaque « Récompense Active » toutes les heures génère un « profit » supplémentaire en pièces.
 <br><br>
-Bir rekor başka bir oyuncu tarafından kırılırsa, rekorun önceki sahibinin ödül kartı “GEÇMİŞ ÖDÜLLER” sekmesine taşınır ve pasif gelir getirmeyi durdurur. 
+Si un record a été battu par un autre joueur, la carte de récompense de l'ancien détenteur du record est déplacée vers l'onglet « RÉCOMPENSES PASSÉES » et cesse de générer des revenus passifs. 
 <br><br>
-Alınan toplam coin sayısı (tek seferlik bonuslar ve ek kar), “PROFİL” bölümündeki ‘Cüzdan’ sekmesinde sırasıyla “SUDOKU bakiyesi” ve “Biriken bonuslar” alanlarında görüntülenebilir.
+Le nombre total de pièces reçues (bonus uniques et bénéfices supplémentaires) peut être consulté dans la section « PROFIL » de l'onglet « Portefeuille », respectivement dans les champs « Solde SUDOKU » et « Bonus accumulés ».
 <br><br>
-“OYNANAN PARTİLER” başarılarında kendi rekorunu aşan oyuncuya yeni bir ödül kartı veya para verilmez.
-Rekor değeri (oyun sayısı / arkadaş sayısı) ödül kartında güncellenir.
+Lorsque le joueur dépasse son propre record pour les réalisations « PARTIES JOUÉES », il ne reçoit pas de nouvelle carte de récompense ni de nouvelles pièces.
+La valeur du record (nombre de parties / nombre d'amis) est mise à jour sur la carte de récompense.
 <br><br>
-Örneğin, bir oyuncu daha önce 10.000 oyun için “OYNANAN OYUNLAR”
-(altın) başarısını elde etmişse, bu oyuncunun oyun sayısı 10.001'e değiştiğinde, rekor sahibine artık ödül kartı verilmeyecektir.<br>
-TR
+Par exemple, si un joueur a déjà obtenu le succès « JEUX JOUÉS »
+(or) pour 10 000 jeux, alors lorsque le nombre de jeux de ce joueur passe à 10 001, aucune carte de récompense ne sera délivrée au détenteur du record.
+FR
             ,
         ],
         'Reward' => 'Ödül',
         'faq_coins' => [
-            SudokuGame::GAME_NAME => <<<TR
-Coin <strong>SUDOKU</strong> {{sudoku_icon}}{{yandex_exclude}}{{ , <strong>Scrabble, Sudoku</strong> gibi oyunlardan oluşan bir oyun ağında kullanılan oyun içi para birimidir<br><br>
-Tüm oyunlar için tek bir hesap, tek bir para birimi, tek bir cüzdan}}
+            SudokuGame::GAME_NAME => <<<FR
+La pièce <strong>SUDOKU</strong> {{sudoku_icon}} est une monnaie utilisée dans le jeu {{yandex_exclude}}{{ pour un réseau de jeux - <strong>Scrabble, Sudoku</strong><br><br>
+Un seul compte pour tous les jeux, une seule monnaie, un seul portefeuille}}
 <br><br>
-{{yandex_exclude}}{{Kripto dünyasında, bu coin SUDOKU olarak da adlandırılır. Yakında, oyun içi cüzdanınızdan TON (Telegram) ağındaki harici bir cüzdana istediğiniz sayıda SUDOKU coinini çekebilmeniz mümkün olacak.
+{{yandex_exclude}}{{Dans le monde des cryptomonnaies, cette monnaie est également appelée SUDOKU. Bientôt, il sera possible de retirer n'importe quel nombre de SUDOKU de votre portefeuille dans le jeu vers un portefeuille externe sur le réseau TON (Telegram).
 <br><br>}}
-Bu arada, “Madeni paralar” modunu seçerek oyunda mümkün olduğunca çok para kazanmaya çalışıyoruz.<br><br>
-
-Bu modda oyuncu sıralamaları da dikkate alınır ve puanlanır.<br>
-Ancak, oyunun sonuçlarına göre kazanılan jetonlar artık cüzdanınıza yatırılır (kaybederseniz ise cüzdanınızdan düşülür).
+En attendant, nous essayons de gagner autant de pièces que possible dans le jeu en sélectionnant le mode « Pièces ».
 <br><br>
-Cüzdanınızdaki mevcut jeton bakiyesine bağlı olarak, 1, 5, 10 vb. jetonlarla oynamak için teklif edilir - listeden istediğiniz miktarı seçin.
+This mode also takes into account and accrues player rankings.
+<br>
+However, coins won by the results of the game are now credited to your wallet (or deducted if you lose)
 <br><br>
-“Başlat” (Start) düğmesine bastıktan sonra, belirtilen miktarı bahis yapmaya hazır olan bir rakip aranmaya başlanacaktır.
+Depending on the current balance of coins in your wallet, you are offered to play for 1, 5, 10, etc. coins - choose the desired amount from the list
+<br><br>
+Après avoir appuyé sur le bouton « Démarrer », la recherche d'un adversaire également prêt à miser le montant spécifié commencera.
 <br><br> 
-Örneğin, bahis miktarınızı 5 jeton olarak belirlediniz ve yeni bir oyuna başlayanlar arasında sadece 1 jeton bahis yapmak isteyenler var.
+Par exemple, vous avez spécifié que votre mise était de 5 pièces, et parmi ceux qui commencent une nouvelle partie, seuls certains sont prêts à miser 1 pièce.
 <br>
-O zaman hem sizin hem de bu tür bir oyuncunun bahsi 1 jeton olacaktır - iki seçenekten daha düşük olanı.
+Dans ce cas, la mise pour vous et pour ce joueur sera de 1 pièce, soit la plus petite des deux options.
 <br><br>
-10 jeton için mücadele etmeye istekli biri varsa, sizin bahsiniz olan 5 jeton seçilecek ve oyun 10 jetonluk bir banka ile başlayacaktır - 5+5.
+Si quelqu'un est prêt à miser 10 pièces, votre mise de 5 pièces sera sélectionnée et le jeu commencera avec une banque de 10 pièces (5 + 5).
 <br><br>
-İki kişilik bir oyunda, kazanan tüm potu alır - kendi bahsi ve rakibinin bahsi.
+Dans un jeu à deux joueurs, le gagnant remporte l'intégralité du pot, c'est-à-dire sa mise et celle de son adversaire.
 <br><br>
-Üçlü oyunda, kazanan kendi bahsini ve son oyuncunun (en az puana sahip oyuncu) bahsini alır.
-Ortadaki oyuncu (ikinci olan) kendi bahsini geri alır ve paralarını elinde tutar.
+Dans une partie à trois joueurs, le gagnant remporte sa mise et celle du dernier joueur (celui qui a le moins de points). 
+Le joueur du milieu (le deuxième) récupère sa mise et conserve ses pièces.
 <br><br>
-Dört oyunculu bir oyunda, pot 1. ve 4. sıradaki oyuncular arasında bölünür (ilk oyuncu her iki bahsi de alır) 
-ve 2. ve 3. sıradaki oyuncular arasında bölünür (ikinci oyuncu her iki bahsi de alır).
+Dans une partie à quatre joueurs, le pot est partagé entre les joueurs en 1ère et 4ème position (le premier joueur remporte les deux mises), 
+et les joueurs en 2ème et 3ème position (le deuxième remporte les deux mises).
 <br><br>
-Böylece, üç ve dört oynamak, jeton biriktirme açısından daha az riskli hale gelir.
+Ainsi, jouer trois et quatre devient moins risqué en termes d'économies de pièces.
 <br><br>
-Tüm kaybeden oyuncuların puanları aynı ise, kazanan oyuncu tüm bahisleri alır.
+Si tous les joueurs perdants ont le même nombre de points, le joueur gagnant remporte toutes les mises.
 <br><br>
-Dörtlü oyunda, 2. ve 3. oyuncular eşit sayıda puan alırlarsa, bahislerini geri alırlar ve bahislerini korurlar.
+Dans une partie à quatre joueurs, si les joueurs classés 2e et 3e obtiennent le même nombre de points, ils récupèrent leur mise et conservent leurs paris.
 <br><br>
-Yeni Sıralama her durumda her zamanki gibi hesaplanır - “Sıralama” sekmesine bakın.
+Le nouveau classement est calculé comme d'habitude dans tous les cas - voir l'onglet « Classement ».
 <br><br>
-<h2>Cüzdanınızı nasıl doldurabilirsiniz</h2>
+<h2>Comment recharger votre portefeuille</h2>
 <ol>
 <li>
-Her yeni oyuncu, bakiyesine {{stone_reward}} {{yandex_exclude}}{{SUDOKU }}hoş geldin jetonu alır ve hemen büyük kazançlar için yarışa katılabilir.
+Chaque nouveau joueur reçoit {{stone_reward}} {{yandex_exclude}}{{SUDOKU}} pièces de monnaie sur son solde et peut immédiatement participer à la course aux gros gains.
 </li>
 <li>
-Referans bağlantınızı kullanarak oyuna gelen her arkadaşınız için {{stone_reward}} jeton kazanacaksınız.
-Ayrıca, davet edilen kişi sayısında (günlük, haftalık, aylık, yıllık) rekor kırarak ödül kazanacaksınız. Bir kullanıcıyı davet etmek için Telegram üzerinden oyuna giriş yapmanız gerekir.
+Vous recevrez {{stone_reward}} pièces pour chaque ami qui rejoint le jeu en utilisant votre lien de parrainage.
+De plus, si vous établissez un record (quotidien, hebdomadaire, mensuel ou annuel) du nombre d'invités, vous serez récompensé. Pour inviter un utilisateur, vous devez vous connecter au jeu via Telegram.
 </li>
 <li>
-Oyundaki başarılar için madeni paralar verilir (oyun başına puan, hamle başına puan, kelime başına puan, oyun sayısı, davet edilen kişi sayısı, sıralamadaki yer #1'den #10'a kadar).
+Des pièces sont attribuées pour les performances réalisées dans le jeu (points par partie, points par coup, points par mot, nombre de parties, nombre d'invités, classement de la 1re à la 10e place).
 </li>
 <li>
-Her 100 oyun için {{stone_reward}} jeton verilir
+Pour chaque série de 100 parties, {{stone_reward}} pièces {{yandex_exclude}}{{SUDOKU }} sont attribuées.
 </li>
+{{yandex_exclude}}{{<li>
+Achetez des pièces contre des roubles par virement bancaire
+</li>
+<li>Acheter des pièces pour la cryptomonnaie (bientôt disponible)
+</li>}}
 </ol>
 
 <br>
-Her başarı için verilen jeton sayısı zaman içinde aşağı veya yukarı doğru değişebilir. Gerçek ödül, başarı kartına yansıtılır.
+Le nombre de pièces attribuées pour chaque succès peut varier au fil du temps, à la hausse ou à la baisse. La récompense réelle est indiquée sur la carte de succès.
 <br><br>
-<h2>Kazandığınız paralarla neler yapabilirsiniz</h2>
+<h2>Ce que vous pouvez faire avec les pièces que vous gagnez</h2>
 <ol>
 <li>
-Oyunlarımızı oynayın, bahisleri artırın, en sevdiğiniz eğlenceye heyecan ve ilgi katın
+Jouez à nos jeux, augmentez les enjeux, ajoutez du piquant et de l'intérêt à votre passe-temps favori.
 </li>
-<li>
-Başka bir oyuncuya cüzdanınızdan istediğiniz sayıda jeton göndererek hediye verin (çok yakında)
-</li>  
+{{yandex_exclude}}{{<li>
+Vendez des pièces contre des roubles ou contre des cryptomonnaies (bientôt) et recevez votre récompense en argent réel.
+</li>}}
+{{yandex_exclude}}{{<li>
+Offrez un cadeau à un autre joueur en lui envoyant le nombre de pièces de votre choix depuis votre portefeuille (bientôt disponible).
+</li>}}   
 </ol>
 <br>
-Cüzdan bakiyenizin ayrıntılarını “PROFİL” menüsünün “Cüzdan” sekmesinden öğrenebilirsiniz.
+Vous pouvez consulter le détail du solde de votre portefeuille dans l'onglet « Portefeuille » du menu « PROFIL ».
 <br><br>
-<strong>Tahakkuk eden bonuslar</strong> - oyuncunun başarılarına bağlı olarak her saat tahakkuk eden pasif kazançların sonucu (“İSTATİSTİKLER” menüsü, “Ödüller” bölümü).
-<br>Bonuslar “Olsun” düğmesine basılarak bakiyeye aktarılabilir
+<strong>Bonus accumulés</strong> - résultat des gains passifs accumulés toutes les heures en fonction des performances du joueur (menu « STATS », section « Récompenses »).
+<br>Les bonus peuvent être transférés vers le solde en appuyant sur le bouton « RÉCLAMER ».
 <br><br>
-<strong>SUDOKU Bakiyesi</strong> - bonuslar olmadan mevcut jeton bakiyesi. Jetonlar oyunun sonuçlarına göre düşülür / yatırılır
+<strong>{{yandex_exclude}}{{SUDOKU}} Solde</strong> - solde actuel des pièces sans bonus. Les pièces sont déduites/créditées en fonction des résultats du jeu.
 <br><br>
-Madalyalara benzeyen başarı kartları, başarınızın bir göstergesidir. 
-<br>Bunlar başarının adını, dönemi (yıl, gün, hafta, ay), puan sayısını (derecelendirme, kelime uzunluğu, arkadaş sayısı) ve jeton sayısını içerir 
+Les cartes de réussite, semblables à des médailles, sont un indicateur de votre succès. 
+<br>
+Elles comprennent le nom de la réussite, la période (année, jour, semaine, mois), le nombre de points (note, longueur du texte, nombre d'amis) et le nombre de pièces. 
 <br><br>
-Rekorunuz başka bir oyuncu tarafından kırıldığında pasif para kazanımı durur
-TR,
+Le gain passif de pièces s'arrête lorsque votre record est battu par un autre joueur.
+FR,
         ],
-        '[[Player]] opened [[number]] [[cell]]' => '[[Player]] [[number]] kare açtı',
-        ' (including [[number]] [[key]])' => ' ([[number]] anahtar dahil)',
-        '[[Player]] made a mistake' => '[[Player]] bir hata yaptı',
-        'You made a mistake!' => 'Bir hata yaptın!',
-        'Your opponent made a mistake' => 'Rakibiniz bir hata yaptı',
-        '[[Player]] gets [[number]] [[point]]' => '[[Player]] [[number]] puan alır',
-        '[[number]] [[point]]' => '[[number]] puan topla',
-        'You got [[number]] [[point]]' => '[[number]] puan alırsın',
-        'Your opponent got [[number]] [[point]]' => 'Rakibin [[number]] puan aldı',
+        '[[Player]] opened [[number]] [[cell]]' => '[[Player]] a ouvert [[number]] [[cell]]',
+        ' (including [[number]] [[key]])' => ' (dont [[number]] [[key]])',
+        '[[Player]] made a mistake' => '[[Player]] a commis une erreur.',
+        'You made a mistake!' => 'Vous avez fait une erreur !',
+        'Your opponent made a mistake' => 'Votre adversaire a commis une erreur.',
+        '[[Player]] gets [[number]] [[point]]' => '[[Player]] obtient [[number]] [[point]].',
+        '[[number]] [[point]]' => '[[number]] [[point]]',
+        'You got [[number]] [[point]]' => 'Vous avez obtenu [[number]] [[point]].',
+        'Your opponent got [[number]] [[point]]' => 'Votre adversaire a obtenu [[number]] [[point]].',
     ];
 }

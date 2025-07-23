@@ -126,4 +126,13 @@ class Tg
 
         return $tgUser;
     }
+
+    public static function isTgApp(): bool
+    {
+        if((BC::$Request[BC::APP_PARAM] ?? false) === 'tg') {
+            return true;
+        }
+
+        return isset($_SERVER['HTTP_REFERER']) && (strpos($_SERVER['HTTP_REFERER'], 'app=tg') !== false);
+    }
 }

@@ -1043,9 +1043,6 @@ class T
         "file size (less than " => [
             self::RU_LANG => 'размер файла (не более '
         ],
-        "resolution - " => [
-            self::RU_LANG => 'разрешение - '
-        ],
         "Incorrect URL format!" => [
             self::RU_LANG => 'Неверный формат URL!'
         ],
@@ -1284,11 +1281,13 @@ class T
         ],
         'cell' => [
             self::EN_LANG => [0 => 'cells', 1 => 'cell', 2 => 'cells'],
-            self::RU_LANG => [0 => 'клеток', 1 => 'клетку', 2 => 'клетки', 5 => 'клеток']
+            self::RU_LANG => [0 => 'клеток', 1 => 'клетку', 2 => 'клетки', 5 => 'клеток'],
+            self::FR_LANG => [0 => 'cellules', 1 => 'cellule', 2 => 'cellules'],
         ],
         'key' => [
             self::EN_LANG => [0 => 'keys', 1 => 'key', 2 => 'keys'],
-            self::RU_LANG => [0 => 'ключей', 1 => 'ключ', 2 => 'ключа', 5 => 'ключей']
+            self::RU_LANG => [0 => 'ключей', 1 => 'ключ', 2 => 'ключа', 5 => 'ключей'],
+            self::FR_LANG => [0 => 'clés', 1 => 'clé', 2 => 'clés'],
         ],
         'Player' => [
             self::EN_LANG => [1 => 'Player1', 2 => 'Player2', 3 => 'Player3', 4 => 'Player4'],

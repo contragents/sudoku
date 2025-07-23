@@ -42,6 +42,7 @@ class BaseController
 
     const VERSION_DEFAULT_YANDEX = '1.0.0.2'; //Версия для яндекса для совместимости до модерации
     const VERSION_DEFAULT = '1.0.0.3'; // Версия для остальных
+    const APP_PARAM = 'app';
 
     public static ?BaseController $instance = null;
     public Game $Game;
@@ -84,7 +85,7 @@ class BaseController
         self::$version = self::$Request[self::VERSION_PARAM]
             ?? (self::$Referer[self::VERSION_PARAM]
                 ?? (
-                self::isYandexApp()
+                Yandex::isYandexApp()
                     ? self::VERSION_DEFAULT_YANDEX
                     : self::VERSION_DEFAULT
                 )
@@ -415,17 +416,15 @@ class BaseController
     private static function setLanguage(): string
     {
         // Главный приоритет выбора языка - параметр "l" в адресе браузера (реферере)
-        if (true || Steam::isSteamApp()) {
-            if (!empty(self::$Referer[self::REF_LANG_PARAM])
-                && in_array(strtoupper(self::$Referer[self::REF_LANG_PARAM]), T::SUPPORTED_LANGS)) {
-                return strtoupper(self::$Referer[self::REF_LANG_PARAM]);
-            }
+        if (!empty(self::$Referer[self::REF_LANG_PARAM])
+            && in_array(strtoupper(self::$Referer[self::REF_LANG_PARAM]), T::SUPPORTED_LANGS)) {
+            return strtoupper(self::$Referer[self::REF_LANG_PARAM]);
+        }
 
-            // При отдате indexView ищем параметр в Реквесте, а не в Реферере
-            if (!empty(self::$Request[self::REF_LANG_PARAM])
-                && in_array(strtoupper(self::$Request[self::REF_LANG_PARAM]), T::SUPPORTED_LANGS)) {
-                return strtoupper(self::$Request[self::REF_LANG_PARAM]);
-            }
+        // При отдаче indexView ищем параметр в Реквесте, а не в Реферере
+        if (!empty(self::$Request[self::REF_LANG_PARAM])
+            && in_array(strtoupper(self::$Request[self::REF_LANG_PARAM]), T::SUPPORTED_LANGS)) {
+            return strtoupper(self::$Request[self::REF_LANG_PARAM]);
         }
 
         // Определение языка для Яндекс.игр - присылаем параметр lang из браузера
@@ -433,7 +432,7 @@ class BaseController
                 strtoupper(self::$Request[self::LANG_PARAM]),
                 T::SUPPORTED_LANGS
             )) {
-            if (self::isYandexApp()) {
+            if (Yandex::isYandexApp()) {
                 Cache::hset(self::USER_LANGUAGE_KEY, self::$User, strtoupper(self::$Request[self::LANG_PARAM]));
 
                 if (isset($_COOKIE[Cookie::COOKIE_NAME])) {
@@ -449,11 +448,11 @@ class BaseController
         }
 
         // Для Я.игр ищем язык пользователя в кеше
-        if (self::isYandexApp() && $lang = Cache::hget(self::USER_LANGUAGE_KEY, self::$User)) {
+        if (Yandex::isYandexApp() && $lang = Cache::hget(self::USER_LANGUAGE_KEY, self::$User)) {
             return $lang;
         }
 
-        if (self::isYandexApp()
+        if (Yandex::isYandexApp()
             && isset($_COOKIE[Cookie::COOKIE_NAME])
             && $lang = Cache::hget(
                 self::USER_LANGUAGE_KEY,
@@ -536,14 +535,5 @@ class BaseController
         return [
             'Game' => var_export($this->Game, true)
         ];
-    }
-
-    public static function isYandexApp(): bool
-    {
-        if (isset($_SERVER['HTTP_REFERER']) && (strpos($_SERVER['HTTP_REFERER'], 'yandex') !== false)) {
-            return true;
-        }
-
-        return false;
     }
 }

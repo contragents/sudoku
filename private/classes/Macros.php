@@ -3,7 +3,6 @@
 namespace classes;
 
 use AchievesModel;
-use BaseController as BC;
 
 class Macros
 {
@@ -84,12 +83,15 @@ class Macros
     public static function applyMacros(string $text): string
     {
         foreach (self::MACROSES as $method => $macros) {
-            if (is_array($macros) && ($macros['text_as_param'] ?? false) && strpos($text, $macros['macros']) !== false) {
+            if (is_array($macros) && ($macros['text_as_param'] ?? false) && strpos(
+                    $text,
+                    $macros['macros']
+                ) !== false) {
                 // метод доллжен обрабатывать все свои макросы в переданной строке
                 $text = call_user_func([Macros::class, $method], $text);
 
                 continue;
-            } elseif(!is_array($macros)) {
+            } elseif (!is_array($macros)) {
                 $text = str_replace($macros, call_user_func([self::class, $method]), $text);
             }
         }
@@ -99,13 +101,17 @@ class Macros
 
     public static function yandexExclude(string $text): string
     {
-        preg_match_all('/({{yandex_exclude}})({{[\s\S]+?}})/', $text, $matches); // ? - отмена жадности, поиск до первых }}
+        preg_match_all(
+            '/({{yandex_exclude}})({{[\s\S]+?}})/',
+            $text,
+            $matches
+        ); // ? - отмена жадности, поиск до первых }}
 
         foreach ($matches[1] as $num => $match) {
             $text = str_replace($match, '', $text);
             $text = str_replace(
                 $matches[2][$num],
-                BC::isYandexApp()
+                (Yandex::isYandexApp() || Steam::isSteamApp())
                     ? ''
                     : trim($matches[2][$num], '{}'),
                 $text
