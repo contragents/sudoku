@@ -137,7 +137,7 @@ class T_FR
         'Accounts linked' => 'Comptes liés',
         'Accounts are already linked' => 'Les comptes sont déjà liés.',
         'Game is not started' => 'Le jeu n&#39;a pas commencé.',
-        'OK' => 'Tamam',
+        'OK' => 'OK',
         'Click to expand the image' => 'Cliquez pour agrandir l&#39;image',
         'Report sent' => 'Rapport envoyé',
         'Report declined! Please choose a player from the list' => 'Rapport refusé ! Veuillez choisir un joueur dans la liste.',
