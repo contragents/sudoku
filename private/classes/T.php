@@ -12,9 +12,11 @@ class T
     const EN_LANG = 'EN';
     const TR_LANG = 'TR';
     const FR_LANG = 'FR';
-    const SUPPORTED_LANGS = [self::EN_LANG, self::RU_LANG, self::TR_LANG, self::FR_LANG];
+    const IT_LANG = 'IT';
+    const SUPPORTED_LANGS = [self::EN_LANG, self::RU_LANG, self::TR_LANG, self::FR_LANG, self::IT_LANG];
 
     const PLURAL_PATTERN = '[[';
+
 
     public static string $lang = self::EN_LANG;
 
@@ -1293,7 +1295,8 @@ class T
             self::EN_LANG => [1 => 'Player1', 2 => 'Player2', 3 => 'Player3', 4 => 'Player4'],
             self::RU_LANG => [1 => 'Игрок1', 2 => 'Игрок2', 3 => 'Игрок3', 4 => 'Игрок4'],
             self::TR_LANG => [1 => 'Oyuncu1', 2 => 'Oyuncu2', 3 => 'Oyuncu3', 4 => 'Oyuncu1'],
-            self::FR_LANG => [1 => 'Joueur1', 2=> 'Joueur2', 3=> 'Joueur3', 4 => 'Joueur4']
+            self::FR_LANG => [1 => 'Joueur1', 2=> 'Joueur2', 3=> 'Joueur3', 4 => 'Joueur4'],
+            self::IT_LANG => [1 => 'Giocatore', 2 => 'Giocatore', 3 => 'Giocatore', 4 => 'Giocatore']
         ],
     ];
 
