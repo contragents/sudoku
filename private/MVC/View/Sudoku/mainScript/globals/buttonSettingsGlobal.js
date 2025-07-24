@@ -13,6 +13,7 @@ var modes = [OTJAT_MODE, ALARM_MODE, 'Inactive', 'Navedenie', 'Najatie'];
 var buttons = {
     newGameButton: {
         filename: 'new_game2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + (version > '1.0.0.2' ? lang : lang.toLowerCase())) : ''),
+        modes: [OTJAT_MODE, INACTIVE_MODE, 'Navedenie', 'Najatie', ALARM_MODE],
         x: topXY.x + lotokX + buttonWidth / 2 - lotokCellStep / 2 + 5,
         y: (topXY.y + topHeight) / 2,
         caption: 'New#Game',
@@ -25,6 +26,7 @@ var buttons = {
     },
     instructButton: {
         filename: 'instrukt2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + (version > '1.0.0.2' ? lang : lang.toLowerCase())) : ''),
+        modes: [OTJAT_MODE, 'Navedenie', 'Najatie'],
         x: topXY.x + lotokX + buttonWidth / 2 - lotokCellStep / 2 + 5 + buttonWidth,
         y: (topXY.y + topHeight) / 2,
         caption: 'инструкция',
@@ -105,6 +107,7 @@ var buttons = {
     },
     resetButton: {
         filename: 'steret2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + (version > '1.0.0.2' ? lang : lang.toLowerCase())) : ''),
+        modes: [OTJAT_MODE, 'Inactive', 'Navedenie', 'Najatie'],
         x: botXY.x + knopkiWidth - buttonWidth / 2 - buttonStepX,
         y: botXY.y + botHeight * (0.25 + 0.125),
         caption: 'clear',
@@ -129,6 +132,7 @@ var buttons = {
     },
     checkButton: {
         filename: 'proveryt2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + (version > '1.0.0.2' ? lang : lang.toLowerCase())) : ''),
+        modes: [OTJAT_MODE, 'Inactive', 'Navedenie', 'Najatie'],
         x: botXY.x + knopkiWidth / 2,
         y: botXY.y + botHeight * 0.125,
         caption: 'check',

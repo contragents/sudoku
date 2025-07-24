@@ -198,37 +198,6 @@ class StatsController extends BaseSubController
         return var_export(self::isAjaxRequest(), true);
     }
 
-    public function gamesAction()
-    {
-        $baseUrl = self::getUrl('games', self::$Request, ['page']);
-
-        $gamesCount = AchievesModel::getGamesByCommonIdCount(self::$Request['common_id'], self::getGamesFilters());
-
-        if ($gamesCount < ((self::$Request['page'] ?? 1) - 1) * AchievesModel::LIMIT) {
-            unset(self::$Request['page']);
-        }
-
-        $baseUrlPage = self::getUrl('games', self::$Request);
-
-        $games = AchievesModel::getGamesByCommonId(
-            self::$Request['common_id'],
-            AchievesModel::LIMIT,
-            self::$Request['page'] ?? 1,
-            self::getGamesFilters()
-        );
-
-        if(self::getGamesFilters()[self::FILTER_PLAYER_PARAM]) {
-            $opponentStats = AchievesModel::getStatsVsOpponent(self::$Request['common_id'], self::getGamesFilters()[self::FILTER_PLAYER_PARAM]);
-        } else $opponentStats = false;
-
-
-        if (BaseController::isAjaxRequest()) {
-            return StatsAchievesGamesView::render($baseUrl, $baseUrlPage, $games, $gamesCount, $opponentStats);
-        } else {
-            return StatsAchievesGamesView::renderFull([$baseUrl, $baseUrlPage, $games, $gamesCount, $opponentStats]);
-        }
-    }
-
     public function leadersAction(): string
     {
         $result = [self::RATING_PARAM => [], self::ACHIEVE_PARAM => [], self::COIN_PARAM => []];

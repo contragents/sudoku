@@ -254,8 +254,8 @@ function StatsPage({ json, BASE_URL }) {
         }
         gameList = games
             .map((item) => {
-                const matchResultClass = ['victory', 'победа'].includes(
-                    item.your_result.toLocaleLowerCase(),
+                const matchResultClass = ['victory'].includes(
+                    item.result_en.toLocaleLowerCase(),
                 )
                     ? 'match-history--win'
                     : 'match-history--lose';
