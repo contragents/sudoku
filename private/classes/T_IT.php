@@ -299,229 +299,234 @@ class T_IT
         'Word' => 'Parola',
         'Points/letters' => 'Punti/lettere',
         'Result' => 'Risultato',
-        'Opponents' => 'Adversaires',
-        'Games<br>total' => 'Jeux<br>total',
-        'Wins<br>total' => 'Victoires<br>total',
-        'Gain/loss<br>in ranking' => 'Gain/perte<br>dans le classement',
-        '% Wins' => '% de victoires',
-        'Games in total' => 'Total des jeux',
-        'Winnings count' => 'Les gains comptent',
-        'Increase/loss in rating' => 'Augmentation/perte de notation',
-        '% of wins' => '% de victoires',
-        "GAME points - Year Record!" => 'Points DE JEU - Record annuel !',
-        "GAME points - Month Record!" => 'Points DE JEU - Record du mois !',
-        "GAME points - Week Record!" => 'Points DE JEU - Record semaine !',
-        "GAME points - Day Record!" => 'Points DE JEU - Record du jour !',
-        "TURN points - Year Record!" => 'Points TURN - Record annuel !',
-        "TURN points - Month Record!" => 'Points TURN - Record du mois !',
-        "TURN points - Week Record!" => 'Points TURN - Record semaine !',
-        "TURN points - Day Record!" => 'Points TURN - Record du jour !',
-        "WORD points - Year Record!" => 'Points WORD - Record annuel !',
-        "WORD points - Month Record!" => 'Points WORD - Record du mois !',
-        "WORD points - Week Record!" => 'Points WORD - Record semaine !',
-        "WORD points - Day Record!" => 'Points WORD - Record du jour !',
-        "Longest WORD - Year Record!" => 'Le mot le plus long - Record annuel !',
-        "Longest WORD - Month Record!" => 'Le mot le plus long - Record du mois !',
-        "Longest WORD - Week Record!" => 'Le mot le plus long - Record de la semana !',
-        "Longest WORD - Day Record!" => 'Le mot le plus long - Record du jour !',
-        "GAMES played - Year Record!" => 'JEUX joués - Record annuel !',
-        "GAMES played - Month Record!" => 'JEUX joués - Record du mois !',
-        "GAMES played - Week Record!" => 'MATCHS joués - Record de la semaine !',
-        "GAMES played - Day Record!" => 'JEUX joués - Record de la journée !',
-        "Victory" => 'Victoire',
-        'Losing' => 'Perdre',
-        "Go to player's stats" => 'Accéder aux statistiques du joueur',
-        'Filter by player' => 'Filtrer par joueur',
-        'Apply filter' => 'Appliquer le filtre',
-        'against' => 'contre',
-        "File loading error!" => 'Erreur de chargement du fichier !',
-        "Check:" => 'Vérifier :',
-        "file size (less than " => 'taille du fichier (moins de',
-        "Incorrect URL format!" => 'Format d&#39;URL incorrect !',
-        "Must begin with " => 'Doit commencer par ',
-        'Error! Choose image file with the size not more than' => 'Erreur ! Choisissez un fichier image dont la taille ne dépasse pas',
-        'Avatar updated' => 'Avatar mis à jour',
-        "Error saving new URL" => 'Erreur lors de l&#39;enregistrement de la nouvelle URL',
+        'Opponents' => 'Avversari',
+        'Games<br>total' => 'Giochi<br>totale',
+        'Wins<br>total' => 'Vittorie<br>totali',
+        'Gain/loss<br>in ranking' => 'Guadagno/perdita<br>in classifica',
+        '% Wins' => '% Vittorie',
+        'Games in total' => 'Giochi in totale',
+        'Winnings count' => 'Le vincite contano',
+        'Increase/loss in rating' => 'Aumento/perdita di rating',
+        '% of wins' => '% di vittorie',
+        "GAME points - Year Record!" => 'Punti GAME - Record annuale!',
+        "GAME points - Month Record!" => 'Punti GAME - Record mensile!',
+        "GAME points - Week Record!" => 'Punti GAME - Record settimanale!',
+        "GAME points - Day Record!" => 'Punti GAME - Record giornaliero!',
+        "TURN points - Year Record!" => 'Punti di SVOLTA - Record annuale!',
+        "TURN points - Month Record!" => 'Punti di SVOLTA - Record mensile!',
+        "TURN points - Week Record!" => 'Punti di SVOLTA - Record settimanale!',
+        "TURN points - Day Record!" => 'Punti di SVOLTA - Record giornaliero!',
+        "WORD points - Year Record!" => 'Punti PAROLA - Record annuale!',
+        "WORD points - Month Record!" => 'Punti PAROLA - Record mensile!',
+        "WORD points - Week Record!" => 'Punti PAROLA - Record settimanale!',
+        "WORD points - Day Record!" => 'Punti PAROLA - Record giornaliero!',
+        "Longest WORD - Year Record!" => 'Parola più lunga - Record annuale!',
+        "Longest WORD - Month Record!" => 'Parola più lunga - Record mensile!',
+        "Longest WORD - Week Record!" => 'Parola più lunga - Record settimanale!',
+        "Longest WORD - Day Record!" => 'Parola più lunga - Record giornaliero!',
+        "GAMES played - Year Record!" => 'PARTITE giocate - Record annuale!',
+        "GAMES played - Month Record!" => 'PARTITE giocate - Record mensile!',
+        "GAMES played - Week Record!" => 'PARTITE giocate - Record settimanale!',
+        "GAMES played - Day Record!" => 'PARTITE giocate - Record giornaliero!',
+        "Victory" => 'Vittoria',
+        'Losing' => 'Perdere',
+        "Go to player's stats" => 'Vai alle statistiche del giocatore',
+        'Filter by player' => 'Filtra per giocatore',
+        'Apply filter' => 'Applica filtro',
+        'against' => 'contro',
+        "File loading error!" => 'Errore durante il caricamento del file!',
+        "Check:" => 'Controllare:',
+        "file size (less than " => 'dimensione del file (inferiore a ',
+        "Incorrect URL format!" => 'Formato URL errato!',
+        "Must begin with " => 'Deve iniziare con ',
+        'Error! Choose image file with the size not more than' => 'Errore! Scegli un file immagine con dimensioni non superiori a',
+        'Avatar updated' => 'Avatar aggiornato',
+        "Error saving new URL" => 'Errore durante il salvataggio del nuovo URL',
         'A player may open more than one cell and more than one KEY in one turn. Use the CASCADES rule'
-        => 'Un joueur peut ouvrir plusieurs cases et plusieurs CLÉS en un seul tour. Utilisez la règle CASCADES.',
+        => 'Un giocatore può aprire più di una casella e più di una CHIAVE in un turno. Utilizza la regola CASCADES.',
         'If after the automatic opening of a number, new blocks of EIGHT open cells are formed on the field, such blocks are also opened by CASCADE'
-        => 'Si, après l&#39;ouverture automatique d&#39;un numéro, de nouveaux blocs de HUIT cases ouvertes se forment sur le champ, ces blocs sont également ouverts par CASCADE.',
+        => 'Se dopo l&#39;apertura automatica di un numero, sul campo si formano nuovi blocchi di OTTO caselle aperte, anche tali blocchi vengono aperti da CASCADE.',
         'If a player has opened a cell (solved a number in it) and there is only ONE closed digit left in the block, this digit is opened automatically'
-        => 'Si un joueur a ouvert une case (résolu un nombre qui s&#39;y trouvait) et qu&#39;il ne reste qu&#39;UN SEUL chiffre fermé dans le bloc, ce chiffre est automatiquement ouvert.',
-        'is awarded for solved empty cell' => 'est attribué pour une cellule vide résolue',
+        => 'Se un giocatore ha aperto una casella (risolvendo un numero al suo interno) e nel blocco rimane solo UNA cifra chiusa, questa cifra viene aperta automaticamente.',
+        'is awarded for solved empty cell' => 'viene assegnato per una cella vuota risolta',
         'by calculating all of other 8 digits in a block - vertically OR horizontally OR in a 3x3 square'
-        => 'en calculant tous les autres 8 chiffres d&#39;un bloc - verticalement OU horizontalement OU dans un carré 3x3',
+        => 'calcolando tutte le altre 8 cifre in un blocco - verticalmente O orizzontalmente O in un quadrato 3x3',
         "The players' task is to take turns making moves and accumulating points to open black squares"
-        => 'La tâche des joueurs consiste à jouer à tour de rôle et à accumuler des points pour ouvrir les cases noires.',
+        => 'Il compito dei giocatori è quello di effettuare mosse a turno e accumulare punti per aprire le caselle nere.',
         'The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated'
-        => 'Les règles classiques du SUDOKU s&#39;appliquent : dans un bloc de neuf cases (verticalement, horizontalement et dans un carré 3x3), les chiffres ne doivent pas se répéter.',
+        => 'Si applicano le regole classiche del SUDOKU: in un blocco di nove caselle (in verticale, in orizzontale e in un quadrato 3x3) i numeri non devono ripetersi.',
         'faq_rules' => [
-            SudokuGame::GAME_NAME => <<<FR
-<h2 id="nav1">À propos du jeu</h2>
-Les règles classiques du SUDOKU s'appliquent : dans un bloc de neuf cases (verticalement, horizontalement et dans un carré 3x3), les chiffres ne doivent pas se répéter.
+            SudokuGame::GAME_NAME => <<<IT
+<h2 id="nav1">Informazioni sul gioco</h2>
+Si applicano le regole classiche del SUDOKU: in un blocco di nove caselle (in verticale, in orizzontale e in un quadrato 3x3) i numeri non devono ripetersi.
 <br><br>
-La tâche des joueurs consiste à jouer à tour de rôle et à accumuler des points pour ouvrir les cases noires (<span style="color:#0f0">+10 points</span>) en calculant les 8 autres chiffres d'un bloc - verticalement OU horizontalement OU dans un carré 3x3.
+Il compito dei giocatori è quello di effettuare mosse a turno e accumulare punti per aprire le caselle nere (<span style="color:#0f0">+10 punti</span>) calcolando tutte le altre 8 cifre in un blocco - verticalmente O orizzontalmente O in un quadrato 3x3.
 <br><br>
-Un <span style="color:#0f0">point +1</span> est attribué pour chaque cellule vide résolue.
+Viene assegnato un <span style="color:#0f0">+1 punto</span> per ogni casella vuota risolta.
 <br><br>
-La victoire revient au joueur qui marque 50 % de tous les points possibles + 1 point.
+La vittoria va al giocatore che ottiene il 50% di tutti i punti possibili +1 punto.
 <br><br>
-Si un joueur a ouvert une case (résolu un nombre qui s'y trouvait) et qu'il ne reste qu'UN SEUL chiffre fermé dans le bloc, ce chiffre est automatiquement ouvert.
+Se un giocatore ha aperto una casella (risolvendo un numero al suo interno) e nel blocco rimane solo UNA cifra chiusa, questa cifra viene aperta automaticamente.
 <br><br>
-Si, après l'ouverture automatique d'un numéro, de nouveaux blocs de HUIT cases ouvertes se forment sur le champ, ces blocs sont également ouverts par CASCADE.
+Se dopo l'apertura automatica di un numero, sul campo si formano nuovi blocchi di OTTO caselle aperte, anche tali blocchi vengono aperti da CASCADE
 <br><br>
-Un joueur peut ouvrir plusieurs cases et plusieurs CLÉS en un seul tour. Utilisez la règle CASCADES.
+Un giocatore può aprire più di una casella e più di una CHIAVE in un turno. Utilizza la regola CASCADES
 <br><br>
-En cas de déplacement erroné (le chiffre dans la case est incorrect), un petit chiffre rouge apparaît sur cette case, visible par les deux joueurs. Ce chiffre ne peut plus être placé sur cette case.
+In caso di mossa errata (il numero nella casella è sbagliato), su questa casella compare un piccolo numero rosso di errore, visibile a entrambi i giocatori. Questo numero non può essere inserito nuovamente in questa casella.
 <br><br>
-En utilisant le bouton « Vérifier », le joueur peut faire une marque, c'est-à-dire inscrire un petit chiffre vert dans la case. Il peut s'agir d'un chiffre calculé dont le joueur est sûr, ou simplement d'une supposition. Utilisez des notes comme dans un SUDOKU normal : l'autre joueur ne peut pas les voir.
-FR
+Utilizzando il pulsante Controlla, il giocatore può inserire un segno, ovvero un piccolo numero verde nella casella. Può trattarsi di un numero calcolato di cui il giocatore è sicuro o semplicemente di un'ipotesi. Utilizza le note come in un normale SUDOKU: l'altro giocatore non può vederle.
+IT
             ,
         ],
-        'faq_rating' => <<<FR
-Classement Elo
+        'faq_rating' => <<<IT
+Classifica Elo
 <br><br>
-Système de classement Elo, coefficient Elo - méthode de calcul de la force relative des joueurs dans les jeux impliquant deux joueurs (par exemple, les échecs, les dames ou le shogi, le go).
+Sistema di classificazione Elo, coefficiente Elo: metodo di calcolo della forza relativa dei giocatori nei giochi 
+che coinvolgono due giocatori (ad esempio scacchi, dama o shogi, go).
 <br>
-Ce système de classement a été développé par le professeur de physique américain d'origine hongroise Arpad Elo (en hongrois : Élő Árpád ; 1903-1992).
+Questo sistema di classificazione è stato sviluppato dal professore di fisica americano di origine ungherese Arpad Elo (in ungherese: Élő Árpád; 1903-1992)
 <br><br>
-Plus la différence de classement entre les joueurs est grande, moins le joueur le plus fort obtiendra de points lorsqu'il gagnera.
+Maggiore è la differenza di punteggio tra i giocatori, minore sarà il numero di punti che il giocatore più forte otterrà in caso di vittoria.
 <br> 
-À l'inverse, un joueur plus faible obtiendra plus de points pour son classement s'il bat un joueur plus fort.
+Al contrario, un giocatore più debole otterrà più punti per la classifica se sconfigge un giocatore più forte.
 <br><br>
-Ainsi, il est plus avantageux pour un joueur fort de jouer avec des adversaires de même niveau : si vous gagnez, vous obtenez plus de points, et si vous perdez, vous ne perdez pas beaucoup de points.
+Pertanto, è più vantaggioso per un giocatore forte giocare con avversari di pari livello: se vince, ottiene più punti, e se perde, non perde molti punti.
 <br><br>
-Un débutant peut sans danger affronter un maître expérimenté.
-<br>La perte de classement en cas de défaite sera minime.
-<br>Mais, en cas de victoire, le maître partagera généreusement les points de classement.
-FR
+È sicuro per un principiante combattere contro un maestro esperto.
+<br>
+La perdita di ranking in caso di sconfitta sarà minima.
+<br>
+Ma, in caso di vittoria, il maestro condividerà generosamente i punti di ranking.
+IT
         ,
         'faq_rewards' => [
-            SudokuGame::GAME_NAME => <<<FR
-Les joueurs sont récompensés pour certaines réalisations (records).
+            SudokuGame::GAME_NAME => <<<IT
+I giocatori vengono premiati per determinati risultati (record).
 <br><br>
-Les récompenses du joueur sont indiquées dans la section « STATS » dans les catégories suivantes : or/argent/bronze/pierre.
+I premi dei giocatori sono riportati nella sezione “STATISTICHE” nelle seguenti categorie: oro/argento/bronzo/pietra.
 <br><br>
-Lorsqu'il reçoit une carte de récompense, le joueur reçoit un bonus de pièces SUDOKU {{sudoku_icon}}<br> 
-Les pièces peuvent être utilisées dans un mode de jeu spécial dédié "AUX PIÈCES". Vous pouvez recharger votre portefeuille dans le jeu 
-et retirer des pièces du jeu. Pour en savoir plus, consultez l'onglet « Mode de jeu avec pièces ».
+Quando riceve una carta premio, il giocatore riceve un bonus di monete SUDOKU {{sudoku_icon}}
+<br>
+Le monete possono essere utilizzate in una modalità di gioco speciale dedicata alle monete, è possibile ricaricare il proprio portafoglio di gioco
+e prelevare monete dal gioco - per ulteriori informazioni, consultare la scheda “Modalità di gioco con monete”.
 <br><br>
-Tant que le record d'un joueur n'a pas été battu par un autre joueur, la carte de récompense est affichée pour ce joueur dans l'onglet « RÉCOMPENSES ACTIVES » de la section « STATISTIQUES ».
+Finché il record di un giocatore non viene superato da un altro giocatore, la carta premio viene visualizzata per quel giocatore nella scheda “PREMI ATTIVI” della sezione “STATISTICHE”.
 <br><br>
-Chaque « Récompense Active » toutes les heures génère un « profit » supplémentaire en pièces.
+Ogni “Premio ATTIVO” ogni ora genera un “profitto” aggiuntivo in monete.
 <br><br>
-Si un record a été battu par un autre joueur, la carte de récompense de l'ancien détenteur du record est déplacée vers l'onglet « RÉCOMPENSES PASSÉES » et cesse de générer des revenus passifs. 
+Se un record è stato battuto da un altro giocatore, la carta premio del precedente detentore del record viene spostata nella scheda “PREMI PASSATI” e smette di generare reddito passivo. 
 <br><br>
-Le nombre total de pièces reçues (bonus uniques et bénéfices supplémentaires) peut être consulté dans la section « PROFIL » de l'onglet « Portefeuille », respectivement dans les champs « Solde SUDOKU » et « Bonus accumulés ».
+Il numero totale di monete ricevute (bonus una tantum e profitti aggiuntivi) può essere visualizzato nella sezione “PROFILO” nella scheda ‘Portafoglio’ nei campi “Saldo SUDOKU” e “Bonus accumulati”, rispettivamente.
 <br><br>
-Lorsque le joueur dépasse son propre record pour les réalisations « PARTIES JOUÉES », il ne reçoit pas de nouvelle carte de récompense ni de nouvelles pièces.
-La valeur du record (nombre de parties / nombre d'amis) est mise à jour sur la carte de récompense.
+Quando si supera il proprio record per i risultati “PARTITE GIOCATE”, il giocatore non riceve nuovamente una nuova carta ricompensa o monete. 
+Il valore del record stesso (numero di partite / numero di amici) viene aggiornato sulla carta ricompensa.
 <br><br>
-Par exemple, si un joueur a déjà obtenu le succès « JEUX JOUÉS »
-(or) pour 10 000 jeux, alors lorsque le nombre de jeux de ce joueur passe à 10 001, aucune carte de récompense ne sera délivrée au détenteur du record.
-FR
+Ad esempio, se un giocatore ha già ottenuto l'obiettivo “GAMES PLAYED”
+(oro) per 10.000 partite, quando il numero di partite di questo giocatore passa a 10.001, non verranno più emesse carte premio al detentore del record.
+IT
             ,
         ],
-        'Reward' => 'Ödül',
+        'Reward' => 'Ricompensa',
         'faq_coins' => [
-            SudokuGame::GAME_NAME => <<<FR
-La pièce <strong>SUDOKU</strong> {{sudoku_icon}} est une monnaie utilisée dans le jeu {{yandex_exclude}}{{ pour un réseau de jeux - <strong>Scrabble, Sudoku</strong><br><br>
-Un seul compte pour tous les jeux, une seule monnaie, un seul portefeuille}}
+            SudokuGame::GAME_NAME => <<<IT
+La moneta <strong>SUDOKU</strong> {{sudoku_icon}} è una valuta{{yandex_exclude}}{{ utilizzabile all'interno di una rete di giochi, tra cui <strong>Scrabble, Sudoku</strong><br><br>
+Un unico account per tutti i giochi, un'unica valuta, un unico portafoglio.}}
 <br><br>
-{{yandex_exclude}}{{Dans le monde des cryptomonnaies, cette monnaie est également appelée SUDOKU. Bientôt, il sera possible de retirer n'importe quel nombre de SUDOKU de votre portefeuille dans le jeu vers un portefeuille externe sur le réseau TON (Telegram).
+{{yandex_exclude}}{{Nel mondo delle criptovalute, la moneta è chiamata anche SUDOKU. Presto sarà possibile prelevare qualsiasi quantità di monete SUDOKU dal proprio portafoglio di gioco e trasferirle su un portafoglio esterno nella rete TON (Telegram).
 <br><br>}}
-En attendant, nous essayons de gagner autant de pièces que possible dans le jeu en sélectionnant le mode « Pièces ».
+Nel frattempo, cerchiamo di vincere il maggior numero possibile di monete nel gioco selezionando la modalità “Monete”.
 <br><br>
-This mode also takes into account and accrues player rankings.
+
+Questa modalità tiene conto anche delle classifiche dei giocatori e le accumula.
 <br>
-However, coins won by the results of the game are now credited to your wallet (or deducted if you lose)
+Tuttavia, le monete vinte in base ai risultati della partita vengono ora accreditate sul tuo portafoglio (o detratte in caso di sconfitta).
 <br><br>
-Depending on the current balance of coins in your wallet, you are offered to play for 1, 5, 10, etc. coins - choose the desired amount from the list
+A seconda del saldo attuale delle monete nel tuo portafoglio, ti viene offerto di giocare per 1, 5, 10, ecc. monete: scegli l'importo desiderato dall'elenco.
 <br><br>
-Après avoir appuyé sur le bouton « Démarrer », la recherche d'un adversaire également prêt à miser le montant spécifié commencera.
+Dopo aver premuto il pulsante “Avvia”, inizierà la ricerca di un avversario che sia anch'esso pronto a scommettere l'importo specificato.
 <br><br> 
-Par exemple, vous avez spécifié que votre mise était de 5 pièces, et parmi ceux qui commencent une nouvelle partie, seuls certains sont prêts à miser 1 pièce.
+Ad esempio, hai specificato che la tua puntata è di 5 gettoni, ma tra i giocatori che iniziano una nuova partita ci sono solo quelli disposti a puntare 1 gettone.
 <br>
-Dans ce cas, la mise pour vous et pour ce joueur sera de 1 pièce, soit la plus petite des deux options.
+In tal caso, la puntata sia per te che per quel giocatore sarà di 1 gettone, ovvero il valore minore tra le due opzioni.
 <br><br>
-Si quelqu'un est prêt à miser 10 pièces, votre mise de 5 pièces sera sélectionnée et le jeu commencera avec une banque de 10 pièces (5 + 5).
+Nel caso in cui ci sia qualcuno disposto a giocare per 10 monete, verrà selezionata la tua puntata di 5 e il gioco inizierà con un banco di 10 monete - 5+5.
 <br><br>
-Dans un jeu à deux joueurs, le gagnant remporte l'intégralité du pot, c'est-à-dire sa mise et celle de son adversaire.
+In una partita a due, il vincitore ottiene l'intero piatto, ovvero la sua puntata e quella del suo avversario.
 <br><br>
-Dans une partie à trois joueurs, le gagnant remporte sa mise et celle du dernier joueur (celui qui a le moins de points). 
-Le joueur du milieu (le deuxième) récupère sa mise et conserve ses pièces.
+In una partita a tre, il vincitore prende la sua puntata e quella dell'ultimo giocatore (il giocatore con il punteggio più basso). 
+Il giocatore al secondo posto (il secondo classificato) recupera la sua puntata, conservando le sue monete.
 <br><br>
-Dans une partie à quatre joueurs, le pot est partagé entre les joueurs en 1ère et 4ème position (le premier joueur remporte les deux mises), 
-et les joueurs en 2ème et 3ème position (le deuxième remporte les deux mises).
+In una partita a quattro giocatori, il piatto viene diviso tra i giocatori al 1° e al 4° posto (il primo giocatore prende entrambe le puntate) 
+e i giocatori al 2° e al 3° posto (il secondo prende entrambe le puntate).
 <br><br>
-Ainsi, jouer trois et quatre devient moins risqué en termes d'économies de pièces.
+Pertanto, giocare tre e quattro diventa meno rischioso in termini di risparmio di monete.
 <br><br>
-Si tous les joueurs perdants ont le même nombre de points, le joueur gagnant remporte toutes les mises.
+Se tutti i giocatori perdenti hanno lo stesso numero di punti, il giocatore vincente si aggiudica tutte le puntate.
 <br><br>
-Dans une partie à quatre joueurs, si les joueurs classés 2e et 3e obtiennent le même nombre de points, ils récupèrent leur mise et conservent leurs paris.
+In una partita a quattro, se il secondo e il terzo giocatore ottengono lo stesso numero di punti, recuperano la loro puntata, mantenendo le loro scommesse.
 <br><br>
-Le nouveau classement est calculé comme d'habitude dans tous les cas - voir l'onglet « Classement ».
+Il nuovo punteggio in tutti i casi viene calcolato come di consueto - vedi la scheda “Classifica”.
 <br><br>
-<h2>Comment recharger votre portefeuille</h2>
+<h2>Come ricaricare il tuo portafoglio</h2>
 <ol>
 <li>
-Chaque nouveau joueur reçoit {{stone_reward}} {{yandex_exclude}}{{SUDOKU}} pièces de monnaie sur son solde et peut immédiatement participer à la course aux gros gains.
+Ogni nuovo giocatore riceve {{stone_reward}} {{yandex_exclude}}{{SUDOKU}} monete di benvenuto sul proprio saldo e può partecipare immediatamente alla corsa per grandi vincite.
 </li>
 <li>
-Vous recevrez {{stone_reward}} pièces pour chaque ami qui rejoint le jeu en utilisant votre lien de parrainage.
-De plus, si vous établissez un record (quotidien, hebdomadaire, mensuel ou annuel) du nombre d'invités, vous serez récompensé. Pour inviter un utilisateur, vous devez vous connecter au jeu via Telegram.
+Riceverai {{stone_reward}} monete per ogni amico che accede al gioco utilizzando il tuo link di riferimento.
+Inoltre, stabilendo un record (giornaliero, settimanale, mensile o annuale) nel numero di invitati, riceverai un premio. Per invitare un utente, devi accedere al gioco tramite Telegram.
 </li>
 <li>
-Des pièces sont attribuées pour les performances réalisées dans le jeu (points par partie, points par coup, points par mot, nombre de parties, nombre d'invités, classement de la 1re à la 10e place).
+Le monete vengono assegnate per i risultati ottenuti nel gioco (punti per partita, punti per mossa, punti per parola, numero di partite, numero di invitati, posizione in classifica da #1 a #10).
 </li>
 <li>
-Pour chaque série de 100 parties, {{stone_reward}} pièces {{yandex_exclude}}{{SUDOKU }} sont attribuées.
+Per ogni 100 partite, vengono assegnati {{stone_reward}} di {{yandex_exclude}}{{SUDOKU }} monete.
 </li>
 {{yandex_exclude}}{{<li>
-Achetez des pièces contre des roubles par virement bancaire
+Acquista monete con rubli tramite bonifico bancario
 </li>
-<li>Acheter des pièces pour la cryptomonnaie (bientôt disponible)
+<li>Acquista monete per criptovaluta (presto disponibile)
 </li>}}
 </ol>
 
 <br>
-Le nombre de pièces attribuées pour chaque succès peut varier au fil du temps, à la hausse ou à la baisse. La récompense réelle est indiquée sur la carte de succès.
+Il numero di monete assegnate per ogni risultato può variare nel tempo, aumentando o diminuendo. Il premio effettivo è indicato nella scheda dei risultati.
 <br><br>
-<h2>Ce que vous pouvez faire avec les pièces que vous gagnez</h2>
+<h2>Cosa puoi fare con le monete che vinci</h2>
 <ol>
 <li>
-Jouez à nos jeux, augmentez les enjeux, ajoutez du piquant et de l'intérêt à votre passe-temps favori.
+Gioca ai nostri giochi, aumentando la posta in gioco, aggiungendo emozioni e interesse al tuo passatempo preferito.
 </li>
 {{yandex_exclude}}{{<li>
-Vendez des pièces contre des roubles ou contre des cryptomonnaies (bientôt) et recevez votre récompense en argent réel.
+Vendi monete in cambio di rubli o criptovalute (presto disponibili) e ricevi il tuo compenso in denaro reale.
 </li>}}
 {{yandex_exclude}}{{<li>
-Offrez un cadeau à un autre joueur en lui envoyant le nombre de pièces de votre choix depuis votre portefeuille (bientôt disponible).
+Fai un regalo a un altro giocatore inviandogli un numero qualsiasi di monete dal tuo portafoglio (in arrivo)
 </li>}}   
 </ol>
 <br>
-Vous pouvez consulter le détail du solde de votre portefeuille dans l'onglet « Portefeuille » du menu « PROFIL ».
+Puoi trovare i dettagli del saldo del tuo portafoglio nella scheda “Portafoglio” del menu “PROFILO”.
 <br><br>
-<strong>Bonus accumulés</strong> - résultat des gains passifs accumulés toutes les heures en fonction des performances du joueur (menu « STATS », section « Récompenses »).
-<br>Les bonus peuvent être transférés vers le solde en appuyant sur le bouton « RÉCLAMER ».
-<br><br>
-<strong>{{yandex_exclude}}{{SUDOKU}} Solde</strong> - solde actuel des pièces sans bonus. Les pièces sont déduites/créditées en fonction des résultats du jeu.
-<br><br>
-Les cartes de réussite, semblables à des médailles, sont un indicateur de votre succès. 
+<strong>Bonus accumulati</strong> - il risultato dei guadagni passivi accumulati ogni ora in base ai risultati ottenuti dal giocatore (menu “STATISTICHE”, sezione “Premi”).
 <br>
-Elles comprennent le nom de la réussite, la période (année, jour, semaine, mois), le nombre de points (note, longueur du texte, nombre d'amis) et le nombre de pièces. 
+I bonus possono essere trasferiti al saldo premendo il pulsante “RICHIEDI”.
 <br><br>
-Le gain passif de pièces s'arrête lorsque votre record est battu par un autre joueur.
-FR,
+<strong>{{yandex_exclude}}{{SUDOKU}} Saldo</strong> - saldo attuale delle monete senza bonus. Le monete vengono detratte/accreditate in base ai risultati del gioco.
+<br><br>
+Le carte dei risultati, simili alle medaglie, sono un indicatore del tuo successo. 
+<br>Includono il nome del risultato, il periodo (anno, giorno, settimana, mese), il numero di punti (valutazione, lunghezza delle parole, numero di amici) e il numero di monete. 
+<br><br>
+Il guadagno passivo di monete si interrompe quando il tuo record viene battuto da un altro giocatore.
+IT,
         ],
-        '[[Player]] opened [[number]] [[cell]]' => '[[Player]] a ouvert [[number]] [[cell]]',
-        ' (including [[number]] [[key]])' => ' (dont [[number]] [[key]])',
-        '[[Player]] made a mistake' => '[[Player]] a commis une erreur.',
-        'You made a mistake!' => 'Vous avez fait une erreur !',
-        'Your opponent made a mistake' => 'Votre adversaire a commis une erreur.',
-        '[[Player]] gets [[number]] [[point]]' => '[[Player]] obtient [[number]] [[point]].',
+        '[[Player]] opened [[number]] [[cell]]' => '[[Player]] ha aperto [[number]] [[cell]]',
+        ' (including [[number]] [[key]])' => ' (inclusa [[number]] [[key]])',
+        '[[Player]] made a mistake' => '[[Player]] ha commesso un errore',
+        'You made a mistake!' => 'Hai commesso un errore!',
+        'Your opponent made a mistake' => 'Il tuo avversario ha commesso un errore.',
+        '[[Player]] gets [[number]] [[point]]' => '[[Player]] ottiene [[number]] [[point]].',
         '[[number]] [[point]]' => '[[number]] [[point]]',
-        'You got [[number]] [[point]]' => 'Vous avez obtenu [[number]] [[point]].',
-        'Your opponent got [[number]] [[point]]' => 'Votre adversaire a obtenu [[number]] [[point]].',
+        'You got [[number]] [[point]]' => 'Hai ottenuto [[number]] [[point]].',
+        'Your opponent got [[number]] [[point]]' => 'Il tuo avversario ha ottenuto [[number]] [[point]].',
     ];
 }

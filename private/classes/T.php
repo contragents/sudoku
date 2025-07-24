@@ -1279,24 +1279,29 @@ class T
     const PLURALS = [
         'point' => [
             self::EN_LANG => [0 => 'points', 1 => 'point', 2 => 'points'],
-            self::RU_LANG => [0 => 'очков', 1 => 'очко', 2 => 'очка', 5 => 'очков']
+            self::RU_LANG => [0 => 'очков', 1 => 'очко', 2 => 'очка', 5 => 'очков'],
+            self::TR_LANG => [0 => 'puan', 1 => 'puan', 2 => 'puan'],
+            self::FR_LANG => [0 => 'points', 1 => 'point', 2 => 'points'],
+            self::IT_LANG =>[0 => 'punti', 1 => 'punto', 2 => 'punti'],
         ],
         'cell' => [
             self::EN_LANG => [0 => 'cells', 1 => 'cell', 2 => 'cells'],
             self::RU_LANG => [0 => 'клеток', 1 => 'клетку', 2 => 'клетки', 5 => 'клеток'],
             self::FR_LANG => [0 => 'cellules', 1 => 'cellule', 2 => 'cellules'],
+            self::IT_LANG => [0 => 'celle', 1 => 'cella', 2 => 'celle'],
         ],
         'key' => [
             self::EN_LANG => [0 => 'keys', 1 => 'key', 2 => 'keys'],
             self::RU_LANG => [0 => 'ключей', 1 => 'ключ', 2 => 'ключа', 5 => 'ключей'],
             self::FR_LANG => [0 => 'clés', 1 => 'clé', 2 => 'clés'],
+            self::IT_LANG=> [0 => 'chiavi', 1 => 'chiave', 2 => 'chiavi'],
         ],
         'Player' => [
             self::EN_LANG => [1 => 'Player1', 2 => 'Player2', 3 => 'Player3', 4 => 'Player4'],
             self::RU_LANG => [1 => 'Игрок1', 2 => 'Игрок2', 3 => 'Игрок3', 4 => 'Игрок4'],
             self::TR_LANG => [1 => 'Oyuncu1', 2 => 'Oyuncu2', 3 => 'Oyuncu3', 4 => 'Oyuncu1'],
             self::FR_LANG => [1 => 'Joueur1', 2=> 'Joueur2', 3=> 'Joueur3', 4 => 'Joueur4'],
-            self::IT_LANG => [1 => 'Giocatore', 2 => 'Giocatore', 3 => 'Giocatore', 4 => 'Giocatore']
+            self::IT_LANG => [1 => 'Giocatore1', 2 => 'Giocatore2', 3 => 'Giocatore3', 4 => 'Giocatore4']
         ],
     ];
 

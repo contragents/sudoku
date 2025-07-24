@@ -334,7 +334,7 @@ class T_FR
         'against' => 'contre',
         "File loading error!" => 'Erreur de chargement du fichier !',
         "Check:" => 'Vérifier :',
-        "file size (less than " => 'taille du fichier (moins de',
+        "file size (less than " => 'taille du fichier (moins de ',
         "Incorrect URL format!" => 'Format d&#39;URL incorrect !',
         "Must begin with " => 'Doit commencer par ',
         'Error! Choose image file with the size not more than' => 'Erreur ! Choisissez un fichier image dont la taille ne dépasse pas',
@@ -420,7 +420,7 @@ Par exemple, si un joueur a déjà obtenu le succès « JEUX JOUÉS »
 FR
             ,
         ],
-        'Reward' => 'Ödül',
+        'Reward' => 'Récompense',
         'faq_coins' => [
             SudokuGame::GAME_NAME => <<<FR
 La pièce <strong>SUDOKU</strong> {{sudoku_icon}} est une monnaie utilisée dans le jeu {{yandex_exclude}}{{ pour un réseau de jeux - <strong>Scrabble, Sudoku</strong><br><br>
