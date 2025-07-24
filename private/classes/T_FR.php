@@ -22,7 +22,7 @@ class T_FR
             SudokuGame::GAME_NAME => 'Sudoku en ligne avec des amis',
         ],
         'secret_prompt' => [
-            SudokuGame::GAME_NAME => 'Conservez cette clé pour pouvoir restaurer votre compte dans <a href="https://t.me/sudoku_app_bot">Telegram</a> ultérieurement',
+            SudokuGame::GAME_NAME => '&#42;Conservez cette clé pour pouvoir restaurer votre compte dans <a href="https://t.me/sudoku_app_bot">Telegram</a> ultérieurement',
         ],
         'COIN Balance' => 'Solde COIN',
         PaymentModel::INIT_STATUS => 'Débuté',

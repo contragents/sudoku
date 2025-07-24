@@ -22,7 +22,7 @@ class T_TR
             SudokuGame::GAME_NAME => 'Arkadaşlarla Online Sudoku',
         ],
         'secret_prompt' => [
-            SudokuGame::GAME_NAME => '<a href="https://t.me/sudoku_app_bot">Telegram&#39;da</a> daha fazla hesap geri yüklemesi için bu anahtarı kaydedin',
+            SudokuGame::GAME_NAME => '&#42;<a href="https://t.me/sudoku_app_bot">Telegram&#39;da</a> daha fazla hesap geri yüklemesi için bu anahtarı kaydedin',
         ],
         'COIN Balance' => 'Para bakiyesi',
         PaymentModel::INIT_STATUS => 'Başladı',
