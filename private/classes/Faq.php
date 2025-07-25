@@ -67,8 +67,10 @@ Conversely, a weaker player will get more points towards the rating if he defeat
 Thus, it is more advantageous for a strong player to play with equals - if you win, you get more points, and if you lose, you don't lose very many points.
 <br><br>
 It is safe for a beginner to fight an experienced master.
-<br>The loss of ranking if you lose will be small.
-<br>But, in case of victory, the master will generously share the rank points
+<br>
+The loss of ranking if you lose will be small.
+<br>
+But, in case of victory, the master will generously share the rank points
 EN
         ,
         T::RU_LANG => <<<RU
@@ -97,7 +99,8 @@ Players are rewarded for certain achievements (records).
 <br><br>
 The player's awards are reflected in the “STATS” section in the following nominations: gold/silver/bronze/stone.
 <br><br>
-When receiving a reward card, the player receives a bonus of SUDOKU coins {{sudoku_icon}}<br> 
+When receiving a reward card, the player receives a bonus of SUDOKU coins {{sudoku_icon}}
+<br> 
 Coins can be used in a special game mode “ON Coins”, you can replenish your in-game wallet, 
 as well as withdraw coins from the game - read more in the “Coin Game mode” tab
 <br><br>
@@ -343,7 +346,7 @@ When exceeding the own record for the achievements “PLAYED PARTIES”, the pla
 The record value itself (number of games / number of friends) is updated on the reward card.
 <br><br>
 For example, if a player has previously earned the achievement - “GAMES PLAYED”
-(gold) for 10,000 games, then when the number of games of this player is changed to 10,001, no more reward cards will be issued to the record holder.<br>
+(gold) for 10,000 games, then when the number of games of this player is changed to 10,001, no more reward cards will be issued to the record holder.
 EN,
         T::RU_LANG => <<<RU
 За определенные достижения (рекорды) игроки получают награды.
@@ -606,14 +609,17 @@ RU
     ];
     const COINS = [
         T::EN_LANG => <<<EN
-Coin <strong>SUDOKU</strong> {{sudoku_icon}} is an in-game currency{{yandex_exclude}}{{ for a network of games - <strong>Scrabble, Sudoku</strong><br><br>
+Coin <strong>SUDOKU</strong> {{sudoku_icon}} is an in-game currency{{yandex_exclude}}{{ for a network of games - <strong>Scrabble, Sudoku</strong>
+<br><br>
 One account for all games, one currency, one wallet}}
 <br><br>
 {{yandex_exclude}}{{In the crypto world, the coin is also called SUDOKU. Soon it will be possible to withdraw any number of SUDOKU coins from your in-game wallet to an external wallet in the TON (Telegram) network
 <br><br>}}
-In the meantime, we try to win as many coins as possible in the game by selecting the “Coins” mode<br><br>
+In the meantime, we try to win as many coins as possible in the game by selecting the “Coins” mode
+<br><br>
 
-This mode also takes into account and accrues player rankings.<br>
+This mode also takes into account and accrues player rankings.
+<br>
 However, coins won by the results of the game are now credited to your wallet (or deducted if you lose)
 <br><br>
 Depending on the current balance of coins in your wallet, you are offered to play for 1, 5, 10, etc. coins - choose the desired amount from the list

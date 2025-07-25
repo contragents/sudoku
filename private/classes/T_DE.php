@@ -198,333 +198,337 @@ class T_DE
         'Play on' => 'Spielen Sie auf',
         // Чат
         'Error sending complaint<br><br>Choose opponent' => 'Fehler beim Senden der Beschwerde<br><br>Gegner auswählen',
-        'You' => 'Tu',
-        'to all: ' => 'A tutti: ',
-        ' (to all):' => ' (a tutti):',
-        'For everyone' => 'Per tutti',
-        'Word matching' => 'Corrispondenza delle parole',
-        'Player support and chat at' => 'Assistenza giocatori e chat su',
-        'Join group' => 'Unisciti al gruppo',
-        'Send an in-game message' => 'Invia un messaggio nel gioco',
+        'You' => 'Sie',
+        'to all: ' => 'An alle: ',
+        ' (to all):' => ' (an alle):',
+        'For everyone' => 'Für alle',
+        'Word matching' => 'Wortabgleich',
+        'Player support and chat at' => 'Spieler-Support und Chat bei',
+        'Join group' => 'Gruppe beitreten',
+        'Send an in-game message' => 'Sende eine Nachricht im Spiel',
         // Чат
-        'News' => 'Notizie',
+        'News' => 'Nachrichten',
         // Окно статистика
-        'Past Awards' => 'Premi precedenti',
-        'Parties_Games' => 'Giochi',
-        'Player`s achievements' => 'Risultati del giocatore',
-        'Player Awards' => 'Premi ai giocatori',
-        'Player' => 'Giocatore',
+        'Past Awards' => 'Frühere Auszeichnungen',
+        'Parties_Games' => 'Spiele',
+        'Player`s achievements' => 'Erfolge des Spielers',
+        'Player Awards' => 'Spieler-Auszeichnungen',
+        'Player' => 'Spieler',
         'VS' => 'VS',
-        'Rating' => 'Grado',
-        'Opponent' => 'Avversario',
-        'Active Awards' => 'Premi attivi',
-        'Remove filter' => 'Rimuovi filtro',
+        'Rating' => 'Rang',
+        'Opponent' => 'Gegner',
+        'Active Awards' => 'Aktive Auszeichnungen',
+        'Remove filter' => 'Filter entfernen',
         // Окно статистика конец
 
-        "Opponent's rating" => 'Rating dell&#39;avversario',
-        'Choose your MAX bet' => 'Scegli la tua puntata MAX',
-        'Searching for players with corresponding bet' => 'Ricerca di giocatori con scommessa corrispondente',
-        'Coins written off the balance sheet' => 'Monete cancellate dal bilancio',
-        'Number of coins on the line' => 'Numero di monete sulla linea',
-        'gets a win' => 'ottiene una vittoria',
-        'The bank of' => 'La banca di',
-        'goes to you' => 'va a te',
-        'is taken by the opponent' => 'viene preso dall&#39;avversario',
-        'Bid' => 'Offerta',
-        'No coins' => 'Nessuna moneta',
-        'Any' => 'Qualsiasi',
+        "Opponent's rating" => 'Bewertung des Gegners',
+        'Choose your MAX bet' => ' Ihr MAX-Einsatz',
+        'Searching for players with corresponding bet' => 'Suche nach Spielern mit entsprechender Wette',
+        'Coins written off the balance sheet' => 'Aus der Bilanz ausgebuchte Münzen',
+        'Number of coins on the line' => 'Anzahl der Münzen auf der Linie',
+        'gets a win' => 'erhält für den Sieg',
+        'The bank of' => 'Die Bank mit',
+        'goes to you' => 'geht an Sie.',
+        'is taken by the opponent' => 'wird vom Gegner gewonnen.',
+        'Bid' => 'Gebot',
+        'No coins' => 'Keine Münzen',
+        'Any' => 'Jeder',
         'online' => 'online',
-        'Above' => 'Sopra',
-        'minutes' => 'minuti',
-        'minute' => 'minuto',
-        'Select the minimum opponent rating' => 'Seleziona il grado minimo dell&#39;avversario',
-        'Not enough 1900+ rated players online' => 'Non ci sono abbastanza giocatori con rating superiore a 1900 online.',
-        'Only for players rated 1800+' => 'Solo per giocatori con punteggio superiore a 1800',
-        'in game' => 'nel gioco',
-        'score' => 'punteggio',
-        'Your current rank' => 'Il tuo grado attuale',
-        'Server syncing..' => 'Sincronizzazione server...',
-        ' is making a turn.' => ' sta effettuando una mossa.',
-        'Your turn is next - get ready!' => 'È il tuo turno, preparati!',
-        'switches pieces and skips turn' => 'cambia i pezzi e salta il turno.',
-        "Game still hasn't started!" => 'Il gioco non è ancora iniziato!',
-        "Word wasn't found" => 'La parola non è stata trovata',
-        'Correct' => 'Corretto',
-        'One-letter word' => 'Parola di una sola lettera',
-        'Repeat' => 'Ripeti',
-        'costs' => 'costi',
-        '+15 for all pieces used' => '+15 per tutti i pezzi utilizzati',
-        'TOTAL' => 'TOTALE',
-        'You did not make any word' => 'Non hai detto nulla.',
-        'is attempting to make a turn out of his turn (turn #' => 'sta cercando di fare una svolta dalla sua svolta (svolta n.',
-        'Data processing error!' => 'Errore di elaborazione dei dati!',
-        ' - turn processing error (turn #' => ' - Errore di elaborazione della svolta (svolta n.',
-        "didn't make any word (turn #" => 'non ha detto nulla (turno n.',
-        'set word lenght record for' => 'Imposta il record di lunghezza della parola per',
-        'set word cost record for' => 'impostare il record di costo delle parole per',
-        'set record for turn cost for' => 'stabilito il record per il costo di svolta per',
-        'gets' => 'ottiene',
-        'for turn #' => 'per la curva n.',
-        'For all pieces' => 'Per tutti i pezzi',
-        'Wins with score ' => 'Vittorie con punteggio ',
-        'set record for gotten points in the game for' => 'ha stabilito il record di punti ottenuti nella partita per',
-        'out of chips - end of game!' => 'senza fiches - fine del gioco!',
-        'set record for number of games played for' => 'ha stabilito il record per il numero di partite giocate per',
-        'is the only one left in the game - Victory!' => 'è l&#39;unico rimasto in gioco - Vittoria!',
-        'left game' => 'partita lasciata',
-        'has left the game' => 'ha lasciato il gioco',
-        'is the only one left in the game! Start a new game' => 'È l&#39;unico rimasto in gioco! Inizia una nuova partita.',
-        'Time for the turn ran out' => 'Il tempo a disposizione per il turno è scaduto.',
-        "is left without any pieces! Winner - " => 'rimane senza pezzi! Vincitore -',
-        ' with score ' => ' con punteggio di ',
-        "is left without any pieces! You won with score " => 'è rimasto senza pezzi! Hai vinto con un punteggio di ',
-        "gave up! Winner - " => 'Ha rinunciato! Vincitore - ',
-        'skipped 3 turns! Winner - ' => 'Ha saltato 3 turni! Vincitore - ',
-        'New game has started!' => 'Il nuovo gioco è iniziato!',
-        'New game' => 'Nuovo gioco',
-        'Accept invitation' => 'Accetta l&#39;invito',
-        'Get' => 'Prendi',
-        'score points' => 'guadagnare punti',
-        "Asking for adversaries' approval." => 'Chiedere l&#39;approvazione degli avversari.',
-        'Remaining in the game:' => 'Rimanere in gioco:',
-        "You got invited for a rematch! - Accept?" => 'Sei stato invitato a una rivincita! - Accetti?',
-        'All players have left the game' => 'Tutti i giocatori hanno abbandonato la partita.',
-        "Your score" => 'Il tuo punteggio',
-        'Turn time' => 'Tempo di rotazione',
-        'Date' => 'Data',
-        'Price' => 'Prezzo',
-        'Status' => 'Stato',
-        'Type' => 'Tipo',
-        'Period' => 'Periodo',
-        'Word' => 'Parola',
-        'Points/letters' => 'Punti/lettere',
-        'Result' => 'Risultato',
-        'Opponents' => 'Avversari',
-        'Games<br>total' => 'Giochi<br>totale',
-        'Wins<br>total' => 'Vittorie<br>totali',
-        'Gain/loss<br>in ranking' => 'Guadagno/perdita<br>in classifica',
-        '% Wins' => '% Vittorie',
-        'Games in total' => 'Giochi in totale',
-        'Winnings count' => 'Le vincite contano',
-        'Increase/loss in rating' => 'Aumento/perdita di rating',
-        '% of wins' => '% di vittorie',
-        "GAME points - Year Record!" => 'Punti GAME - Record annuale!',
-        "GAME points - Month Record!" => 'Punti GAME - Record mensile!',
-        "GAME points - Week Record!" => 'Punti GAME - Record settimanale!',
-        "GAME points - Day Record!" => 'Punti GAME - Record giornaliero!',
-        "TURN points - Year Record!" => 'Punti di SVOLTA - Record annuale!',
-        "TURN points - Month Record!" => 'Punti di SVOLTA - Record mensile!',
-        "TURN points - Week Record!" => 'Punti di SVOLTA - Record settimanale!',
-        "TURN points - Day Record!" => 'Punti di SVOLTA - Record giornaliero!',
-        "WORD points - Year Record!" => 'Punti PAROLA - Record annuale!',
-        "WORD points - Month Record!" => 'Punti PAROLA - Record mensile!',
-        "WORD points - Week Record!" => 'Punti PAROLA - Record settimanale!',
-        "WORD points - Day Record!" => 'Punti PAROLA - Record giornaliero!',
-        "Longest WORD - Year Record!" => 'Parola più lunga - Record annuale!',
-        "Longest WORD - Month Record!" => 'Parola più lunga - Record mensile!',
-        "Longest WORD - Week Record!" => 'Parola più lunga - Record settimanale!',
-        "Longest WORD - Day Record!" => 'Parola più lunga - Record giornaliero!',
-        "GAMES played - Year Record!" => 'PARTITE giocate - Record annuale!',
-        "GAMES played - Month Record!" => 'PARTITE giocate - Record mensile!',
-        "GAMES played - Week Record!" => 'PARTITE giocate - Record settimanale!',
-        "GAMES played - Day Record!" => 'PARTITE giocate - Record giornaliero!',
-        "Victory" => 'Vittoria',
-        'Losing' => 'Perdere',
-        "Go to player's stats" => 'Vai alle statistiche del giocatore',
-        'Filter by player' => 'Filtra per giocatore',
-        'Apply filter' => 'Applica filtro',
-        'against' => 'contro',
-        "File loading error!" => 'Errore durante il caricamento del file!',
-        "Check:" => 'Controllare:',
-        "file size (less than " => 'dimensione del file (inferiore a ',
-        "Incorrect URL format!" => 'Formato URL errato!',
-        "Must begin with " => 'Deve iniziare con ',
-        'Error! Choose image file with the size not more than' => 'Errore! Scegli un file immagine con dimensioni non superiori a',
-        'Avatar updated' => 'Avatar aggiornato',
-        "Error saving new URL" => 'Errore durante il salvataggio del nuovo URL',
+        'Above' => 'Oben',
+        'minutes' => 'Minuten',
+        'minute' => 'Minute',
+        'Select the minimum opponent rating' => 'Wählen Sie den Mindestwert für den Gegner',
+        'Not enough 1900+ rated players online' => 'Nicht genügend Spieler mit einer Bewertung von 1900+ online',
+        'Only for players rated 1800+' => 'Nur für Spieler mit einer Bewertung von 1800+',
+        'in game' => 'im Spiel',
+        'score' => 'Ergebnis',
+        'Your current rank' => 'Ihr aktueller Rang',
+        'Server syncing..' => 'Server-Synchronisierung..',
+        ' is making a turn.' => ' macht einen Zug.',
+        'Your turn is next - get ready!' => 'Jetzt bist du dran - mach dich bereit!',
+        'switches pieces and skips turn' => 'tauscht Figuren und überspringt Zug',
+        "Game still hasn't started!" => 'Das Spiel hat noch immer nicht begonnen!',
+        "Word wasn't found" => 'Wort wurde nicht gefunden',
+        'Correct' => 'Korrekt',
+        'One-letter word' => 'Wort mit einem Buchstaben',
+        'Repeat' => 'Wiederholen Sie',
+        'costs' => 'kostet',
+        '+15 for all pieces used' => '+15 für alle verwendeten Teile',
+        'TOTAL' => 'GESAMT',
+        'You did not make any word' => 'Sie haben kein einziges Wort gesagt.',
+        'is attempting to make a turn out of his turn (turn #' => 'versucht, einen Zug aus seinem Zug zu machen (Zug #',
+        'Data processing error!' => 'Fehler in der Datenverarbeitung!',
+        ' - turn processing error (turn #' => ' - Abbiegeverarbeitungsfehler (Abbiegung #',
+        "didn't make any word (turn #" => 'hat kein Wort gesagt (Zug #',
+        'set word lenght record for' => 'stellt Wortlängenrekord für das',
+        'set word cost record for' => 'stellen Wortkostenrekord für das',
+        'set record for turn cost for' => 'stellen Rekord bei den Turnkosten für das',
+        'gets' => 'erhält',
+        'for turn #' => 'für Runde #',
+        'For all pieces' => 'Für alle Stücke',
+        'Wins with score ' => 'Gewinnt mit Punktzahl ',
+        'set record for gotten points in the game for' => 'stellt Rekord für erhaltene Punkte im Spiel für',
+        'out of chips - end of game!' => 'keine Chips mehr - Ende des Spiels!',
+        'set record for number of games played for' => 'stellt Rekord für Anzahl der Spiele des',
+        'is the only one left in the game - Victory!' => 'ist der Einzige, der noch im Spiel ist - Sieg!',
+        'left game' => 'hat das Spiel verlassen',
+        'has left the game' => 'hat das Spiel verlassen',
+        'is the only one left in the game! Start a new game' => 'ist der Einzige, der noch im Spiel ist! Ein neues Spiel beginnen',
+        'Time for the turn ran out' => 'Die Zeit für die Wende lief ab',
+        "is left without any pieces! Winner - " => 'hat keine Figuren mehr! Sieger -',
+        ' with score ' => '. Punktzahl: ',
+        "is left without any pieces! You won with score " => 'hat keine Figuren mehr! Du hast mit Punkten gewonnen ',
+        "gave up! Winner - " => 'hat aufgegeben! Sieger - ',
+        'skipped 3 turns! Winner - ' => 'hat 3 Züge übersprungen! Sieger - ',
+        'New game has started!' => 'Das neue Spiel hat begonnen!',
+        'New game' => 'Neues Spiel',
+        'Accept invitation' => 'Einladung annehmen',
+        'Get' => 'Erhalte',
+        'score points' => 'Punkte',
+        "Asking for adversaries' approval." => 'Die Zustimmung des Gegners einholen.',
+        'Remaining in the game:' => 'Bleibt im Spiel:',
+        "You got invited for a rematch! - Accept?" => 'Du wurdest zu einem Rückkampf eingeladen! - Annehmen?',
+        'All players have left the game' => 'Alle Spieler haben das Spiel verlassen',
+        "Your score" => 'Ihr Ergebnis',
+        'Turn time' => 'Wendezeit',
+        'Date' => 'Datum',
+        'Price' => 'Preis',
+        'Status' => 'Status',
+        'Type' => 'Typ',
+        'Period' => 'Zeitraum',
+        'Word' => 'Wort',
+        'Points/letters' => 'Punkte/Briefe',
+        'Result' => 'Ergebnis',
+        'Opponents' => 'Gegner',
+        'Games<br>total' => 'Partien<br>insgesamt',
+        'Wins<br>total' => 'Siege<br>insgesamt',
+        'Gain/loss<br>in ranking' => 'Zugewinn/Verlust<br>an Rang',
+        '% Wins' => '% Siege',
+        'Games in total' => 'Spiele insgesamt',
+        'Winnings count' => 'Gewinne zählen',
+        'Increase/loss in rating' => 'Erhöhung/Verlust des Ratings',
+        '% of wins' => '% der Siege',
+        "GAME points - Year Record!" => 'GAME-Punkte - Jahresrekord!',
+        "GAME points - Month Record!" => 'GAME-Punkte - Monatsrekord!',
+        "GAME points - Week Record!" => 'GAME points - Wochenrekord!',
+        "GAME points - Day Record!" => 'GAME-Punkte - Tagesrekord!',
+        "TURN points - Year Record!" => 'TURN Punkte - Jahresrekord!',
+        "TURN points - Month Record!" => 'TURN-Punkte - Monatsrekord!',
+        "TURN points - Week Record!" => 'TURN-Punkte - Wochenrekord!',
+        "TURN points - Day Record!" => 'TURN-Punkte - Tagesrekord!',
+        "WORD points - Year Record!" => 'WORD-Punkte - Jahresrekord!',
+        "WORD points - Month Record!" => 'WORD-Punkte - Monatsrekord!',
+        "WORD points - Week Record!" => 'WORD-Punkte - Wochenrekord!',
+        "WORD points - Day Record!" => 'WORD-Punkte - Tagesrekord!',
+        "Longest WORD - Year Record!" => 'Längstes WORT - Jahresrekord!',
+        "Longest WORD - Month Record!" => 'Längstes WORT - Monatsrekord!',
+        "Longest WORD - Week Record!" => 'Längstes WORT - Wochenrekord!',
+        "Longest WORD - Day Record!" => 'Längstes WORT - Tagesrekord!',
+        "GAMES played - Year Record!" => 'GAMES gespielt - Jahresrekord!',
+        "GAMES played - Month Record!" => 'GAMES gespielt - Monatsrekord!',
+        "GAMES played - Week Record!" => 'GAMES played - Wochenrekord!',
+        "GAMES played - Day Record!" => 'GAMES gespielt - Tagesrekord!',
+        "Victory" => 'Sieg',
+        'Losing' => 'Verlieren',
+        "Go to player's stats" => 'Zu den Spielerstatistiken gehen',
+        'Filter by player' => 'Nach Spieler filtern',
+        'Apply filter' => 'Filter anwenden',
+        'against' => 'gegen',
+        "File loading error!" => 'Fehler beim Laden der Datei!',
+        "Check:" => 'Prüfen:',
+        "file size (less than " => 'Dateigröße (weniger als ',
+        "Incorrect URL format!" => 'Falsches URL-Format!',
+        "Must begin with " => 'Muss beginnen mit ',
+        'Error! Choose image file with the size not more than' => 'Fehler! Wählen Sie eine Bilddatei mit einer Größe von nicht mehr als',
+        'Avatar updated' => 'Avatar aktualisiert',
+        "Error saving new URL" => 'Fehler beim Speichern der neuen URL',
         'A player may open more than one cell and more than one KEY in one turn. Use the CASCADES rule'
-        => 'Un giocatore può aprire più di una casella e più di una CHIAVE in un turno. Utilizza la regola CASCADES.',
+        => 'Ein Spieler darf in einem Zug mehr als ein Feld und mehr als einen SCHLÜSSEL öffnen. Verwenden Sie die CASCADES-Regel',
         'If after the automatic opening of a number, new blocks of EIGHT open cells are formed on the field, such blocks are also opened by CASCADE'
-        => 'Se dopo l&#39;apertura automatica di un numero, sul campo si formano nuovi blocchi di OTTO caselle aperte, anche tali blocchi vengono aperti da CASCADE.',
+        => 'Wenn nach dem automatischen Öffnen einer Nummer neue Blöcke von ACHT offenen Zellen auf dem Feld gebildet werden, werden diese Blöcke ebenfalls durch CASCADE geöffnet',
         'If a player has opened a cell (solved a number in it) and there is only ONE closed digit left in the block, this digit is opened automatically'
-        => 'Se un giocatore ha aperto una casella (risolvendo un numero al suo interno) e nel blocco rimane solo UNA cifra chiusa, questa cifra viene aperta automaticamente.',
-        'is awarded for solved empty cell' => 'viene assegnato per una cella vuota risolta',
+        => 'Wenn ein Spieler ein Feld geöffnet hat (eine Zahl darin gelöst hat) und nur noch EINE geschlossene Ziffer in dem Block vorhanden ist, wird diese Ziffer automatisch geöffnet',
+        'is awarded for solved empty cell' => 'wird für gelöste leere Zellen ausgezeichnet',
         'by calculating all of other 8 digits in a block - vertically OR horizontally OR in a 3x3 square'
-        => 'calcolando tutte le altre 8 cifre in un blocco - verticalmente O orizzontalmente O in un quadrato 3x3',
+        => ' durch Berechnung aller anderen 8 Ziffern in einem Block - senkrecht ODER waagerecht ODER in einem 3x3-Quadrat',
         "The players' task is to take turns making moves and accumulating points to open black squares"
-        => 'Il compito dei giocatori è quello di effettuare mosse a turno e accumulare punti per aprire le caselle nere.',
+        => 'Die Aufgabe der Spieler besteht darin, abwechselnd Züge zu machen und Punkte zu sammeln, um schwarze Felder zu öffnen',
         'The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated'
-        => 'Si applicano le regole classiche del SUDOKU: in un blocco di nove caselle (in verticale, in orizzontale e in un quadrato 3x3) i numeri non devono ripetersi.',
+        => 'Es gelten die klassischen SUDOKU-Regeln - in einem Block von neun Zellen (vertikal, horizontal und in einem 3x3-Quadrat) dürfen sich die Zahlen nicht wiederholen',
         'faq_rules' => [
-            SudokuGame::GAME_NAME => <<<IT
-<h2 id="nav1">Informazioni sul gioco</h2>
-Si applicano le regole classiche del SUDOKU: in un blocco di nove caselle (in verticale, in orizzontale e in un quadrato 3x3) i numeri non devono ripetersi.
+            SudokuGame::GAME_NAME => <<<DE
+<h2 id="nav1">Über das Spiel</h2>
+Es gelten die klassischen SUDOKU-Regeln - in einem Block von neun Zellen (vertikal, horizontal und in einem 3x3-Quadrat) dürfen sich die Zahlen nicht wiederholen
 <br><br>
-Il compito dei giocatori è quello di effettuare mosse a turno e accumulare punti per aprire le caselle nere (<span style="color:#0f0">+10 punti</span>) calcolando tutte le altre 8 cifre in un blocco - verticalmente O orizzontalmente O in un quadrato 3x3.
+Die Aufgabe der Spieler ist es, abwechselnd Züge zu machen und Punkte zu sammeln, um schwarze Quadrate zu öffnen (<span style="color:#0f0">+10 Punkte</span>), indem sie alle anderen 8 Ziffern in einem Block berechnen - vertikal ODER horizontal ODER in einem 3x3-Quadrat
 <br><br>
-Viene assegnato un <span style="color:#0f0">+1 punto</span> per ogni casella vuota risolta.
+Ein <span style="color:#0f0">+1 Punkt</span> wird für gelöste leere Zellen vergeben
 <br><br>
-La vittoria va al giocatore che ottiene il 50% di tutti i punti possibili +1 punto.
+Sieger ist der Spieler, der 50% aller möglichen Punkte erreicht hat +1 Punkt
 <br><br>
-Se un giocatore ha aperto una casella (risolvendo un numero al suo interno) e nel blocco rimane solo UNA cifra chiusa, questa cifra viene aperta automaticamente.
+Wenn ein Spieler ein Feld geöffnet hat (eine Zahl darin gelöst hat) und es nur noch EINE geschlossene Ziffer im Block gibt, wird diese Ziffer automatisch geöffnet
 <br><br>
-Se dopo l'apertura automatica di un numero, sul campo si formano nuovi blocchi di OTTO caselle aperte, anche tali blocchi vengono aperti da CASCADE
+Wenn nach dem automatischen Öffnen einer Zahl neue Blöcke von ACHT offenen Feldern auf dem Feld gebildet werden, werden diese Blöcke auch durch CASCADE
 <br><br>
-Un giocatore può aprire più di una casella e più di una CHIAVE in un turno. Utilizza la regola CASCADES
+Ein Spieler kann mehr als ein Feld und mehr als einen SCHLÜSSEL in einer Runde öffnen. Verwenden Sie die CASCADES-Regel
 <br><br>
-In caso di mossa errata (il numero nella casella è sbagliato), su questa casella compare un piccolo numero rosso di errore, visibile a entrambi i giocatori. Questo numero non può essere inserito nuovamente in questa casella.
+Im Falle eines fehlerhaften Zuges - die Ziffer im Feld ist falsch - erscheint eine kleine rote Fehlerziffer auf diesem Feld, die für beide Spieler sichtbar ist. Diese Ziffer darf nicht mehr auf dieses Feld gesetzt werden
 <br><br>
-Utilizzando il pulsante Controlla, il giocatore può inserire un segno, ovvero un piccolo numero verde nella casella. Può trattarsi di un numero calcolato di cui il giocatore è sicuro o semplicemente di un'ipotesi. Utilizza le note come in un normale SUDOKU: l'altro giocatore non può vederle.
-IT
+Mit der Schaltfläche „Ankreuzen“ kann der Spieler eine Markierung vornehmen - eine kleine grüne Zahl in das Feld setzen. Dabei kann es sich um eine berechnete Zahl handeln, die der Spieler sicher weiß, oder um eine Schätzung. Verwenden Sie Notizen wie in einem normalen SUDOKU - der andere Spieler kann sie nicht sehen
+DE
             ,
         ],
-        'faq_rating' => <<<IT
-Classifica Elo
+        'faq_rating' => <<<DE
+Elo-Bewertung
 <br><br>
-Sistema di classificazione Elo, coefficiente Elo: metodo di calcolo della forza relativa dei giocatori nei giochi 
-che coinvolgono due giocatori (ad esempio scacchi, dama o shogi, go).
+Elo-Bewertungssystem, Elo-Koeffizient - eine Methode zur Berechnung der relativen Stärke von Spielern in Spielen, 
+in Spielen mit zwei Spielern (z. B. Schach, Dame oder Shogi, Go).
 <br>
-Questo sistema di classificazione è stato sviluppato dal professore di fisica americano di origine ungherese Arpad Elo (in ungherese: Élő Árpád; 1903-1992)
+Dieses Bewertungssystem wurde von dem in Ungarn geborenen amerikanischen Physikprofessor Arpad Elo (ungarisch: Élő Árpád; 1903-1992) entwickelt
 <br><br>
-Maggiore è la differenza di punteggio tra i giocatori, minore sarà il numero di punti che il giocatore più forte otterrà in caso di vittoria.
+Je größer der Unterschied in der Bewertung zwischen den Spielern ist, desto weniger Punkte erhält der stärkere Spieler, wenn er gewinnt.
 <br> 
-Al contrario, un giocatore più debole otterrà più punti per la classifica se sconfigge un giocatore più forte.
+Umgekehrt erhält ein schwächerer Spieler mehr Punkte für die Wertung, wenn er einen stärkeren Spieler besiegt.
 <br><br>
-Pertanto, è più vantaggioso per un giocatore forte giocare con avversari di pari livello: se vince, ottiene più punti, e se perde, non perde molti punti.
+Daher ist es für einen starken Spieler vorteilhafter, mit Gleichen zu spielen - wenn man gewinnt, bekommt man mehr Punkte, und wenn man verliert, verliert man nicht sehr viele Punkte.
 <br><br>
-È sicuro per un principiante combattere contro un maestro esperto.
+Es ist sicher für einen Anfänger, gegen einen erfahrenen Meister zu kämpfen.
 <br>
-La perdita di ranking in caso di sconfitta sarà minima.
+Wenn Sie verlieren, ist der Verlust an Rangpunkten gering.
 <br>
-Ma, in caso di vittoria, il maestro condividerà generosamente i punti di ranking.
-IT
+Aber im Falle eines Sieges, wird der Meister großzügig die Rangpunkte teilen
+DE
         ,
         'faq_rewards' => [
-            SudokuGame::GAME_NAME => <<<IT
-I giocatori vengono premiati per determinati risultati (record).
+            SudokuGame::GAME_NAME => <<<DE
+Spieler werden für bestimmte Leistungen (Rekorde) belohnt.
 <br><br>
-I premi dei giocatori sono riportati nella sezione “STATISTICHE” nelle seguenti categorie: oro/argento/bronzo/pietra.
+Die Auszeichnungen des Spielers werden in der Rubrik „STATS“ in den folgenden Nominierungen angezeigt: Gold/Silber/Bronze/Stein.
 <br><br>
-Quando riceve una carta premio, il giocatore riceve un bonus di monete SUDOKU {{sudoku_icon}}
-<br>
-Le monete possono essere utilizzate in una modalità di gioco speciale dedicata alle monete, è possibile ricaricare il proprio portafoglio di gioco
-e prelevare monete dal gioco - per ulteriori informazioni, consultare la scheda “Modalità di gioco con monete”.
+Wenn der Spieler eine Belohnungskarte erhält, bekommt er einen Bonus von SUDOKU-Münzen {{sudoku_icon}}
+<br> 
+Münzen können in einem speziellen Spielmodus „ON Coins“ verwendet werden, Sie können Ihre Geldbörse im Spiel auffüllen, 
+sowie Münzen aus dem Spiel abheben - lesen Sie mehr im Reiter „Münzspielmodus“
 <br><br>
-Finché il record di un giocatore non viene superato da un altro giocatore, la carta premio viene visualizzata per quel giocatore nella scheda “PREMI ATTIVI” della sezione “STATISTICHE”.
+Solange der Rekord eines Spielers nicht von einem anderen Spieler gebrochen wurde, wird die Belohnungskarte für diesen Spieler auf der Registerkarte „AKTIVE BELOHNUNGEN“ im Abschnitt „STATISTIK“ angezeigt.
 <br><br>
-Ogni “Premio ATTIVO” ogni ora genera un “profitto” aggiuntivo in monete.
+Jede „AKTIVE BELOHNUNG“ generiert jede Stunde zusätzlichen „Gewinn“ in Münzen.
 <br><br>
-Se un record è stato battuto da un altro giocatore, la carta premio del precedente detentore del record viene spostata nella scheda “PREMI PASSATI” e smette di generare reddito passivo. 
+Wenn ein Rekord von einem anderen Spieler gebrochen wurde, wird die Prämienkarte des vorherigen Besitzers des Rekords in die Registerkarte „PAST AWARDS“ verschoben und bringt kein passives Einkommen mehr. 
 <br><br>
-Il numero totale di monete ricevute (bonus una tantum e profitti aggiuntivi) può essere visualizzato nella sezione “PROFILO” nella scheda ‘Portafoglio’ nei campi “Saldo SUDOKU” e “Bonus accumulati”, rispettivamente.
+Die Gesamtzahl der erhaltenen Münzen (einmalige Boni und zusätzlicher Gewinn) kann im Abschnitt „PROFIL“ auf der Registerkarte ‚Brieftasche‘ in den Feldern „SUDOKU-Guthaben“ bzw. „Aufgelaufene Boni“ eingesehen werden.
 <br><br>
-Quando si supera il proprio record per i risultati “PARTITE GIOCATE”, il giocatore non riceve nuovamente una nuova carta ricompensa o monete. 
-Il valore del record stesso (numero di partite / numero di amici) viene aggiornato sulla carta ricompensa.
+Beim Überschreiten des eigenen Rekords für die Errungenschaft „GESPIELTE PARTIES“ erhält der Spieler keine neue Belohnungskarte oder Münzen mehr. 
+Der Rekordwert selbst (Anzahl der Spiele/Anzahl der Freunde) wird auf der Belohnungskarte aktualisiert.
 <br><br>
-Ad esempio, se un giocatore ha già ottenuto l'obiettivo “GAMES PLAYED”
-(oro) per 10.000 partite, quando il numero di partite di questo giocatore passa a 10.001, non verranno più emesse carte premio al detentore del record.
-IT
+Wenn ein Spieler zum Beispiel die Errungenschaft - „GAMES PLAYED“
+(Gold) für 10.000 Spiele erworben hat, dann werden, wenn die Anzahl der Spiele dieses Spielers auf 10.001 geändert wird, keine weiteren Belohnungskarten an den Rekordhalter ausgegeben.
+DE
             ,
         ],
-        'Reward' => 'Ricompensa',
+        'Reward' => 'Belohnung',
         'faq_coins' => [
-            SudokuGame::GAME_NAME => <<<IT
-La moneta <strong>SUDOKU</strong> {{sudoku_icon}} è una valuta{{yandex_exclude}}{{ utilizzabile all'interno di una rete di giochi, tra cui <strong>Scrabble, Sudoku</strong><br><br>
-Un unico account per tutti i giochi, un'unica valuta, un unico portafoglio.}}
+            SudokuGame::GAME_NAME => <<<DE
+Coin <strong>SUDOKU</strong> {{sudoku_icon}} is an in-game currency{{yandex_exclude}}{{ for a network of games - <strong>Scrabble, Sudoku</strong>
 <br><br>
-{{yandex_exclude}}{{Nel mondo delle criptovalute, la moneta è chiamata anche SUDOKU. Presto sarà possibile prelevare qualsiasi quantità di monete SUDOKU dal proprio portafoglio di gioco e trasferirle su un portafoglio esterno nella rete TON (Telegram).
+Ein Konto für alle Spiele, eine Währung, eine Geldbörse}}
+<br><br>
+{{yandex_exclude}}{{In the crypto world, the coin is also called SUDOKU. Soon it will be possible to withdraw any number of SUDOKU coins from your in-game wallet to an external wallet in the TON (Telegram) network
 <br><br>}}
-Nel frattempo, cerchiamo di vincere il maggior numero possibile di monete nel gioco selezionando la modalità “Monete”.
+In the meantime, we try to win as many coins as possible in the game by selecting the “Coins” mode
+
+{{yandex_exclude}}{{In der Kryptowelt wird die Münze auch SUDOKU genannt. In Kürze wird es möglich sein, eine beliebige Anzahl von SUDOKU-Münzen aus der Geldbörse im Spiel in eine externe Geldbörse im TON (Telegram)-Netzwerk abzuheben
+<br><br>}}
+In der Zwischenzeit versuchen wir, so viele Münzen wie möglich im Spiel zu gewinnen, indem wir den Modus „Münzen“ auswählen
 <br><br>
 
-Questa modalità tiene conto anche delle classifiche dei giocatori e le accumula.
+Auch in diesem Modus wird die Rangliste der Spieler berücksichtigt und erhöht.
 <br>
-Tuttavia, le monete vinte in base ai risultati della partita vengono ora accreditate sul tuo portafoglio (o detratte in caso di sconfitta).
+Allerdings werden Münzen, die durch die Ergebnisse des Spiels gewonnen werden, nun Ihrem Geldbeutel gutgeschrieben (oder abgezogen, wenn Sie verlieren).
 <br><br>
-A seconda del saldo attuale delle monete nel tuo portafoglio, ti viene offerto di giocare per 1, 5, 10, ecc. monete: scegli l'importo desiderato dall'elenco.
+Je nach aktuellem Guthaben in Ihrem Geldbeutel wird Ihnen angeboten, um 1, 5, 10, etc. Coins zu spielen - wählen Sie den gewünschten Betrag aus der Liste
 <br><br>
-Dopo aver premuto il pulsante “Avvia”, inizierà la ricerca di un avversario che sia anch'esso pronto a scommettere l'importo specificato.
+Nach dem Drücken des „Start“-Buttons beginnt die Suche nach einem Gegner, der ebenfalls bereit ist, den angegebenen Betrag zu setzen
 <br><br> 
-Ad esempio, hai specificato che la tua puntata è di 5 gettoni, ma tra i giocatori che iniziano una nuova partita ci sono solo quelli disposti a puntare 1 gettone.
+Sie haben zum Beispiel einen Einsatz von 5 Münzen festgelegt, und unter den Spielern, die ein neues Spiel beginnen, gibt es nur solche, die bereit sind, 1 Münze zu setzen.
 <br>
-In tal caso, la puntata sia per te che per quel giocatore sarà di 1 gettone, ovvero il valore minore tra le due opzioni.
+Dann beträgt der Einsatz sowohl für Sie als auch für einen solchen Spieler 1 Münze - die geringere der beiden Optionen.
 <br><br>
-Nel caso in cui ci sia qualcuno disposto a giocare per 10 monete, verrà selezionata la tua puntata di 5 e il gioco inizierà con un banco di 10 monete - 5+5.
+Falls jemand bereit ist, um 10 Münzen zu kämpfen, wird Ihr Einsatz - 5 - ausgewählt und das Spiel beginnt mit einer Bank von 10 Münzen - 5+5
 <br><br>
-In una partita a due, il vincitore ottiene l'intero piatto, ovvero la sua puntata e quella del suo avversario.
+In einem Spiel mit zwei Personen erhält der Gewinner den gesamten Pott - seinen Einsatz und den Einsatz seines Gegners
 <br><br>
-In una partita a tre, il vincitore prende la sua puntata e quella dell'ultimo giocatore (il giocatore con il punteggio più basso). 
-Il giocatore al secondo posto (il secondo classificato) recupera la sua puntata, conservando le sue monete.
+Bei einem Drei-Wege-Spiel nimmt der Gewinner seinen Einsatz und den Einsatz des letzten Spielers (der Spieler mit den wenigsten Punkten). 
+Der mittlere Spieler (der Zweitplatzierte) erhält seinen Einsatz zurück und behält seine Münzen
 <br><br>
-In una partita a quattro giocatori, il piatto viene diviso tra i giocatori al 1° e al 4° posto (il primo giocatore prende entrambe le puntate) 
-e i giocatori al 2° e al 3° posto (il secondo prende entrambe le puntate).
+Bei einem Spiel mit vier Spielern wird der Pott zwischen den Spielern auf Platz 1 und 4 (der erste Spieler nimmt beide Einsätze), 
+und den Spielern auf Platz 2 und 3 (der zweite Spieler nimmt beide Einsätze) aufgeteilt.
 <br><br>
-Pertanto, giocare tre e quattro diventa meno rischioso in termini di risparmio di monete.
+So wird das Spiel zu dritt und zu viert weniger riskant, wenn es darum geht, Münzen zu sparen
 <br><br>
-Se tutti i giocatori perdenti hanno lo stesso numero di punti, il giocatore vincente si aggiudica tutte le puntate.
+Wenn alle Verlierer die gleiche Anzahl von Punkten haben, nimmt der Gewinner alle Einsätze.
 <br><br>
-In una partita a quattro, se il secondo e il terzo giocatore ottengono lo stesso numero di punti, recuperano la loro puntata, mantenendo le loro scommesse.
+Wenn in einem Viererspiel der 2. und 3. Spieler die gleiche Punktzahl erreichen, erhalten sie ihren Einsatz zurück und behalten ihre Einsätze
 <br><br>
-Il nuovo punteggio in tutti i casi viene calcolato come di consueto - vedi la scheda “Classifica”.
+Der neue Rang wird in allen Fällen wie üblich berechnet - siehe Registerkarte „Rangliste“.
 <br><br>
-<h2>Come ricaricare il tuo portafoglio</h2>
+<h2>Wie Sie Ihr Portemonnaie wieder auffüllen können</h2>
 <ol>
 <li>
-Ogni nuovo giocatore riceve {{stone_reward}} {{yandex_exclude}}{{SUDOKU}} monete di benvenuto sul proprio saldo e può partecipare immediatamente alla corsa per grandi vincite.
+Jeder neue Spieler erhält zur Begrüßung {{stone_reward}} {{yandex_exclude}}{{SUDOKU}} Münzen auf sein Guthaben und kann sofort in das Rennen um große Gewinne einsteigen
 </li>
 <li>
-Riceverai {{stone_reward}} monete per ogni amico che accede al gioco utilizzando il tuo link di riferimento.
-Inoltre, stabilendo un record (giornaliero, settimanale, mensile o annuale) nel numero di invitati, riceverai un premio. Per invitare un utente, devi accedere al gioco tramite Telegram.
+Sie erhalten {{stone_reward}} Münzen für jeden Freund, der über Ihren Empfehlungslink zum Spiel kommt. 
+Außerdem werden Sie belohnt, wenn Sie einen Rekord (für den Tag, die Woche, den Monat oder das Jahr) bei der Anzahl der Eingeladenen aufstellen. Um einen Benutzer einzuladen, müssen Sie sich über Telegram in das Spiel einloggen.
 </li>
 <li>
-Le monete vengono assegnate per i risultati ottenuti nel gioco (punti per partita, punti per mossa, punti per parola, numero di partite, numero di invitati, posizione in classifica da #1 a #10).
+Münzen werden für Leistungen im Spiel vergeben (Punkte pro Spiel, Punkte pro Zug, Punkte pro Wort, Anzahl der Spiele, Anzahl der Eingeladenen, Platz in der Rangliste von #1 bis #10)
 </li>
 <li>
-Per ogni 100 partite, vengono assegnati {{stone_reward}} di {{yandex_exclude}}{{SUDOKU }} monete.
+Für alle 100 Spiele werden {{stone_reward}} von {{yandex_exclude}}{{SUDOKU }} Münzen vergeben
 </li>
 {{yandex_exclude}}{{<li>
-Acquista monete con rubli tramite bonifico bancario
+Münzen für Rubel per Überweisung kaufen
 </li>
-<li>Acquista monete per criptovaluta (presto disponibile)
+<li>Münzen für Kryptowährung kaufen (in Kürze)
 </li>}}
 </ol>
 
 <br>
-Il numero di monete assegnate per ogni risultato può variare nel tempo, aumentando o diminuendo. Il premio effettivo è indicato nella scheda dei risultati.
+Die Anzahl der Münzen, die für jede Leistung vergeben werden, kann sich im Laufe der Zeit ändern, entweder nach oben oder nach unten. Die tatsächliche Belohnung ist auf der Erfolgskarte angegeben.
 <br><br>
-<h2>Cosa puoi fare con le monete che vinci</h2>
+<h2>Was Sie mit den gewonnenen Münzen machen können</h2>
 <ol>
 <li>
-Gioca ai nostri giochi, aumentando la posta in gioco, aggiungendo emozioni e interesse al tuo passatempo preferito.
+Spielen Sie unsere Spiele, erhöhen Sie die Einsätze und machen Sie Ihre Lieblingsbeschäftigung spannender und interessanter.
 </li>
 {{yandex_exclude}}{{<li>
-Vendi monete in cambio di rubli o criptovalute (presto disponibili) e ricevi il tuo compenso in denaro reale.
+Verkaufen Sie Münzen für Rubel oder für Kryptowährung (bald) und erhalten Sie Ihre Belohnung in Form von echtem Geld
 </li>}}
 {{yandex_exclude}}{{<li>
-Fai un regalo a un altro giocatore inviandogli un numero qualsiasi di monete dal tuo portafoglio (in arrivo)
+Machen Sie einem anderen Spieler ein Geschenk, indem Sie ihm eine beliebige Anzahl von Münzen aus Ihrer Brieftasche schicken (in Kürze)
 </li>}}   
 </ol>
 <br>
-Puoi trovare i dettagli del saldo del tuo portafoglio nella scheda “Portafoglio” del menu “PROFILO”.
+Sie können die Details Ihres Guthabens in der Registerkarte „Brieftasche“ des Menüs „PROFIL“ einsehen.
 <br><br>
-<strong>Bonus accumulati</strong> - il risultato dei guadagni passivi accumulati ogni ora in base ai risultati ottenuti dal giocatore (menu “STATISTICHE”, sezione “Premi”).
-<br>
-I bonus possono essere trasferiti al saldo premendo il pulsante “RICHIEDI”.
+<strong>Aufgelaufene Boni</strong> - das Ergebnis des passiven Verdienstes, der stündlich in Abhängigkeit von den Erfolgen des Spielers aufgelaufen ist (Menü „STATS“, Abschnitt „Auszeichnungen“).
+<br>Bonusse können durch Drücken der Taste „CLAIM“ auf das Guthaben übertragen werden.
 <br><br>
-<strong>{{yandex_exclude}}{{SUDOKU}} Saldo</strong> - saldo attuale delle monete senza bonus. Le monete vengono detratte/accreditate in base ai risultati del gioco.
+<strong>{{yandex_exclude}}{{SUDOKU}} Saldo</strong> - aktueller Saldo der Münzen ohne Boni. Münzen werden davon abgezogen / gutgeschrieben, je nach den Ergebnissen des Spiels
 <br><br>
-Le carte dei risultati, simili alle medaglie, sono un indicatore del tuo successo. 
-<br>Includono il nome del risultato, il periodo (anno, giorno, settimana, mese), il numero di punti (valutazione, lunghezza delle parole, numero di amici) e il numero di monete. 
+Erfolgskarten, die Medaillen ähneln, sind ein Zeichen für Ihren Erfolg.
+<br>Sie enthalten den Namen der Leistung, den Zeitraum (Jahr, Tag, Woche, Monat), die Anzahl der Punkte (Bewertung, Wortlänge, Anzahl der Freunde) und die Anzahl der Münzen 
 <br><br>
-Il guadagno passivo di monete si interrompe quando il tuo record viene battuto da un altro giocatore.
-IT,
+Das passive Sammeln von Münzen hört auf, wenn dein Rekord von einem anderen Spieler gebrochen wird.
+DE,
         ],
-        '[[Player]] opened [[number]] [[cell]]' => '[[Player]] ha aperto [[number]] [[cell]]',
-        ' (including [[number]] [[key]])' => ' (inclusa [[number]] [[key]])',
-        '[[Player]] made a mistake' => '[[Player]] ha commesso un errore',
-        'You made a mistake!' => 'Hai commesso un errore!',
-        'Your opponent made a mistake' => 'Il tuo avversario ha commesso un errore.',
-        '[[Player]] gets [[number]] [[point]]' => '[[Player]] ottiene [[number]] [[point]].',
+        '[[Player]] opened [[number]] [[cell]]' => '[[Player]] öffnete [[number]] [[cell]]',
+        ' (including [[number]] [[key]])' => ' (einschließlich [[number]] [[key]])',
+        '[[Player]] made a mistake' => '[[Player]] hat einen Fehler gemacht',
+        'You made a mistake!' => 'Sie haben einen Fehler gemacht!',
+        'Your opponent made a mistake' => 'Ihr Gegner hat einen Fehler gemacht',
+        '[[Player]] gets [[number]] [[point]]' => '[[Player]] erhält [[number]] [[point]].',
         '[[number]] [[point]]' => '[[number]] [[point]]',
         'You got [[number]] [[point]]' => 'Hai ottenuto [[number]] [[point]].',
         'Your opponent got [[number]] [[point]]' => 'Il tuo avversario ha ottenuto [[number]] [[point]].',

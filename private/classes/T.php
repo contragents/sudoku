@@ -1284,18 +1284,21 @@ class T
             self::TR_LANG => [0 => 'puan', 1 => 'puan', 2 => 'puan'],
             self::FR_LANG => [0 => 'points', 1 => 'point', 2 => 'points'],
             self::IT_LANG =>[0 => 'punti', 1 => 'punto', 2 => 'punti'],
+            self::DE_LANG =>[0 => 'Punkte', 1 => 'Punkt', 2 => 'Punkte'],
         ],
         'cell' => [
             self::EN_LANG => [0 => 'cells', 1 => 'cell', 2 => 'cells'],
             self::RU_LANG => [0 => 'клеток', 1 => 'клетку', 2 => 'клетки', 5 => 'клеток'],
             self::FR_LANG => [0 => 'cellules', 1 => 'cellule', 2 => 'cellules'],
             self::IT_LANG => [0 => 'celle', 1 => 'cella', 2 => 'celle'],
+            self::DE_LANG => [0 => 'Zellen', 1 => 'Zelle', 2 => 'Zellen'],
         ],
         'key' => [
             self::EN_LANG => [0 => 'keys', 1 => 'key', 2 => 'keys'],
             self::RU_LANG => [0 => 'ключей', 1 => 'ключ', 2 => 'ключа', 5 => 'ключей'],
             self::FR_LANG => [0 => 'clés', 1 => 'clé', 2 => 'clés'],
             self::IT_LANG=> [0 => 'chiavi', 1 => 'chiave', 2 => 'chiavi'],
+            self::DE_LANG=> [0 => 'Schlüssel', 1 => 'Schlüssel', 2 => 'Schlüssel'],
         ],
         'Player' => [
             self::EN_LANG => [1 => 'Player1', 2 => 'Player2', 3 => 'Player3', 4 => 'Player4'],
