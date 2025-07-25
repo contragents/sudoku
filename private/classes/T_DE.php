@@ -429,14 +429,10 @@ DE
         'Reward' => 'Belohnung',
         'faq_coins' => [
             SudokuGame::GAME_NAME => <<<DE
-Coin <strong>SUDOKU</strong> {{sudoku_icon}} is an in-game currency{{yandex_exclude}}{{ for a network of games - <strong>Scrabble, Sudoku</strong>
+Die Münze <strong>SUDOKU</strong> {{sudoku_icon}} ist eine In-Game Währung{{yandex_exclude}}{{ für ein Netzwerk von Spielen - <strong>Scrabble, Sudoku</strong>
 <br><br>
 Ein Konto für alle Spiele, eine Währung, eine Geldbörse}}
 <br><br>
-{{yandex_exclude}}{{In the crypto world, the coin is also called SUDOKU. Soon it will be possible to withdraw any number of SUDOKU coins from your in-game wallet to an external wallet in the TON (Telegram) network
-<br><br>}}
-In the meantime, we try to win as many coins as possible in the game by selecting the “Coins” mode
-
 {{yandex_exclude}}{{In der Kryptowelt wird die Münze auch SUDOKU genannt. In Kürze wird es möglich sein, eine beliebige Anzahl von SUDOKU-Münzen aus der Geldbörse im Spiel in eine externe Geldbörse im TON (Telegram)-Netzwerk abzuheben
 <br><br>}}
 In der Zwischenzeit versuchen wir, so viele Münzen wie möglich im Spiel zu gewinnen, indem wir den Modus „Münzen“ auswählen

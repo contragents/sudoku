@@ -40,7 +40,7 @@ class BaseController
     const VERSION_PARAM = 'version';
     const USER_LANGUAGE_KEY = 'user.language_storage';
 
-    const VERSION_DEFAULT_YANDEX = '1.0.0.2'; //Версия для яндекса для совместимости до модерации
+    const VERSION_DEFAULT_YANDEX = '1.0.0.3'; //Версия для яндекса для совместимости до модерации
     const VERSION_DEFAULT = '1.0.0.3'; // Версия для остальных
     const APP_PARAM = 'app';
 
