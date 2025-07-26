@@ -14,7 +14,16 @@ class T
     const FR_LANG = 'FR';
     const IT_LANG = 'IT';
     const DE_LANG = 'DE';
-    const SUPPORTED_LANGS = [self::EN_LANG, self::RU_LANG, self::TR_LANG, self::FR_LANG, self::IT_LANG, self::DE_LANG];
+    const ES_LANG = 'ES';
+    const SUPPORTED_LANGS = [
+        self::EN_LANG,
+        self::RU_LANG,
+        self::TR_LANG,
+        self::FR_LANG,
+        self::IT_LANG,
+        self::DE_LANG,
+        self::ES_LANG
+    ];
 
     const PLURAL_PATTERN = '[[';
 
@@ -75,7 +84,7 @@ class T
         ],
         '<strong>File upload error!</strong><br /> Please review:<br /> <ul><li>file size (no more than <strong>' => [
             self::RU_LANG => '<strong>Ошибка загрузки файла!</strong><br /> Проверьте:<br /> <ul><li>размер файла (не более <strong>',
-            ],
+        ],
         'Error creating new payment' => [
             self::RU_LANG => 'Ошибка создания нового платежа',
         ],
@@ -193,6 +202,10 @@ class T
             self::RU_LANG => 'https://t.me/sudoku_app_bot',
         ],
         'loading_text' => [
+            SudokuGame::GAME_NAME => [
+                self::EN_LANG => 'SUDOKU is loading...',
+                self::RU_LANG => 'Загружаем СУДОКУ...',
+            ],
             self::EN_LANG => 'SUDOKU is loading...',
             self::RU_LANG => 'Загружаем СУДОКУ...',
         ],
@@ -1283,8 +1296,8 @@ class T
             self::RU_LANG => [0 => 'очков', 1 => 'очко', 2 => 'очка', 5 => 'очков'],
             self::TR_LANG => [0 => 'puan', 1 => 'puan', 2 => 'puan'],
             self::FR_LANG => [0 => 'points', 1 => 'point', 2 => 'points'],
-            self::IT_LANG =>[0 => 'punti', 1 => 'punto', 2 => 'punti'],
-            self::DE_LANG =>[0 => 'Punkte', 1 => 'Punkt', 2 => 'Punkte'],
+            self::IT_LANG => [0 => 'punti', 1 => 'punto', 2 => 'punti'],
+            self::DE_LANG => [0 => 'Punkte', 1 => 'Punkt', 2 => 'Punkte'],
         ],
         'cell' => [
             self::EN_LANG => [0 => 'cells', 1 => 'cell', 2 => 'cells'],
@@ -1297,14 +1310,14 @@ class T
             self::EN_LANG => [0 => 'keys', 1 => 'key', 2 => 'keys'],
             self::RU_LANG => [0 => 'ключей', 1 => 'ключ', 2 => 'ключа', 5 => 'ключей'],
             self::FR_LANG => [0 => 'clés', 1 => 'clé', 2 => 'clés'],
-            self::IT_LANG=> [0 => 'chiavi', 1 => 'chiave', 2 => 'chiavi'],
-            self::DE_LANG=> [0 => 'Schlüssel', 1 => 'Schlüssel', 2 => 'Schlüssel'],
+            self::IT_LANG => [0 => 'chiavi', 1 => 'chiave', 2 => 'chiavi'],
+            self::DE_LANG => [0 => 'Schlüssel', 1 => 'Schlüssel', 2 => 'Schlüssel'],
         ],
         'Player' => [
             self::EN_LANG => [1 => 'Player1', 2 => 'Player2', 3 => 'Player3', 4 => 'Player4'],
             self::RU_LANG => [1 => 'Игрок1', 2 => 'Игрок2', 3 => 'Игрок3', 4 => 'Игрок4'],
             self::TR_LANG => [1 => 'Oyuncu1', 2 => 'Oyuncu2', 3 => 'Oyuncu3', 4 => 'Oyuncu1'],
-            self::FR_LANG => [1 => 'Joueur1', 2=> 'Joueur2', 3=> 'Joueur3', 4 => 'Joueur4'],
+            self::FR_LANG => [1 => 'Joueur1', 2 => 'Joueur2', 3 => 'Joueur3', 4 => 'Joueur4'],
             self::IT_LANG => [1 => 'Giocatore1', 2 => 'Giocatore2', 3 => 'Giocatore3', 4 => 'Giocatore4'],
             self::DE_LANG => [1 => 'Spieler1', 2 => 'Spieler2', 3 => 'Spieler3', 4 => 'Spieler4'],
         ],

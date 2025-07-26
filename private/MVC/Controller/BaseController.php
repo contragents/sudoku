@@ -536,4 +536,11 @@ class BaseController
             'Game' => var_export($this->Game, true)
         ];
     }
+
+    public function translateAction(): string
+    {
+        print \classes\Deepl::translateTClass(T::ES_LANG);
+
+        exit;
+    }
 }
