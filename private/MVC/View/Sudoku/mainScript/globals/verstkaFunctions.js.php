@@ -556,7 +556,6 @@ function StatsPage({ json, BASE_URL }) {
         const diff = Math.abs(
             tabContentWrap.getBoundingClientRect().height - tabContent.scrollHeight,
         );
-        // console.log(i, diff);
 
         if (diff > 1 && i < 100) {
             i++;

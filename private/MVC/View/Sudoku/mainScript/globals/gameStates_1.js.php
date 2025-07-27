@@ -562,7 +562,6 @@ var gameStates = {
                         callback: function () {
                             activateFullScreenForMobiles();
                             getStatPageGlobal().then(data => {
-                                console.log(data);
                                 dialog = bootbox
                                     .dialog({
                                         message: data.message,

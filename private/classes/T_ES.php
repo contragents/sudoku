@@ -6,7 +6,7 @@ namespace classes;
 use PaymentModel;
 use UserModel;
 
-class T_DE
+class T_ES
 {
     const PHRASES = [
         'Invalid URL format! <br />It must begin with <strong>http(s)://</strong>' => 'Formato de URL no válido! <br />Debe empezar por <strong>http(s)://</strong>',
