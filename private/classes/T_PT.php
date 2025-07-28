@@ -428,106 +428,106 @@ PT
         ],
         'Reward' => 'Recompensa',
         'faq_coins' => [
-            SudokuGame::GAME_NAME => <<<ES
-Moneda <strong>SUDOKU</strong> {{sudoku_icon}} es una moneda dentro del juego{{yandex_exclude}}{{para una red de juegos - <strong>Scrabble, Sudoku</strong>
+            SudokuGame::GAME_NAME => <<<PT
+Moeda <strong>SUDOKU</strong> {{sudoku_icon}} é uma moeda do jogo{{yandex_exclude}}{{para uma rede de jogos - <strong>Scrabble, Sudoku</strong>
 <br><br>
-Una cuenta para todos los juegos, una moneda, un monedero}}.
+Uma conta para todos os jogos, uma moeda, uma carteira}}
 <br><br>
-{{yandex_exclude}}{{En el mundo de las criptomonedas, la moneda también se llama SUDOKU. Pronto será posible retirar cualquier número de monedas SUDOKU de tu monedero del juego a un monedero externo en la red TON (Telegram)
+{{yandex_exclude}}{{No mundo das criptomoedas, a moeda também se chama SUDOKU. Em breve será possível retirar qualquer número de moedas SUDOKU da tua carteira do jogo para uma carteira externa na rede TON (Telegram)
 <br><br>}}
-Mientras tanto, intentamos ganar tantas monedas como sea posible en el juego seleccionando el modo «Monedas»
+Entretanto, tentamos ganhar o máximo de moedas possível no jogo selecionando o modo "Moedas
 <br><br>
 
-Este modo también tiene en cuenta y acumula las clasificaciones de los jugadores.
+Este modo também tem em conta e acumula as classificações dos jogadores.
 <br>
-Sin embargo, las monedas ganadas por los resultados del juego ahora se acreditan a su cartera (o se deducen si pierde)
+No entanto, as moedas ganhas pelos resultados do jogo são agora creditadas na tua carteira (ou deduzidas se perderes)
 <br><br>
-Dependiendo del saldo actual de monedas en su cartera, se le ofrece jugar por 1, 5, 10, etc. monedas - elija la cantidad deseada de la lista
+Dependendo do saldo atual de moedas na sua carteira, é-lhe proposto jogar por 1, 5, 10, etc. moedas - escolha o montante desejado na lista
 <br><br>
-Después de pulsar el botón «Empezar», comenzará la búsqueda de un oponente que también esté dispuesto a apostar la cantidad especificada
+Depois de premir o botão “Iniciar”, começará a procura de um adversário que também esteja pronto para apostar o montante especificado
 <br><br> 
-Por ejemplo, usted ha especificado que el tamaño de su apuesta es de 5 monedas, y entre los que empiezan una nueva partida sólo hay quien está dispuesto a apostar 1 moneda.
+Por exemplo, especificou o tamanho da sua aposta como 5 moedas e, entre os que iniciam um novo jogo, só há quem esteja disposto a apostar 1 moeda.
 <br>
-Entonces la apuesta tanto para usted como para dicho jugador será de 1 moneda - la menor de ambas opciones.
+Então a aposta para si e para esse jogador será de 1 moeda - a menor das duas opções.
 <br><br>
-En caso de que haya alguien dispuesto a luchar por 10 monedas, su apuesta - 5 será seleccionada y la partida comenzará con un banco de 10 monedas - 5+5
+No caso de haver alguém disposto a lutar por 10 moedas, a sua aposta - 5 será selecionada e o jogo começará com uma banca de 10 moedas - 5+5
 <br><br>
-En una partida de dos personas, el ganador se lleva todo el bote - su apuesta y la de su oponente
+Num jogo a duas pessoas, o vencedor recebe o pote inteiro - a sua aposta e a aposta do adversário
 <br><br>
-En una partida de tres jugadores, el ganador se lleva su apuesta y la del último jugador (el jugador con menos puntos). 
-El jugador del medio (el segundo clasificado) recupera su apuesta, quedándose con sus monedas
+Num jogo a três, o vencedor recebe a sua aposta e a aposta do último jogador (o jogador com menos pontos). 
+O jogador do meio (o segundo classificado) recebe a sua aposta de volta, ficando com as suas moedas
 <br><br>
-En una partida de cuatro jugadores, el bote se divide entre los jugadores que ocupan los puestos 1º y 4º (el primer jugador se lleva ambas apuestas), 
-y los jugadores que ocupan los puestos 2º y 3º (el segundo se lleva ambas apuestas).
+Num jogo a quatro jogadores, o pote é dividido entre os jogadores em 1º e 4º lugar (o primeiro jogador fica com as duas apostas), 
+e os jogadores em 2º e 3º lugares (o segundo fica com as duas apostas).
 <br><br>
-Por lo tanto, jugar a tres y a cuatro resulta menos arriesgado en términos de ahorro de monedas
+Assim, jogar três e quatro torna-se menos arriscado em termos de poupança de moedas
 <br><br>
-Si todos los jugadores perdedores tienen el mismo número de puntos, entonces el jugador ganador se lleva todas las apuestas
+Se todos os jogadores perdedores tiverem o mesmo número de pontos, então o jogador vencedor recebe todas as apostas
 <br><br>
-En una partida a cuatro, si el 2º y el 3º jugador consiguen el mismo número de puntos, recuperan su apuesta, quedándose con sus apuestas
+Num jogo a quatro, se o 2º e o 3º jogadores marcarem um número igual de pontos, recebem a sua aposta de volta, mantendo as suas apostas
 <br><br>
-La nueva clasificación en todos los casos se calcula como de costumbre - ver la pestaña «Clasificación»
+A Nova Classificação em todos os casos é calculada como habitualmente - ver o separador “Classificação”
 <br><br>
-<h2>Cómo puedes reponer tu cartera</h2>
+<h2>Como pode reabastecer a sua carteira</h2>
 <ol>
 <li>
-Cada nuevo jugador recibe {{stone_reward}} de bienvenida. {{yandex_exclude}}{{SUDOKU}} monedas a su saldo y puede participar inmediatamente en la carrera por las grandes ganancias
+Todos os novos jogadores recebem moedas de boas-vindas {{stone_reward}} {{yandex_exclude}}{{SUDOKU}} moedas no seu saldo e pode envolver-se imediatamente na corrida para grandes prémios
 </li>
 <li>
-Recibirás monedas {{stone_reward}} por cada amigo que entre en el juego utilizando tu enlace de recomendación. 
-Además, si establece un récord (para el día, la semana, el mes o el año) en el número de invitados, será recompensado. Para invitar a un usuario, tienes que iniciar sesión en el juego a través de Telegram.
-</li> <li>
-<li>
-Las monedas se otorgan por logros en el juego (puntos por partida, puntos por movimiento, puntos por palabra, número de partidas, número de invitados, puesto en el ranking del #1 al #10).
+Receberás moedas {{stone_reward}} por cada amigo que entrar no jogo usando o teu link de referência. 
+Além disso, ao estabeleceres um recorde (para o dia, semana, mês, ano) no número de convidados, serás recompensado. Para convidar um utilizador, é necessário iniciar sessão no jogo através do Telegram.
 </li>
 <li>
-Por cada 100 partidas, se otorgan {{stone_reward}} de {{yandex_exclude}}{{SUDOKU }} monedas
+As moedas são atribuídas por conquistas no jogo (pontos por jogo, pontos por movimento, pontos por palavra, número de jogos, número de convidados, lugar no ranking de #1 a #10)
+</li>
+<li>
+Por cada 100 jogos, são atribuídas {{stone_reward}} de moedas {{yandex_exclude}}{{{SUDOKU }}
 </li>
 {{yandex_exclude}}{{<li>
-Compra monedas por rublos mediante transferencia
+Comprar moedas por rublos por transferência
 </li>
-<li>Compra monedas por criptodivisas (próximamente)
-</li>}}.
+<li>Comprar moedas por criptomoeda (brevemente)
+</li>}}
 </ol>
 
 <br>
-El número de monedas otorgadas por cada logro puede cambiar con el tiempo, ya sea hacia arriba o hacia abajo. La recompensa real se refleja en la tarjeta del logro.
+O número de moedas atribuídas a cada conquista pode mudar ao longo do tempo, para cima ou para baixo. A recompensa real é reflectida no cartão de conquista.
 <br><br>
-<h2>Qué puedes hacer con las monedas que ganes</h2>
+<h2>O que podes fazer com as moedas que ganhas</h2>
 <ol>
 <li>
-Juega a nuestros juegos, aumentando las apuestas, añadiendo emoción e interés a tu pasatiempo favorito
+Jogue nossos jogos, aumentando as apostas, adicionando emoção e interesse ao seu passatempo favorito
 </li>
 {{yandex_exclude}}{{<li>
-Vende monedas por rublos o por criptodivisas (próximamente) y obtén tu recompensa en términos de dinero real
-</li><}}
+Venda moedas por rublos ou por criptomoeda (em breve) e receba sua recompensa em termos de dinheiro real
+</li>}}
 {{yandex_exclude}}{{<li>
-Haz un regalo a otro jugador enviándole cualquier cantidad de monedas de tu monedero (próximamente)
+Oferece um presente a outro jogador enviando-lhe qualquer número de moedas da tua carteira (em breve)
 </li>}}   
 </ol>
 <br>
-Puedes conocer los detalles del saldo de tu monedero en la pestaña «Monedero» del menú «PERFIL».
+Pode saber os detalhes do saldo da sua carteira no separador “Carteira” do menu “PERFIL”.
 <br><br>
-<strong>Bonificaciones acumuladas</strong> - el resultado de las ganancias pasivas acumuladas cada hora dependiendo de los logros del jugador (menú «ESTADÍSTICAS», sección «Premios»).
-<br>Las bonificaciones pueden transferirse al saldo pulsando el botón «RECLAMAR»
+<strong>Bónus acumulados</strong> - resultado dos ganhos passivos acumulados a cada hora em função das conquistas do jogador (menu “ESTATÍSTICAS”, secção “Prémios”).
+<br>Os bónus podem ser transferidos para o saldo premindo o botão “RECLAMAR”
 <br><br>
-<strong>{{yandex_exclude}}{{SUDOKU}} Saldo</strong> - saldo actual de monedas sin bonificaciones. Las monedas se deducen / acreditan en función de los resultados del juego
+<strong>{{yandex_exclude}}{{SUDOKU}} Saldo</strong> - saldo atual de moedas sem bónus. As moedas são deduzidas / creditadas de acordo com os resultados do jogo
 <br><br>
-Las tarjetas de logros, similares a las medallas, son un indicador de tu éxito. 
-<br>Incluyen el nombre del logro, el periodo (año, día, semana, mes), el número de puntos (puntuación, longitud de palabra, número de amigos) y el número de monedas 
+Os cartões de conquistas, semelhantes a medalhas, são um indicador do seu sucesso. 
+<br>Incluem o nome da conquista, o período (ano, dia, semana, mês), o número de pontos (classificação, comprimento da palavra, número de amigos) e o número de moedas 
 <br><br>
-La obtención pasiva de monedas se detiene cuando otro jugador bate tu récord.
-ES
+O ganho passivo de moedas pára quando o teu recorde é batido por outro jogador
+PT
             ,
         ],
-        '[[Player]] opened [[number]] [[cell]]' => '[[Player]] abierto [[number]] [[cell]]',
-        ' (including [[number]] [[key]])' => ' (incluyendo [[number]] [[key]])',
-        '[[Player]] made a mistake' => '[[Player]] cometió un error',
-        'You made a mistake!' => '¡Cometiste un error!',
-        'Your opponent made a mistake' => 'Su oponente cometió un error',
-        '[[Player]] gets [[number]] [[point]]' => '[[Player]] consigue [[number]] [[point]].',
+        '[[Player]] opened [[number]] [[cell]]' => '[[Player]] abriu [[number]] [[cell]]',
+        ' (including [[number]] [[key]])' => ' (incluindo [[number]] [[key]])',
+        '[[Player]] made a mistake' => '[[Player]] cometeu um erro',
+        'You made a mistake!' => 'Cometeste um erro!',
+        'Your opponent made a mistake' => 'O seu adversário cometeu um erro',
+        '[[Player]] gets [[number]] [[point]]' => '[[Player]] recebe [[number]] [[point]].',
         '[[number]] [[point]]' => '[[number]] [[point]]',
-        'You got [[number]] [[point]]' => 'Tienes [[number]] [[point]].',
-        'Your opponent got [[number]] [[point]]' => 'Su oponente obtuvo [[number]] [[point]].',
+        'You got [[number]] [[point]]' => 'Tem [[number]] [[point]].',
+        'Your opponent got [[number]] [[point]]' => 'O seu adversário obteve [[number]] [[point]].',
     ];
 }

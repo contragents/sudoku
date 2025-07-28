@@ -15,6 +15,8 @@ class T
     const IT_LANG = 'IT';
     const DE_LANG = 'DE';
     const ES_LANG = 'ES';
+    const PT_LANG = 'PT';
+
     const SUPPORTED_LANGS = [
         self::EN_LANG,
         self::RU_LANG,
@@ -22,10 +24,12 @@ class T
         self::FR_LANG,
         self::IT_LANG,
         self::DE_LANG,
-        self::ES_LANG
+        self::ES_LANG,
+        self::PT_LANG,
     ];
 
     const PLURAL_PATTERN = '[[';
+
 
 
     public static string $lang = self::EN_LANG;
@@ -1299,6 +1303,7 @@ class T
             self::IT_LANG => [0 => 'punti', 1 => 'punto', 2 => 'punti'],
             self::DE_LANG => [0 => 'Punkte', 1 => 'Punkt', 2 => 'Punkte'],
             self::ES_LANG => [0 => 'puntos', 1 => 'punto', 2 => 'puntos'],
+            self::PT_LANG => [0 => 'pontos', 1 => 'ponto', 2 => 'pontos'],
         ],
         'cell' => [
             self::EN_LANG => [0 => 'cells', 1 => 'cell', 2 => 'cells'],
@@ -1307,6 +1312,7 @@ class T
             self::IT_LANG => [0 => 'celle', 1 => 'cella', 2 => 'celle'],
             self::DE_LANG => [0 => 'Zellen', 1 => 'Zelle', 2 => 'Zellen'],
             self::ES_LANG => [0 => 'celdas', 1 => 'celda', 2 => 'celdas'],
+            self::PT_LANG => [0 => 'células', 1 => 'célula', 2 => 'células'],
         ],
         'key' => [
             self::EN_LANG => [0 => 'keys', 1 => 'key', 2 => 'keys'],
@@ -1315,6 +1321,7 @@ class T
             self::IT_LANG => [0 => 'chiavi', 1 => 'chiave', 2 => 'chiavi'],
             self::DE_LANG => [0 => 'Schlüssel', 1 => 'Schlüssel', 2 => 'Schlüssel'],
             self::ES_LANG => [0 => 'llaves', 1 => 'llave', 2 => 'llaves'],
+            self::PT_LANG => [0 => 'chaves', 1 => 'chave', 2 => 'chaves'],
         ],
         'Player' => [
             self::EN_LANG => [1 => 'Player1', 2 => 'Player2', 3 => 'Player3', 4 => 'Player4'],
@@ -1324,6 +1331,7 @@ class T
             self::IT_LANG => [1 => 'Giocatore1', 2 => 'Giocatore2', 3 => 'Giocatore3', 4 => 'Giocatore4'],
             self::DE_LANG => [1 => 'Spieler1', 2 => 'Spieler2', 3 => 'Spieler3', 4 => 'Spieler4'],
             self::ES_LANG => [1 => 'Jugador1', 2 => 'Jugador2', 3 => 'Jugador3', 4 => 'Jugador4'],
+            self::PT_LANG => [1 => 'Jogador1', 2 => 'Jogador2', 3 => 'Jogador3', 4 => 'Jogador4'],
         ],
     ];
 
