@@ -299,131 +299,131 @@ class T_PT
         'Word' => 'Palavra',
         'Points/letters' => 'Pontos/letras',
         'Result' => 'Resultado',
-        'Opponents' => 'Oponentes',
-        'Games<br>total' => 'Juegos<br>total',
-        'Wins<br>total' => 'Victorias<br>total',
-        'Gain/loss<br>in ranking' => 'Ganancia/pérdida<br>en el ranking',
-        '% Wins' => '% Ganancias',
-        'Games in total' => 'Juegos en total',
-        'Winnings count' => 'Recuento de premios',
-        'Increase/loss in rating' => 'Aumento/pérdida de rating',
-        '% of wins' => '% de victorias',
-        "GAME points - Year Record!" => 'Puntos de JUEGO - ¡Récord del Año!',
-        "GAME points - Month Record!" => 'Puntos de JUEGO - ¡Récord del Mes!',
-        "GAME points - Week Record!" => 'Puntos de JUEGO - ¡Récord de la Semana!',
-        "GAME points - Day Record!" => 'Puntos de JUEGO - ¡Récord del Día!',
-        "TURN points - Year Record!" => 'Puntos TURN - ¡Récord del Año!',
-        "TURN points - Month Record!" => 'Puntos TURN - ¡Récord del Mes!',
-        "TURN points - Week Record!" => 'Puntos TURN - ¡Récord de la Semana!',
-        "TURN points - Day Record!" => 'Puntos TURN - ¡Récord del Día!',
-        "WORD points - Year Record!" => 'Puntos de PALABRA - ¡Récord del Año!',
-        "WORD points - Month Record!" => 'Puntos de PALABRA - ¡Récord del Mes!',
-        "WORD points - Week Record!" => 'Puntos de PALABRA - ¡Récord de la Semana',
-        "WORD points - Day Record!" => 'Puntos de PALABRA - ¡Récord del Día!',
-        "Longest WORD - Year Record!" => 'PALABRA más larga - ¡Récord del Año!',
-        "Longest WORD - Month Record!" => 'PALABRA más larga - ¡Récord del Mes!',
-        "Longest WORD - Week Record!" => 'PALABRA más larga - ¡Récord de la Semana',
-        "Longest WORD - Day Record!" => 'PALABRA más larga - ¡Récord del Día!',
-        "GAMES played - Year Record!" => 'PARTIDOS jugados - ¡Récord del Año!',
-        "GAMES played - Month Record!" => 'PARTIDOS jugados - ¡Récord del Mes!',
-        "GAMES played - Week Record!" => 'PARTIDOS jugados - ¡Récord de la Semana',
-        "GAMES played - Day Record!" => 'PARTIDOS jugados - ¡Récord del Día!',
-        "Victory" => 'Victoria',
+        'Opponents' => 'Opositores',
+        'Games<br>total' => 'Jogos<br>total',
+        'Wins<br>total' => 'Vitórias<br>total',
+        'Gain/loss<br>in ranking' => 'Ganho/perda<br>na posição',
+        '% Wins' => '% de Vitórias',
+        'Games in total' => 'Jogos no total',
+        'Winnings count' => 'Os ganhos contam',
+        'Increase/loss in rating' => 'Aumento/perda da notação',
+        '% of wins' => '% de vitórias',
+        "GAME points - Year Record!" => 'Pontos do jogo - Recorde do Ano!',
+        "GAME points - Month Record!" => 'Pontos de jogo - Recorde do Mês!',
+        "GAME points - Week Record!" => 'Pontos do jogo - Recorde da Semana!',
+        "GAME points - Day Record!" => 'Pontos do jogo - Recorde do Dia!',
+        "TURN points - Year Record!" => 'Pontos de rotação - Recorde do Ano!',
+        "TURN points - Month Record!" => 'Pontos de rotação - Recorde do Mês!',
+        "TURN points - Week Record!" => 'Pontos de rotação - ecorde da Semana!',
+        "TURN points - Day Record!" => 'Pontos de rotação - Recorde do Dia!',
+        "WORD points - Year Record!" => 'Pontos de PALAVRAS - Recorde do Ano!',
+        "WORD points - Month Record!" => 'Pontos de PALAVRAS - Recorde do Mês!',
+        "WORD points - Week Record!" => 'Pontos de PALAVRAS - ecorde da Semana!',
+        "WORD points - Day Record!" => 'Pontos de PALAVRAS - Recorde do Dia!',
+        "Longest WORD - Year Record!" => 'A PALAVRA mais longa - Recorde do Ano!',
+        "Longest WORD - Month Record!" => 'A PALAVRA mais longa - Recorde do Mês!',
+        "Longest WORD - Week Record!" => 'A PALAVRA mais longa - ecorde da Semana!',
+        "Longest WORD - Day Record!" => 'A PALAVRA mais longa - Recorde do Dia!',
+        "GAMES played - Year Record!" => 'JOGOS jogados - Recorde do Ano!',
+        "GAMES played - Month Record!" => 'JOGOS jogados - Recorde do Mês!',
+        "GAMES played - Week Record!" => 'JOGOS jogados - ecorde da Semana!',
+        "GAMES played - Day Record!" => 'JOGOS jogados - Recorde do Dia!',
+        "Victory" => 'Vitória',
         'Losing' => 'Perder',
-        "Go to player's stats" => 'Ir a las estadísticas del jugador',
-        'Filter by player' => 'Filtrar por jugador',
+        "Go to player's stats" => 'Ir para as estatísticas do jogador',
+        'Filter by player' => 'Filtrar por jogador',
         'Apply filter' => 'Aplicar filtro',
         'against' => 'contra',
-        "File loading error!" => 'Error de carga del archivo',
-        "Check:" => 'Revisa:',
-        "file size (less than " => 'tamaño del archivo (menos de ',
-        "Incorrect URL format!" => 'Formato de URL incorrecto!',
-        "Must begin with " => 'Debe empezar por ',
-        'Error! Choose image file with the size not more than' => 'Error Elija un archivo de imagen cuyo tamaño no supere los',
-        'Avatar updated' => 'Avatar actualizado',
-        "Error saving new URL" => 'Error al guardar la nueva URL',
+        "File loading error!" => 'Erro de carregamento do ficheiro!',
+        "Check:" => 'Verificar:',
+        "file size (less than " => 'tamanho do ficheiro (inferior a ',
+        "Incorrect URL format!" => 'Formato de URL incorreto!',
+        "Must begin with " => 'Deve começar por ',
+        'Error! Choose image file with the size not more than' => 'Erro! Selecionar ficheiro de imagem com tamanho não superior a',
+        'Avatar updated' => 'Avatar atualizado',
+        "Error saving new URL" => 'Erro ao guardar o novo URL',
         'A player may open more than one cell and more than one KEY in one turn. Use the CASCADES rule'
-        => 'Un jugador puede abrir más de una casilla y más de una LLAVE en un turno. Utilizar la regla de las CASCADAS',
-        'If after the automatic opening of a number, new blocks of EIGHT open cells are formed on the field, such blocks are also opened by CASCADE'
-        => 'Si tras la apertura automática de un número se forman nuevos bloques de OCHO celdas abiertas en el campo, dichos bloques también se abren por CASCADA',
+        => 'Um jogador pode abrir mais do que uma célula e mais do que uma CHAVE numa jogada. Utilizar a regra dos CASCAIS',
+        'Se, após a abertura automática de um número, se formarem no campo novos blocos de OITO células abertas, esses blocos são também abertos por CASCATA'
+        => 'Se, após a abertura automática de um número, se formarem no campo novos blocos de OITO células abertas, esses blocos são também abertos por CASCATA',
         'If a player has opened a cell (solved a number in it) and there is only ONE closed digit left in the block, this digit is opened automatically'
-        => 'Si un jugador ha abierto una casilla (ha resuelto un número en ella) y sólo queda UN dígito cerrado en el bloque, este dígito se abre automáticamente',
-        'is awarded for solved empty cell' => 'premiado por celda vacía resuelta',
+        => 'Se um jogador tiver aberto uma célula (resolvido um número nela) e só restar UM dígito fechado no bloco, este dígito é aberto automaticamente',
+        'is awarded for solved empty cell' => 'é atribuído a uma célula vazia resolvida',
         'by calculating all of other 8 digits in a block - vertically OR horizontally OR in a 3x3 square'
-        => 'calculando todos los otros 8 dígitos de un bloque - vertical u horizontalmente o en un cuadrado de 3x3.',
+        => 'calculando todos os outros 8 dígitos num bloco - verticalmente OU horizontalmente OU num quadrado 3x3',
         "The players' task is to take turns making moves and accumulating points to open black squares"
-        => 'La tarea de los jugadores es hacer movimientos por turnos y acumular puntos para abrir casillas negras',
+        => 'A tarefa dos jogadores é fazer jogadas à vez e acumular pontos para abrir quadrados pretos,',
         'The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated'
-        => 'Se aplican las reglas clásicas del SUDOKU - en un bloque de nueve casillas (vertical, horizontal y en un cuadrado de 3x3) los números no deben repetirse',
+        => 'Aplicam-se as regras clássicas do SUDOKU - num bloco de nove células (verticalmente, horizontalmente e num quadrado 3x3), os números não podem ser repetidos',
         'faq_rules' => [
-            SudokuGame::GAME_NAME => <<<ES
-<h2 id="nav1">Sobre el juego</h2>
-Se aplican las reglas clásicas de SUDOKU - en un bloque de nueve casillas (vertical, horizontal y en un cuadrado de 3x3) los números no deben repetirse
+            SudokuGame::GAME_NAME => <<<PT
+<h2 id="nav1">Sobre o jogo</h2>
+The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated
 <br><br>
-La tarea de los jugadores es hacer movimientos por turnos y acumular puntos para abrir casillas negras (<span style="color:#0f0">+10 puntos</span>) calculando todos los otros 8 dígitos en un bloque - vertical u horizontal o en un cuadrado de 3x3.
+A tarefa dos jogadores é fazer jogadas à vez e acumular pontos para abrir quadrados pretos (<span style="color:#0f0">+10 pontos</span>) calculando todos os outros 8 dígitos num bloco - verticalmente OU horizontalmente OU num quadrado 3x3
 <br><br>
-Se concede un <span style="color:#0f0">+1 punto</span> por celda vacía resuelta
+É atribuído um <span style="color:#0f0">+1 ponto</span> por cada célula vazia resolvida
 <br><br>
-La victoria es para el jugador que consiga el 50% de todos los puntos posibles +1 punto
+A vitória vai para o jogador que marcar 50% de todos os pontos possíveis +1 ponto
 <br><br>
-Si un jugador ha abierto una casilla (ha resuelto un número en ella) y sólo queda UNA cifra cerrada en el bloque, esta cifra se abre automáticamente
+Se um jogador tiver aberto uma célula (resolvido um número nela) e restar apenas UM dígito fechado no bloco, este dígito é aberto automaticamente
 <br><br>
-Si tras la apertura automática de un número se forman en el campo nuevos bloques de OCHO casillas abiertas, dichos bloques también se abren por CASCADA
+Se, após a abertura automática de um número, se formarem novos blocos de OITO células abertas no campo, esses blocos também são abertos por CASCATA
 <br><br>
-Un jugador puede abrir más de una casilla y más de una LLAVE en un turno. Utilice la regla de las CASCADAS
+Um jogador pode abrir mais do que uma célula e mais do que uma CHAVE na mesma jogada. Utilizar a regra dos CASCAIS
 <br><br>
-En caso de un movimiento erróneo - el dígito en la casilla es incorrecto - un pequeño dígito rojo de error aparece en esta casilla, que es visible para ambos jugadores. Este dígito no puede volver a colocarse en esta casilla.
+Em caso de jogada errada - o algarismo da célula está errado - aparece um pequeno algarismo de erro vermelho nesta célula, que é visível para ambos os jogadores. Este algarismo não pode voltar a ser colocado nesta célula
 <br><br>
-Con el botón Comprobar, el jugador puede hacer una marca: poner un pequeño número verde en la celda. Puede ser una cifra calculada de la que el jugador esté seguro, o simplemente una suposición. Utilice las notas como en un SUDOKU normal: el otro jugador no puede verlas.
-ES
+Utilizando o botão Verificar, o jogador pode fazer uma marca - colocar um pequeno número verde na célula. Pode ser um valor calculado de que o jogador tem a certeza, ou apenas um palpite. Utiliza notas como num SUDOKU normal - o outro jogador não as pode ver
+PT
             ,
         ],
-        'faq_rating' => <<<ES
-Clasificación Elo
+        'faq_rating' => <<<PT
+Classificação Elo
 <br><br>
-Sistema de clasificación Elo, coeficiente Elo: método para calcular la fuerza relativa de los jugadores en las partidas, 
-en juegos en los que participan dos jugadores (por ejemplo, ajedrez, damas o shogi, go). 
+Sistema de classificação Elo, coeficiente Elo - um método de cálculo da força relativa dos jogadores em jogos, 
+em jogos que envolvem dois jogadores (por exemplo, xadrez, damas ou shogi, go).
 <br>
-Este sistema de clasificación fue desarrollado por el profesor de física estadounidense de origen húngaro Arpad Elo (húngaro: Élő Árpád; 1903-1992).
+Este sistema de classificação foi desenvolvido pelo professor de física americano de origem húngara Arpad Elo (húngaro: Élő Árpád; 1903-1992)
 <br><br>
-Cuanto mayor sea la diferencia de puntuación entre los jugadores, menos puntos para la puntuación obtendrá el jugador más fuerte al ganar.
+Quanto maior for a diferença de classificação entre os jogadores, menos pontos para a classificação o jogador mais forte obterá ao ganhar.
 <br> 
-Por el contrario, un jugador más débil obtendrá más puntos para la clasificación si derrota a un jugador más fuerte.
+Por outro lado, um jogador mais fraco obterá mais pontos para a classificação se derrotar um jogador mais forte.
 <br><br>
-Por lo tanto, para un jugador fuerte es más ventajoso jugar con iguales: si ganas, consigues más puntos, y si pierdes, no pierdes muchos puntos.
+Assim, é mais vantajoso para um jogador forte jogar com iguais - se ganhar, ganha mais pontos, e se perder, não perde muitos pontos.
 <br><br>
-Es seguro para un principiante luchar contra un maestro experimentado.
+É seguro para um principiante lutar contra um mestre experiente.
 <br>
-La pérdida de rango si pierdes será pequeña.
+A perda de classificação se perderes será pequena.
 <br>
-Pero, en caso de victoria, el maestro compartirá generosamente los puntos de rango...
-ES
+Mas, em caso de vitória, o mestre partilhará generosamente os pontos da classificação
+PT
         ,
         'faq_rewards' => [
-            SudokuGame::GAME_NAME => <<<ES
-Los jugadores son recompensados por determinados logros (récords).
+            SudokuGame::GAME_NAME => <<<PT
+Os jogadores são recompensados por determinados feitos (recordes).
 <br><br>
-Las recompensas del jugador se reflejan en la sección «STATS» en las siguientes nominaciones: oro/plata/bronce/piedra.
+Os prémios do jogador são reflectidos na secção “ESTATÍSTICAS” nas seguintes nomeações: ouro/prata/bronze/pedra.
 <br><br>
-Al recibir una carta de recompensa, el jugador recibe una bonificación de monedas SUDOKU {{sudoku_icon}}.
+Ao receber um cartão de recompensa, o jogador recebe um bónus de moedas SUDOKU {{sudoku_icon}}
 <br> 
-Las monedas se pueden usar en un modo de juego especial « CON Monedas», puedes reponer tu monedero del juego, 
-así como retirar monedas del juego - lee más en la pestaña «Modo Monedas»
+As moedas podem ser usadas num modo de jogo especial “Moedas ON”, podes reabastecer a tua carteira no jogo, 
+bem como retirar moedas do jogo - lê mais no separador "Modo de Jogo Moedas"
 <br><br>
-Mientras el récord de un jugador no haya sido batido por otro jugador, la tarjeta de recompensa se refleja para ese jugador en la pestaña «PREMIOS ACTIVOS» de la sección «ESTADÍSTICAS».
+Enquanto o recorde de um jogador não tiver sido batido por outro jogador, o cartão de recompensa é refletido para esse jogador no separador “PRÉMIOS ACTIVOS” da secção “ESTATÍSTICAS”.
 <br><br>
-Cada «Recompensa ACTIVA» cada hora genera «ganancias» adicionales en monedas.
+Cada “Recompensa ACTIVA” a cada hora gera um “lucro” adicional em moedas.
 <br><br>
-Si un récord ha sido batido por otro jugador, la tarjeta de premio del anterior propietario del récord se mueve a la pestaña «PREMIOS PASADOS» y deja de aportar ingresos pasivos. 
+Se um recorde for batido por outro jogador, o cartão de prémio do anterior detentor do recorde é movido para o separador “PRÉMIOS ANTERIORES” e deixa de gerar rendimentos passivos. 
 <br><br>
-El número total de monedas recibidas (bonificaciones únicas y ganancias adicionales) puede consultarse en la sección «PERFIL», en la pestaña “Monedero”, en los campos «Saldo SUDOKU» y «Bonificaciones acumuladas», respectivamente.
+O número total de moedas recebidas (bónus único e lucro adicional) pode ser consultado na secção “PERFIL”, no separador ‘Carteira’, nos campos “Saldo SUDOKU” e “Bónus acumulados”, respetivamente.
 <br><br>
-Cuando se supera el propio récord para los logros «PARTIDAS JUGADAS», el jugador no vuelve a recibir una nueva tarjeta de recompensa o monedas. 
-El valor del récord propio (número de partidas / número de amigos) se actualiza en la tarjeta de recompensa.
+Quando se ultrapassa o próprio recorde da conquista “FESTAS JOGADAS”, o jogador não volta a receber um novo cartão de recompensa ou moedas. 
+O próprio valor do recorde (número de jogos / número de amigos) é atualizado no cartão de recompensa.
 <br><br>
-Por ejemplo, si un jugador ha obtenido previamente el logro - «PARTIDAS JUGADAS»
-(oro) por 10.000 partidas, cuando el número de partidas de este jugador se cambie a 10.001, no se emitirán más tarjetas de recompensa para el poseedor del récord.
-ES
+Por exemplo, se um jogador já ganhou a conquista - “JOGOS JOGADOS”
+(ouro) por 10.000 jogos, então quando o número de jogos deste jogador for alterado para 10.001, não serão emitidos mais cartões de recompensa para o detentor do recorde.
+PT
             ,
         ],
         'Reward' => 'Recompensa',
