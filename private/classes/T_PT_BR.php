@@ -6,14 +6,14 @@ namespace classes;
 use PaymentModel;
 use UserModel;
 
-class T_PT
+class T_PT_BR
 {
     const PHRASES = [
-        'Invalid URL format! <br />It must begin with <strong>http(s)://</strong>' => 'Formato de URL inválido! <br>Deve começar por <strong>http(s)://</strong>',
+        'Invalid URL format! <br />It must begin with <strong>http(s)://</strong>' => 'Formato de URL inválido! <br>Ele deve começar com <strong>http(s):</strong>',
         '</strong> or <strong>' => '</strong> ou <strong>',
         'MB</strong>)</li><li>extension -<strong>' => 'MB</strong>)</li><li>extensão -<strong>',
         '<strong>File upload error!</strong><br /> Please review:<br /> <ul><li>file size (no more than <strong>'
-        => '<strong>Erro de carregamento do ficheiro!</strong><br /> Por favor, reveja:<br /> <ul><li> tamanho do ficheiro (não mais de <strong>',
+        => '<strong>Erro de upload de arquivo!</strong><br /> Favor revisar:<br /> <ul><li> tamanho do arquivo (não mais do que <strong>',
         'Error creating new payment' => 'Erro ao criar novo pagamento',
         'FAQ' => 'FAQ',
         'Agreement' => 'Acordo',
@@ -358,45 +358,45 @@ class T_PT
         'faq_rules' => [
             SudokuGame::GAME_NAME => <<<PT
 <h2 id="nav1">Sobre o jogo</h2>
-Aplicam-se as regras clássicas do SUDOKU - num bloco de nove células (verticalmente, horizontalmente e num quadrado 3x3), os números não podem ser repetidos
+As regras clássicas do SUDOKU se aplicam: em um bloco de nove células (vertical, horizontal e em um quadrado 3x3), os números não podem se repetir
 <br><br>
-A tarefa dos jogadores é fazer jogadas à vez e acumular pontos para abrir quadrados pretos (<span style="color:#0f0">+10 pontos</span>) calculando todos os outros 8 dígitos num bloco - verticalmente OU horizontalmente OU num quadrado 3x3
+A tarefa dos jogadores é se revezar para fazer jogadas e acumular pontos para abrir quadrados pretos (<span style="color:#0f0">+10 pontos</span>) calculando todos os outros 8 dígitos em um bloco - vertical OU horizontalmente OU em um quadrado 3x3
 <br><br>
-É atribuído um <span style="color:#0f0">+1 ponto</span> por cada célula vazia resolvida
+Um <span style="color:#0f0">+1 ponto</span> é concedido por célula vazia resolvida
 <br><br>
 A vitória vai para o jogador que marcar 50% de todos os pontos possíveis +1 ponto
 <br><br>
-Se um jogador tiver aberto uma célula (resolvido um número nela) e restar apenas UM dígito fechado no bloco, este dígito é aberto automaticamente
+Se um jogador tiver aberto uma célula (resolvido um número nela) e restar apenas UM dígito fechado no bloco, esse dígito é aberto automaticamente
 <br><br>
-Se, após a abertura automática de um número, se formarem novos blocos de OITO células abertas no campo, esses blocos também são abertos por CASCATA
+Se, após a abertura automática de um número, novos blocos de OITO células abertas forem formados no campo, esses blocos também serão abertos por CASCATA
 <br><br>
-Um jogador pode abrir mais do que uma célula e mais do que uma CHAVE na mesma jogada. Utilizar a regra dos CASCAIS
+Um jogador pode abrir mais de uma célula e mais de uma CHAVE em um turno. Use a regra CASCADES
 <br><br>
-Em caso de jogada errada - o algarismo da célula está errado - aparece um pequeno algarismo de erro vermelho nesta célula, que é visível para ambos os jogadores. Este algarismo não pode voltar a ser colocado nesta célula
+No caso de uma jogada errônea - o dígito na célula está errado -, um pequeno dígito de erro vermelho aparece nessa célula, visível para ambos os jogadores. Esse dígito não pode ser colocado nessa célula novamente
 <br><br>
-Utilizando o botão Verificar, o jogador pode fazer uma marca - colocar um pequeno número verde na célula. Pode ser um valor calculado de que o jogador tem a certeza, ou apenas um palpite. Utiliza notas como num SUDOKU normal - o outro jogador não as pode ver
+Usando o botão Check (Verificar), o jogador pode fazer uma marca - colocar um pequeno número verde na célula. Esse pode ser um número calculado do qual o jogador tem certeza ou apenas um palpite. Use as anotações como em um SUDOKU normal - o outro jogador não pode vê-las
 PT
             ,
         ],
         'faq_rating' => <<<PT
 Classificação Elo
 <br><br>
-Sistema de classificação Elo, coeficiente Elo - um método de cálculo da força relativa dos jogadores em jogos, 
-em jogos que envolvem dois jogadores (por exemplo, xadrez, damas ou shogi, go).
+Sistema de classificação Elo, coeficiente Elo - um método de calcular a força relativa dos jogadores em jogos, 
+em jogos que envolvem dois jogadores (por exemplo, xadrez, damas ou shogi, go). 
 <br>
-Este sistema de classificação foi desenvolvido pelo professor de física americano de origem húngara Arpad Elo (húngaro: Élő Árpád; 1903-1992)
+Esse sistema de classificação foi desenvolvido pelo professor de física americano de origem húngara Arpad Elo (húngaro: Élő Árpád; 1903-1992)
 <br><br>
-Quanto maior for a diferença de classificação entre os jogadores, menos pontos para a classificação o jogador mais forte obterá ao ganhar.
+Quanto maior for a diferença de classificação entre os jogadores, menos pontos para a classificação o jogador mais forte receberá ao vencer.
 <br> 
 Por outro lado, um jogador mais fraco obterá mais pontos para a classificação se derrotar um jogador mais forte.
 <br><br>
-Assim, é mais vantajoso para um jogador forte jogar com iguais - se ganhar, ganha mais pontos, e se perder, não perde muitos pontos.
+Assim, é mais vantajoso para um jogador forte jogar com iguais - se vencer, você ganha mais pontos e, se perder, não perde muitos pontos.
 <br><br>
-É seguro para um principiante lutar contra um mestre experiente.
+É seguro para um iniciante lutar contra um mestre experiente.
 <br>
-A perda de classificação se perderes será pequena.
+A perda de classificação se você perder será pequena.
 <br>
-Mas, em caso de vitória, o mestre partilhará generosamente os pontos da classificação
+Mas, em caso de vitória, o mestre compartilhará generosamente os pontos de classificação
 PT
         ,
         'faq_rewards' => [
@@ -523,11 +523,11 @@ PT
         '[[Player]] opened [[number]] [[cell]]' => '[[Player]] abriu [[number]] [[cell]]',
         ' (including [[number]] [[key]])' => ' (incluindo [[number]] [[key]])',
         '[[Player]] made a mistake' => '[[Player]] cometeu um erro',
-        'You made a mistake!' => 'Cometeste um erro!',
-        'Your opponent made a mistake' => 'O seu adversário cometeu um erro',
-        '[[Player]] gets [[number]] [[point]]' => '[[Player]] recebe [[number]] [[point]].',
+        'You made a mistake!' => 'Você cometeu um erro!',
+        'Your opponent made a mistake' => 'Seu oponente cometeu um erro',
+        '[[Player]] gets [[number]] [[point]]' => '[[Player]] obtém [[number]] [[point]].',
         '[[number]] [[point]]' => '[[number]] [[point]]',
         'You got [[number]] [[point]]' => 'Tem [[number]] [[point]].',
-        'Your opponent got [[number]] [[point]]' => 'O seu adversário obteve [[number]] [[point]].',
+        'Your opponent got [[number]] [[point]]' => 'Seu oponente obteve [[number]] [[point]].',
     ];
 }
