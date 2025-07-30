@@ -17,6 +17,7 @@ class T
     const ES_LANG = 'ES';
     const PT_LANG = 'PT';
     const PT_BR_LANG = 'PT_BR';
+    const ZH_CN_LANG = 'ZH_CN';
 
     const SUPPORTED_LANGS = [
         self::EN_LANG,
@@ -28,6 +29,7 @@ class T
         self::ES_LANG,
         self::PT_LANG,
         self::PT_BR_LANG,
+        self::ZH_CN_LANG,
     ];
 
     const PLURAL_PATTERN = '[[';
@@ -1338,6 +1340,7 @@ class T
             self::ES_LANG => [1 => 'Jugador1', 2 => 'Jugador2', 3 => 'Jugador3', 4 => 'Jugador4'],
             self::PT_LANG => [1 => 'Jogador1', 2 => 'Jogador2', 3 => 'Jogador3', 4 => 'Jogador4'],
             self::PT_BR_LANG => [1 => 'Jogador1', 2 => 'Jogador2', 3 => 'Jogador3', 4 => 'Jogador4'],
+            self::ZH_CN_LANG => [1 => '玩家1', 2 => '玩家2', 3 => '玩家3', 4 => '玩家4'],
         ],
     ];
 
