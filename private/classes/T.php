@@ -18,6 +18,7 @@ class T
     const PT_LANG = 'PT';
     const PT_BR_LANG = 'PT_BR';
     const ZH_CN_LANG = 'ZH_CN';
+    const ZH_TW_LANG = 'ZH_TW';
 
     const SUPPORTED_LANGS = [
         self::EN_LANG,
@@ -30,11 +31,10 @@ class T
         self::PT_LANG,
         self::PT_BR_LANG,
         self::ZH_CN_LANG,
+        self::ZH_TW_LANG,
     ];
 
     const PLURAL_PATTERN = '[[';
-
-
 
     public static string $lang = self::EN_LANG;
 
@@ -1344,6 +1344,7 @@ class T
             self::PT_LANG => [1 => 'Jogador1', 2 => 'Jogador2', 3 => 'Jogador3', 4 => 'Jogador4'],
             self::PT_BR_LANG => [1 => 'Jogador1', 2 => 'Jogador2', 3 => 'Jogador3', 4 => 'Jogador4'],
             self::ZH_CN_LANG => [1 => '玩家1', 2 => '玩家2', 3 => '玩家3', 4 => '玩家4'],
+            self::ZH_TW_LANG => [1 => '玩家1', 2 => '玩家2', 3 => '玩家3', 4 => '玩家4'],
         ],
     ];
 
