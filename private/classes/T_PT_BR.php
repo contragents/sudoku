@@ -314,19 +314,19 @@ class T_PT_BR
         "GAME points - Day Record!" => 'Pontos do jogo - Recorde do Dia!',
         "TURN points - Year Record!" => 'Pontos de rotação - Recorde do Ano!',
         "TURN points - Month Record!" => 'Pontos de rotação - Recorde do Mês!',
-        "TURN points - Week Record!" => 'Pontos de rotação - ecorde da Semana!',
+        "TURN points - Week Record!" => 'Pontos de rotação - Recorde da Semana!',
         "TURN points - Day Record!" => 'Pontos de rotação - Recorde do Dia!',
         "WORD points - Year Record!" => 'Pontos de PALAVRAS - Recorde do Ano!',
         "WORD points - Month Record!" => 'Pontos de PALAVRAS - Recorde do Mês!',
-        "WORD points - Week Record!" => 'Pontos de PALAVRAS - ecorde da Semana!',
+        "WORD points - Week Record!" => 'Pontos de PALAVRAS - Recorde da Semana!',
         "WORD points - Day Record!" => 'Pontos de PALAVRAS - Recorde do Dia!',
         "Longest WORD - Year Record!" => 'A PALAVRA mais longa - Recorde do Ano!',
         "Longest WORD - Month Record!" => 'A PALAVRA mais longa - Recorde do Mês!',
-        "Longest WORD - Week Record!" => 'A PALAVRA mais longa - ecorde da Semana!',
+        "Longest WORD - Week Record!" => 'A PALAVRA mais longa - Recorde da Semana!',
         "Longest WORD - Day Record!" => 'A PALAVRA mais longa - Recorde do Dia!',
         "GAMES played - Year Record!" => 'JOGOS jogados - Recorde do Ano!',
         "GAMES played - Month Record!" => 'JOGOS jogados - Recorde do Mês!',
-        "GAMES played - Week Record!" => 'JOGOS jogados - ecorde da Semana!',
+        "GAMES played - Week Record!" => 'JOGOS jogados - Recorde da Semana!',
         "GAMES played - Day Record!" => 'JOGOS jogados - Recorde do Dia!',
         "Victory" => 'Vitória',
         'Losing' => 'Perder',
@@ -344,7 +344,7 @@ class T_PT_BR
         "Error saving new URL" => 'Erro ao guardar o novo URL',
         'A player may open more than one cell and more than one KEY in one turn. Use the CASCADES rule'
         => 'Um jogador pode abrir mais do que uma célula e mais do que uma CHAVE numa jogada. Utilizar a regra dos CASCAIS',
-        'Se, após a abertura automática de um número, se formarem no campo novos blocos de OITO células abertas, esses blocos são também abertos por CASCATA'
+        'If after the automatic opening of a number, new blocks of EIGHT open cells are formed on the field, such blocks are also opened by CASCADE'
         => 'Se, após a abertura automática de um número, se formarem no campo novos blocos de OITO células abertas, esses blocos são também abertos por CASCATA',
         'If a player has opened a cell (solved a number in it) and there is only ONE closed digit left in the block, this digit is opened automatically'
         => 'Se um jogador tiver aberto uma célula (resolvido um número nela) e só restar UM dígito fechado no bloco, este dígito é aberto automaticamente',

@@ -298,236 +298,254 @@ class T_ZH_CN
         'Period' => '期间',
         'Word' => '字词',
         'Points/letters' => '分数/字母',
-        'Result' => 'Resultado',
-        'Opponents' => 'Opositores',
-        'Games<br>total' => 'Jogos<br>total',
-        'Wins<br>total' => 'Vitórias<br>total',
-        'Gain/loss<br>in ranking' => 'Ganho/perda<br>na posição',
-        '% Wins' => '% de Vitórias',
-        'Games in total' => 'Jogos no total',
-        'Winnings count' => 'Os ganhos contam',
-        'Increase/loss in rating' => 'Aumento/perda da notação',
-        '% of wins' => '% de vitórias',
-        "GAME points - Year Record!" => 'Pontos do jogo - Recorde do Ano!',
-        "GAME points - Month Record!" => 'Pontos de jogo - Recorde do Mês!',
-        "GAME points - Week Record!" => 'Pontos do jogo - Recorde da Semana!',
-        "GAME points - Day Record!" => 'Pontos do jogo - Recorde do Dia!',
-        "TURN points - Year Record!" => 'Pontos de rotação - Recorde do Ano!',
-        "TURN points - Month Record!" => 'Pontos de rotação - Recorde do Mês!',
-        "TURN points - Week Record!" => 'Pontos de rotação - ecorde da Semana!',
-        "TURN points - Day Record!" => 'Pontos de rotação - Recorde do Dia!',
-        "WORD points - Year Record!" => 'Pontos de PALAVRAS - Recorde do Ano!',
-        "WORD points - Month Record!" => 'Pontos de PALAVRAS - Recorde do Mês!',
-        "WORD points - Week Record!" => 'Pontos de PALAVRAS - ecorde da Semana!',
-        "WORD points - Day Record!" => 'Pontos de PALAVRAS - Recorde do Dia!',
-        "Longest WORD - Year Record!" => 'A PALAVRA mais longa - Recorde do Ano!',
-        "Longest WORD - Month Record!" => 'A PALAVRA mais longa - Recorde do Mês!',
-        "Longest WORD - Week Record!" => 'A PALAVRA mais longa - ecorde da Semana!',
-        "Longest WORD - Day Record!" => 'A PALAVRA mais longa - Recorde do Dia!',
-        "GAMES played - Year Record!" => 'JOGOS jogados - Recorde do Ano!',
-        "GAMES played - Month Record!" => 'JOGOS jogados - Recorde do Mês!',
-        "GAMES played - Week Record!" => 'JOGOS jogados - ecorde da Semana!',
-        "GAMES played - Day Record!" => 'JOGOS jogados - Recorde do Dia!',
-        "Victory" => 'Vitória',
-        'Losing' => 'Perder',
-        "Go to player's stats" => 'Ir para as estatísticas do jogador',
-        'Filter by player' => 'Filtrar por jogador',
-        'Apply filter' => 'Aplicar filtro',
-        'against' => 'contra',
-        "File loading error!" => 'Erro de carregamento do ficheiro!',
-        "Check:" => 'Verificar:',
-        "file size (less than " => 'tamanho do ficheiro (inferior a ',
-        "Incorrect URL format!" => 'Formato de URL incorreto!',
-        "Must begin with " => 'Deve começar por ',
-        'Error! Choose image file with the size not more than' => 'Erro! Selecionar ficheiro de imagem com tamanho não superior a',
-        'Avatar updated' => 'Avatar atualizado',
-        "Error saving new URL" => 'Erro ao guardar o novo URL',
+        'Result' => '结果',
+        'Opponents' => '反对者',
+        'Games<br>total' => '游戏/总计',
+        'Wins<br>total' => '胜场/总胜场',
+        'Gain/loss<br>in ranking' => '排名上升/下降',
+        '% Wins' => '胜率百分比',
+        'Games in total' => '游戏总数',
+        'Winnings count' => '赢钱计数',
+        'Increase/loss in rating' => '排名上升/下降',
+        '% of wins' => '胜率百分比',
+        "GAME points - Year Record!" => '游戏积分 - 年记录！',
+        "GAME points - Month Record!" => '游戏积分 - 月份记录！',
+        "GAME points - Week Record!" => '游戏积分 - 周记录！',
+        "GAME points - Day Record!" => '游戏积分 - 日记录！',
+        "TURN points - Year Record!" => '比赛回合积分 - 年记录！',
+        "TURN points - Month Record!" => '比赛回合积分 - 月份记录！',
+        "TURN points - Week Record!" => '比赛回合积分 - 周记录！',
+        "TURN points - Day Record!" => '比赛回合积分 - 日记录！',
+        "WORD points - Year Record!" => '字点 - 年记录！',
+        "WORD points - Month Record!" => '字点 - 月份记录！',
+        "WORD points - Week Record!" => '字点 - 周记录！',
+        "WORD points - Day Record!" => '字点 - 日记录！',
+        "Longest WORD - Year Record!" => '最长单词 - 周记录！',
+        "Longest WORD - Month Record!" => '最长单词 - 月份记录！',
+        "Longest WORD - Week Record!" => '最长单词 - 周记录！',
+        "Longest WORD - Day Record!" => '最长单词 - 日记录！',
+        "GAMES played - Year Record!" => '游戏次数 - 年记录！',
+        "GAMES played - Month Record!" => '游戏次数 - 月份记录！',
+        "GAMES played - Week Record!" => '游戏次数 - 周记录！',
+        "GAMES played - Day Record!" => '游戏次数 - 日记录！',
+        "Victory" => '胜利',
+        'Losing' => '损失',
+        "Go to player's stats" => '查看球员数据',
+        'Filter by player' => '按玩家筛选',
+        'Apply filter' => '应用过滤器',
+        'against' => '反对',
+        "File loading error!" => '文件加载错误！',
+        "Check:" => '检查：',
+        "file size (less than " => '文件大小（小于 ',
+        "Incorrect URL format!" => 'URL 格式不正确！',
+        "Must begin with " => '必须从 ',
+        'Error! Choose image file with the size not more than' => '错误！选择大小不超过',
+        'Avatar updated' => '头像已更新',
+        "Error saving new URL" => '保存新 URL 时出错',
         'A player may open more than one cell and more than one KEY in one turn. Use the CASCADES rule'
-        => 'Um jogador pode abrir mais do que uma célula e mais do que uma CHAVE numa jogada. Utilizar a regra dos CASCAIS',
-        'Se, após a abertura automática de um número, se formarem no campo novos blocos de OITO células abertas, esses blocos são também abertos por CASCATA'
-        => 'Se, após a abertura automática de um número, se formarem no campo novos blocos de OITO células abertas, esses blocos são também abertos por CASCATA',
+        => '玩家可在一个回合内打开多个格子和多个钥匙。使用<strong>级联</strong>规则',
+        'If after the automatic opening of a number, new blocks of EIGHT open cells are formed on the field, such blocks are also opened by CASCADE'
+        => '如果在自动打开一个号码后，场上形成了新的八开小格组块，这些组块也将通过<strong>级联</strong>打开',
         'If a player has opened a cell (solved a number in it) and there is only ONE closed digit left in the block, this digit is opened automatically'
-        => 'Se um jogador tiver aberto uma célula (resolvido um número nela) e só restar UM dígito fechado no bloco, este dígito é aberto automaticamente',
-        'is awarded for solved empty cell' => 'é atribuído a uma célula vazia resolvida',
+        => '如果玩家打开了一个单元格（在其中解出了一个数字），而区块中只剩下<strong>一个</strong>封闭数字，则该数字将自动打开',
+        'is awarded for solved empty cell' => '因解决了空格而获奖',
         'by calculating all of other 8 digits in a block - vertically OR horizontally OR in a 3x3 square'
-        => 'calculando todos os outros 8 dígitos num bloco - verticalmente OU horizontalmente OU num quadrado 3x3',
+        => '计算一个数块中的所有其他 8 个数字 - 纵向或横向或 3x3 正方形中的所有数字',
         "The players' task is to take turns making moves and accumulating points to open black squares"
-        => 'A tarefa dos jogadores é fazer jogadas à vez e acumular pontos para abrir quadrados pretos,',
+        => '玩家的任务是轮流走棋，积累点数，打开黑色方格',
         'The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated'
-        => 'Aplicam-se as regras clássicas do SUDOKU - num bloco de nove células (verticalmente, horizontalmente e num quadrado 3x3), os números não podem ser repetidos',
+        => '<strong>适用经典数独规则</strong> - 在九个单元格（纵向、横向和 3x3 正方形）中，数字不得重复',
         'faq_rules' => [
-            SudokuGame::GAME_NAME => <<<PT
-<h2 id="nav1">Sobre o jogo</h2>
-Aplicam-se as regras clássicas do SUDOKU - num bloco de nove células (verticalmente, horizontalmente e num quadrado 3x3), os números não podem ser repetidos
+            SudokuGame::GAME_NAME => <<<ZHCN
+<h2 id="nav1">关于游戏</h2>
+
+经典数独规则适用 - 在九个单元格（垂直、水平和 3x3 正方形）中，数字不得重复
 <br><br>
-A tarefa dos jogadores é fazer jogadas à vez e acumular pontos para abrir quadrados pretos (<span style="color:#0f0">+10 pontos</span>) calculando todos os outros 8 dígitos num bloco - verticalmente OU horizontalmente OU num quadrado 3x3
+玩家的任务是轮流走棋，通过计算一个方格中所有其他 8 位数字--纵向或横向或 3x3 方格中的所有其他 8 位数字--累积分数，打开黑色方格（<span style="color:#0f0">+10 分</span>）。
 <br><br>
-É atribuído um <span style="color:#0f0">+1 ponto</span> por cada célula vazia resolvida
+解决空格可得 <span style="color:#0f0">+1 分</span>
 <br><br>
-A vitória vai para o jogador que marcar 50% de todos os pontos possíveis +1 ponto
+获得所有可能得分的 50%的玩家获胜 +1 分
 <br><br>
-Se um jogador tiver aberto uma célula (resolvido um número nela) e restar apenas UM dígito fechado no bloco, este dígito é aberto automaticamente
+如果玩家打开了一个单元格（在其中解出了一个数字），而该区块中只剩下一个封闭的数字，则该数字会自动打开
 <br><br>
-Se, após a abertura automática de um número, se formarem novos blocos de OITO células abertas no campo, esses blocos também são abertos por CASCATA
+如果在自动打开一个数字后，场上又形成了新的 8 个开放单元格的区块，则这些区块也会通过 <strong>级联</strong>打开
 <br><br>
-Um jogador pode abrir mais do que uma célula e mais do que uma CHAVE na mesma jogada. Utilizar a regra dos CASCAIS
+玩家可以在一个回合中打开多个单元格和多个 <strong>钥匙</strong>。使用 <strong>级联</strong>规则
 <br><br>
-Em caso de jogada errada - o algarismo da célula está errado - aparece um pequeno algarismo de erro vermelho nesta célula, que é visível para ambos os jogadores. Este algarismo não pode voltar a ser colocado nesta célula
+如果走错一步棋--单元格中的数字是错误的--这个单元格上会出现一个红色的小错误数字，双方都能看到。这个数字不能再出现在这个单元格中
 <br><br>
-Utilizando o botão Verificar, o jogador pode fazer uma marca - colocar um pequeno número verde na célula. Pode ser um valor calculado de que o jogador tem a certeza, ou apenas um palpite. Utiliza notas como num SUDOKU normal - o outro jogador não as pode ver
-PT
+玩家可以使用 “校验 ”按钮做标记--在单元格中填入一个绿色的小数字。这个数字可以是玩家确定的计算结果，也可以只是猜测。使用注释就像使用普通的 <strong>数独</strong>一样 - 其他玩家看不到它们
+ZHCN
             ,
         ],
-        'faq_rating' => <<<PT
-Classificação Elo
+        'faq_rating' => <<<ZHCN
+埃洛等级分
 <br><br>
-Sistema de classificação Elo, coeficiente Elo - um método de cálculo da força relativa dos jogadores em jogos, 
-em jogos que envolvem dois jogadores (por exemplo, xadrez, damas ou shogi, go).
+埃洛等级分制度，埃洛系数--一种计算棋手在比赛中相对实力的方法，
+，在涉及两名棋手的比赛中（如国际象棋、国际跳棋或将棋、围棋）。
 <br>
-Este sistema de classificação foi desenvolvido pelo professor de física americano de origem húngara Arpad Elo (húngaro: Élő Árpád; 1903-1992)
+这个等级分系统是由出生于匈牙利的美国物理学教授阿帕德-埃洛（匈牙利语：Élő Árpád；1903-1992）
 <br><br>
-Quanto maior for a diferença de classificação entre os jogadores, menos pontos para a classificação o jogador mais forte obterá ao ganhar.
-<br> 
-Por outro lado, um jogador mais fraco obterá mais pontos para a classificação se derrotar um jogador mais forte.
-<br><br>
-Assim, é mais vantajoso para um jogador forte jogar com iguais - se ganhar, ganha mais pontos, e se perder, não perde muitos pontos.
-<br><br>
-É seguro para um principiante lutar contra um mestre experiente.
+棋手之间的等级分差距越大，实力较强的棋手获胜时获得的等级分就越少。
 <br>
-A perda de classificação se perderes será pequena.
+相反，实力较弱的棋手如果击败实力较强的棋手，则会获得更多的等级分。
+<br><br>
+因此，与实力相当的棋手对弈更有利--如果你赢了，你会得到更多分数，如果你输了，你也不会失去很多分数。
+<br><br>
+新手与经验丰富的高手对战是安全的。
 <br>
-Mas, em caso de vitória, o mestre partilhará generosamente os pontos da classificação
-PT
+如果你输了，排名的损失会很小。
+<br>
+但是，如果赢了，大师会慷慨地分享等级分。
+ZHCN
         ,
         'faq_rewards' => [
-            SudokuGame::GAME_NAME => <<<PT
-Os jogadores são recompensados por determinados feitos (recordes).
+            SudokuGame::GAME_NAME => <<<ZHCN
+球员的某些成就（记录）会得到奖励。
 <br><br>
-Os prémios do jogador são reflectidos na secção “ESTATÍSTICAS” nas seguintes nomeações: ouro/prata/bronze/pedra.
+玩家获得的奖励会在 “STATS（统计）”部分以下列提名方式体现：金/银/铜/石。
 <br><br>
-Ao receber um cartão de recompensa, o jogador recebe um bónus de moedas SUDOKU {{sudoku_icon}}
-<br> 
-As moedas podem ser usadas num modo de jogo especial “Moedas ON”, podes reabastecer a tua carteira no jogo, 
-bem como retirar moedas do jogo - lê mais no separador "Modo de Jogo Moedas"
+收到奖励卡时，玩家将获得 SUDOKU 硬币奖励 {{sudoku_icon}} 。
+<br>
+硬币可以在特殊游戏模式 “ON 硬币 ”中使用，您可以补充游戏中的钱包，
+，也可以从游戏中提取硬币--更多信息请参阅 “硬币游戏模式 ”选项卡
 <br><br>
-Enquanto o recorde de um jogador não tiver sido batido por outro jogador, o cartão de recompensa é refletido para esse jogador no separador “PRÉMIOS ACTIVOS” da secção “ESTATÍSTICAS”.
+只要一个玩家的记录没有被其他玩家打破，奖励卡就会在 “统计 ”部分的 “活动奖励 ”选项卡中反映出该玩家的记录。
 <br><br>
-Cada “Recompensa ACTIVA” a cada hora gera um “lucro” adicional em moedas.
+每个 “活动奖励 ”每小时都会产生额外的金币 “利润”。
 <br><br>
-Se um recorde for batido por outro jogador, o cartão de prémio do anterior detentor do recorde é movido para o separador “PRÉMIOS ANTERIORES” e deixa de gerar rendimentos passivos. 
+如果某项记录已被其他玩家打破，则该记录前所有者的奖励卡将被移至 “PAST AWARDS（过去的奖励）”选项卡，并停止带来被动收入。
+<br>
+获得的金币总数（一次性奖励和额外利润）可分别在 “个人资料 ”部分的 “钱包 ”选项卡中的 “SUDOKU 硬币余额 ”和 “累积奖励 ”字段中查看。
 <br><br>
-O número total de moedas recebidas (bónus único e lucro adicional) pode ser consultado na secção “PERFIL”, no separador ‘Carteira’, nos campos “Saldo SUDOKU” e “Bónus acumulados”, respetivamente.
+当超过自己的 “已玩游戏 ”成就记录时，玩家不会再获得新的奖励卡或金币。
+记录值本身（游戏次数/好友人数）会在奖励卡上更新。
 <br><br>
-Quando se ultrapassa o próprio recorde da conquista “FESTAS JOGADAS”, o jogador não volta a receber um novo cartão de recompensa ou moedas. 
-O próprio valor do recorde (número de jogos / número de amigos) é atualizado no cartão de recompensa.
-<br><br>
-Por exemplo, se um jogador já ganhou a conquista - “JOGOS JOGADOS”
-(ouro) por 10.000 jogos, então quando o número de jogos deste jogador for alterado para 10.001, não serão emitidos mais cartões de recompensa para o detentor do recorde.
-PT
+例如，如果一名玩家之前因 10,000 场游戏而获得了成就--“玩过的派对”
+ （金币），那么当该玩家的游戏场数变为 10,001 场时，将不会再向记录保持者发放奖励卡。
+ZHCN
             ,
         ],
         'Reward' => 'Recompensa',
         'faq_coins' => [
-            SudokuGame::GAME_NAME => <<<PT
-Moeda <strong>SUDOKU</strong> {{sudoku_icon}} é uma moeda do jogo{{yandex_exclude}}{{para uma rede de jogos - <strong>Scrabble, Sudoku</strong>
+            SudokuGame::GAME_NAME => <<<ZHCN
+硬币 <strong>SUDOKU</strong>{{sudoku_icon}}是一种游戏内货币{{yandex_exclude}}{{用于网络游戏 - <strong>拼字游戏、数独</strong>
 <br><br>
-Uma conta para todos os jogos, uma moeda, uma carteira}}
+一个账户对应所有游戏，一种货币，一个钱包}}。
 <br><br>
-{{yandex_exclude}}{{No mundo das criptomoedas, a moeda também se chama SUDOKU. Em breve será possível retirar qualquer número de moedas SUDOKU da tua carteira do jogo para uma carteira externa na rede TON (Telegram)
+{{yandex_exclude}}{{在加密世界中，该币也被称为 SUDOKU。不久之后，您就可以将任意数量的 SUDOKU 硬币从游戏内钱包提取到 TON（Telegram）网络的外部钱包
 <br><br>}}
-Entretanto, tentamos ganhar o máximo de moedas possível no jogo selecionando o modo "Moedas
+在此期间，我们可以通过选择 “硬币 ”模式在游戏中赢得尽可能多的硬币
 <br><br>
-
-Este modo também tem em conta e acumula as classificações dos jogadores.
+该模式也会考虑并累积玩家排名。
 <br>
-No entanto, as moedas ganhas pelos resultados do jogo são agora creditadas na tua carteira (ou deduzidas se perderes)
+不过，游戏结果赢得的金币现在会存入您的钱包（如果您输了，则会被扣除）
 <br><br>
-Dependendo do saldo atual de moedas na sua carteira, é-lhe proposto jogar por 1, 5, 10, etc. moedas - escolha o montante desejado na lista
+根据您钱包中的当前金币余额，您可以选择 1、5、10 等不同金额的游戏。硬币 - 从列表中选择所需的金额
 <br><br>
-Depois de premir o botão “Iniciar”, começará a procura de um adversário que também esteja pronto para apostar o montante especificado
-<br><br> 
-Por exemplo, especificou o tamanho da sua aposta como 5 moedas e, entre os que iniciam um novo jogo, só há quem esteja disposto a apostar 1 moeda.
+按 “开始 ”按钮后，将开始搜索同样准备投注指定金额的对手
+<br><br>
+例如，您指定的投注额为 5 个硬币，而在开始新游戏的玩家中，只有人愿意投注 1 个硬币。
 <br>
-Então a aposta para si e para esse jogador será de 1 moeda - a menor das duas opções.
+那么您和这样的玩家的赌注都将是 1 个金币--两个选项中较小的一个。
+因此，玩三人和四人游戏在节省金币方面风险较小
 <br><br>
-No caso de haver alguém disposto a lutar por 10 moedas, a sua aposta - 5 será selecionada e o jogo começará com uma banca de 10 moedas - 5+5
+如果所有输的玩家积分相同，那么赢的玩家会拿走所有赌注
 <br><br>
-Num jogo a duas pessoas, o vencedor recebe o pote inteiro - a sua aposta e a aposta do adversário
+在四人游戏中，如果第二和第三名玩家积分相同，他们会拿回赌注，保留他们的赌注
 <br><br>
-Num jogo a três, o vencedor recebe a sua aposta e a aposta do último jogador (o jogador com menos pontos). 
-O jogador do meio (o segundo classificado) recebe a sua aposta de volta, ficando com as suas moedas
+在所有情况下，新排名的计算方法与往常一样 - 参见 “排名 ”选项卡
 <br><br>
-Num jogo a quatro jogadores, o pote é dividido entre os jogadores em 1º e 4º lugar (o primeiro jogador fica com as duas apostas), 
-e os jogadores em 2º e 3º lugares (o segundo fica com as duas apostas).
+该模式也会考虑并累积玩家排名。
+<br>
+不过，游戏结果赢得的金币现在会存入您的钱包（如果您输了，则会被扣除）
 <br><br>
-Assim, jogar três e quatro torna-se menos arriscado em termos de poupança de moedas
+根据您钱包中的当前金币余额，您可以选择 1、5、10 等不同金额的游戏。硬币 - 从列表中选择所需的金额
 <br><br>
-Se todos os jogadores perdedores tiverem o mesmo número de pontos, então o jogador vencedor recebe todas as apostas
+按 “开始 ”按钮后，将开始搜索同样准备投注指定金额的对手
 <br><br>
-Num jogo a quatro, se o 2º e o 3º jogadores marcarem um número igual de pontos, recebem a sua aposta de volta, mantendo as suas apostas
+例如，您指定的投注额为 5 个硬币，而在开始新游戏的玩家中，只有人愿意投注 1 个硬币。
+<br>
+那么您和这样的玩家的赌注都将是 1 个金币--两个选项中较小的一个。
 <br><br>
-A Nova Classificação em todos os casos é calculada como habitualmente - ver o separador “Classificação”
+如果有人愿意为 10 个金币而战，您的赌注 - 5 将被选中，游戏将以 10 个金币的银行 - 5+5 开始
 <br><br>
-<h2>Como pode reabastecer a sua carteira</h2>
+在二人游戏中，获胜者获得整个彩池 - 他的赌注和对手的赌注
+<br><br>
+在三人游戏中，获胜者获得他的赌注和最后一名玩家（积分最少的玩家）的赌注。
+中间的玩家（亚军）拿回他的赌注，保留他的硬币
+<br><br>
+在四人游戏中，彩池由第一名和第四名的玩家（第一名玩家拿回两个赌注）、
+、第二名和第三名的玩家（第二名玩家拿回两个赌注）平分。
+<br><br>
+因此，从节省金币的角度来看，玩三人和四人游戏的风险更小。
+<br><br>
+如果所有输钱的玩家积分相同，那么赢钱的玩家将收回所有赌注
+<br><br>
+在四人游戏中，如果第二和第三名玩家积分相同，那么他们将收回赌注，并保留他们的赌注
+<br><br>
+在所有情况下，新排名的计算方法与往常一样 - 请参见 “排名 ”选项卡
+<br><br>
+<h2>如何补充您的钱包</h2>
 <ol>
 <li>
-Todos os novos jogadores recebem moedas de boas-vindas {{stone_reward}} {{yandex_exclude}}{{SUDOKU}} moedas no seu saldo e pode envolver-se imediatamente na corrida para grandes prémios
+每个新玩家都会收到欢迎{{stone_reward}}。{{yandex_exclude}}{{SUDOKU}}币到他的余额中，并可以立即参与到大赢家的角逐中
 </li>
 <li>
-Receberás moedas {{stone_reward}} por cada amigo que entrar no jogo usando o teu link de referência. 
-Além disso, ao estabeleceres um recorde (para o dia, semana, mês, ano) no número de convidados, serás recompensado. Para convidar um utilizador, é necessário iniciar sessão no jogo através do Telegram.
+每一位使用您的推荐链接进入游戏的朋友都会收到{{stone_reward}}币。
+此外，如果您创下（当日、当周、当月、当年）邀请人数的记录，您也将获得奖励。要邀请用户，您需要通过 Telegram 登录游戏。
 </li>
 <li>
-As moedas são atribuídas por conquistas no jogo (pontos por jogo, pontos por movimento, pontos por palavra, número de jogos, número de convidados, lugar no ranking de #1 a #10)
+在游戏中取得的成绩（每局得分、每步得分、每字得分、游戏次数、邀请人数、排名第 1 到第 10 位）可获得金币奖励。
 </li>
 <li>
-Por cada 100 jogos, são atribuídas {{stone_reward}} de moedas {{yandex_exclude}}{{{SUDOKU }}
+每玩游戏 100 局，{{stone_reward}} {{yandex_exclude}}{{SUDOKU }} 会获得金币
 </li>
 {{yandex_exclude}}{{<li>
-Comprar moedas por rublos por transferência
+通过转账将金币换成卢布
 </li>
-<li>Comprar moedas por criptomoeda (brevemente)
+<li>将金币换成加密货币（即将推出）
 </li>}}
-</ol>
-
+</ol> </p
 <br>
-O número de moedas atribuídas a cada conquista pode mudar ao longo do tempo, para cima ou para baixo. A recompensa real é reflectida no cartão de conquista.
+每项成就所奖励的金币数量可能会随着时间的推移而发生变化，或增或减。实际奖励反映在成就卡中。
 <br><br>
-<h2>O que podes fazer com as moedas que ganhas</h2>
+<h2>您可以用赢得的金币做什么</h2>
 <ol>
 <li>
-Jogue nossos jogos, aumentando as apostas, adicionando emoção e interesse ao seu passatempo favorito
+玩我们的游戏，增加赌注，为您喜爱的消遣活动增添刺激和趣味
 </li>
 {{yandex_exclude}}{{<li>
-Venda moedas por rublos ou por criptomoeda (em breve) e receba sua recompensa em termos de dinheiro real
+将金币出售为卢布或加密货币（即将推出），并以真钱形式获得奖励
 </li>}}
 {{yandex_exclude}}{{<li>
-Oferece um presente a outro jogador enviando-lhe qualquer número de moedas da tua carteira (em breve)
+向其他玩家赠送礼物，从您的钱包中向后者发送任意数量的金币（即将推出）
 </li>}}   
 </ol>
 <br>
-Pode saber os detalhes do saldo da sua carteira no separador “Carteira” do menu “PERFIL”.
+您可以在 “个人资料 ”菜单的 “钱包 ”选项卡中查看钱包余额详情。
 <br><br>
-<strong>Bónus acumulados</strong> - resultado dos ganhos passivos acumulados a cada hora em função das conquistas do jogador (menu “ESTATÍSTICAS”, secção “Prémios”).
-<br>Os bónus podem ser transferidos para o saldo premindo o botão “RECLAMAR”
+<strong>累积奖金</strong>--根据玩家的成就（菜单 “统计”，“奖励 ”部分），每小时累积的被动收入的结果。
+<br>奖金可通过按 “领取 ”按钮转入余额
 <br><br>
-<strong>{{yandex_exclude}}{{SUDOKU}} Saldo</strong> - saldo atual de moedas sem bónus. As moedas são deduzidas / creditadas de acordo com os resultados do jogo
+<strong>{{yandex_exclude}}{{SUDOKU}} coin balance</strong> - current balance of coins without bonuses. 金币将根据游戏结果从中扣除或存入
 <br><br>
-Os cartões de conquistas, semelhantes a medalhas, são um indicador do seu sucesso. 
-<br>Incluem o nome da conquista, o período (ano, dia, semana, mês), o número de pontos (classificação, comprimento da palavra, número de amigos) e o número de moedas 
+类似奖牌的成就卡是您成功的标志。
+<br>它们包括成就名称、时间（年、日、周、月）、点数（等级、单词长度、好友数量）和金币数量
 <br><br>
-O ganho passivo de moedas pára quando o teu recorde é batido por outro jogador
-PT
+当您的记录被其他玩家打破时，被动金币收入将停止。
+ZHCN
             ,
         ],
-        '[[Player]] opened [[number]] [[cell]]' => '[[Player]] abriu [[number]] [[cell]]',
-        ' (including [[number]] [[key]])' => ' (incluindo [[number]] [[key]])',
-        '[[Player]] made a mistake' => '[[Player]] cometeu um erro',
-        'You made a mistake!' => 'Cometeste um erro!',
-        'Your opponent made a mistake' => 'O seu adversário cometeu um erro',
-        '[[Player]] gets [[number]] [[point]]' => '[[Player]] recebe [[number]] [[point]].',
+        '[[Player]] opened [[number]] [[cell]]' => '[[Player]] 打开 [[number]] [[cell]]',
+        ' (including [[number]] [[key]])' => ' (包括 [[number]] [[key]])',
+        '[[Player]] made a mistake' => '[[Player]] 犯了一个错误',
+        'You made a mistake!' => '你犯了一个错误！',
+        'Your opponent made a mistake' => '你的对手犯了一个错误',
+        '[[Player]] gets [[number]] [[point]]' => '[[Player]] 获得 [[number]] [[point]]',
         '[[number]] [[point]]' => '[[number]] [[point]]',
-        'You got [[number]] [[point]]' => 'Tem [[number]] [[point]].',
-        'Your opponent got [[number]] [[point]]' => 'O seu adversário obteve [[number]] [[point]].',
+        'You got [[number]] [[point]]' => '你有 [[number]] [[point]]',
+        'Your opponent got [[number]] [[point]]' => '你的对手得到 [[number]] [[point]]',
     ];
 }
