@@ -427,7 +427,7 @@ ZHCN
 ZHCN
             ,
         ],
-        'Reward' => 'Recompensa',
+        'Reward' => '奖励',
         'faq_coins' => [
             SudokuGame::GAME_NAME => <<<ZHCN
 硬币 <strong>SUDOKU</strong>{{sudoku_icon}}是一种游戏内货币{{yandex_exclude}}{{用于网络游戏 - <strong>拼字游戏、数独</strong>
