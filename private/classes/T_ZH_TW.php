@@ -349,7 +349,7 @@ class T_ZH_TW
         'If a player has opened a cell (solved a number in it) and there is only ONE closed digit left in the block, this digit is opened automatically'
         => '如果玩家打開了一個單元格（解出了其中的數字），而區塊中只剩下一個封閉的數字，則會自動打開這個數字。',
         'is awarded for solved empty cell' => '因解開空格而獲獎',
-        '方法是計算方塊中所有其他 8 位數字 - 縱向或橫向或 3x3 方塊中的所有 8 位數字。'
+        'by calculating all of other 8 digits in a block - vertically OR horizontally OR in a 3x3 square'
         => '计算一个数块中的所有其他 8 个数字 - 纵向或横向或 3x3 正方形中的所有数字',
         "The players' task is to take turns making moves and accumulating points to open black squares"
         => '玩家的任務是輪流走棋並累積點數，以開啟黑色方塊，',
