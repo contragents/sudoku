@@ -166,7 +166,7 @@ class T_ZH_CN
         'Looking for a new game...' => '寻找新游戏',
         'Get ready - your turn is next!' => '准备好，下一个就轮到你了！',
         'Take a break - your move in one' => '休息一下 - 您的一举一动',
-        'Refuse' => '垃圾',
+        'Refuse' => '拒绝',
         'Offer a game' => '提供游戏',
         'Players ready:' => '准备就绪的球员：',
         'Players' => '球员',
@@ -190,7 +190,7 @@ class T_ZH_CN
         'Rating of opponents' => '对手评级',
         'new player' => '新玩家',
         'CHOOSE GAME OPTIONS' => '<strong>选择游戏选项</strong>',
-        'Profile' => '简介',
+        'Profile' => '个人资料',
         'Error' => '错误',
         'Your profile' => '您的个人资料',
         'Start' => '开始游戏',
@@ -375,7 +375,7 @@ class T_ZH_CN
 <br><br>
 如果走错一步棋--单元格中的数字是错误的--这个单元格上会出现一个红色的小错误数字，双方都能看到。这个数字不能再出现在这个单元格中
 <br><br>
-玩家可以使用 “校验 ”按钮做标记--在单元格中填入一个绿色的小数字。这个数字可以是玩家确定的计算结果，也可以只是猜测。使用注释就像使用普通的 <strong>数独</strong>一样 - 其他玩家看不到它们
+玩家可以使用 “检查” 按钮做标记--在单元格中填入一个绿色的小数字。这个数字可以是玩家确定的计算结果，也可以只是猜测。使用注释就像使用普通的 <strong>数独</strong>一样 - 其他玩家看不到它们
 ZHCN
             ,
         ],
