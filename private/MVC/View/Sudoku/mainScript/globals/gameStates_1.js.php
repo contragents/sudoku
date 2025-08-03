@@ -832,7 +832,7 @@ var gameStates = {
             if (dialog && canCloseDialog)
                 dialog.modal('hide');
             var okButtonCaption = '<?= T::S('Refuse') ?>';
-            if ('inviteStatus' in data && data['inviteStatus'] == 'waiting') {
+            if ('inviteStatus' in data && data['inviteStatus'] === 'waiting') {
                 okButtonCaption = '<?= T::S('OK') ?>';
             }
 
