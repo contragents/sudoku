@@ -1313,6 +1313,7 @@ class T
             self::PT_BR_LANG => [0 => 'pontos', 1 => 'ponto', 2 => 'pontos'],
             self::ZH_CN_LANG => [0 => '积分', 1 => '点', 2 => '点数'],
             self::ZH_TW_LANG => [0 => '點數', 1 => '點', 2 => '點數'],
+            self::KO_LANG => [0 => '점', 1 => '점', 2 => '점'],
         ],
         'cell' => [
             self::EN_LANG => [0 => 'cells', 1 => 'cell', 2 => 'cells'],
@@ -1325,6 +1326,7 @@ class T
             self::PT_BR_LANG => [0 => 'células', 1 => 'célula', 2 => 'células'],
             self::ZH_CN_LANG => [0 => '个牢房', 1 => '个单元', 2 => '个牢房'],
             self::ZH_TW_LANG => [0 => '細胞', 1 => '細胞', 2 => '細胞'],
+            self::KO_LANG => [0 => '세포', 1 => '셀', 2 => '개 셀'],
         ],
         'key' => [
             self::EN_LANG => [0 => 'keys', 1 => 'key', 2 => 'keys'],
@@ -1337,6 +1339,7 @@ class T
             self::PT_BR_LANG => [0 => 'chaves', 1 => 'chave', 2 => 'chaves'],
             self::ZH_CN_LANG => [0 => '钥匙', 1 => '把钥匙', 2 => '把钥匙'],
             self::ZH_TW_LANG => [0 => '鑰匙', 1 => '鑰匙', 2 => '鑰匙'],
+            self::KO_LANG => [0 => '키', 1 => '개 키', 2 => '개의 키'],
         ],
         'Player' => [
             self::EN_LANG => [1 => 'Player1', 2 => 'Player2', 3 => 'Player3', 4 => 'Player4'],
