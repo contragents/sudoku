@@ -36,6 +36,24 @@ class T
         self::KO_LANG,
     ];
 
+    /**
+     * @var string[] HTML_LANG Соответствие внутренних кодов языка тегу HTML-lang
+     */
+    const HTML_LANG = [
+        self::EN_LANG => 'en',
+        self::RU_LANG => 'ru',
+        self::TR_LANG => 'tr',
+        self::FR_LANG => 'fr',
+        self::IT_LANG => 'it',
+        self::DE_LANG => 'de',
+        self::ES_LANG => 'es',
+        self::PT_LANG => 'pt',
+        self::PT_BR_LANG => 'pt-BR',
+        self::ZH_CN_LANG => 'zh-CN',
+        self::ZH_TW_LANG => 'zh-Hant',
+        self::KO_LANG => 'ko',
+    ];
+
     const PLURAL_PATTERN = '[[';
 
     public static string $lang = self::EN_LANG;

@@ -12,7 +12,7 @@ use BaseController as BC;
 
 ?>
 <!DOCTYPE html>
-<html lang="<?= strtolower(T::$lang) ?>">
+<html lang="<?= T::HTML_LANG[T::$lang] ?>">
 <head>
     <meta charset="utf-8">
     <title><?= $title ?></title>
