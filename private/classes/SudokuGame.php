@@ -580,14 +580,13 @@ class SudokuGame extends Game
 
         // Особенности создания конкретной игры | начало
 
-        // Число очков для победы - половина всех ключей и всех закрытых клеток + 1 очко
-        $this->gameStatus->gameGoal = ceil(
-            (
-                $this->gameStatus->desk->getKeyCount() * self::KEY_OPEN_POINTS
-                + $this->gameStatus->desk->unopenedCellsCount() * self::CELL_OPEN_POINTS
-                + 1)
-            / 2
-        );
+        $totalGamePoints = $this->gameStatus->desk->getKeyCount() * self::KEY_OPEN_POINTS
+            + $this->gameStatus->desk->unopenedCellsCount() * self::CELL_OPEN_POINTS;
+
+        // Число очков для победы - половина всех ключей и всех закрытых клеток
+        $this->gameStatus->gameGoal = ($totalGamePoints % 2 === 0)
+            ? (int)($totalGamePoints / 2)
+            : (int)(($totalGamePoints + 1) / 2);
 
         // Добавляем в лог стартовый коммент без рейтинга
         foreach (T::SUPPORTED_LANGS as $lang) {

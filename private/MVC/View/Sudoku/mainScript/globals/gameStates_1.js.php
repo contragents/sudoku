@@ -1327,8 +1327,6 @@ function commonCallback(data) {
 
         let resourceName = 'bankBlock_' + gameBankString + '_' + Date.now();
 
-        preloaderObject.load.reset();
-
         let langModifier = (gameBank < 1000 && lang !== 'EN')
             ?  (lang in SUPPORTED_LANGS
                 ? ('_' + (version > '1.0.0.2' ? lang : lang.toLowerCase()))
@@ -1376,9 +1374,9 @@ function commonCallback(data) {
         }
     }
 
-    if ('winScore' in data) {
+    if ('winScore' in data && winScore === false) {
         winScore = data.winScore;
-        players.goalBlock.filename = 'goal_' + winScore;
+
         if (players.goalBlock.svgObject !== false) {
             while (players.goalBlock.svgObject.length) {
                 players.goalBlock.svgObject.pop().setVisible(false).destroy();
@@ -1389,39 +1387,29 @@ function commonCallback(data) {
 
         let resourceName = 'goalBlock_' + winScore + '_' + Date.now();
 
-        preloaderObject.load.reset();
-
-        let langModifier = (gameBank < 1000 && lang !== 'EN')
-            ?  (lang in SUPPORTED_LANGS
-                    ? ('_' + (version > '1.0.0.2' ? lang : lang.toLowerCase()))
-                    : ''
-            )
-            : '';
-
-        preloaderObject.load.svg(resourceName + OTJAT_MODE, BASE_URL + `img/otjat/${players.goalBlock.filename}${gameBankString}${langModifier}.svg`,
+        preloaderObject.load.svg(resourceName + OTJAT_MODE, BASE_URL + `img/otjat/${players.goalBlock.filename}${winScore}.svg`,
             {
-                ...('width' in players.bankBlock && {
-                    'width': players.bankBlock.width,
+                ...('width' in players.goalBlock && {
+                    'width': players.goalBlock.width,
                 }),
                 'height':
-                    'height' in players.bankBlock ? players.bankBlock.height : buttonHeight,
+                    'height' in players.goalBlock ? players.goalBlock.height : buttonHeight,
             }
         );
 
         preloaderObject.load.start();
 
         preloaderObject.load.on('complete', function () {
+            playerTmpBlockModes = playerBlockModes;
             playerBlockModes = [OTJAT_MODE];
 
-            while (players.bankBlock.svgObject.length) {
-                players.bankBlock.svgObject.pop().setVisible(false).destroy();
+            while (players.goalBlock.svgObject.length) {
+                players.goalBlock.svgObject.pop().setVisible(false).destroy();
             }
-            players.bankBlock.svgObject.push(getSVGBlockGlobal(players.bankBlock.x, players.bankBlock.y, resourceName, faserObject, players.bankBlock.scalable, false));
+            players.goalBlock.svgObject.push(getSVGBlockGlobal(players.goalBlock.x, players.goalBlock.y, resourceName, faserObject, players.goalBlock.scalable, false));
 
-            playerBlockModes = [OTJAT_MODE, ALARM_MODE];
+            playerBlockModes = playerTmpBlockModes;
         });
-
-        // buttonSetModeGlobal(players, 'goalBlock', OTJAT_MODE); // 54 points is the goal for sudoku
     }
 
     responseData = data;
