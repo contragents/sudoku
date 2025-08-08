@@ -1117,6 +1117,9 @@ function Leaderboard() {
             url.searchParams.set(key, params[key]);
         }
 
+        // Чтобы браузер не кешировал результаты запроса
+        url.searchParams.set('ver', Math.floor(Date.now()));
+
         try {
             const response = await fetch(url.toString(), {
                 method: 'GET',
