@@ -8,6 +8,7 @@ use classes\Game;
 use classes\Response;
 use classes\StateMachine;
 use classes\Steam;
+use classes\SudokuGame;
 use classes\T;
 use classes\Tg;
 use classes\UserProfile;
@@ -19,16 +20,12 @@ use classes\Yandex;
  */
 class BaseController
 {
-    const TITLE = 'game_title';
-    const GAME_URL = Config::BASE_URL . "game_name/"; // Используются только константы наследников
-    const SITE_NAME = Config::DOMAIN;
-
-    const FB_IMG_URL = 'https://' . Config::ERUDIT_DOMAIN . '/img/share/hor_640_360.png';
     const FORCE_ACTIONS = [
         self::GAME_STATE_PARAM . 'Action',
         'mainScript' . 'Action',
         'index' . 'Action',
     ];
+
     const MAX_UPLOAD_SIZE = 2 * 1024 * 1024;
     const GAME_STATE_PARAM = 'gameState';
     const MESSAGE_PARAM = 'messageText';
@@ -118,6 +115,21 @@ class BaseController
         return $refererParams;
     }
 
+    public static function FB_IMG_URL(): string
+    {
+        return 'https://' . Config::DOMAIN() . '/'. SudokuGame::GAME_NAME . '/img/share/hor_640_360.png';
+    }
+
+    public static function GAME_URL(): string
+    {
+        return Config::BASE_URL() . "game_name/"; // Используются только константы наследников
+    }
+
+    public static function SITE_NAME(): string
+    {
+        return Config::DOMAIN();
+    }
+
     public function Run()
     {
         foreach (self::$Request as $param => $value) {
@@ -160,7 +172,8 @@ class BaseController
         );
     }
 
-    public function playersAction()
+    public
+    function playersAction()
     {
         return $this->callSubController(
             'PlayersController',
@@ -184,8 +197,10 @@ class BaseController
         );
     }
 
-    private function callSubController(string $controller, string $action): string
-    {
+    private function callSubController(
+        string $controller,
+        string $action
+    ): string {
         return (new $controller($action, $_REQUEST))->Run();
     }
 
@@ -257,13 +272,18 @@ class BaseController
         include static::VIEW_PATH . 'mainScript/main.js';
     }
 
+    public static function TITLE(): string
+    {
+        return T::S('game_title');
+    }
+
     public function indexAction()
     {
-        $title = T::S(static::TITLE);
-        $url = static::GAME_URL;
-        $siteName = static::SITE_NAME;
+        $title = T::S(static::TITLE());
+        $url = static::GAME_URL();
+        $siteName = static::SITE_NAME();
         $description = strip_tags(T::S('faq_rules'));
-        $fbImgUrl = static::FB_IMG_URL;
+        $fbImgUrl = static::FB_IMG_URL();
 
         include self::VIEW_PATH . 'index.html.php';
     }
@@ -481,8 +501,9 @@ class BaseController
             : T::EN_LANG;
     }
 
-    public function __get($attr)
-    {
+    public function __get(
+        $attr
+    ) {
         if (is_callable([$this, $attr])) {
             return $this->{$attr}();
         }
@@ -503,9 +524,12 @@ class BaseController
             && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
     }
 
-    public static function getUrl(string $action, array $params = [], array $excludedParams = [])
-    {
-        return static::GAME_URL
+    public static function getUrl(
+        string $action,
+        array $params = [],
+        array $excludedParams = []
+    ) {
+        return static::GAME_URL()
             . $action . '/'
             . (!empty($params)
                 ? ('?' . implode(

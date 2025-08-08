@@ -47,7 +47,7 @@ class BaseSubController
 
     public static function getUrl(string $action, array $params = [], array $excludedParams = [])
     {
-        return BC::$instance::GAME_URL
+        return BC::$instance::GAME_URL()
             . BC::$instance->ActionRaw . '/'
             . $action
             . (!empty($params)

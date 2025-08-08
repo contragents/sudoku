@@ -10,9 +10,17 @@ class GomokuController extends BaseController
 {
     // todo привести в соответствие с SudokuController
 
-    const GAME_URL = Config::BASE_URL . GomokuGame::GAME_NAME . '/';
-
     const VIEW_PATH = parent::VIEW_PATH . 'Gomoku/';
+
+    public static function SITE_NAME(): string
+    {
+        return self::GAME_URL();
+    }
+
+    public static function GAME_URL(): string
+    {
+        return Config::BASE_URL() . GomokuGame::GAME_NAME . '/';
+    }
 
     public function __construct($action, array $request)
     {

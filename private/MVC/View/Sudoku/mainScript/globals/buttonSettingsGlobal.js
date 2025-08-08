@@ -281,12 +281,13 @@ var players = {
     },
     goalBlock: {
         modes: [OTJAT_MODE],
-        filename: 'goal_54',
+        filename: 'goal_',
         x: botXY.x + buttonStepX + buttonWidth / 2,
         y: botXY.y + botHeight * 0.75 * (0.8 + 0.1),
         width: buttonWidth,
         object: false,
         svgObject: false,
+        preload: false,
     },
     bankBlock: {
         filename: 'bank_',

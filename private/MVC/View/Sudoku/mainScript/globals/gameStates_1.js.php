@@ -1378,7 +1378,50 @@ function commonCallback(data) {
 
     if ('winScore' in data) {
         winScore = data.winScore;
-        buttonSetModeGlobal(players, 'goalBlock', OTJAT_MODE); // 54 points is the goal for sudoku
+        players.goalBlock.filename = 'goal_' + winScore;
+        if (players.goalBlock.svgObject !== false) {
+            while (players.goalBlock.svgObject.length) {
+                players.goalBlock.svgObject.pop().setVisible(false).destroy();
+            }
+        }
+
+        players.goalBlock.svgObject = [];
+
+        let resourceName = 'goalBlock_' + winScore + '_' + Date.now();
+
+        preloaderObject.load.reset();
+
+        let langModifier = (gameBank < 1000 && lang !== 'EN')
+            ?  (lang in SUPPORTED_LANGS
+                    ? ('_' + (version > '1.0.0.2' ? lang : lang.toLowerCase()))
+                    : ''
+            )
+            : '';
+
+        preloaderObject.load.svg(resourceName + OTJAT_MODE, BASE_URL + `img/otjat/${players.goalBlock.filename}${gameBankString}${langModifier}.svg`,
+            {
+                ...('width' in players.bankBlock && {
+                    'width': players.bankBlock.width,
+                }),
+                'height':
+                    'height' in players.bankBlock ? players.bankBlock.height : buttonHeight,
+            }
+        );
+
+        preloaderObject.load.start();
+
+        preloaderObject.load.on('complete', function () {
+            playerBlockModes = [OTJAT_MODE];
+
+            while (players.bankBlock.svgObject.length) {
+                players.bankBlock.svgObject.pop().setVisible(false).destroy();
+            }
+            players.bankBlock.svgObject.push(getSVGBlockGlobal(players.bankBlock.x, players.bankBlock.y, resourceName, faserObject, players.bankBlock.scalable, false));
+
+            playerBlockModes = [OTJAT_MODE, ALARM_MODE];
+        });
+
+        // buttonSetModeGlobal(players, 'goalBlock', OTJAT_MODE); // 54 points is the goal for sudoku
     }
 
     responseData = data;

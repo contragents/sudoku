@@ -66,7 +66,7 @@ use BaseController as BC;
         head.appendChild(script);
     }
 
-    loader.importJS('<?= BC::$instance::GAME_URL ?>mainScript?ver=' + Date.now());
+    loader.importJS('<?= BC::$instance::GAME_URL() ?>mainScript?ver=' + Date.now());
 </script>
 <div id="ss" style="display:none;"></div>
 </body>

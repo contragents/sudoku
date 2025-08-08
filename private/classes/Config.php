@@ -4,8 +4,6 @@ namespace classes;
 
 class Config
 {
-    public const DOMAIN = '5-5.su';
-    public const BASE_URL = 'https://' . self::DOMAIN . '/'; // Место, где задается домен проекта
     const ERUDIT_DOMAIN = 'xn--d1aiwkc2d.club';
 
     public static array $config = []; // основной конфиг
@@ -24,6 +22,16 @@ class Config
             'SQL_DB_NAME' => ['key' => 'MYSQL_DATABASE'],
         ],
     ];
+
+    public static function BASE_URL(): string
+    {
+        return 'https://' . self::DOMAIN() . '/'; // Место, где задается домен проекта
+    }
+
+    public static function DOMAIN(): string
+    {
+        return self::$config['DOMAIN'] ?? '';
+    }
 
     public static function parseEnv()
     {

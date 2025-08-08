@@ -125,7 +125,7 @@ class PlayersController extends BaseSubController
 
     public static function getBaseUploadFileURL()
     {
-        return Config::BASE_URL . Game::GAME_NAME . self::UPLOAD_DIR; // один адрес для всех аватаров игр - sudoku
+        return Config::BASE_URL() . Game::GAME_NAME . self::UPLOAD_DIR; // один адрес для всех аватаров игр - sudoku
     }
 
     public function saveUserNameAction()
