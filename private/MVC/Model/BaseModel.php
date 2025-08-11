@@ -45,6 +45,32 @@ class BaseModel
 
     public ?int $_id = null;
 
+    /**
+     * Обновляет модель из БД. Если $_id не установлен или не найден, то ничего не делает и возвращает false
+     * @return bool
+     */
+    public function refresh(): bool
+    {
+        if(!$this->_id) {
+            return false;
+        }
+
+        if($freshModel = static::getOneO($this->_id)) {
+            foreach(get_object_vars($freshModel) as $property => $value) {
+                $this->$property = $value;
+            }
+
+            // Делаем еще один прогон присвоения - чтобы исключить поля, записанные как null в БД
+            foreach(get_object_vars($this) as $property => $nothing) {
+                $this->$property = $freshModel->$property;
+            }
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private static function fieldName(string $property): string
     {
         return ltrim($property, '_');
@@ -359,6 +385,11 @@ class BaseModel
         return (int)(DB::queryValue("SELECT max(id) as mx FROM " . static::TABLE_NAME) ?: 0);
     }
 
+    public static function getFirstID(): ?int
+    {
+        return (int)(DB::queryValue("SELECT min(id) as mn FROM " . static::TABLE_NAME) ?: 0) ?: null;
+    }
+
     public static function findAll(array $fieldList = [])
     {
         //$query = "SELECT * FROM " . static::TABLE_NAME;
@@ -567,6 +598,21 @@ class BaseModel
         $query = "SELECT * FROM " . static::TABLE_NAME . " WHERE id = $id LIMIT 1";
 
         return DB::queryArray($query)[0] ?? [];
+    }
+
+    /**
+     * @param int $id
+     * @param bool $ignoreDeleted
+     * @return static|null
+     */
+    public static function getOneNextO(int $id, bool $ignoreDeleted = true): ?object {
+        $row = self::getOneNext($id, $ignoreDeleted ? '' : '');
+
+        if (!empty($row)) {
+            $res = self::arrayToObject($row);
+        }
+
+        return $res ?: null;
     }
 
     public static function getOneNext($id, $isDelited = ''): array

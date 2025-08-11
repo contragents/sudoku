@@ -65,6 +65,7 @@ class BaseController
 
     const VIEW_PATH = __DIR__ . '/../View/';
     const DEFAULT_ACTION = 'index';
+    const DEFAULT_CONTROLLER = SudokuController::class;
 
     const SLEEP_ACTIONS = ['statusHiddenChecker' => 10];
 
@@ -110,7 +111,7 @@ class BaseController
     private static function decodeRefererQuery(): array
     {
         $refererParams = [];
-        parse_str(parse_url(urldecode($_SERVER['HTTP_REFERER'] ?? ''), PHP_URL_QUERY), $refererParams);
+        parse_str(parse_url(urldecode($_SERVER['HTTP_REFERER'] ?? ''), PHP_URL_QUERY) ?? '', $refererParams);
 
         return $refererParams;
     }

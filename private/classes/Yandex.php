@@ -10,7 +10,12 @@ class Yandex
     private const YANDEX_AUTHORIZED_PARAM = 'yandex_authorized';
 
     const METRIKA_COUNTERS = [
-        SudokuGame::GAME_NAME => '102483438', // Счетчик для игры Судоку
+        Config::DOMAIN_5_5_SU => [
+            SudokuGame::GAME_NAME => '102483438', // Счетчик для игры Судоку
+        ],
+        Config::DOMAIN_SUDOKU_BOX => [
+            SudokuGame::GAME_NAME => '103668291'
+        ],
     ];
 
     public static ?string $yandexUser = null;
@@ -19,12 +24,14 @@ class Yandex
     public static function authorize(): bool
     {
         if (!empty($_REQUEST[self::USER_ID_PARAM])) {
-
             // IL-33 - задача создалась в другом проекте
-            if(!($_REQUEST[self::YANDEX_AUTHORIZED_PARAM] ?? true)) {
+            if (!($_REQUEST[self::YANDEX_AUTHORIZED_PARAM] ?? true)) {
                 if (isset($_COOKIE[Cookie::COOKIE_NAME])) {
                     if ($commonId = (int)PlayerModel::getPlayerCommonId($_COOKIE[Cookie::COOKIE_NAME])) {
-                        $yandexUser = PlayerModel::getFirstCommonIdRecordO($commonId, $_COOKIE[Cookie::COOKIE_NAME])->_cookie ?? null;
+                        $yandexUser = PlayerModel::getFirstCommonIdRecordO(
+                                $commonId,
+                                $_COOKIE[Cookie::COOKIE_NAME]
+                            )->_cookie ?? null;
                         self::$commonId = $commonId;
 
                         if ($yandexUser) {
@@ -40,7 +47,9 @@ class Yandex
                                 ]
                             );
 
-                            if ($playerModel->save()) {return true;}
+                            if ($playerModel->save()) {
+                                return true;
+                            }
                         }
                     }
                 }
@@ -49,7 +58,7 @@ class Yandex
             self::$yandexUser = md5($_REQUEST[self::USER_ID_PARAM]); // Ключ яндекса длиннее 32
             self::$commonId = (int)PlayerModel::getPlayerCommonId(self::$yandexUser, true);
 
-            if(isset($_COOKIE[Cookie::COOKIE_NAME]) && !($_REQUEST[self::YANDEX_AUTHORIZED_PARAM] ?? true)) {
+            if (isset($_COOKIE[Cookie::COOKIE_NAME]) && !($_REQUEST[self::YANDEX_AUTHORIZED_PARAM] ?? true)) {
                 $playerModel = PlayerModel::new(
                     [
                         PlayerModel::COMMON_ID_FIELD => self::$commonId,

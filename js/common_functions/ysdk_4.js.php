@@ -1,5 +1,5 @@
 <?php
-use classes\Yandex;
+use classes\Config;use classes\Yandex;
 use BaseController as BC;
 ?>
 //
@@ -176,7 +176,7 @@ const resumeCallback = () => {
     k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
 (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-ym(<?= Yandex::METRIKA_COUNTERS[BC::gameName()] ?>, "init", {
+ym(<?= Yandex::METRIKA_COUNTERS[Config::DOMAIN()][BC::gameName()] ?? '102483438' ?>, "init", {
     clickmap:true,
     trackLinks:true,
     accurateTrackBounce:true,

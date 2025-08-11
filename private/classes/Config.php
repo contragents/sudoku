@@ -5,6 +5,8 @@ namespace classes;
 class Config
 {
     const ERUDIT_DOMAIN = 'xn--d1aiwkc2d.club';
+    const DOMAIN_5_5_SU = '5-5.su';
+    const DOMAIN_SUDOKU_BOX = 'sudoku.box';
 
     public static array $config = []; // основной конфиг
     private static array $envConfig = []; // временный конфиг
@@ -78,5 +80,10 @@ class Config
                 self::$config[$key] = $value;
             }
         }
+    }
+
+    public static function isDev(): bool
+    {
+        return (self::$config['ENV'] ?? 'TEST') === 'TEST';
     }
 }

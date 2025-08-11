@@ -7,11 +7,9 @@ use BaseController as BC;
 
 /**
  * Class BalanceModel
- * @property int $_id
- * @property int $_sudoku
+ * @property int $_id Player common_id
+ * @property int $_sudoku SUDOKU balance
  */
-
-
 class BalanceModel extends BaseModel
 {
     const TABLE_NAME = 'balance';
@@ -105,11 +103,8 @@ class BalanceModel extends BaseModel
      * @param int|null $topMax
      * @return self[][]
      */
-    public static function
-    getTopPlayersO(
-        int $top,
-        ?int $topMax = null
-    ): array {
+    public static function getTopPlayersO(int $top, ?int $topMax = null): array
+    {
         $rows1 = self::getTopPlayers($top, $topMax);
 
         $res = [];

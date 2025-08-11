@@ -147,7 +147,7 @@ class DB
         $res = mysqli_query(self::$DBConnect, $mysqlQuery);
         $affectedRows = mysqli_affected_rows(self::$DBConnect);
 
-        preg_match_all ('/(\S[^:]+): (\d+)/', mysqli_info(self::$DBConnect), $matches);
+        preg_match_all ('/(\S[^:]+): (\d+)/', (string)(mysqli_info(self::$DBConnect) ?? ''), $matches);
         $info = array_combine ($matches[1], $matches[2]);
 
         return $affectedRows > 0

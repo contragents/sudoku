@@ -17,7 +17,7 @@ class Steam
     public static function authorize(): bool
     {
         $refererParams = [];
-        parse_str(parse_url(urldecode($_SERVER['HTTP_REFERER'] ?? ''), PHP_URL_QUERY), $refererParams);
+        parse_str(parse_url(urldecode($_SERVER['HTTP_REFERER'] ?? ''), PHP_URL_QUERY) ?? '', $refererParams);
 
         if (!empty($refererParams[self::USER_ID_PARAM]) && self::isSteamApp()) {
             if (isset($_COOKIE[Cookie::COOKIE_NAME])) {
