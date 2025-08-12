@@ -33,7 +33,7 @@ class Orchestrator
         // Получаем настройки, через конфиг
         $scriptParts = explode('_', str_replace('.php', '', basename($scriptName)));
         $module = $scriptParts[0];
-        $scriptType = $scriptParts[1];
+        $scriptType = $scriptParts[1] ?? '';
         unset($scriptParts[0]);
         unset($scriptParts[1]);
         $scriptName = implode('_', $scriptParts);
