@@ -22,14 +22,15 @@ $pathParts = explode('/', $path);
 if (strpos($pathParts[1], 'ndex.php')) {
     header('HTTP/1.0 403 Forbidden');
 
-    echo 'Access denied';
+    print_r($pathParts);
+    echo 'Access denied - index.php';
     exit();
 }
 
 $controller = ($pathParts[1] ?? false)
     ? (ucfirst($pathParts[1]) . 'Controller')
     : BaseController::DEFAULT_CONTROLLER;
-$action = $pathParts[2] ?? $controller::DEFAULT_ACTION;
+$action = $pathParts[2] ?: $controller::DEFAULT_ACTION;
 $subAction = $pathParts[3] ?? '';
 
 if (class_exists($controller) && method_exists($controller, $action . 'Action')) {
@@ -40,6 +41,7 @@ if (class_exists($controller) && method_exists($controller, $action . 'Action'))
     print is_array($res) ? json_encode($res, JSON_UNESCAPED_UNICODE) : $res;
 } else {
     header('HTTP/1.0 403 Forbidden');
+    print_r(['$pathParts' => $pathParts, '$controller' => $controller, '$action' => $action]);
     echo 'Access denied';
 }
 

@@ -51,7 +51,11 @@ class PlayersController extends BaseSubController
             if (isset(self::ENABLE_UPLOAD_EXT[$extension]) && $files['url']['size'] < self::MAX_UPLOAD_SIZE) {
                 if (move_uploaded_file(
                     $files['url']['tmp_name'],
-                    $_SERVER['DOCUMENT_ROOT'] . '/../erudit.club' . self::UPLOAD_DIR . $filename
+                    $_SERVER['DOCUMENT_ROOT']
+                    . '/../'
+                    . (Config::DOMAIN() === Config::DOMAIN_SUDOKU_BOX ? 'sudoku' : 'erudit.club')
+                    . self::UPLOAD_DIR
+                    . $filename
                 )) {
                     $avatarAddRes = self::addUserAvatarUrl(
                         self::getBaseUploadFileURL() . $filename,

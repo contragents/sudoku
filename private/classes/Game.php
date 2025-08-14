@@ -23,7 +23,7 @@ class Game
     const CACHE_TIMEOUT = StateMachine::CACHE_TTL;
     const TURN_DELTA_TIME = 10; // Разрешенное превышение длительности хода
 
-    public const GAME_NAME = 'sudoku';
+    public const GAME_NAME = 'sudoku'; // Игра по умолчанию. Не менять! Используется в ссылках на аватары
     public const GAME_DATA_KEY = '.current_game_'; // Получает состояние игры по номеру
     public const GET_GAME_KEY = '.get_game_'; // Получает игру пользователя
     public const GAME_USERS_KEY = '.game_users_'; // Список игроков в игре

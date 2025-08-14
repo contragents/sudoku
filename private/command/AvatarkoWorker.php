@@ -34,9 +34,11 @@ class AvatarkoWorker extends Command
                         sleep(1);
 
                         continue;
+                    } else {
+                        throw new Exception('file_put_contents error');
                     }
                 } catch (Throwable $e) {
-                    print 'file get failed' . PHP_EOL;
+                    print 'file save failed' . PHP_EOL;
 
                     $avatarModel->_queued = true;
                     $avatarModel->save();
