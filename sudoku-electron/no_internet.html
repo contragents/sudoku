@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Sudoku Online with friends</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="./js/bootstrap_4.5.2/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/choose_css_new_10.css">
+    <link rel="stylesheet" type="text/css" href="./css/tg_app_tuning.css">
+    <!-- JS dependencies -->
+    <script src="./js/jquery_1.12.4/jquery.min.js"></script>
+    <!-- Bootstrap 4 dependency -->
+    <script src="./js/popper_2.4.4/popper.min.js"></script>
+    <script src="./js/bootstrap_4.5.2/bootstrap.min.js"></script>
+
+    <!-- bootbox code -->
+    <script src="./js/bootbox_5.4.0/bootbox.min.js"></script>
+    <script src="./js/bootbox_5.4.0/bootbox.locales.min.js"></script>
+</head>
+
+<body style="overscroll-behavior-y: none;" oncontextmenu="return false" onselectstart="return false" onselect="return false" oncopy="return false">
+
+<script>
+    const url = new URL(window.location.href);
+    document.body.style.backgroundImage = "url('./img/back_gorizont_2.svg')";
+    //document.body.style.backgroundSize = 'contain'; //'cover';
+    //document.body.style.backgroundPosition = 'center';
+    //document.body.style.backgroundOrigin = 'border-box';
+    bootbox.dialog({
+        message: url.searchParams.get('message'),
+        onEscape: false,
+        closeButton: false,
+        className: 'modal-settings modal-profile text-white',
+        buttons: {
+            confirm: {
+                label: 'Exit the game',
+                className: 'btn-success',
+                callback: function (result) {
+                    window.electronAPI.closeApp(true);
+
+                    return false;
+                }
+            },
+        },
+    });
+</script>
+</body>
+</html>
