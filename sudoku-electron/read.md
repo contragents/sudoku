@@ -2,6 +2,11 @@ Importing your project into Forge - установка билдера
 npm install --save-dev @electron-forge/cli
 npx electron-forge import
 
+Установить онлайн-чекер
+npm install is-online
+Установить Windows api Steam
+npm install steamworks.js
+
 npm run start - просто запуск программы
 
 npm run make
