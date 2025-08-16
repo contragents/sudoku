@@ -103,7 +103,11 @@ if (isOnline) {
             + '&l=' + languages['turkish'/*lang*/] // hard select language
             + curVersion()
             + '&message='
-            + encodeURIComponent(languages[errorMessage][lang])
+            + encodeURIComponent(languages.phrases[errorMessage].get(lang))
+            + '&ok='
+            + encodeURIComponent(languages.phrases.ok_button_caption.get(lang))
+            + '&title='
+            + encodeURIComponent(languages.phrases.title.get(lang))
         )
     }
 }
@@ -113,11 +117,16 @@ app.whenReady().then(() => {
         const systemLanguage = app.getLocale();
         console.log('System language:', systemLanguage);
 
-        if(systemLanguage in languages.icu) {
+        if (systemLanguage in languages.icu) {
             lang = languages.icu[systemLanguage];
+            console.log("ICU language found: ", lang);
         } else {
             lang = 'ru'; // todo change to "en" on release
+            console.log("Default language set: ", lang);
         }
+        console.log("errorMessage", errorMessage);
+        console.log(languages.phrases[errorMessage].get(lang));
+        lang = 'zh-cn';
     }
 
     createWindow()
@@ -125,8 +134,36 @@ app.whenReady().then(() => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })
 
-    ipcMain.on('close-app', handleCloseApp)
+    ipcMain.on('close-app', handleCloseApp);
+
+    const fs = require('fs');
+    ipcMain.on('get-file', (event, filePath) => {
+        fs.readFile(filePath, (err, data) => {
+            if (err) {
+                console.log(err);
+                event.sender.send('file-from-main', false);
+            } else {
+                console.log(data);
+                event.sender.send('file-from-main', data.toString('base64'));
+            }
+        });
+    });
+
 })
+
+const fs = require('fs');
+
+async function readBinaryFile(filePath) {
+    let res = await fs.readFile(filePath, (err, data) => {
+        if (err) {
+            console.log(err);
+            return false;
+        }
+        return data.toString('base64');
+    });
+
+    return res;
+}
 
 function curVersion() {
     return '&version=' + version;

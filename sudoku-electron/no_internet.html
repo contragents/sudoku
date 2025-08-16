@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <title>Sudoku Online with friends</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16x16.png">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="./js/bootstrap_4.5.2/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="./css/choose_css_new_10.css">
@@ -22,6 +24,7 @@
 
 <script>
     const url = new URL(window.location.href);
+    document.title = url.searchParams.get('title');
     document.body.style.backgroundImage = "url('./img/back_gorizont_2.svg')";
     //document.body.style.backgroundSize = 'contain'; //'cover';
     //document.body.style.backgroundPosition = 'center';
@@ -33,7 +36,7 @@
         className: 'modal-settings modal-profile text-white',
         buttons: {
             confirm: {
-                label: 'Exit the game',
+                label: url.searchParams.get('ok'),
                 className: 'btn-success',
                 callback: function (result) {
                     window.electronAPI.closeApp(true);

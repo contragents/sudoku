@@ -28,5 +28,10 @@
     "electron-squirrel-startup": "^1.0.1",
     "is-online": "^11.0.0",
     "steamworks.js": "^0.4.0"
+  },
+  "build": {
+    "win":  {
+      "icon": "images/sudoku-coin-128.ico"
+    }
   }
 }

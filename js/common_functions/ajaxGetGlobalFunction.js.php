@@ -1,5 +1,5 @@
 <?php
-use classes\Cookie;
+use classes\Cookie;use classes\Steam;
 ?>
 //
 async function fetchGlobal(script, param_name = '', param_data = '') {
@@ -163,4 +163,80 @@ async function fetchGlobalYowser(script, param_name, param_data) {
     }
 
     return await response.json();
+}
+
+if (<?= Steam::isSteamApp() ?>) {
+    const originalXMLHttpRequest = window.XMLHttpRequest;
+
+    // Создаем новый класс, который расширяет оригинальный XMLHttpRequest
+    class ElectronXMLHttpRequest extends originalXMLHttpRequest {
+        // Регистрируем получение файла из API
+        done(data) {
+            this.buffer = data;
+            console.log(this.buffer);
+            this.onload;
+        }
+
+        // Переопределяем метод open
+        open(method, url, async, user, password) {
+            if(url.indexOf('field_source6.svg') > -1) {
+                console.log(`XMLHttpRequest dropped open: ${method} ${url}`);
+                this.filePath = 'img/sudoku/field_source6.svg';
+
+                return;
+            }
+
+            super.open(method, url, async, user, password);
+        }
+
+        get status() {
+            if (this.filePath && this.buffer) {
+                return 200;
+            }
+            if (this.filePath && !this.buffer) {
+                return 0;
+            }
+
+            return super.status;
+        }
+
+        get response() {
+            console.log(this.buffer)
+            if (this.filePath && this.buffer) {
+
+                return atob(this.buffer);
+            }
+            if (this.filePath && !this.buffer) {
+                return '';
+            }
+
+            return super.response;
+        }
+
+        get readyState() {
+            if (this.filePath && this.buffer) {
+                return 4;
+            }
+            if (this.filePath && !this.buffer) {
+                return 0;
+            }
+
+            return super.readyState;
+        }
+
+        // Переопределяем метод send
+        send(body) {
+            if (this.filePath) {
+                window.electronAPI.getFile(this.filePath, this);
+
+                return;
+            }
+
+            // Иначе отправляем запрос как обычно
+            super.send(body);
+        }
+    }
+
+    // Перехватываем вызов конструктора XMLHttpRequest
+    window.XMLHttpRequest = ElectronXMLHttpRequest;
 }

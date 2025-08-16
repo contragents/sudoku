@@ -1,5 +1,33 @@
 module.exports.languages = {
     phrases: {
+        title: new Map([
+            ['en', 'Sudoku Online with friends'],
+            ['ru', 'Судоку онлайн с друзьями'],
+            ['zh-cn', '与朋友在线玩数独'],
+            ['zh-tw', '與朋友線上數獨遊戲'],
+            ['ko', '친구와 함께하는 스도쿠 온라인'],
+            ['de', 'Sudoku Online mit Freunden'],
+            ['es', 'Sudoku en línea con amigos'],
+            ['fr', 'Sudoku en ligne avec des amis'],
+            ['it', 'Sudoku online con gli amici'],
+            ['pt', 'Sudoku online com amigos'],
+            ['pt-br', 'Sudoku on-line com amigos'],
+            ['tr', 'Arkadaşlarınızla Çevrimiçi Sudoku'],
+        ]),
+        ok_button_caption: new Map([
+            ['en', 'Quit the game'],
+            ['ru', 'Выйти из игры'],
+            ['zh-cn', '退出游戏'],
+            ['zh-tw', '退出遊戲'],
+            ['ko', '게임 종료'],
+            ['de', 'Beenden Sie das Spiel'],
+            ['es', 'Abandonar el juego'],
+            ['fr', 'Quitter le jeu'],
+            ['it', 'Abbandonare il gioco'],
+            ['pt', 'Abandonar o jogo'],
+            ['pt-br', 'Sair do jogo'],
+            ['tr', 'Oyundan çık'],
+        ]),
         no_internet: new Map([
             ['en', 'The Internet is unavailable. Please try logging into the game later.'],
             ['ru', 'Интернет недоступен. Попробуйте войти в игру позднее'],
