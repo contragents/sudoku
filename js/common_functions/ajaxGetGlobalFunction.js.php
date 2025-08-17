@@ -167,14 +167,17 @@ async function fetchGlobalYowser(script, param_name, param_data) {
 
 if (<?= Steam::isSteamApp() ?>) {
     const originalXMLHttpRequest = window.XMLHttpRequest;
-
+    cacheXML = {};
     // Создаем новый класс, который расширяет оригинальный XMLHttpRequest
     class ElectronXMLHttpRequest extends originalXMLHttpRequest {
         // Регистрируем получение файла из API
-        done(data) {
-            this.buffer = data;
-            console.log(this.buffer);
-            this.onload;
+        done(filePath, data) {
+            cacheXML[filePath].buffer = data;
+            console.log(cacheXML[filePath].buffer);
+            //delete window.cacheXML[this.filePath];
+
+            cacheXML[filePath].onload;
+            //delete cacheXML[filePath];
         }
 
         // Переопределяем метод open
@@ -182,7 +185,7 @@ if (<?= Steam::isSteamApp() ?>) {
             if(url.indexOf('field_source6.svg') > -1) {
                 console.log(`XMLHttpRequest dropped open: ${method} ${url}`);
                 this.filePath = 'img/sudoku/field_source6.svg';
-
+                cacheXML[this.filePath] = this;
                 return;
             }
 
@@ -204,7 +207,7 @@ if (<?= Steam::isSteamApp() ?>) {
             console.log(this.buffer)
             if (this.filePath && this.buffer) {
 
-                return atob(this.buffer);
+                return atob(this.buffer); // atob возвращает \r\n вместо перевода строки - портится файл. нужен другой способ
             }
             if (this.filePath && !this.buffer) {
                 return '';
@@ -227,7 +230,8 @@ if (<?= Steam::isSteamApp() ?>) {
         // Переопределяем метод send
         send(body) {
             if (this.filePath) {
-                window.electronAPI.getFile(this.filePath, this);
+
+                window.electronAPI.getFile(this.filePath, this.done);
 
                 return;
             }

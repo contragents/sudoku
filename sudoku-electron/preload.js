@@ -1,13 +1,15 @@
-const {contextBridge, ipcRenderer} = require('electron/renderer')
+// window.cacheXML = {};
+const {contextBridge, ipcRenderer} = require('electron/renderer');
 
 contextBridge.exposeInMainWorld('electronAPI', {
     closeApp: (param) => ipcRenderer.send('close-app', param),
-    getFile: (filePath, caller) => {
+    getFile: (filePath, callback) => {
         ipcRenderer.send('get-file', filePath);
         ipcRenderer.on('file-from-main', (event, data) => {
-            console.log(caller);
-            caller.buffer = data;
-            caller.onLoad(); // Uncaught TypeError: caller.onLoad is not a function
+            //console.log(window.cacheXML);
+            //window.cacheXML[filePath].buffer = data;
+            //window.cacheXML[filePath].done(); // Uncaught TypeError: caller.onLoad is not a function
+            callback(filePath, data);
         });
     },
 })
