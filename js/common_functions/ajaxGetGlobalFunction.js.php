@@ -173,11 +173,28 @@ if (<?= Steam::isSteamApp() ?>) {
         // Регистрируем получение файла из API
         done(filePath, data) {
             cacheXML[filePath].buffer = data;
-            console.log(cacheXML[filePath].buffer);
+
+            console.log(cacheXML[filePath]);
             //delete window.cacheXML[this.filePath];
 
-            cacheXML[filePath].onload;
+            //cacheXML[filePath].onload.call(cacheXML[filePath]);
             //delete cacheXML[filePath];
+        }
+
+        async waitForBuffer(variableName, timeout = 5000) {
+            return new Promise((resolve, reject) => {
+                const startTime = Date.now();
+                const checkVariable = () => {
+                    if (typeof this.buffer !== 'undefined' && this.buffer !== null) {
+                        resolve(true);
+                    } else if (Date.now() - startTime > timeout) {
+                        resolve(false);
+                    } else {
+                        setTimeout(checkVariable, 100);
+                    }
+                };
+                checkVariable();
+            });
         }
 
         // Переопределяем метод open
@@ -204,16 +221,22 @@ if (<?= Steam::isSteamApp() ?>) {
         }
 
         get response() {
-            console.log(this.buffer)
-            if (this.filePath && this.buffer) {
+            if (this.filePath) {
+                console.log(String.fromCharCode.apply(null, this.buffer));
+                if (this.buffer) {
 
-                return atob(this.buffer); // atob возвращает \r\n вместо перевода строки - портится файл. нужен другой способ
-            }
-            if (this.filePath && !this.buffer) {
-                return '';
+                    return String.fromCharCode.apply(null, this.buffer);// new TextDecoder().decode(this.buffer); //atob(this.buffer); // atob возвращает \r\n вместо перевода строки - портится файл. нужен другой способ
+                }
+                else {
+                    return '';
+                }
             }
 
             return super.response;
+        }
+
+        get responseText() {
+            return this.response;
         }
 
         get readyState() {
@@ -232,6 +255,9 @@ if (<?= Steam::isSteamApp() ?>) {
             if (this.filePath) {
 
                 window.electronAPI.getFile(this.filePath, this.done);
+                this.waitForBuffer().then(result => {
+                    this.onload(this, new ProgressEvent('www')); // new ProgressEvent('www') работает какимто хуем
+                });
 
                 return;
             }

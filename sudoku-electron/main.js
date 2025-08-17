@@ -144,7 +144,7 @@ app.whenReady().then(() => {
                 event.sender.send('file-from-main', false);
             } else {
                 console.log(data);
-                event.sender.send('file-from-main', data.toString('base64'));
+                event.sender.send('file-from-main', data);
             }
         });
     });
