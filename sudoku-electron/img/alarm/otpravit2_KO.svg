@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 100 35"
+   version="1.1"
+   id="svg14"
+   sodipodi:docname="Send-Enviar_красный.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview14"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="6.68"
+     inkscape:cx="50"
+     inkscape:cy="17.44012"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg14" />
+  <defs
+     id="defs6">
+    <style
+       id="style1">.cls-1{fill:#e20000;}.cls-1,.cls-2,.cls-3{stroke-width:0px;}.cls-4{opacity:.45;}.cls-2{fill:url(#_Безымянный_градиент_105);}.cls-3{fill:#fff;}.cls-5{fill:none;stroke:#e20000;stroke-miterlimit:10;stroke-width:2px;}</style>
+    <linearGradient
+       id="_Безымянный_градиент_105"
+       x1="50"
+       y1="1"
+       x2="50"
+       y2="34"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0"
+         stop-color="#ff7b7b"
+         id="stop1" />
+      <stop
+         offset=".15"
+         stop-color="#ff7474"
+         id="stop2" />
+      <stop
+         offset=".35"
+         stop-color="#ff6161"
+         id="stop3" />
+      <stop
+         offset=".59"
+         stop-color="#ff4343"
+         id="stop4" />
+      <stop
+         offset=".86"
+         stop-color="#ff1919"
+         id="stop5" />
+      <stop
+         offset="1"
+         stop-color="red"
+         id="stop6" />
+    </linearGradient>
+  </defs>
+  <g
+     id="buttons">
+    <rect
+       class="cls-2"
+       x="1"
+       y="1"
+       width="98"
+       height="33"
+       rx="5"
+       ry="5"
+       id="rect6" />
+    <rect
+       class="cls-5"
+       x="1"
+       y="1.25"
+       width="98"
+       height="33"
+       rx="5"
+       ry="5"
+       id="rect7" />
+    <g
+       class="cls-4"
+       id="g7">
+      <image
+         width="115"
+         height="82"
+         transform="translate(-9 -24)"
+         xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHMAAABSCAYAAABns+t1AAAACXBIWXMAAAsSAAALEgHS3X78AAAEC0lEQVR4nO2b7VLiQBBFbwQUddd9/9fcXVFEyP7IXNJpenAtmZkU3lM1RYIfGTl2T6cZACGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghrp+u9QQ+S9/3VefcdV1f83pfYbYyP5BWY95ZiXMVPCuZgcAucxydX3QqHzx3PJ6T2FnIdBI785g7rkUfPEbPzUJqc5lGZPeJAZSfuxdox8GdH7+/pdRmMs9IvDEjOq8h1EqiuEMwQrGthDaRGYikqEU6XgSjllAfkRS3zwwvt5nQZe0LGnwkLtJ8/FjhVGopoedEvpuxc+f79HMH93uqUl1mikov0oq7dWOVxhLnhV5siohF7gC8BcNf/5D+zurRWVVmULVakbcA7tJYm3GHqVSfcoHLR6ZPrRS3BfBqhp0Df/6Yavu+72oKbZFmo/RKkfcAHsy4T2ONUegS+fXzq1gZFMmI3AJ4AbBJY2GuG1W8QOV022rNpEyukysMwh4A/HCDUhmhTLclZTIymV4Zic9pHktMRdpIvsFYDFWlmszMrcgC4zppZT4B+AXgJ0ahNjq9TODrQm002bXyDYPIDQaRK3OtqDg6pLn1w59dL9XWjky+CL6CtWn2EaPMJwxCHzFGZ22ZXCfXGFM8v27XUmaMdzenq18zgVgoo/MRY4Q+pfMHTCPTrlml1swdBlG36XrAINKuoS84Lcw4p2+zZkbrJlMuo5QFkY1MVr+lqlkvk/80B4zrpy/Iolum6rRsGgD/3zjwo+QLxzTL433m+rlGRjNay4yImtq+WmQKKykzatfZtp2d6yxoLTPqffpuC4sLprp3nDYNLj0nRqStZrdpvKX57TCV3VxsK5nR/RxfOFaPG0wl7jBtGpTszUb3mRsM95kbDEWPFcv+bFOpLWTmXjArcYXxXm2PsaL0MoHLRqe/PeE/GSvXZwC/AfxN82TE+ii1v6satWVynYua2FtM22R9+pqtHksXP5yjzRq2ncfo/INRKGU2F1pNZtd1feoC+fKf6dVK8iJts4CyS8v0/VlmDvZnmXJf0/yZapu9Ud1yzfQtM9vr5HMvGN8K81EJlJMZzZFCmXJfzaOV2aQvC7RfMztM2198AW3nxd+Yl4xKO0cfndF7mr4IalrZVpVpUi0wvTnnuW+j+V0G0cauEvh7XbtNhOL840lUXvWb08BRKE+9TFtB+r0/JXcXRJxrXDBSs/uAvtseIL/7zb5w7PTU3pUXzS8nNeoKNW0czGWrJR+9uCit1pxzJDRqN052FnyrrZaWjNTccSuiXuzJ9pDWu9qbywQwp8+YeLycPve11iKBmci0zODTX56spDkItMxOZo7an8u0zE2aEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCXAX/ACAFNuE3n2PIAAAAAElFTkSuQmCC"
+         id="image7" />
+    </g>
+  </g>
+  <g
+     id="g2-0"
+     transform="matrix(1.1353807,0,0,1.1057329,0.45474579,46.728898)"
+     style="stroke-width:0.892492"
+     inkscape:label="text">
+    <path
+       d="m 23.954536,-21.157316 v -1.459183 h 5.361975 v -2.443609 h -3.476905 v -6.695487 h 1.759398 v 2.031686 h 5.208377 v -2.031686 h 1.745434 v 6.695487 H 31.07591 v 2.443609 h 5.375938 v 1.459183 z m 8.852845,-7.093446 h -5.208377 v 1.731471 h 5.208377 z m 15.283025,8.950588 V -26.03057 H 46.86162 v 6.332437 h -1.731471 v -12.797526 h 1.731471 v 4.991943 h 1.228786 v -5.264231 h 1.745435 v 13.467773 z M 44.6135,-23.531107 q -0.984425,0.174543 -1.940923,0.223415 -0.949516,0.04887 -3.644467,0.04887 v -8.447904 h 1.724489 v 6.974757 q 2.115467,0 3.679376,-0.230398 z m 17.489255,4.230933 v -13.467773 h 1.717508 v 13.467773 z m -2.059613,-12.280878 q -0.04887,2.883458 -1.633727,5.327067 -1.577873,2.436627 -4.440385,4.007518 l -1.347476,-1.270677 q 2.066595,-0.788936 3.637486,-2.61117 1.570891,-1.822234 1.92696,-3.979591 h -4.747582 v -1.473147 z"
+       id="text1-71"
+       style="font-weight:600;font-size:14.2986px;font-family:'Yu Gothic UI';-inkscape-font-specification:'Yu Gothic UI, Semi-Bold';fill:#e20000;fill-opacity:1;stroke:#e20000;stroke-width:0;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:2;stroke-opacity:1;paint-order:markers fill stroke"
+       aria-label="보내기" />
+    <path
+       d="m 23.454876,-21.957113 v -1.459184 h 5.361975 v -2.443608 h -3.476906 v -6.695487 h 1.759398 v 2.031686 h 5.208377 v -2.031686 h 1.745435 v 6.695487 h -3.476906 v 2.443608 h 5.375939 v 1.459184 z m 8.852844,-7.093446 h -5.208377 v 1.731471 h 5.208377 z m 15.283025,8.950588 v -6.730396 H 46.36196 v 6.332437 h -1.731472 v -12.797526 h 1.731472 v 4.991943 h 1.228785 v -5.264231 h 1.745435 v 13.467773 z m -3.476905,-4.230933 q -0.984425,0.174543 -1.940924,0.223415 -0.949516,0.04887 -3.644467,0.04887 v -8.447904 h 1.724489 v 6.974757 q 2.115467,0 3.679377,-0.230398 z m 17.489254,4.230933 v -13.467773 h 1.717508 v 13.467773 z m -2.059612,-12.280878 q -0.04887,2.883458 -1.633727,5.327067 -1.577873,2.436626 -4.440386,4.007518 l -1.347475,-1.270677 q 2.066594,-0.788936 3.637485,-2.61117 1.570892,-1.822234 1.92696,-3.979591 h -4.747582 v -1.473147 z"
+       id="text1-7-1"
+       style="font-weight:600;font-size:14.2986px;font-family:'Yu Gothic UI';-inkscape-font-specification:'Yu Gothic UI, Semi-Bold';fill:#ffffff;stroke:#364a73;stroke-width:0;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:2;paint-order:markers fill stroke"
+       aria-label="보내기" />
+  </g>
+</svg>

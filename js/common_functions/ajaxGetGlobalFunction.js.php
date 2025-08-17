@@ -167,7 +167,21 @@ async function fetchGlobalYowser(script, param_name, param_data) {
 
 if (<?= Steam::isSteamApp() ?>) {
     const originalXMLHttpRequest = window.XMLHttpRequest;
-    cacheXML = {};
+    var cacheXML = {};
+    var dataMapping = {
+        path_rules: {
+            1: '(img/alarm/.*)$',
+            2: '(img/inactive/.*)$',
+            3: '(img/najatie/.*)$',
+            4: '(img/navedenie/.*)$',
+            5: '(img/otjat/.*)$',
+            6: '(img/sudoku/.*)$',
+        },
+        exceptions: {
+            1: 'bank',
+        }
+    };
+
     // Создаем новый класс, который расширяет оригинальный XMLHttpRequest
     class ElectronXMLHttpRequest extends originalXMLHttpRequest {
         // Регистрируем получение файла из API
@@ -185,8 +199,10 @@ if (<?= Steam::isSteamApp() ?>) {
             return new Promise((resolve, reject) => {
                 const startTime = Date.now();
                 const checkVariable = () => {
-                    if (typeof this.buffer !== 'undefined' && this.buffer !== null) {
+                    if (typeof this.buffer !== 'undefined' && this.buffer) {
                         resolve(true);
+                    } else if (typeof this.buffer !== 'undefined' && this.buffer === false) {
+                        resolve(false);
                     } else if (Date.now() - startTime > timeout) {
                         resolve(false);
                     } else {
@@ -199,12 +215,35 @@ if (<?= Steam::isSteamApp() ?>) {
 
         // Переопределяем метод open
         open(method, url, async, user, password) {
-            if(url.indexOf('field_source6.svg') > -1) {
+            mainLoop: for (let ruleNumber in dataMapping.path_rules) {
+                const matches = url.match(dataMapping.path_rules[ruleNumber]);
+                if (matches && (1 in matches)) {
+                    for (let exptNumber in dataMapping.exceptions) {
+                        const exMatches = matches[1].match(dataMapping.exceptions[exptNumber]);
+                        if (exMatches) {
+                            continue mainLoop;
+                        }
+                    }
+
+                    // Сохраняем параметры вызова для байпаса
+                    this.method = method;
+                    this.url = url;
+                    this.async = async;
+                    this.user = user;
+                    this.password = password;
+
+                    this.filePath = matches[1];
+                    console.log(`XMLHttpRequest dropped open: ${this.filePath} ${url}`);
+                    cacheXML[this.filePath] = this;
+                    return;
+                }
+            }
+            /*if(url.indexOf('field_source6.svg') > -1) {
                 console.log(`XMLHttpRequest dropped open: ${method} ${url}`);
                 this.filePath = 'img/sudoku/field_source6.svg';
                 cacheXML[this.filePath] = this;
                 return;
-            }
+            }*/
 
             super.open(method, url, async, user, password);
         }
@@ -222,12 +261,11 @@ if (<?= Steam::isSteamApp() ?>) {
 
         get response() {
             if (this.filePath) {
-                console.log(String.fromCharCode.apply(null, this.buffer));
                 if (this.buffer) {
-
-                    return String.fromCharCode.apply(null, this.buffer);// new TextDecoder().decode(this.buffer); //atob(this.buffer); // atob возвращает \r\n вместо перевода строки - портится файл. нужен другой способ
-                }
-                else {
+                    return this.responseType === 'blob'
+                        ? new Blob([this.buffer])
+                        : String.fromCharCode.apply(null, this.buffer);
+                } else {
                     return '';
                 }
             }
@@ -236,7 +274,11 @@ if (<?= Steam::isSteamApp() ?>) {
         }
 
         get responseText() {
-            return this.response;
+            if (this.filePath) {
+                return this.response;
+            }
+
+            return super.responseText;
         }
 
         get readyState() {
@@ -256,7 +298,13 @@ if (<?= Steam::isSteamApp() ?>) {
 
                 window.electronAPI.getFile(this.filePath, this.done);
                 this.waitForBuffer().then(result => {
-                    this.onload(this, new ProgressEvent('www')); // new ProgressEvent('www') работает какимто хуем
+                    // delete cacheXML[this.filePath];
+                    if (result) {
+                        this.onload(this, new ProgressEvent('www')); // new ProgressEvent('www') работает какимто хуем
+                    } else {
+                        super.open(this.method, this.url, this.async, this.user, this.password);
+                        super.send(body);
+                    }
                 });
 
                 return;

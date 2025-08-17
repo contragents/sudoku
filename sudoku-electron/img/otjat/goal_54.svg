@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   id="_200_300"
+   viewBox="0 0 108 20"
+   version="1.1"
+   sodipodi:docname="arrows54_4.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview10"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="6.8888889"
+     inkscape:cx="54"
+     inkscape:cy="9.9435484"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="_200_300" />
+  <defs
+     id="defs7">
+    <style
+       id="style1">.cls-1{fill:url(#_Безымянный_градиент_11-2);}.cls-1,.cls-2,.cls-3,.cls-4{stroke-width:0px;}.cls-2{fill:#ffde03;}.cls-3{fill:url(#_Безымянный_градиент_11);}.cls-4{fill:#b3bde0;}.cls-5{fill:none;stroke:#ffde03;stroke-linecap:round;stroke-linejoin:round;stroke-width:.5px;}</style>
+    <linearGradient
+       id="_Безымянный_градиент_11"
+       x1="24.96"
+       y1="5.99"
+       x2="24.96"
+       y2="14.01"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0"
+         stop-color="#b3bde0"
+         id="stop1" />
+      <stop
+         offset=".11"
+         stop-color="#acbcda"
+         id="stop2" />
+      <stop
+         offset=".28"
+         stop-color="#99b9ca"
+         id="stop3" />
+      <stop
+         offset=".46"
+         stop-color="#7bb5af"
+         id="stop4" />
+      <stop
+         offset=".68"
+         stop-color="#51af8b"
+         id="stop5" />
+      <stop
+         offset=".9"
+         stop-color="#1ba75c"
+         id="stop6" />
+      <stop
+         offset="1"
+         stop-color="#02a446"
+         id="stop7" />
+    </linearGradient>
+    <linearGradient
+       id="_Безымянный_градиент_11-2"
+       x1="37.04"
+       x2="37.04"
+       xlink:href="#_Безымянный_градиент_11" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#_Безымянный_градиент_11"
+       id="linearGradient10"
+       gradientUnits="userSpaceOnUse"
+       x1="24.96"
+       y1="5.99"
+       x2="24.96"
+       y2="14.01" />
+  </defs>
+  <path
+     class="cls-4"
+     d="M98,1.5c4.69,0,8.5,3.81,8.5,8.5s-3.81,8.5-8.5,8.5H10c-4.69,0-8.5-3.81-8.5-8.5S5.31,1.5,10,1.5h88M98,1H10C5.03,1,1,5.03,1,10h0c0,4.97,4.03,9,9,9h88c4.97,0,9-4.03,9-9h0c0-4.97-4.03-9-9-9h0Z"
+     id="path7" />
+  <polygon
+     class="cls-3"
+     points="27.37 5.99 27.37 5.99 18.54 5.99 18.54 5.99 22.55 10 18.54 14.01 18.54 14.01 27.37 14.01 27.37 14.01 31.38 10 27.37 5.99"
+     id="polygon7" />
+  <polygon
+     class="cls-3"
+     points="31.38,10 27.37,5.99 18.54,5.99 22.55,10 18.54,14.01 27.37,14.01 "
+     id="polygon7-3"
+     style="fill:url(#linearGradient10);stroke-width:0px"
+     transform="translate(12.08)" />
+  <line
+     class="cls-5"
+     x1="55.07"
+     y1="16.790001"
+     x2="72.082672"
+     y2="16.790001"
+     id="line10" />
+  <path
+     d="M 72.62,11.992961 H 71.022363 V 14.7 H 69.63437 V 11.992961 H 64.48 V 10.506998 L 69.692203,5.08 h 1.33016 v 5.879247 H 72.62 Z M 69.63437,10.959247 V 6.6176494 l -4.171208,4.3415976 z"
+     id="text1-3"
+     style="font-size:13.736px;font-family:'HoloLens MDL2 Assets';-inkscape-font-specification:'HoloLens MDL2 Assets, Normal';text-align:center;text-anchor:middle;opacity:0.99;fill:#ffde03;stroke:#ffdd03;stroke-width:0.46;stroke-linecap:square;stroke-miterlimit:4.1;stroke-dasharray:none;paint-order:stroke fill markers"
+     aria-label="4" />
+  <path
+     d="m 62.125001,11.510211 q 0,0.65821 -0.277164,1.259461 -0.277165,0.60125 -0.758556,1.01263 -0.525155,0.443028 -1.254538,0.683527 Q 59.112656,14.7 58.157166,14.7 q -0.889845,0 -1.714046,-0.164552 -0.8242,-0.158224 -1.393118,-0.386066 v -1.335408 h 0.102112 q 0.598093,0.329105 1.400412,0.563276 0.802321,0.227843 1.575465,0.227843 0.51786,0 0.999251,-0.126579 0.488686,-0.12658 0.867965,-0.443027 0.320927,-0.272144 0.481392,-0.651882 0.167758,-0.379737 0.167758,-0.879722 0,-0.48733 -0.196934,-0.822764 -0.189638,-0.335434 -0.532448,-0.53796 -0.379278,-0.2405012 -0.926314,-0.3354345 -0.539742,-0.1012636 -1.210773,-0.1012636 -0.641856,0 -1.239948,0.075948 -0.590799,0.075947 -1.021136,0.1518947 V 5.0800004 h 6.535259 v 1.1075658 h -5.127552 v 2.5062631 q 0.313635,-0.025316 0.641856,-0.037974 0.328222,-0.012657 0.568916,-0.012657 0.882551,0 1.54629,0.1329079 0.663737,0.126579 1.218068,0.4556841 0.583504,0.3480923 0.90443,0.8987107 0.320929,0.550618 0.32093,1.37971 z"
+     id="text1-3-3-8"
+     style="font-size:13.2343px;font-family:'HoloLens MDL2 Assets';-inkscape-font-specification:'HoloLens MDL2 Assets, Normal';text-align:center;text-anchor:middle;opacity:0.99;fill:#ffde03;stroke:#ffdd03;stroke-width:0.460001;stroke-linecap:square;stroke-miterlimit:4.1;paint-order:stroke fill markers"
+     aria-label="5" />
+</svg>

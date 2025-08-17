@@ -141,10 +141,10 @@ app.whenReady().then(() => {
         fs.readFile(filePath, (err, data) => {
             if (err) {
                 console.log(err);
-                event.sender.send('file-from-main', false);
+                event.sender.send('file-from-main', filePath, false);
             } else {
                 console.log(data);
-                event.sender.send('file-from-main', data);
+                event.sender.send('file-from-main', filePath, data);
             }
         });
     });
