@@ -118,7 +118,7 @@ class BaseController
 
     public static function FB_IMG_URL(): string
     {
-        return 'https://' . Config::DOMAIN() . '/'. SudokuGame::GAME_NAME . '/img/share/hor_640_360.png';
+        return 'https://' . Config::DOMAIN() . '/' . SudokuGame::GAME_NAME . '/img/share/hor_640_360.png'; // todo Подставить имя игры
     }
 
     public static function GAME_URL(): string
@@ -286,7 +286,11 @@ class BaseController
         $description = strip_tags(T::S('faq_rules'));
         $fbImgUrl = static::FB_IMG_URL();
 
-        include self::VIEW_PATH . 'index.html.php';
+        include(self::VIEW_PATH
+            . (Steam::isSteamApp()
+                ? 'index_steam.html.php'
+                : 'index.html.php'
+            ));
     }
 
     public function initGameAction(): string

@@ -1,6 +1,7 @@
 <?php
 use classes\Cookie;
 use classes\MonetizationService;
+use classes\Steam;
 use classes\T;
 use BaseController as BC;
 ?>
@@ -310,12 +311,12 @@ var fullImgID = false;
 var fullImgWidth = 0;
 
 var soundPlayed = false;
-var instruction = `<?= T::S('faq_rules') ?>`;
+var instruction = '';
 
 //<?php include('globals/tgGlobalFunction.js')?>
 //<?php include('globals/buttonSettingsGlobal.js')?>
 //<?php include('globals/gameStates_1.js.php')?>
-//<?php include('globals/wav.js')?>
+//<?php if(!Steam::isSteamApp()) {include('globals/wav.js');}?>
 
 yacheikaWidth = 32 * 2 * 15 / 9 * 0.96;
 correctionX = 4;

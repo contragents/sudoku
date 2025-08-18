@@ -136,6 +136,8 @@ app.whenReady().then(() => {
 
     ipcMain.on('close-app', handleCloseApp);
 
+    var scriptsAsked = {};
+
     const fs = require('fs');
     ipcMain.on('get-file', (event, filePath) => {
         fs.readFile(filePath, (err, data) => {
@@ -143,27 +145,36 @@ app.whenReady().then(() => {
                 console.log(err);
                 event.sender.send('file-from-main', filePath, false);
             } else {
-                console.log(data);
                 event.sender.send('file-from-main', filePath, data);
             }
         });
     });
 
-})
-
-const fs = require('fs');
-
-async function readBinaryFile(filePath) {
-    let res = await fs.readFile(filePath, (err, data) => {
-        if (err) {
-            console.log(err);
-            return false;
+    ipcMain.on('get-script', (event, filePath) => {
+        if(filePath === 'page_reload_event') {
+            scriptsAsked = {};
+            return;
         }
-        return data.toString('base64');
+
+        if(!(filePath in scriptsAsked)) {
+            scriptsAsked[filePath] = true;
+            const fileData = fs.readFileSync(filePath, "utf8");
+            event.sender.send('script-from-main', filePath, fileData ? fileData : '');
+        } else {
+            console.log(filePath, 'Duplicate script query!');
+        }
     });
 
-    return res;
-}
+    ipcMain.on('get-style', (event, filePath) => {
+        if(!(filePath in scriptsAsked)) {
+            scriptsAsked[filePath] = true;
+            const fileData = fs.readFileSync(filePath, "utf8");
+            event.sender.send('style-from-main', filePath, fileData ? fileData : '');
+        } else {
+            console.log(filePath, 'Duplicate style query!');
+        }
+    });
+});
 
 function curVersion() {
     return '&version=' + version;

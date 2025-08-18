@@ -165,34 +165,13 @@ async function fetchGlobalYowser(script, param_name, param_data) {
     return await response.json();
 }
 
-if (<?= Steam::isSteamApp() ?>) {
-    const originalXMLHttpRequest = window.XMLHttpRequest;
+if (<?= Steam::isSteamApp() ? 'true' : 'false' ?>) {
     var cacheXML = {};
-    var dataMapping = {
-        path_rules: {
-            1: '(img/alarm/.*)$',
-            2: '(img/inactive/.*)$',
-            3: '(img/najatie/.*)$',
-            4: '(img/navedenie/.*)$',
-            5: '(img/otjat/.*)$',
-            6: '(img/sudoku/.*)$',
-        },
-        exceptions: {
-            1: 'bank',
-        }
-    };
+    const originalXMLHttpRequest = window.XMLHttpRequest;
 
-    // Создаем новый класс, который расширяет оригинальный XMLHttpRequest
     class ElectronXMLHttpRequest extends originalXMLHttpRequest {
-        // Регистрируем получение файла из API
         done(filePath, data) {
             cacheXML[filePath].buffer = data;
-
-            console.log(cacheXML[filePath]);
-            //delete window.cacheXML[this.filePath];
-
-            //cacheXML[filePath].onload.call(cacheXML[filePath]);
-            //delete cacheXML[filePath];
         }
 
         async waitForBuffer(variableName, timeout = 5000) {
@@ -233,17 +212,10 @@ if (<?= Steam::isSteamApp() ?>) {
                     this.password = password;
 
                     this.filePath = matches[1];
-                    console.log(`XMLHttpRequest dropped open: ${this.filePath} ${url}`);
                     cacheXML[this.filePath] = this;
                     return;
                 }
             }
-            /*if(url.indexOf('field_source6.svg') > -1) {
-                console.log(`XMLHttpRequest dropped open: ${method} ${url}`);
-                this.filePath = 'img/sudoku/field_source6.svg';
-                cacheXML[this.filePath] = this;
-                return;
-            }*/
 
             super.open(method, url, async, user, password);
         }
@@ -315,6 +287,5 @@ if (<?= Steam::isSteamApp() ?>) {
         }
     }
 
-    // Перехватываем вызов конструктора XMLHttpRequest
     window.XMLHttpRequest = ElectronXMLHttpRequest;
 }

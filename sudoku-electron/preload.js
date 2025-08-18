@@ -6,9 +6,20 @@ contextBridge.exposeInMainWorld('electronAPI', {
     getFile: (filePath, callback) => {
         ipcRenderer.send('get-file', filePath);
         ipcRenderer.on('file-from-main', (event, filePathBack, data) => {
-            //console.log(window.cacheXML);
-            //window.cacheXML[filePath].buffer = data;
-            //window.cacheXML[filePath].done(); // Uncaught TypeError: caller.onLoad is not a function
+            callback(filePathBack, data);
+        });
+    },
+    // Новый метод, т.к. callback нельзя менять в процессе работы
+    getScript: (filePath, callback) => {
+        ipcRenderer.send('get-script', filePath);
+        ipcRenderer.on('script-from-main', (event, filePathBack, data) => {
+            callback(filePathBack, data);
+        });
+    },
+
+    getStyle: (filePath, callback) => {
+        ipcRenderer.send('get-style', filePath);
+        ipcRenderer.on('style-from-main', (event, filePathBack, data) => {
             callback(filePathBack, data);
         });
     },
