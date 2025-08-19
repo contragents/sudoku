@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 100 35"
+   version="1.1"
+   id="svg19"
+   sodipodi:docname="New game-Nuova partita_серый.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview19"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="6.68"
+     inkscape:cx="50"
+     inkscape:cy="17.44012"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg19" />
+  <defs
+     id="defs5">
+    <style
+       id="style1">.cls-1{fill:url(#_Безымянный_градиент_4);}.cls-1,.cls-2,.cls-3{stroke-width:0px;}.cls-2{fill:gray;}.cls-4{fill:none;stroke:gray;stroke-miterlimit:10;stroke-width:2px;}.cls-3{fill:#fff;}</style>
+    <linearGradient
+       id="_Безымянный_градиент_4"
+       x1="-220.25"
+       y1="1"
+       x2="-220.25"
+       y2="34"
+       gradientTransform="translate(270,0.5)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0"
+         stop-color="#dbdbdb"
+         id="stop1" />
+      <stop
+         offset=".24"
+         stop-color="#d4d4d4"
+         id="stop2" />
+      <stop
+         offset=".57"
+         stop-color="#c1c1c1"
+         id="stop3" />
+      <stop
+         offset=".96"
+         stop-color="#a3a3a3"
+         id="stop4" />
+      <stop
+         offset="1"
+         stop-color="#a0a0a0"
+         id="stop5" />
+    </linearGradient>
+  </defs>
+  <g
+     id="buttons"
+     transform="translate(-0.25,0.25)">
+    <rect
+       class="cls-1"
+       x="0.75"
+       y="1.5"
+       width="98"
+       height="33"
+       rx="5"
+       ry="5"
+       id="rect5"
+       style="fill:url(#_%D0%91%D0%B5%D0%B7%D1%8B%D0%BC%D1%8F%D0%BD%D0%BD%D1%8B%D0%B9_%D0%B3%D1%80%D0%B0%D0%B4%D0%B8%D0%B5%D0%BD%D1%82_4)" />
+    <rect
+       class="cls-4"
+       x="1.25"
+       y="1"
+       width="98"
+       height="33"
+       rx="5"
+       ry="5"
+       transform="rotate(180,50.25,17.5)"
+       id="rect6" />
+  </g>
+  <g
+     id="g2"
+     transform="translate(-5.4041202,47.564298)"
+     inkscape:label="text">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:12.2236px;font-family:'Yu Gothic UI';-inkscape-font-specification:'Yu Gothic UI, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;opacity:0.99;fill:#828282;fill-opacity:1;stroke:#828282;stroke-width:0.0999993;stroke-linecap:square;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1"
+       x="54.077923"
+       y="-27.636805"
+       id="text11-0-9-8-6-2"
+       inkscape:transform-center-x="-16.331115"
+       inkscape:transform-center-y="0.62655376"
+       transform="scale(1.0240447,0.97651987)"><tspan
+         sodipodi:role="line"
+         id="tspan18"
+         x="54.077923"
+         y="-27.636805">Novo Jogo</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:12.1468px;font-family:'Yu Gothic UI';-inkscape-font-specification:'Yu Gothic UI, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;opacity:0.99;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1"
+       x="53.323292"
+       y="-28.44199"
+       id="text11-0-1-5-8-3-2"
+       inkscape:transform-center-x="-16.309686"
+       inkscape:transform-center-y="0.61952878"
+       transform="scale(1.0291677,0.97165895)"><tspan
+         sodipodi:role="line"
+         id="tspan11"
+         x="53.323292"
+         y="-28.44199">Novo Jogo</tspan></text>
+  </g>
+</svg>

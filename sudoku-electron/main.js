@@ -5,7 +5,6 @@ var lang = false;
 const net = require('net');
 
 function checkInternetConnection(callback) {
-    // const socket = net.createConnection(53, '8.8.8.8');
     const socket = net.createConnection(443, 'sudoku.box');
 
     socket.on('connect', () => {
@@ -49,8 +48,8 @@ try {
 
     //lang = languages['turkish']; // todo remove on release
 
-    console.log('current_language', lang)
-    console.log('available_game_languages', client.apps.availableGameLanguages())
+    // console.log('current_language', lang)
+    // console.log('available_game_languages', client.apps.availableGameLanguages())
     // /!\ Those 3 lines are important for Steam compatibility!
     app.commandLine.appendSwitch("in-process-gpu")
     app.commandLine.appendSwitch("disable-direct-composition")
@@ -75,7 +74,7 @@ if (isOnline) {
             webPreferences: {
                 preload: path.join(__dirname, 'preload.js')
             },
-            icon: path.join(__dirname, '/img/sudoku-coin.png'/*'images/sudoku-coin-128.ico'*/) // Укажите путь к вашей иконке
+            icon: path.join(__dirname, '/img/sudoku-coin.png'),
             // autoHideMenuBar: true, // todo включить на релизе
         })
 
@@ -86,7 +85,6 @@ if (isOnline) {
             + '&playerName=' + encodeURIComponent(playerName)
             + '&l=' + lang
             + curVersion();
-        console.log(url);
         win.loadURL(url)
     }
 } else {
@@ -95,9 +93,10 @@ if (isOnline) {
             webPreferences: {
                 preload: path.join(__dirname, 'preload.js')
             },
-            // autoHideMenuBar: true, // todo включить на релизе - НУЖНО!
+            icon: path.join(__dirname, '/img/sudoku-coin.png'),
+            autoHideMenuBar: true, // todo включить на релизе - НУЖНО!
         })
-        //win.setBackgroundColor("#719998")
+        win.setBackgroundColor("#719998")
         // win.setFullScreen(true) // todo включить на релизе - а нужно??
         win.loadURL(path.join(__dirname, 'no_internet.html?')
             + '&l=' + languages['turkish'/*lang*/] // hard select language
@@ -119,14 +118,9 @@ app.whenReady().then(() => {
 
         if (systemLanguage in languages.icu) {
             lang = languages.icu[systemLanguage];
-            console.log("ICU language found: ", lang);
         } else {
-            lang = 'ru'; // todo change to "en" on release
-            console.log("Default language set: ", lang);
+            lang = 'en';
         }
-        console.log("errorMessage", errorMessage);
-        console.log(languages.phrases[errorMessage].get(lang));
-        lang = 'zh-cn';
     }
 
     createWindow()

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 100 35"
+   version="1.1"
+   id="svg16"
+   sodipodi:docname="New game-Nueva Partida_наведено_синий.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview16"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="6.68"
+     inkscape:cx="50"
+     inkscape:cy="17.44012"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg16" />
+  <defs
+     id="defs2">
+    <style
+       id="style1">.cls-1{fill:#364a73;}.cls-1,.cls-2,.cls-3{stroke-width:0px;}.cls-2{fill:url(#_Безымянный_градиент_2);}.cls-4{fill:none;stroke:#02a446;stroke-miterlimit:10;stroke-width:2px;}.cls-5{opacity:.45;}.cls-3{fill:#fff;}</style>
+    <linearGradient
+       id="_Безымянный_градиент_2"
+       x1="50"
+       y1="1.25"
+       x2="50"
+       y2="34.25"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0"
+         stop-color="#89afd3"
+         id="stop1" />
+      <stop
+         offset="1"
+         stop-color="#00357b"
+         id="stop2" />
+    </linearGradient>
+  </defs>
+  <g
+     id="buttons">
+    <rect
+       class="cls-2"
+       x="1"
+       y="1.25"
+       width="98"
+       height="33"
+       rx="5"
+       ry="5"
+       id="rect2" />
+    <rect
+       class="cls-4"
+       x="1"
+       y="1.25"
+       width="98"
+       height="33"
+       rx="5"
+       ry="5"
+       id="rect3" />
+    <g
+       class="cls-5"
+       id="g3">
+      <image
+         width="115"
+         height="83"
+         transform="translate(-9 -24)"
+         xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHMAAABTCAYAAACs7zjQAAAACXBIWXMAAAsSAAALEgHS3X78AAAECklEQVR4nO2ba3ObMBBFL3ZeTdP2///OJn4lsfoBXbNeJOLMGC1J75nZAeOXxoddJCEDQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEII8YXoohtwKSmlsLZ2XZeivvszLFLmhLiI9lZFLk3yYmQ6gbX90uM58bJS7bkliA2XaSTabW0/imS2tf1woaEynUgbq8KxCKleXCmOWIjUMJlZZEngKsfaPW4ttCTyOBH2dSFCb1p/IVAVuZ4IL7SVzJLE9xxvZr8zz/O9zWkus1BarbTb3KZbs3+D9kJ9KX038YpepN+SIwCklJpnZ0hmYpyRFHiX497sU2xJ6FyURFLcwcS+0JZTqU0pdS2FNpU5kZW36AU+5Phh9inVZyg/Z5amYiivVuQ+xxbADsOJZd8z6uW2IiIzbVauMGTlPXqJP3M85njIz7HsrjFvqfXXSpuR2xw8uaxI2xGyPdxmRMtkib1DL+0RwBOAXzkolUJtdraQyaw8oM/EDYAX9CcWq4PtFL3nxyt+RstS20xmYYaHZZYybWb+NkGhNjttebumUFseKYnldYv+pKLIhCFrGet8zFaO73nNxHg4UstOCv2DPkOZnSxvc103vUzKYlZS5BHn19AdxlWjOUvszbIDRKlPOWyptb3aa+OvlwcMJxHQZysFUnC4SCBOJlDPUGYpS6/t4frrJj/nmvghCTs6RwzXTg6Z/Di4NP3YjEiZltI87MrF2mznzALK5GdPzUa1GPNeTKTMqTlP9iJ9cFiC/Lo5fkjfk30r7NfmZUOJkulF+hkWXpNY0tb5fSx7LH0tZL5imCRg7DH0YO2QZDTh3pIImTWRvB5t0Y/lfKeDHRE7tXft4QkFUIzvzT7ntm1yO/e5XTZjwzK0mcyu61JK/d0h1KfKduh/LPZYOZbb43xo0kqmH2c+A/ib4wVjoaFlNzozbVbeoD/jKYmZscPQk/XjzDnLrJXpZ4Cec2zycZ+dp1th33ai3WA7PZTpJ615fIMhK1li55qf9ZMGtn12bpZSX1CW+f0z05RaYDjzvRRmLLPB3g7zwwNgnsxk+2x2lu6aMA4YOkNhPdvooQl/LH/MdojsAL3VPU1faq1QSrX3NX2vNqFxiQUCZBay0+LnRPeYXm0AzJeZJaEca/pVBiORV27TRURnJnC+bsb3cKfWAQHzZqZtE0t/aQ3QEQWREQu6olfnsQ21FXo2eNy+Z7bmme0lq/POXvffLbUERkK59WJLk9et2j0l1R8Ly0iyiAniilRua8+1wq/nKa3xCRcJLEQm+cT/TWrHrtqcD46d9qMlkkXJtHzwF77WZXbcgIUItCxWZomo/2guUZwQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEJ8ef4Bu8suePKG4HcAAAAASUVORK5CYII="
+         id="image3" />
+    </g>
+  </g>
+  <g
+     id="g2-0-0"
+     transform="matrix(1.1353807,0,0,1.1057329,-18.478728,46.728898)"
+     style="stroke-width:0.892492"
+     inkscape:label="text">
+    <path
+       d="m 33.938422,-19.300174 v -6.730396 h -1.131041 v 6.332437 H 31.07591 v -12.797526 h 1.731471 v 4.991943 h 1.131041 v -5.264231 h 1.738453 v 13.467773 z m -4.391513,-3.218581 q -0.586466,-0.467777 -1.256713,-1.333512 -0.670247,-0.872717 -0.949517,-1.494092 -0.321159,0.761009 -1.068205,1.731471 -0.747046,0.970462 -1.40333,1.44522 l -1.242749,-1.145005 q 1.382384,-0.865736 2.12943,-2.317937 0.747046,-1.452202 0.747046,-3.260472 v -2.960257 h 1.696562 v 3.002147 q 0,1.612782 0.670247,2.960257 0.670247,1.347476 1.892051,2.143394 z m 8.706228,1.403329 v -1.459183 h 5.375938 v -1.885069 h -3.602577 v -4.33566 h 7.135337 v -1.354457 h -7.10741 v -1.44522 h 8.866808 v 4.203006 h -7.135337 v 1.487111 h 7.491405 v 1.44522 H 45.37451 v 1.885069 h 5.375938 v 1.459183 z m 20.547256,-5.787861 q -2.136412,0 -3.344253,-0.747046 -1.200859,-0.747046 -1.200859,-2.003759 0,-1.249731 1.228786,-2.024704 1.228786,-0.774973 3.316326,-0.774973 2.087539,0 3.316325,0.774973 1.228786,0.774973 1.228786,2.024704 0,1.249731 -1.214822,2.003759 -1.214823,0.747046 -3.330289,0.747046 z m 0,-4.119226 q -1.347476,0 -2.052631,0.377014 -0.705156,0.377014 -0.705156,0.991407 0,0.614393 0.712137,0.970462 0.712138,0.349087 2.04565,0.349087 1.333512,0 2.045649,-0.349087 0.712137,-0.356069 0.712137,-0.970462 0,-0.614393 -0.705155,-0.991407 -0.705156,-0.377014 -2.052631,-0.377014 z m 0.872717,6.534908 v 2.213211 h -1.759398 v -2.213211 h -5.361975 v -1.473147 h 12.497311 v 1.473147 z m -5.292158,4.614929 v -3.770139 h 1.759398 v 2.296992 h 7.247045 v 1.473147 z m 27.480123,0.572502 v -13.467773 h 1.738453 v 13.467773 z m -3.97959,-12.336731 q -0.195489,2.059612 -0.656284,3.483887 h 1.801289 v -4.342641 h 1.731471 v 12.797526 H 79.02649 v -6.995702 h -2.373791 q -0.43985,0.956498 -1.410312,2.241138 -0.963479,1.28464 -2.003758,2.150376 l -1.473147,-1.103115 q 1.333512,-0.788936 2.632115,-2.680987 1.305585,-1.899033 1.612782,-4.091299 h -3.504833 v -1.459183 z m 17.901176,6.493016 v -7.624058 h 1.717507 v 7.624058 z m -5.487647,-0.530612 q -1.563909,0 -2.583243,-0.928571 -1.019334,-0.935553 -1.019334,-2.464554 0,-1.501074 1.019334,-2.436626 1.019334,-0.935553 2.583243,-0.935553 1.577873,0 2.590225,0.942534 1.012352,0.935553 1.012352,2.429645 0,1.515037 -1.012352,2.457572 -1.012352,0.935553 -2.590225,0.935553 z m 0,-5.306121 q -0.851772,0 -1.361439,0.52363 -0.509666,0.516649 -0.509666,1.389366 0,0.851772 0.516648,1.396348 0.523631,0.537594 1.354457,0.537594 0.837809,0 1.354458,-0.537594 0.516648,-0.537594 0.516648,-1.396348 0,-0.872717 -0.509667,-1.389366 -0.509666,-0.52363 -1.361439,-0.52363 z m -1.48711,11.394197 v -4.991943 h 8.692264 v 4.991943 z m 6.98872,-3.53276 h -5.271212 v 2.073577 h 5.271212 z"
+       id="text1-71-30"
+       style="font-weight:600;font-size:14.2986px;font-family:'Yu Gothic UI';-inkscape-font-specification:'Yu Gothic UI, Semi-Bold';fill:#364a73;stroke:#364a73;stroke-width:0;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:2;paint-order:markers fill stroke"
+       aria-label="새로운 게임" />
+    <path
+       d="m 33.438762,-20.099971 v -6.730396 H 32.30772 v 6.332437 h -1.731471 v -12.797526 h 1.731471 v 4.991943 h 1.131042 v -5.264231 h 1.738453 v 13.467773 z m -4.391514,-3.218581 q -0.586466,-0.467777 -1.256713,-1.333512 -0.670246,-0.872718 -0.949516,-1.494092 -0.32116,0.761009 -1.068206,1.731471 -0.747046,0.970461 -1.403329,1.44522 l -1.24275,-1.145005 q 1.382384,-0.865736 2.12943,-2.317938 0.747046,-1.452201 0.747046,-3.260471 v -2.960257 h 1.696563 v 3.002147 q 0,1.612782 0.670247,2.960257 0.670247,1.347476 1.892051,2.143394 z m 8.706228,1.403329 v -1.459183 h 5.375939 v -1.885069 h -3.602577 v -4.33566 h 7.135336 v -1.354457 h -7.107409 v -1.44522 h 8.866807 v 4.203006 h -7.135336 v 1.487111 h 7.491405 v 1.44522 h -3.902792 v 1.885069 h 5.375939 v 1.459183 z m 20.547256,-5.787861 q -2.136412,0 -3.344253,-0.747046 -1.200859,-0.747046 -1.200859,-2.003759 0,-1.249731 1.228786,-2.024704 1.228786,-0.774973 3.316326,-0.774973 2.08754,0 3.316326,0.774973 1.228786,0.774973 1.228786,2.024704 0,1.249731 -1.214823,2.003759 -1.214822,0.747046 -3.330289,0.747046 z m 0,-4.119226 q -1.347475,0 -2.052631,0.377014 -0.705156,0.377014 -0.705156,0.991407 0,0.614393 0.712138,0.970462 0.712137,0.349087 2.045649,0.349087 1.333512,0 2.045649,-0.349087 0.712138,-0.356069 0.712138,-0.970462 0,-0.614393 -0.705156,-0.991407 -0.705155,-0.377014 -2.052631,-0.377014 z m 0.872717,6.534908 v 2.213211 h -1.759398 v -2.213211 h -5.361975 v -1.473147 h 12.497312 v 1.473147 z m -5.292157,4.614929 v -3.770139 h 1.759398 v 2.296992 h 7.247044 v 1.473147 z m 27.480123,0.572502 v -13.467773 h 1.738453 v 13.467773 z m -3.979591,-12.336732 q -0.195489,2.059613 -0.656283,3.483888 h 1.801288 v -4.342641 H 80.2583 v 12.797526 h -1.731471 v -6.995702 h -2.373791 q -0.439849,0.956498 -1.410311,2.241138 -0.96348,1.28464 -2.003759,2.150376 l -1.473147,-1.103115 q 1.333512,-0.788936 2.632116,-2.680988 1.305585,-1.899032 1.612781,-4.091298 h -3.504832 v -1.459184 z M 95.283,-25.943686 v -7.624058 h 1.717508 v 7.624058 z m -5.487646,-0.530612 q -1.563909,0 -2.583243,-0.928571 -1.019334,-0.935553 -1.019334,-2.464554 0,-1.501074 1.019334,-2.436627 1.019334,-0.935552 2.583243,-0.935552 1.577873,0 2.590225,0.942534 1.012352,0.935553 1.012352,2.429645 0,1.515037 -1.012352,2.457572 -1.012352,0.935553 -2.590225,0.935553 z m 0,-5.306121 q -0.851772,0 -1.361439,0.52363 -0.509667,0.516649 -0.509667,1.389366 0,0.851772 0.516649,1.396348 0.52363,0.537594 1.354457,0.537594 0.837809,0 1.354457,-0.537594 0.516649,-0.537594 0.516649,-1.396348 0,-0.872717 -0.509667,-1.389366 -0.509667,-0.52363 -1.361439,-0.52363 z m -1.48711,11.394197 v -4.991943 h 8.692264 v 4.991943 z m 6.98872,-3.53276 h -5.271213 v 2.073577 h 5.271213 z"
+       id="text1-7-1-5"
+       style="font-weight:600;font-size:14.2986px;font-family:'Yu Gothic UI';-inkscape-font-specification:'Yu Gothic UI, Semi-Bold';fill:#ffffff;stroke:#364a73;stroke-width:0;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:2;paint-order:markers fill stroke"
+       aria-label="새로운 게임" />
+  </g>
+</svg>
