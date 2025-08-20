@@ -3,65 +3,65 @@ module.exports.languages = {
         title: new Map([
             ['en', 'Sudoku Online with friends'],
             ['ru', 'Судоку онлайн с друзьями'],
-            ['zh-cn', '与朋友在线玩数独'],
-            ['zh-tw', '與朋友線上數獨遊戲'],
+            ['zh_cn', '与朋友在线玩数独'],
+            ['zh_tw', '與朋友線上數獨遊戲'],
             ['ko', '친구와 함께하는 스도쿠 온라인'],
             ['de', 'Sudoku Online mit Freunden'],
             ['es', 'Sudoku en línea con amigos'],
             ['fr', 'Sudoku en ligne avec des amis'],
             ['it', 'Sudoku online con gli amici'],
             ['pt', 'Sudoku online com amigos'],
-            ['pt-br', 'Sudoku on-line com amigos'],
+            ['pt_br', 'Sudoku on-line com amigos'],
             ['tr', 'Arkadaşlarınızla Çevrimiçi Sudoku'],
         ]),
         ok_button_caption: new Map([
             ['en', 'Quit the game'],
             ['ru', 'Выйти из игры'],
-            ['zh-cn', '退出游戏'],
-            ['zh-tw', '退出遊戲'],
+            ['zh_cn', '退出游戏'],
+            ['zh_tw', '退出遊戲'],
             ['ko', '게임 종료'],
             ['de', 'Beenden Sie das Spiel'],
             ['es', 'Abandonar el juego'],
             ['fr', 'Quitter le jeu'],
             ['it', 'Abbandonare il gioco'],
             ['pt', 'Abandonar o jogo'],
-            ['pt-br', 'Sair do jogo'],
+            ['pt_br', 'Sair do jogo'],
             ['tr', 'Oyundan çık'],
         ]),
         no_internet: new Map([
             ['en', 'The Internet is unavailable. Please try logging into the game later.'],
             ['ru', 'Интернет недоступен. Попробуйте войти в игру позднее'],
-            ['zh-cn', '互联网连接已中断。请稍后再尝试登录游戏。'],
-            ['zh-tw', '網際網路無法使用。請稍後試著登入遊戲。'],
+            ['zh_cn', '互联网连接已中断。请稍后再尝试登录游戏。'],
+            ['zh_tw', '網際網路無法使用。請稍後試著登入遊戲。'],
             ['ko', '인터넷이 연결되지 않았습니다. 나중에 다시 게임에 로그인해 주시기 바랍니다.'],
             ['de', 'Das Internet ist derzeit nicht verfügbar. Bitte versuchen Sie später erneut, sich im Spiel anzumelden.'],
             ['es', 'No hay conexión a Internet. Intenta iniciar sesión en el juego más tarde.'],
             ['fr', 'Internet n\'est pas disponible. Veuillez réessayer de vous connecter au jeu plus tard.'],
             ['it', 'Internet non è disponibile. Prova ad accedere al gioco più tardi.'],
             ['pt', 'A Internet não está disponível. Tente entrar no jogo mais tarde.'],
-            ['pt-br', 'A Internet está indisponível. Tente entrar no jogo mais tarde.'],
+            ['pt_br', 'A Internet está indisponível. Tente entrar no jogo mais tarde.'],
             ['tr', 'İnternet bağlantısı mevcut değil. Lütfen daha sonra oyuna giriş yapmayı deneyin.'],
         ]),
         no_steam_app: new Map([
             ['en', 'The Steam application is not running. Please launch the Steam application, log in, and try to enter the game again.'],
             ['ru', 'Приложение Steam не запущено. Пожалуйста, запустите приложение Steam, авторизуйтесь и попробуйте войти в игру заново'],
-            ['zh-cn', 'Steam 应用程序未运行。请启动 Steam 应用程序，登录后再次尝试进入游戏。'],
-            ['zh-tw', 'Steam 應用程式未執行。請啟動 Steam 應用程式，登入後再嘗試進入遊戲。'],
+            ['zh_cn', 'Steam 应用程序未运行。请启动 Steam 应用程序，登录后再次尝试进入游戏。'],
+            ['zh_tw', 'Steam 應用程式未執行。請啟動 Steam 應用程式，登入後再嘗試進入遊戲。'],
             ['ko', 'Steam 애플리케이션이 실행 중이 아닙니다. Steam 애플리케이션을 실행하고 로그인한 후 다시 게임에 접속해 보세요.'],
             ['de', 'Die Steam-Anwendung wird nicht ausgeführt. Bitte starten Sie die Steam-Anwendung, melden Sie sich an und versuchen Sie erneut, das Spiel zu starten.'],
             ['es', 'La aplicación Steam no se está ejecutando. Inicie la aplicación Steam, inicie sesión e intente volver a entrar en el juego.'],
             ['fr', 'L\'application Steam n\'est pas en cours d\'exécution. Veuillez lancer l\'application Steam, vous connecter, puis réessayer d\'accéder au jeu.'],
             ['it', 'L\'applicazione Steam non è in esecuzione. Avvia l\'applicazione Steam, effettua l\'accesso e prova a entrare nuovamente nel gioco.'],
             ['pt', 'A aplicação Steam não está a funcionar. Inicie a aplicação Steam, inicie sessão e tente entrar no jogo novamente.'],
-            ['pt-br', 'O aplicativo Steam não está em execução. Inicie o aplicativo Steam, faça login e tente entrar no jogo novamente.'],
+            ['pt_br', 'O aplicativo Steam não está em execução. Inicie o aplicativo Steam, faça login e tente entrar no jogo novamente.'],
             ['tr', 'Steam uygulaması çalışmıyor. Lütfen Steam uygulamasını başlatın, oturum açın ve oyuna tekrar girmeyi deneyin.'],
         ]),
     },
     russian: 'ru', // русский
-    schinese: 'zh-cn', // 简体中文 (упрощенный китайский)</a>
-    tchinese: 'zh-tw', // 繁體中文 (традиционный китайский)</a>
+    schinese: 'zh_cn', // 简体中文 (упрощенный китайский)</a>
+    tchinese: 'zh_tw', // 繁體中文 (традиционный китайский)</a>
     japanese: 'en', // 日本語 (японский)</a>
-    korean: 'ko', // 한국어 (корейский)</a>
+    koreana: 'ko', // 한국어 (корейский)</a>
     thai: 'en', // ไทย (тайский)</a>
     bulgarian: 'en', // Български (болгарский)</a>
     czech: 'en', // Čeština (чешский)</a>
@@ -79,7 +79,7 @@ module.exports.languages = {
     norwegian: 'en', // Norsk (норвежский)</a>
     polish: 'en', // Polski (польский)</a>
     portuguese: 'pt', // Português (португальский — Португалия)</a>
-    brazilian: 'pt-br', // Português-Brasil (португальский — Бразилия)</a>
+    brazilian: 'pt_br', // Português-Brasil (португальский — Бразилия)</a>
     romanian: 'en', // Română (румынский)</a>
     finnish: 'en', // Suomi (финский)</a>
     swedish: 'en', // Svenska (шведский)</a>
@@ -631,7 +631,7 @@ module.exports.languages = {
         ps_AF: 'en', //	пушту (Афганистан)	پښتو (افغانستان)
         pt: 'pt', //	португальский	português
         pt_AO: 'pt', //	португальский (Ангола)	português (Angola)
-        pt_BR: 'pt-br', //	португальский (Бразилия)	português (Brasil)	бразильский португальский
+        pt_BR: 'pt_br', //	португальский (Бразилия)	português (Brasil)	бразильский португальский
         pt_CH: 'pt', //	португальский (Швейцария)	português (Suíça)
         pt_CV: 'pt', //	португальский (Кабо-Верде)	português (Cabo Verde)
         pt_GQ: 'pt', //	португальский (Экваториальная Гвинея)	português (Guiné Equatorial)
@@ -797,16 +797,16 @@ module.exports.languages = {
         yue_Hant_HK: 'en', //	кантонский (традиционный, Гонконг [САР])	粵語 (繁體，中華人民共和國香港特別行政區)
         zgh: 'en', //	тамазигхтский	ⵜⴰⵎⴰⵣⵉⵖⵜ
         zgh_MA: 'en', //	тамазигхтский (Марокко)	ⵜⴰⵎⴰⵣⵉⵖⵜ (ⵍⵎⵖⵔⵉⴱ)
-        zh: 'zh-cn', //	китайский	中文
-        zh_Hans: 'zh-cn', //	китайский (упрощенный)	中文（简体）	китайский, упрощенное письмо
-        zh_Hans_CN: 'zh-cn', //	китайский (упрощенный, Китай)	中文（简体，中国）	китайский, упрощенное письмо (Китай)
-        zh_Hans_HK: 'zh-cn', //	китайский (упрощенный, Гонконг [САР])	中文（简体，中国香港特别行政区）	китайский, упрощенное письмо (Гонконг [САР])
-        zh_Hans_MO: 'zh-cn', //	китайский (упрощенный, Макао [САР])	中文（简体，中国澳门特别行政区）	китайский, упрощенное письмо (Макао [САР])
-        zh_Hans_SG: 'zh-cn', //	китайский (упрощенный, Сингапур)	中文（简体，新加坡）	китайский, упрощенное письмо (Сингапур)
-        zh_Hant: 'zh-tw', //	китайский (традиционный)	中文（繁體）	китайский, традиционное письмо
-        zh_Hant_HK: 'zh-tw', //	китайский (традиционный, Гонконг [САР])	中文（繁體字，中國香港特別行政區）	китайский, традиционное письмо (Гонконг [САР])
-        zh_Hant_MO: 'zh-tw', //	китайский (традиционный, Макао [САР])	中文（繁體字，中國澳門特別行政區）	китайский, традиционное письмо (Макао [САР])
-        zh_Hant_TW: 'zh-tw', //	китайский (традиционный, Тайвань)	中文（繁體，台灣）	китайский, традиционное письмо (Тайвань)
+        zh: 'zh_cn', //	китайский	中文
+        zh_Hans: 'zh_cn', //	китайский (упрощенный)	中文（简体）	китайский, упрощенное письмо
+        zh_Hans_CN: 'zh_cn', //	китайский (упрощенный, Китай)	中文（简体，中国）	китайский, упрощенное письмо (Китай)
+        zh_Hans_HK: 'zh_cn', //	китайский (упрощенный, Гонконг [САР])	中文（简体，中国香港特别行政区）	китайский, упрощенное письмо (Гонконг [САР])
+        zh_Hans_MO: 'zh_cn', //	китайский (упрощенный, Макао [САР])	中文（简体，中国澳门特别行政区）	китайский, упрощенное письмо (Макао [САР])
+        zh_Hans_SG: 'zh_cn', //	китайский (упрощенный, Сингапур)	中文（简体，新加坡）	китайский, упрощенное письмо (Сингапур)
+        zh_Hant: 'zh_tw', //	китайский (традиционный)	中文（繁體）	китайский, традиционное письмо
+        zh_Hant_HK: 'zh_tw', //	китайский (традиционный, Гонконг [САР])	中文（繁體字，中國香港特別行政區）	китайский, традиционное письмо (Гонконг [САР])
+        zh_Hant_MO: 'zh_tw', //	китайский (традиционный, Макао [САР])	中文（繁體字，中國澳門特別行政區）	китайский, традиционное письмо (Макао [САР])
+        zh_Hant_TW: 'zh_tw', //	китайский (традиционный, Тайвань)	中文（繁體，台灣）	китайский, традиционное письмо (Тайвань)
         zu: 'en', //	зулу	isiZulu
         zu_ZA: 'en', //	зулу (Южно-Африканская Республика)	isiZulu (iNingizimu Afrika)
     }

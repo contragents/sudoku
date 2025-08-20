@@ -10,6 +10,7 @@ class Steam
 {
     const USER_ID_PARAM = 'steamId64';
     const PLAYER_NAME_PARAM = 'playerName';
+    const GREETING_BONUS = 1000;
 
     public static ?string $steamUser = null;
     public static ?int $commonId = null;

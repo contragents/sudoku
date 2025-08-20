@@ -13,6 +13,7 @@ use classes\GameUser;
 use classes\MonetizationService;
 use classes\ORM;
 use classes\Ru;
+use classes\Steam;
 use classes\T;
 
 class PlayerModel extends BaseModel
@@ -107,7 +108,8 @@ class PlayerModel extends BaseModel
                             // Начисляем приветственный бонус
                             BalanceModel::changeBalance(
                                 $commonId,
-                                MonetizationService::REWARD[AchievesModel::DAY_PERIOD],
+                                MonetizationService::REWARD[AchievesModel::DAY_PERIOD]
+                                + (Steam::isSteamApp() ? Steam::GREETING_BONUS : 0),
                                 BalanceHistoryModel::GREETING_DEPOSIT_TYPE,
                                 BalanceHistoryModel::TYPE_IDS[BalanceHistoryModel::GREETING_DEPOSIT_TYPE]
                             );
@@ -130,7 +132,8 @@ class PlayerModel extends BaseModel
                 // Начисляем приветственный бонус
                 BalanceModel::changeBalance(
                     $id,
-                    MonetizationService::REWARD[AchievesModel::DAY_PERIOD],
+                    MonetizationService::REWARD[AchievesModel::DAY_PERIOD]
+                    + (Steam::isSteamApp() ? Steam::GREETING_BONUS : 0),
                     BalanceHistoryModel::GREETING_DEPOSIT_TYPE,
                     BalanceHistoryModel::TYPE_IDS[BalanceHistoryModel::GREETING_DEPOSIT_TYPE]
                 );

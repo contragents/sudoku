@@ -1,4 +1,5 @@
 var isOnline = true;
+var isSteam = true;
 var errorMessage = 'no_internet';
 var lang = false;
 
@@ -20,8 +21,7 @@ function checkInternetConnection(callback) {
 
 checkInternetConnection((isConnected) => {
     if (isConnected) {
-        isOnline = true;
-        console.log('Internet-connection is active');
+        console.log('Internet connection is active');
     } else {
         isOnline = false;
         console.log('No Internet');
@@ -29,15 +29,15 @@ checkInternetConnection((isConnected) => {
 });
 
 const version = '1.0.0.3';
-const {app, BrowserWindow, ipcMain} = require('electron/main')
-const path = require('node:path')
-const {languages} = require('./locale.js')
+const {app, BrowserWindow, ipcMain} = require('electron/main');
+const path = require('node:path');
+const {languages} = require('./locale.js');
 try {
-    const steamworks = require("steamworks.js")
+    const steamworks = require("steamworks.js");
 
-    const client = steamworks.init()
-    var playerName = client.localplayer.getName()
-    var steamId64 = client.localplayer.getSteamId().steamId64
+    const client = steamworks.init();
+    var playerName = client.localplayer.getName();
+    var steamId64 = client.localplayer.getSteamId().steamId64;
 
     const steamLang = client.apps.currentGameLanguage();
     if (steamLang in languages) {
@@ -46,18 +46,18 @@ try {
         lang = 'en';
     }
 
-    //lang = languages['turkish']; // todo remove on release
+    console.log('current_language', lang);
+    console.log('available_game_languages', client.apps.availableGameLanguages());
 
-    // console.log('current_language', lang)
-    // console.log('available_game_languages', client.apps.availableGameLanguages())
     // /!\ Those 3 lines are important for Steam compatibility!
-    app.commandLine.appendSwitch("in-process-gpu")
-    app.commandLine.appendSwitch("disable-direct-composition")
-    app.allowRendererProcessReuse = false
+    app.commandLine.appendSwitch("in-process-gpu");
+    app.commandLine.appendSwitch("disable-direct-composition");
+    app.allowRendererProcessReuse = false;
 } catch (e) {
-    isOnline = false;
+    isSteam = false;
     errorMessage = 'no_steam_app';
     lang = false;
+    console.log('Steam app not loaded');
 }
 
 function handleCloseApp(event, param) {
@@ -66,16 +66,14 @@ function handleCloseApp(event, param) {
 
 var createWindow = true;
 
-//isOnline = false; // todo remove line afret tests
-
-if (isOnline) {
-    createWindow = () => {
+createWindow = () => {
+    if (isOnline && isSteam) {
         const win = new BrowserWindow({
             webPreferences: {
                 preload: path.join(__dirname, 'preload.js')
             },
             icon: path.join(__dirname, '/img/sudoku-coin.png'),
-            autoHideMenuBar: true, // todo включить на релизе
+            autoHideMenuBar: true, // todo включать на релизе - НУЖНО!
         })
 
         win.setBackgroundColor("#719998")
@@ -85,31 +83,29 @@ if (isOnline) {
             + '&playerName=' + encodeURIComponent(playerName)
             + '&l=' + lang
             + curVersion();
-        win.loadURL(url)
-    }
-} else {
-    createWindow = () => {
+        win.loadURL(url);
+    } else {
         const win = new BrowserWindow({
             webPreferences: {
                 preload: path.join(__dirname, 'preload.js')
             },
             icon: path.join(__dirname, '/img/sudoku-coin.png'),
-            autoHideMenuBar: true, // todo включить на релизе - НУЖНО!
-        })
-        win.setBackgroundColor("#719998")
-        // win.setFullScreen(true) // todo включить на релизе - а нужно??
-        win.loadURL(path.join(__dirname, 'no_internet.html?')
-            + '&l=' + languages['turkish'/*lang*/] // hard select language
-            + curVersion()
-            + '&message='
+            autoHideMenuBar: true, // todo включать на релизе - НУЖНО!
+        });
+        win.setBackgroundColor("#719998");
+        // win.setFullScreen(true) // при ошибке открываем уменьшенное окно
+        win.loadURL(path.join(__dirname, 'no_internet.html')
+            + '?'
+            + 'message='
             + encodeURIComponent(languages.phrases[errorMessage].get(lang))
             + '&ok='
             + encodeURIComponent(languages.phrases.ok_button_caption.get(lang))
             + '&title='
             + encodeURIComponent(languages.phrases.title.get(lang))
-        )
+        );
     }
 }
+
 
 app.whenReady().then(() => {
     if (!lang) {
@@ -123,9 +119,11 @@ app.whenReady().then(() => {
         }
     }
 
-    createWindow()
+    createWindow();
     app.on('activate', () => {
-        if (BrowserWindow.getAllWindows().length === 0) createWindow()
+        if (BrowserWindow.getAllWindows().length === 0) {
+            createWindow();
+        }
     })
 
     ipcMain.on('close-app', handleCloseApp);
@@ -145,12 +143,13 @@ app.whenReady().then(() => {
     });
 
     ipcMain.on('get-script', (event, filePath) => {
-        if(filePath === 'page_reload_event') {
+        if (filePath === 'page_reload_event') {
             scriptsAsked = {};
+
             return;
         }
 
-        if(!(filePath in scriptsAsked)) {
+        if (!(filePath in scriptsAsked)) {
             scriptsAsked[filePath] = true;
             const fileData = fs.readFileSync(filePath, "utf8");
             event.sender.send('script-from-main', filePath, fileData ? fileData : '');
@@ -160,7 +159,7 @@ app.whenReady().then(() => {
     });
 
     ipcMain.on('get-style', (event, filePath) => {
-        if(!(filePath in scriptsAsked)) {
+        if (!(filePath in scriptsAsked)) {
             scriptsAsked[filePath] = true;
             const fileData = fs.readFileSync(filePath, "utf8");
             event.sender.send('style-from-main', filePath, fileData ? fileData : '');
