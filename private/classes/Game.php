@@ -356,7 +356,7 @@ class Game
     protected function getPlayers()
     {
         $lastGame = Cache::get(self::GAMES_COUNTER);
-        // todo Добавить анализ названия игры, а не все игры подряд
+
         for ($i = $lastGame; $i > ($lastGame - 50); $i--) {
             $game = $this->getGameStatus($i);
             if ($game && $game instanceof GameStatus && $game->gameName === static::GAME_NAME && !empty($game->users)) {
@@ -386,7 +386,7 @@ class Game
             }
 
             $rangedOnlinePlayers = [
-                0 => date('H') < 6 ? rand(1, 10) : rand(15, 50),
+                0 => (count(self::$players ?: []) >= 50) ? count(self::$players) : rand(15, 50),
                 1900 => 0,
                 2000 => 0,
                 2100 => 0,
