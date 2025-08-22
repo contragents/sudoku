@@ -572,4 +572,9 @@ class BaseController
 
         exit;
     }
+
+    function testAction(): string
+    {
+        return print_r(apcu_cache_info(), true);
+    }
 }

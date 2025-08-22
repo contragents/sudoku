@@ -6,7 +6,11 @@
     "require": {
         "php": "^7.4||^8.0",
         "ext-redis": "*",
-      "ext-json": "*"
+      "ext-json": "*",
+        "deeplcom/deepl-php": "^1.12",
+        "symfony/http-client": "^5.4",
+        "nyholm/psr7": "^1.8",
+      "ext-apcu": "*"
     },
     "require-dev": {},
     "autoload": {

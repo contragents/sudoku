@@ -6,6 +6,7 @@
  * @property int $_common_id
  **/
 
+use classes\ApcuCache;
 use classes\Cache;
 use classes\DB;
 use classes\Game;
@@ -58,12 +59,17 @@ class PlayerModel extends BaseModel
      */
     public static function getPlayerCommonId(string $cookie, bool $createIfNotExist = false): ?int
     {
+        if($commonId = ApcuCache::get($cookie)) {
+            return $commonId;
+        }
+
         if (self::$cache[$cookie]['common_id'] ?? false) {
             return self::$cache[$cookie]['common_id'];
         }
 
         if ($commonId = self::getCommonID($cookie)) {
             self::$cache[$cookie]['common_id'] = $commonId;
+            ApcuCache::set($cookie, $commonId);
 
             return $commonId;
         }
@@ -75,6 +81,7 @@ class PlayerModel extends BaseModel
             // .. и если common_id установлен - возвращаем
             if ($commonIdCrossing) {
                 self::$cache[$cookie]['common_id'] = (int)$commonIdCrossing;
+                ApcuCache::set($cookie, (int)$commonIdCrossing);
 
                 return (int)$commonIdCrossing;
             }
@@ -127,7 +134,7 @@ class PlayerModel extends BaseModel
                 }
 
                 self::$cache[$cookie]['common_id'] = (int)$id;
-
+                ApcuCache::set($cookie, (int)$id);
 
                 // Начисляем приветственный бонус
                 BalanceModel::changeBalance(
