@@ -40,6 +40,8 @@ class BaseController
     const VERSION_DEFAULT_YANDEX = '1.0.0.3'; //Версия для яндекса для совместимости до модерации
     const VERSION_DEFAULT = '1.0.0.3'; // Версия для остальных
     const APP_PARAM = 'app';
+    const PAGE_HIDDEN_PARAM = 'page_hidden'; // = 'true' - значит вкладки скрыта/закрыта
+    const PAGE_HIDDEN_SLEEP_TIME = 10; // Если страница скрыта (невидна), мы ждем 10 секунд и отдаем норамльный ответ
 
     public static ?BaseController $instance = null;
     public Game $Game;
@@ -410,6 +412,10 @@ class BaseController
 
     public function statusCheckerAction(): string
     {
+        if (self::$Request[self::PAGE_HIDDEN_PARAM] ?? false === 'true') {
+            sleep(self::PAGE_HIDDEN_SLEEP_TIME);
+        }
+
         return Response::jsonResp($this->Game->checkGameStatus(), $this->Game);
     }
 

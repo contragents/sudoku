@@ -22,7 +22,7 @@ use BaseController as BC;
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
-    <link rel="stylesheet" type="text/css" href="css/choose_css_new_10.css">
+    <!--<link rel="stylesheet" type="text/css" href="css/choose_css_new_10.css">-->
 
 
     <meta property="og:locale" content="ru_RU">
@@ -51,7 +51,7 @@ use BaseController as BC;
                 6: '(img/sudoku/.*)$',
                 7: '(js/.*.js)$',
                 8: '(js/bootstrap_4.5.2/bootstrap.min.css)$',
-                9: '(css/tg_app_tuning.css)$',
+                // 9: '(css/tg_app_tuning.css)$',
             },
             exceptions: {
                 1: 'bank',
@@ -163,9 +163,14 @@ use BaseController as BC;
     <!--<link rel="stylesheet" type="text/css" href="js/bootstrap_4.5.2/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/tg_app_tuning.css">-->
     <script>
-        loader.importCSS('js/bootstrap_4.5.2/bootstrap.min.css');
-        loader.importCSS('css/tg_app_tuning.css');
+        // loader.importCSS('js/bootstrap_4.5.2/bootstrap.min.css');
+        // loader.importCSS('css/choose_css_new_10.css');
+        // loader.importCSS('css/tg_app_tuning.css');
     </script>
+
+    <link rel="stylesheet" type="text/css" href="js/bootstrap_4.5.2/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/tg_app_tuning.css">
+    <link rel="stylesheet" type="text/css" href="css/choose_css_new_10.css">
 
     <!--<script src="js/phaser_3.87/phaser.min.js"></script>-->
     <script>

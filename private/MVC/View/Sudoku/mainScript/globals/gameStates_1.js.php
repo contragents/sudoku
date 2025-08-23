@@ -1414,7 +1414,7 @@ function commonCallback(data) {
 
     responseData = data;
 
-    if (pageActive == 'hidden' && gameState != 'chooseGame') {
+    if (pageActive == 'hidden' && gameState != CHOOSE_GAME_STATE) {
         fetchGlobal(STATUS_CHECKER_SCRIPT)
             .then((data) => {
                 commonCallback(data);

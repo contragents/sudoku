@@ -116,6 +116,7 @@ const INIT_GAME_STATE = 'initGame';
 const INIT_RATING_GAME_STATE= 'initRatingGame';
 const GAME_RESULTS_STATE = 'gameResults';
 const START_GAME_STATE= 'startGame';
+const CHOOSE_GAME_STATE = 'chooseGame';
 
 const BAD_REQUEST = 400;
 const PAGE_NOT_FOUND = 404;
