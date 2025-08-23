@@ -9,8 +9,9 @@ npm install steamworks.js
 
 npm run start - просто запуск программы
 
-npm run make
+npm run make 
 Создает .exe и другие файлы в каталоге ./out/sudoku_electron-win32-x64
+Перед созданием выпуска поменять в main.js: const DOMAIN = '5-5.su'; // 'sudoku.box' //до todo На релизе поставить sudoku.box
 
 Нужно скопировать *.dll из папки node_modules/steamworks.js/dist/win64 
 в папку ./out/sudoku_electron-win32-x64/resources/app.asar.unpacked/node_modules/steamworks.js/dist/win64

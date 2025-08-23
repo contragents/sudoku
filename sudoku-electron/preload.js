@@ -19,6 +19,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     getStyle: (filePath, callback) => {
         ipcRenderer.send('get-style', filePath);
         ipcRenderer.on('style-from-main', (event, filePathBack, data) => {
+            console.log(filePathBack, data, callback, typeof callback);
             callback(filePathBack, data);
         });
     },

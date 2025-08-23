@@ -1,3 +1,4 @@
+const DOMAIN = '5-5.su'; // 'sudoku.box' //до todo На релизе поставить sudoku.box
 var isOnline = true;
 var isSteam = true;
 var errorMessage = 'no_internet';
@@ -6,7 +7,7 @@ var lang = false;
 const net = require('net');
 
 function checkInternetConnection(callback) {
-    const socket = net.createConnection(443, 'sudoku.box');
+    const socket = net.createConnection(443, DOMAIN);
 
     socket.on('connect', () => {
         socket.end();
@@ -78,7 +79,7 @@ createWindow = () => {
 
         win.setBackgroundColor("#719998")
         win.setFullScreen(true)
-        const url = 'https://sudoku.box/sudoku/?app=steam'
+        const url = `https://${DOMAIN}/sudoku/?app=steam`
             + '&steamId64=' + steamId64
             + '&playerName=' + encodeURIComponent(playerName)
             + '&l=' + lang
