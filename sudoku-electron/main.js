@@ -1,4 +1,4 @@
-const DOMAIN = '5-5.su'; // 'sudoku.box' //до todo На релизе поставить sudoku.box
+const DOMAIN = 'sudoku.box'; // '5-5.su' // todo На релизе поставить sudoku.box
 var isOnline = true;
 var isSteam = true;
 var errorMessage = 'no_internet';
