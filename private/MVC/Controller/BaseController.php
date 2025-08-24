@@ -93,9 +93,10 @@ class BaseController
 
         self::$User = $this->checkCookie();
 
-        self::$commonId = Tg::$commonId // авторизован через Телеграм или...
+        self::$commonId = Steam::$commonId // авторизован через Steam или...
+            ?? (Tg::$commonId // авторизован через Телеграм или...
             ?? (Yandex::$commonId // авторизован через Яндекс или...
-                ?? PlayerModel::getPlayerCommonId(self::$User, true));
+                ?? PlayerModel::getPlayerCommonId(self::$User, true)));
 
         self::$instance = $this;
 
@@ -120,7 +121,8 @@ class BaseController
 
     public static function FB_IMG_URL(): string
     {
-        return 'https://' . Config::DOMAIN() . '/' . SudokuGame::GAME_NAME . '/img/share/hor_640_360.png'; // todo Подставить имя игры
+        return 'https://' . Config::DOMAIN(
+            ) . '/' . SudokuGame::GAME_NAME . '/img/share/hor_640_360.png'; // todo Подставить имя игры
     }
 
     public static function GAME_URL(): string
@@ -217,6 +219,12 @@ class BaseController
 
     private function checkCookie(): ?string
     {
+        if (Steam::authorize()) {
+            if (Steam::$steamUser) {
+                return Steam::$steamUser;
+            }
+        }
+
         if (Tg::authorize()) {
             if (Tg::$tgUser) {
                 return Tg::$tgUser['user']['id'];
@@ -229,11 +237,6 @@ class BaseController
             }
         }
 
-        if (Steam::authorize()) {
-            if (Steam::$steamUser) {
-                return Steam::$steamUser;
-            }
-        }
 
         if (!isset($_COOKIE[Cookie::COOKIE_NAME])) {
             $_COOKIE = Cookie::setGetCook(null, Cookie::COOKIE_NAME);
@@ -581,6 +584,11 @@ class BaseController
 
     function testAction(): string
     {
-        return print_r(apcu_cache_info(), true);
+
+        print_r(\classes\ApcuCache::exists(76561199869241805));
+        print_r( \classes\ApcuCache::get(76561199869241805));
+        print_r(apcu_cache_info());
+
+        return '0';
     }
 }
