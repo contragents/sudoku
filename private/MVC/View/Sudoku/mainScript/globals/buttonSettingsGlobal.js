@@ -160,7 +160,7 @@ var buttons = {
             this.svgObject.bringToTop(this.svgObject.getByName('checkButton' + INACTIVE_MODE));
         }
     },
-    ...(!isYandexAppGlobal() && {
+    ...(!isYandexAppGlobal() && !isSteamGlobal() && {
         chatButton: {
             filename: 'chat2',
             x: botXY.x + knopkiWidth / 2,

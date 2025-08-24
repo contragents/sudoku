@@ -584,10 +584,11 @@ class BaseController
 
     function testAction(): string
     {
+        if (isset(self::$Request['flush'])) {
+            \classes\ApcuCache::flushAll();
+        }
 
-        print_r(\classes\ApcuCache::exists(76561199869241805));
-        print_r( \classes\ApcuCache::get(76561199869241805));
-        print_r(apcu_cache_info());
+        return (count(apcu_cache_info()['cache_list']));
 
         return '0';
     }
