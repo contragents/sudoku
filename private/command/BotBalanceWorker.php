@@ -1,19 +1,18 @@
 <?php
 
-use classes\Command;
 use classes\DB;
 use classes\Game;
 
 include_once __DIR__ . '/../../autoload.php';
 
-class BotBalanceWorker extends Command
+class BotBalanceWorker
 {
     const MAX_SUDOKU_FOR_BOT = 5000;
     const MIN_SUDOKU_PER_BOT = 1000;
 
     public function run()
     {
-        DB::queryValue(
+        print DB::queryInsert(
             "UPDATE balance 
 SET sudoku = sudoku + " . self::MAX_SUDOKU_FOR_BOT . " * rand() 
 WHERE
@@ -29,4 +28,4 @@ WHERE
     }
 }
 
-(new BotBalanceWorker(__FILE__))->run();
+(new BotBalanceWorker())->run();
