@@ -1,4 +1,6 @@
-const DOMAIN = '5-5.su'; //'sudoku.box'; // '5-5.su'; // todo На релизе поставить sudoku.box
+require('dotenv').config();
+
+const DOMAIN = process.env.DOMAIN; // '5-5.su'; //'sudoku.box'; // '5-5.su'; // todo На релизе поставить sudoku.box
 var isOnline = true;
 var isSteam = true;
 var errorMessage = 'no_internet';
