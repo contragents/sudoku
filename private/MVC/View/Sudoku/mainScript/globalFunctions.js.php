@@ -164,9 +164,10 @@ function genDivGlobal(i, isChange = false) {
 }
 
 document.addEventListener("visibilitychange", function () {
-    pageActive = document.visibilityState;
-
-    onVisibilityChange();
+    if (pageActive !== document.visibilityState) {
+        pageActive = document.visibilityState;
+        onVisibilityChange();
+    }
 });
 
 function newVisibilityStatus(status) {
