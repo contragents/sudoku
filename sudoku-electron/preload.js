@@ -22,4 +22,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
             callback(filePathBack, data);
         });
     },
+
+    openLink: (link) => {
+        ipcRenderer.send('open-link', link);
+    }
 })

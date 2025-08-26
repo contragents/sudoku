@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const DOMAIN = process.env.DOMAIN; // '5-5.su'; //'sudoku.box'; // '5-5.su'; // todo На релизе поставить sudoku.box
+const DOMAIN = process.env.DOMAIN; // '5-5.su' для локальной разработки, 'sudoku.box' - для PROD
 var isOnline = true;
 var isSteam = true;
 var errorMessage = 'no_internet';
@@ -32,7 +32,7 @@ checkInternetConnection((isConnected) => {
 });
 
 const version = '1.0.0.3';
-const {app, BrowserWindow, ipcMain} = require('electron/main');
+const {app, BrowserWindow, ipcMain, shell} = require('electron/main');
 const path = require('node:path');
 const {languages} = require('./locale.js');
 try {
@@ -109,7 +109,6 @@ createWindow = () => {
     }
 }
 
-
 app.whenReady().then(() => {
     if (!lang) {
         const systemLanguage = app.getLocale();
@@ -169,6 +168,10 @@ app.whenReady().then(() => {
         } else {
             console.log(filePath, 'Duplicate style query!');
         }
+    });
+
+    ipcMain.on('open-link', (event, link) => {
+        shell.openExternal(link);
     });
 });
 
