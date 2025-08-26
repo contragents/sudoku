@@ -415,7 +415,7 @@ class BaseController
 
     public function statusCheckerAction(): string
     {
-        if (self::$Request[self::PAGE_HIDDEN_PARAM] ?? false === 'true') {
+        if ((self::$Request[self::PAGE_HIDDEN_PARAM] ?? false) === 'true') {
             sleep(self::PAGE_HIDDEN_SLEEP_TIME);
         }
 
