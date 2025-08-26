@@ -56,6 +56,7 @@ class Game
         'bank_string' => 'getBankString',
         'is_opponent_active' => 'isOpponentActive',
         'chat' => 'getNewChatMessages',
+        'hidden_request' => 'isWindowHidden',
         self::SPECIAL_PARAMS => [
             StateMachine::STATE_GAME_RESULTS => [
                 'active_users' => 'getActiveUsersCount',
@@ -1284,6 +1285,11 @@ class Game
         return $this->gameStatus
             ? $this->gameStatus->bid * count($this->gameStatus->users)
             : null;
+    }
+
+    public function isWindowHidden(): bool
+    {
+        return (BC::$Request[BC::PAGE_HIDDEN_PARAM] ?? '') === 'hidden';
     }
 
     public function getBankString(): ?string
