@@ -169,6 +169,17 @@ document.addEventListener("visibilitychange", function () {
     onVisibilityChange();
 });
 
+function newVisibilityStatus(status) {
+    if (pageActive !== status) {
+        pageActive = status;
+        onVisibilityChange();
+    }
+}
+
+if(isSteamGlobal()) {
+    window.electronAPI.windowFocus(newVisibilityStatus);
+}
+
 function onVisibilityChange() {
     reportVisibilityChangeYandex();
 

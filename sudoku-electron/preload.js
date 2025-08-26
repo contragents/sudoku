@@ -25,5 +25,13 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
     openLink: (link) => {
         ipcRenderer.send('open-link', link);
-    }
+    },
+
+    windowFocus: (callback) => {
+        ipcRenderer.on('window-focus', (event, status) => {
+            if (typeof callback === 'function') {
+                callback(status);
+            }
+        });
+    },
 })

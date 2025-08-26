@@ -24,7 +24,7 @@ function checkInternetConnection(callback) {
 
 checkInternetConnection((isConnected) => {
     if (isConnected) {
-        console.log('Internet connection is active');
+        log('Internet connection is active');
     } else {
         isOnline = false;
         console.log('No Internet');
@@ -49,8 +49,8 @@ try {
         lang = 'en';
     }
 
-    console.log('current_language', lang);
-    console.log('available_game_languages', client.apps.availableGameLanguages());
+    log('current_language', lang);
+    log('available_game_languages', client.apps.availableGameLanguages());
 
     // /!\ Those 3 lines are important for Steam compatibility!
     app.commandLine.appendSwitch("in-process-gpu");
@@ -60,7 +60,7 @@ try {
     isSteam = false;
     errorMessage = 'no_steam_app';
     lang = false;
-    console.log('Steam app not loaded');
+    log('Steam app not loaded');
 }
 
 function handleCloseApp(event, param) {
@@ -68,10 +68,11 @@ function handleCloseApp(event, param) {
 }
 
 var createWindow = true;
+var mainWindow = false;
 
 createWindow = () => {
     if (isOnline && isSteam) {
-        const win = new BrowserWindow({
+        mainWindow = new BrowserWindow({
             webPreferences: {
                 preload: path.join(__dirname, 'preload.js')
             },
@@ -79,25 +80,25 @@ createWindow = () => {
             autoHideMenuBar: true, // todo включать на релизе - НУЖНО!
         })
 
-        win.setBackgroundColor("#719998")
-        win.setFullScreen(true)
+        mainWindow.setBackgroundColor("#719998")
+        mainWindow.setFullScreen(true)
         const url = `https://${DOMAIN}/sudoku/?app=steam`
             + '&steamId64=' + steamId64
             + '&playerName=' + encodeURIComponent(playerName)
             + '&l=' + lang
             + curVersion();
-        win.loadURL(url);
+        mainWindow.loadURL(url);
     } else {
-        const win = new BrowserWindow({
+        mainWindow = new BrowserWindow({
             webPreferences: {
                 preload: path.join(__dirname, 'preload.js')
             },
             icon: path.join(__dirname, '/img/sudoku-coin.png'),
             autoHideMenuBar: true, // todo включать на релизе - НУЖНО!
         });
-        win.setBackgroundColor("#719998");
+        mainWindow.setBackgroundColor("#719998");
         // win.setFullScreen(true) // при ошибке открываем уменьшенное окно
-        win.loadURL(path.join(__dirname, 'no_internet.html')
+        mainWindow.loadURL(path.join(__dirname, 'no_internet.html')
             + '?'
             + 'message='
             + encodeURIComponent(languages.phrases[errorMessage].get(lang))
@@ -112,7 +113,7 @@ createWindow = () => {
 app.whenReady().then(() => {
     if (!lang) {
         const systemLanguage = app.getLocale();
-        console.log('System language:', systemLanguage);
+        log('System language:', systemLanguage);
 
         if (systemLanguage in languages.icu) {
             lang = languages.icu[systemLanguage];
@@ -136,7 +137,7 @@ app.whenReady().then(() => {
     ipcMain.on('get-file', (event, filePath) => {
         fs.readFile(filePath, (err, data) => {
             if (err) {
-                console.log(err);
+                log(err);
                 event.sender.send('file-from-main', filePath, false);
             } else {
                 event.sender.send('file-from-main', filePath, data);
@@ -156,7 +157,7 @@ app.whenReady().then(() => {
             const fileData = fs.readFileSync(filePath, "utf8");
             event.sender.send('script-from-main', filePath, fileData ? fileData : '');
         } else {
-            console.log(filePath, 'Duplicate script query!');
+            log(filePath, 'Duplicate script query!');
         }
     });
 
@@ -166,15 +167,32 @@ app.whenReady().then(() => {
             const fileData = fs.readFileSync(filePath, "utf8");
             event.sender.send('style-from-main', filePath, fileData ? fileData : '');
         } else {
-            console.log(filePath, 'Duplicate style query!');
+            log(filePath, 'Duplicate style query!');
         }
     });
 
     ipcMain.on('open-link', (event, link) => {
         shell.openExternal(link);
     });
+
+    // События для всех окон приложения. Пока их только одно
+    app.on('browser-window-focus', () => {
+        log('Window get focus', 1);
+        mainWindow.webContents.send('window-focus', 'visible');
+    });
+
+    app.on('browser-window-blur', () => {
+        log('Window lost focus', 2);
+        mainWindow.webContents.send('window-focus', 'hidden');
+    });
 });
 
 function curVersion() {
     return '&version=' + version;
+}
+
+function log(...args) {
+    if(process.env.ENV === 'dev') {
+        console.log(...args);
+    }
 }
