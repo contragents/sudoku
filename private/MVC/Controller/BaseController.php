@@ -41,6 +41,7 @@ class BaseController
     const VERSION_DEFAULT = '1.0.0.3'; // Версия для остальных
     const APP_PARAM = 'app';
     const PAGE_HIDDEN_PARAM = 'page_hidden'; // = 'true' - значит вкладки скрыта/закрыта
+    const QUERY_NUMBER_PARAM = 'queryNumber'; // Номер запроса в текущей сессии
     const PAGE_HIDDEN_SLEEP_TIME = 10; // Если страница скрыта (невидна), мы ждем 10 секунд и отдаем норамльный ответ
 
     public static ?BaseController $instance = null;

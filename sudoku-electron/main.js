@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const DOMAIN = process.env.DOMAIN; // '5-5.su' для локальной разработки, 'sudoku.box' - для PROD
-var isOnline = true;
+var isOnline = null;
 var isSteam = true;
 var errorMessage = 'no_internet';
 var lang = false;
@@ -24,6 +24,7 @@ function checkInternetConnection(callback) {
 
 checkInternetConnection((isConnected) => {
     if (isConnected) {
+        isOnline = true;
         log('Internet connection is active');
     } else {
         isOnline = false;
@@ -110,6 +111,15 @@ createWindow = () => {
     }
 }
 
+function waitForIsOnlineChange(callback) {
+    const intervalId = setInterval(() => {
+        if (isOnline !== null) { // Проверяем, изменилась ли переменная
+            clearInterval(intervalId); // Останавливаем проверку
+            callback(); // Вызываем функцию обратного вызова с новым значением
+        }
+    }, 10); // Проверяем каждые 10 миллисекунд
+}
+
 app.whenReady().then(() => {
     if (!lang) {
         const systemLanguage = app.getLocale();
@@ -122,12 +132,16 @@ app.whenReady().then(() => {
         }
     }
 
-    createWindow();
-    app.on('activate', () => {
-        if (BrowserWindow.getAllWindows().length === 0) {
-            createWindow();
-        }
-    })
+    createW = function() {
+        createWindow();
+        app.on('activate', () => {
+            if (BrowserWindow.getAllWindows().length === 0) {
+                createWindow();
+            }
+        })
+    }
+
+    waitForIsOnlineChange(createW);
 
     ipcMain.on('close-app', handleCloseApp);
 
@@ -192,7 +206,7 @@ function curVersion() {
 }
 
 function log(...args) {
-    if(process.env.ENV === 'dev') {
+    if (process.env.ENV === 'dev') {
         console.log(...args);
     }
 }

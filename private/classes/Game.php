@@ -35,6 +35,7 @@ class Game
     const RATING_INIT_TIMEOUT = 360;
 
     const RESPONSE_PARAMS = [
+        'query_number' => 'getQueryNumber',
         'debug' => 'debug',
         'desk' => ['gameStatus' => ['desk' => 'desk']],
         'gameNumber' => ['gameStatus' => 'gameNumber'],
@@ -174,7 +175,10 @@ class Game
                 return $this;
             }
 
-            $this->doSaveGameState = true;
+            // Если пришел пакет с номером большим, чем предыдущий пакет, то состояние игры сохраняем, иначе нет
+            if (isset(BC::$Request[BC::QUERY_NUMBER_PARAM]) && BC::$Request[BC::QUERY_NUMBER_PARAM] > ($this->gameStatus->users[$this->numUser]->lastRequestNum ?? 0)) {
+                $this->doSaveGameState = true;
+            }
 
             //Забрали статус игры из кэша
             $this->gameStatus = $this->getGameStatus();
@@ -199,19 +203,16 @@ class Game
                 //Номер пользователя по порядку
                 $this->numUser = (int)$this->gameStatus->{$this->User};
 
-
-                if (isset($_GET['page_hidden']) && $_GET['page_hidden'] == 'true') {
-                    if (isset($_GET['queryNumber']) && $_GET['queryNumber'] < ($this->gameStatus->users[$this->numUser]->lastRequestNum ?? 0)) {
+                // Проверяем очередность пакетов и выбрасываем ошибку при ее нарушении
+                //if (isset($_GET['page_hidden']) && $_GET['page_hidden'] == 'true') {
+                    if (isset(BC::$Request[BC::QUERY_NUMBER_PARAM]) && BC::$Request[BC::QUERY_NUMBER_PARAM] <= ($this->gameStatus->users[$this->numUser]->lastRequestNum ?? 0)) {
                         throw new BadRequest('Num packet error when returned from page_hidden state');
                     }
-                }
+                //}
             } catch (BadRequest $e) {
                 $this->Response = BadRequest::sendBadRequest(
                     [
                         'err_msg' => $e->getMessage(),
-                        // 'err_file' => $e->getFile(),
-                        // 'err_line' => $e->getLine(),
-                        // 'err_context' => $e->getTrace(),
                     ]
                 );
 
@@ -220,7 +221,7 @@ class Game
 
             $this->gameStatus->users[$this->numUser]->lastRequestNum
                 =
-                $_GET['queryNumber'] ?? $this->gameStatus->users[$this->numUser]->lastRequestNum;
+                BC::$Request[BC::QUERY_NUMBER_PARAM] ?? $this->gameStatus->users[$this->numUser]->lastRequestNum;
 
             if (!(isset($_GET['page_hidden']) && $_GET['page_hidden'] == 'true')) {
                 //Обновили время активности, если это не закрытие вкладки
@@ -270,6 +271,11 @@ class Game
     public static function isBot(string $User): bool
     {
         return !(strstr($User, self::BOT_TPL) === false);
+    }
+
+    public function getQueryNumber(): ?int
+    {
+        return BC::$Request[BC::QUERY_NUMBER_PARAM] ?? null;
     }
 
     public static function getNewGameId(): int
@@ -589,7 +595,7 @@ class Game
                 $this->gameStatus->isGameEndedSaved = true;
             }
 
-            $this->gameStatus->users[$this->numUser]->lastRequestNum = $_GET['queryNumber'] ?? 1000;
+            $this->gameStatus->users[$this->numUser]->lastRequestNum = BC::$Request[BC::QUERY_NUMBER_PARAM] ?? 1000;
 
             $this->storeGameStatus();
         }
@@ -684,7 +690,7 @@ class Game
         $arr['noDialog'] = true;
 
         if ($queryNumber) {
-            $arr['queryNumber'] = $queryNumber;
+            $arr[BC::QUERY_NUMBER_PARAM] = $queryNumber;
         }
 
         return $arr;

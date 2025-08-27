@@ -75,7 +75,7 @@ async function fetchGlobalMVC(urlPart, param_name, param_data) {
 
 function commonParams() {
     return 'queryNumber='
-        + (queryNumber++)
+        + (++queryNumber)
         + '&lang='
         + lang
         + '&game_id='

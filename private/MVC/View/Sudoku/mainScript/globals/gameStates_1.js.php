@@ -1015,7 +1015,14 @@ function commonCallback(data) {
         return;
     }
 
-    if ('query_number' in data && data['query_number'] != (queryNumber - 1)) {
+    if ('query_number' in data && data.query_number != queryNumber) {
+        if (!requestSended && pageActive === 'hidden' && gameState !== CHOOSE_GAME_STATE) {
+            fetchGlobal(STATUS_CHECKER_SCRIPT)
+                .then((data) => {
+                    commonCallback(data);
+                });
+        }
+
         return;
     }
 
