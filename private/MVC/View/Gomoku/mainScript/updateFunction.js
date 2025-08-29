@@ -11,8 +11,9 @@ function (time, delta) {
         noNetworkImg.visible = false;
     }
 
-    if (gameState == 'chooseGame' && (queryNumber > 1))
+    if (gameState == 'chooseGame' && (queryNumber > 0))
         return;
+
     if (newCells.constructor === Array && Array.isArray(newCells[15])) {
 
         for (k = 100; k >= 0; k--)
@@ -35,13 +36,13 @@ function (time, delta) {
         newCells.splice(15, 1);
     }
     var flor = Math.floor(time / 1000);
-    //if ( (Math.random() > (1-(1/gameStates[gameState]['refresh']/60))) || (queryNumber == 1) ) {
+
     if (
         (
             (flor > lastQueryTime)
-            && ((flor % gameStates[gameState]['refresh']) === 0)
+            && ((flor % gameStates[gameState].refresh) === 0)
         )
-        || (queryNumber === 1)
+        || (queryNumber === 0)
     ) {
         if (requestToServerEnabled) {
             lastQueryTime = flor;
@@ -55,16 +56,12 @@ function (time, delta) {
     if (ochki_arr !== false)
         if ('activeUser' in responseData)
             for (k in ochki_arr)
-                if ((k == responseData['activeUser']) && (responseData['userNames'][k] !== '')) {
+                if ((k == responseData.activeUser) && (responseData.userNames[k] !== '')) {
                     let x = ochki_arr[k].x;
                     if (((flor % 2) === 0) && (flor > lastflor)) {
                         ochki_arr[k].visible = false;
-                        //ochki_arr[k].setFontSize(vremiaFontSizeDefault + 3);
-                        //ochki_arr[k].x = ochki_arr[k].x-13;
                     } else if (flor > lastflor) {
                         ochki_arr[k].visible = true;
-                        //ochki_arr[k].setFontSize(vremiaFontSizeDefault);
-                        //ochki_arr[k].x = ochki_arr[k].x+13;
                     }
                     lastflor = flor;
                 } else if (responseData['userNames'][k] === '')
@@ -79,32 +76,7 @@ function (time, delta) {
                     vremiaMinutes--;
                     vremiaSeconds = 59;
                 }
-                if (vremiaSeconds < 10)
-                    vremia.text = vremia.text.substr(0, vremia.text.length - 4) + vremiaMinutes + ':' + '0' + vremiaSeconds;
-                else
-                    vremia.text = vremia.text.substr(0, vremia.text.length - 4) + vremiaMinutes + ':' + vremiaSeconds;
-                if ((vremiaMinutes === 0) && (vremiaSeconds < 20)) {
-                    if (vremiaSeconds > 10)
-                        vremia.setColor('yellow');
-                    else {
-                        vremia.setColor('red');
-                        if ((flor % 2) === 0)
-                            vremiaFontSize = vremiaFontSizeDefault + vremiaFontSizeDelta;
-                        else
-                            vremiaFontSize = vremiaFontSizeDefault;
-                    }
-                } else {
-                    vremia.setColor('black');
-                    vremiaFontSize = vremiaFontSizeDefault;
-                }
-
-            } else if ((vremiaMinutes === 0) && (vremiaSeconds === 0)) {
-                if ((flor % 2) === 0)
-                    vremiaFontSize = vremiaFontSizeDefault + vremiaFontSizeDelta;
-                else
-                    vremiaFontSize = vremiaFontSizeDefault;
             }
-            vremia.setFontSize(vremiaFontSize);
         }
 
     if (gameState == 'myTurn')

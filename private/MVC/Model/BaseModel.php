@@ -234,7 +234,7 @@ class BaseModel
      * @param bool $createIfNotExists
      * @return static|null
      */
-    public static function getOneO(int $id, bool $createIfNotExists = false): ?object {
+    public static function getOneO(int $id, bool $createIfNotExists = false): ?self {
         $row = self::getOne($id);
 
         if (!empty($row)) {

@@ -11,8 +11,8 @@ use classes\ORM;
  * @property string $_updated_at
  * @property int $_tg_id
  * @property bool $_is_balance_hidden
+ * @property int $_user_type_id 1 - Site, 2 - TG, 3- Yandex, 4 - Steam
  **/
-
 class UserModel extends BaseModel
 {
     const TABLE_NAME = 'users';
@@ -20,17 +20,24 @@ class UserModel extends BaseModel
     const COMMON_ID_FIELD = self::ID_FIELD;
     const BALANCE_HIDDEN_FIELD = 'is_balance_hidden';
     const NAME_FIELD = 'name';
+    const TYPE_ID = '_user_type_id';
+    const TG_ID_FIELD = 'tg_id';
+
     const UPDATABLE_FIELDS = [self::NAME_FIELD, self::AVATAR_URL_FIELD];
 
     // public ?int $_id = null; // =common_id наследует
+    const STEAM_TYPE_ID = 4; // Тип юзера Стима
+
     public ?string $_avatar_url = null;
     public ?string $_name = null;
     public ?string $_created_at = null;
     public ?string $_updated_at = null;
     public ?int $_tg_id = null;
     public bool $_is_balance_hidden = false;
+    public int $_user_type_id = 1;
 
-    public static function updateUrl(int $commonId, string $url): bool {
+    public static function updateUrl(int $commonId, string $url): bool
+    {
         // Добавим версию для перекеширования
         if (strpos($url, '?') === false) {
             $url .= ('?ver=' . date('U'));
@@ -39,11 +46,13 @@ class UserModel extends BaseModel
         return self::updateFieldWithCreate($commonId, self::AVATAR_URL_FIELD, $url);
     }
 
-    public static function updateNickname(int $commonId, string $nickName): bool {
+    public static function updateNickname(int $commonId, string $nickName): bool
+    {
         return self::updateFieldWithCreate($commonId, self::NAME_FIELD, $nickName);
     }
 
-    private static function updateFieldWithCreate(int $commonId, string $field, string $value): bool {
+    private static function updateFieldWithCreate(int $commonId, string $field, string $value): bool
+    {
         if (!in_array($field, self::UPDATABLE_FIELDS)) {
             return false;
         }
@@ -72,7 +81,8 @@ class UserModel extends BaseModel
         return (bool)$res;
     }
 
-    public static function getNameByCommonId(int $commonId) {
+    public static function getNameByCommonId(int $commonId)
+    {
         return self::getOne($commonId)['name'] ?? false;
     }
 }

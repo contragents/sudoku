@@ -343,17 +343,23 @@ class BaseController
             $message = T::S('Your new game request awaits players response');
         } else {
             $message = T::S('Request was aproved! Starting new game');
+
+            $whoFirstInvited = $this->Game->gameStatus->invite;
+
             $this->Game->gameStatus->invite = self::$SM::NEW_INVITE_GAME_STARTED_STATE;
 
             // Если игрок подтверждает приглашение, то его отключают от игры, дают статус InitGame, помещают в очередь инвайта
             $this->Game->exitGame($this->Game->numUser);
 
             // Удаляем из игры пригласившего игрока
-            if (isset($this->Game->gameStatus->{$this->Game->gameStatus->invite})) {
-                $this->Game->exitGame($this->Game->gameStatus->{$this->Game->gameStatus->invite});
+            if (isset($this->Game->gameStatus->{$whoFirstInvited})) {
+                $this->Game->exitGame($this->Game->gameStatus->{$whoFirstInvited});
             }
 
-            $this->Game->Queue->storePlayerToInviteQueue(self::$User);
+            // Помещаем в очередь инвайтов обоих игроков
+            $this->Game->Queue->storePlayerToInviteQueue($whoFirstInvited);
+
+            return $this->Game->Queue->storePlayerToInviteQueue(self::$User);
         }
 
         return ['message' => $message, 'inviteStatus' => $this->Game->gameStatus->invite];

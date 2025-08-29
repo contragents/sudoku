@@ -48,7 +48,7 @@ var gameStates = {
             gameSubState = gameOldSubState;
             enableButtons();
             if ('queryNumber' in data) {
-                queryNumber = data['queryNumber'];
+                queryNumber = data.queryNumber;
             }
         },
         //message: 'Синхронизация с сервером...'
@@ -621,7 +621,7 @@ var gameStates = {
                             },
                         },
                     }),
-                    ...(!isTgBot()  && !isYandexAppGlobal() && !isSteamGlobal() && {
+                    ...(!isTgBot() && !isYandexAppGlobal() && !isSteamGlobal() && {
                         telegram: {
                             label: '<?= T::S('Play on') ?>',
                             className: 'btn-tg',
@@ -1001,21 +1001,22 @@ var gameStates = {
 
 var gameState = 'noGame';
 var gameSubState = 'waiting';
-var queryNumber = 1;
+var queryNumber = 0;
 var lastQueryTime = 0;
 var gameOldState = '';
 
 function commonCallback(data) {
-    if (('gameState' in data) && !(data['gameState'] in gameStates)) {
+    if (('gameState' in data) && !(data.gameState in gameStates)) {
         return;
     }
 
     if ('http_status' in data && (data['http_status'] === BAD_REQUEST || data['http_status'] === PAGE_NOT_FOUND)) {
-        console.log(data['message']);
         return;
     }
 
     if ('query_number' in data && data.query_number != queryNumber) {
+        logChatProcess(data);
+
         if (!requestSended && pageActive === 'hidden' && gameState !== CHOOSE_GAME_STATE) {
             fetchGlobal(STATUS_CHECKER_SCRIPT)
                 .then((data) => {
@@ -1035,30 +1036,34 @@ function commonCallback(data) {
     gameOldState = gameState;
     gameOldSubState = gameSubState;
 
-    if ('gameState' in data && gameState != data['gameState']) {
-        gameState = data['gameState'];
+    if ('gameState' in data && gameState !== data.gameState) {
+        gameState = data.gameState;
 
         if ('gameNumber' in data) {
-            gameNumber = data['gameNumber'];
+            gameNumber = data.gameNumber;
         }
     }
 
-    if (gameOldState != gameState) {
+    if (gameOldState !== gameState) {
         soundPlayed = false;
     }
 
     if (gameState === MY_TURN_STATE) {
-        if (pageActive == 'hidden') {
-            if(!isYandexAppGlobal()) {snd.play();}
-            soundPlayed = true;
+        if (pageActive === 'hidden') {
+            if (!isYandexAppGlobal()) {
+                snd.play();
+            }
         } else if (!soundPlayed) {
-            if(!isYandexAppGlobal()) {snd.play();}
-            soundPlayed = true;
+            if (!isYandexAppGlobal()) {
+                snd.play();
+            }
         }
+
+        soundPlayed = true;
     }
 
     if ('lang' in data && data.lang !== lang) {
-        lang = data['lang'];
+        lang = data.lang;
         bootbox.setLocale(convertLang2Bootbox());
     }
 
@@ -1072,12 +1077,12 @@ function commonCallback(data) {
 
     if (myUserNum === false) {
         if ('yourUserNum' in data) {
-            myUserNum = data['yourUserNum'];
+            myUserNum = data.yourUserNum;
         }
     }
 
     if ('gameSubState' in data) {
-        gameSubState = data['gameSubState'];
+        gameSubState = data.gameSubState;
     }
 
     console.log(gameOldState + '->' + gameState);
@@ -1100,7 +1105,7 @@ function commonCallback(data) {
         if (canOpenDialog) {
             if (gameState == 'initGame' || gameState == 'initRatingGame') {
                 dialog = bootbox.dialog({
-                    message: ('comments' in data) ? data['comments'] : gameStates[gameState].message,
+                    message: ('comments' in data) ? data.comments : gameStates[gameState].message,
                     onEscape: false,
                     closeButton: false,
                     size: 'small',
@@ -1122,11 +1127,11 @@ function commonCallback(data) {
                         intervalId = setInterval(function () {
                             var igrokiWaiting = '';
                             if ('gameSubState' in data)
-                                igrokiWaiting = "<br /><?= T::S('Players ready:') ?> " + data['gameSubState'];
+                                igrokiWaiting = "<br /><?= T::S('Players ready:') ?> " + data.gameSubState;
 
-                            if ('gameWaitLimit' in data ) {
+                            if ('gameWaitLimit' in data) {
                                 gWLimit = data.gameWaitLimit;
-                            } else if(!gWLimit) {
+                            } else if (!gWLimit) {
                                 gWLimit = <?= Game::GAME_DEFAULT_WAIT_LIMIT ?>
                             }
 
@@ -1156,18 +1161,18 @@ function commonCallback(data) {
                         intervalId = setInterval(function () {
                             if ('timeWaiting' in data)
                                 if (!tWaiting)
-                                    tWaiting = data['timeWaiting'];
+                                    tWaiting = data.timeWaiting;
                                 else {
-                                    data['timeWaiting'] = 0;
+                                    data.timeWaiting = 0;
                                     if (!tWaiting)
-                                        tWaiting = data['timeWaiting'];
+                                        tWaiting = data.timeWaiting;
                                 }
-                            dialog.find('.bootbox-body').html(data['comments'] +
+                            dialog.find('.bootbox-body').html(data.comments +
                                 '<br /><?= T::S('Time elapsed:') ?> ' +
                                 (tWaiting++) +
                                 'с' +
                                 '<br /><?= T::S('Time limit:') ?> ' +
-                                data['ratingGameWaitLimit'] +
+                                data.ratingGameWaitLimit +
                                 'c' +
                                 '<hr><?= T::S('You can start a new game if you wait for a long time') ?>');
                         }, 1000);
@@ -1175,15 +1180,15 @@ function commonCallback(data) {
 
             } else if (gameState == 'gameResults') {
                 if ('inviteStatus' in data) {
-                    if (data['inviteStatus'] == 'newGameStarting') {
+                    if (data.inviteStatus == 'newGameStarting') {
                         // document.location.reload(true); // Do nothing
-                    } else if (data['inviteStatus'] == 'waiting') {
-                        gameStates['gameResults']['results'](data);
+                    } else if (data.inviteStatus == 'waiting') {
+                        gameStates.gameResults.results(data);
                     } else {
-                        gameStates['gameResults']['decision'](data);
+                        gameStates.gameResults.decision(data);
                     }
                 } else {
-                    gameStates['gameResults']['results'](data);
+                    gameStates.gameResults.results(data);
                 }
             } else if (!('noDialog' in gameStates[gameState])) {
                 setTimeout(function () {
@@ -1209,7 +1214,7 @@ function commonCallback(data) {
                                 : comments;
                         } else {
                             message = 'message' in gameStates[gameState]
-                                ? gameStates[gameState]['message']
+                                ? gameStates[gameState].message
                                 : '&nbsp;';
                         }
 
@@ -1319,7 +1324,7 @@ function commonCallback(data) {
         if (players.bankBlock.svgObject === false) {
             buttons.logButton.svgObject.x = ('chatButton' in buttons ? buttons.chatButton.svgObject.x : buttons.checkButton.svgObject.x) - (buttons.checkButton.svgObject.width - buttons.logButton.svgObject.width) / 2;
             buttons.playersButton.svgObject.x += (buttons.resetButton.svgObject.width - buttons.playersButton.svgObject.width) / 2
-            if('chatButton' in buttons) {
+            if ('chatButton' in buttons) {
                 buttons.chatButton.svgObject.x = buttons.logButton.svgObject.x + (buttons.playersButton.svgObject.x - buttons.logButton.svgObject.x) / 2;
             } else {
                 buttons.logButton.svgObject.x = buttons.logButton.svgObject.x + (buttons.playersButton.svgObject.x - buttons.logButton.svgObject.x) / 2;
@@ -1335,9 +1340,9 @@ function commonCallback(data) {
         let resourceName = 'bankBlock_' + gameBankString + '_' + Date.now();
 
         let langModifier = (gameBank < 1000 && lang !== 'EN')
-            ?  (lang in SUPPORTED_LANGS
-                ? ('_' + (version > '1.0.0.2' ? lang : lang.toLowerCase()))
-                : ''
+            ? (lang in SUPPORTED_LANGS
+                    ? ('_' + (version > '1.0.0.2' ? lang : lang.toLowerCase()))
+                    : ''
             )
             : '';
 
@@ -1365,21 +1370,7 @@ function commonCallback(data) {
         });
     }
 
-    if ('log' in data)
-        for (k in data['log'])
-            gameLog.unshift(data['log'][k]);
-
-    if ('chat' in data && 'chatButton' in buttons) {
-        for (k in data.chat) {
-            if ((data.chat[k].indexOf('<?= T::S('You') ?>') + 1) !== 1) {
-                hasIncomingMessages = true;
-                buttons.chatButton.svgObject.bringToTop(buttons.chatButton.svgObject.getByName('chatButton' + ALARM_MODE));
-                buttons.chatButton.svgObject.getByName('chatButton' + ALARM_MODE).setData('alarm', true);
-            }
-
-            chatLog.unshift(data['chat'][k]);
-        }
-    }
+    logChatProcess(data);
 
     if ('winScore' in data && winScore === false) {
         winScore = data.winScore;
@@ -1426,6 +1417,26 @@ function commonCallback(data) {
             .then((data) => {
                 commonCallback(data);
             });
+    }
+}
+
+function logChatProcess(data) {
+    if ('log' in data) {
+        for (k in data.log) {
+            gameLog.unshift(data.log[k]);
+        }
+    }
+
+    if ('chat' in data && 'chatButton' in buttons) {
+        for (k in data.chat) {
+            if ((data.chat[k].indexOf('<?= T::S('You') ?>') + 1) !== 1) {
+                hasIncomingMessages = true;
+                buttons.chatButton.svgObject.bringToTop(buttons.chatButton.svgObject.getByName('chatButton' + ALARM_MODE));
+                buttons.chatButton.svgObject.getByName('chatButton' + ALARM_MODE).setData('alarm', true);
+            }
+
+            chatLog.unshift(data.chat[k]);
+        }
     }
 }
 

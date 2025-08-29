@@ -11,7 +11,7 @@ function (time, delta) {
         noNetworkImg.visible = false;
     }
 
-    if (gameState == 'chooseGame' && (queryNumber > 1)) {
+    if (gameState == 'chooseGame' && (queryNumber > 0)) {
         return;
     }
 
@@ -22,7 +22,7 @@ function (time, delta) {
             (flor > lastQueryTime)
             && ((flor % gameStates[gameState]['refresh']) === 0)
         )
-        || (queryNumber === 1)
+        || (queryNumber === 0)
     ) {
         if((isYandexAppGlobal() && uniqID) || !isYandexAppGlobal() || isYandexFakeGlobal()) {
             if (requestToServerEnabled) {

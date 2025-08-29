@@ -22,7 +22,8 @@ class GameUser
     public int $lostTurns = 0;
     public int $rating = 0;
     public int $common_id;
-    public array $logStack = [];
+    public array $logStack = []; // Стек логов пользователя. Наполняется и опустошается по мере отправки
+    public array $fullLog = []; // Логи пользователя. Наполняется и не опустошается. На случай перезагрузки игры
     protected array $comments = [];
     protected array $lastComment = []; // Комментарий на текущем языке юзера отдаем, если comments пуст
     public array $result_ratings = [];

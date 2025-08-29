@@ -165,7 +165,9 @@ class Queue
         } else {
             $prefsArray = $this->getUserPrefsArray($this->getUserPrefs());
             foreach($prefsArray as $prefAttr => $prefValue) {
-                @($this->queueUser->$prefAttr = $prefValue);
+                if(isset($prefValue)) {
+                    @($this->queueUser->$prefAttr = $prefValue);
+                }
             }
         }
 
@@ -739,7 +741,7 @@ class Queue
         return $this->caller->gameStarted(true);
     }
 
-    public function storePlayerToInviteQueue($User)
+    public function storePlayerToInviteQueue($User): array
     {
         $queueUser = self::getUserFromQueue(static::QUEUES["inviteplayers_waiters"], $User);
         if (!$queueUser) {

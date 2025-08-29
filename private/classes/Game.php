@@ -133,7 +133,9 @@ class Game
 
     public function debug(): ?array
     {
-        return json_decode(json_encode($this->gameStatus ?? []), true);
+        return Config::isDev()
+            ? json_decode(json_encode($this->gameStatus ?? []), true)
+            : null;
     }
 
     public function getCommonIdHash(): ?string
@@ -203,11 +205,16 @@ class Game
                 //Номер пользователя по порядку
                 $this->numUser = (int)$this->gameStatus->{$this->User};
 
+                if (isset(BC::$Request[BC::QUERY_NUMBER_PARAM]) && BC::$Request[BC::QUERY_NUMBER_PARAM] == 1) {
+                    // Сбрасываем номер реквеста пользователя при перезагрузке страницы с игрой
+                    $this->gameStatus->users[$this->numUser]->lastRequestNum = 0;
+                }
+
                 // Проверяем очередность пакетов и выбрасываем ошибку при ее нарушении
                 //if (isset($_GET['page_hidden']) && $_GET['page_hidden'] == 'true') {
-                    if (isset(BC::$Request[BC::QUERY_NUMBER_PARAM]) && BC::$Request[BC::QUERY_NUMBER_PARAM] <= ($this->gameStatus->users[$this->numUser]->lastRequestNum ?? 0)) {
-                        throw new BadRequest('Num packet error when returned from page_hidden state');
-                    }
+                if (isset(BC::$Request[BC::QUERY_NUMBER_PARAM]) && BC::$Request[BC::QUERY_NUMBER_PARAM] <= ($this->gameStatus->users[$this->numUser]->lastRequestNum ?? 0)) {
+                    throw new BadRequest('Num packet error when returned from page_hidden state');
+                }
                 //}
             } catch (BadRequest $e) {
                 $this->Response = BadRequest::sendBadRequest(
@@ -618,7 +625,7 @@ class Game
      */
     public function unsetUsersGameNumber(array $users)
     {
-        foreach($users as $user) {
+        foreach ($users as $user) {
             Cache::del(self::getCacheKey(self::GET_GAME_KEY . $user->cookie));
         }
     }
@@ -658,7 +665,11 @@ class Game
                 $this->storeGameResults($this->gameStatus->users[($this->numUser + 1) % 2]->ID);
 
                 foreach (T::SUPPORTED_LANGS as $lang) {
-                    $this->addToLog(T::S('is the only one left in the game - Victory!', null, $lang), $lang, ($this->numUser + 1) % 2);
+                    $this->addToLog(
+                        T::S('is the only one left in the game - Victory!', null, $lang),
+                        $lang,
+                        ($this->numUser + 1) % 2
+                    );
                 }
             }
 
@@ -704,8 +715,11 @@ class Game
 
         $log = [];
 
-        if (!isset($this->gameStatus->users[$this->numUser]->logStack[T::$lang])) {
-            $this->gameStatus->users[$this->numUser]->logStack[T::$lang] = [];
+        if (empty($this->gameStatus->users[$this->numUser]->logStack[T::$lang])) {
+            $this->gameStatus->users[$this->numUser]->logStack[T::$lang]
+                = BC::$Request[BC::QUERY_NUMBER_PARAM] == 1
+                ? ($this->gameStatus->users[$this->numUser]->fullLog[T::$lang] ?? [])
+                : [];
         }
 
         while ($logRecord = array_shift($this->gameStatus->users[$this->numUser]->logStack[T::$lang])) {
@@ -724,17 +738,22 @@ class Game
 
     public function addToLog($message, string $lang, ?int $numUser = null)
     {
-        if(!isset($this->gameStatus->gameLog[$lang])) {
+        if (!isset($this->gameStatus->gameLog[$lang])) {
             $this->gameStatus->gameLog[$lang] = [];
         }
         $this->gameStatus->gameLog[$lang][] = [$numUser ?? false, $message];
 
         foreach ($this->gameStatus->users as $num => $User) {
-            if(!isset($this->gameStatus->users[$num]->logStack[$lang])) {
+            if (!isset($this->gameStatus->users[$num]->logStack[$lang])) {
                 $this->gameStatus->users[$num]->logStack[$lang] = [];
             }
 
+            if (!isset($this->gameStatus->users[$num]->fullLog[$lang])) {
+                $this->gameStatus->users[$num]->fullLog[$lang] = [];
+            }
+
             $this->gameStatus->users[$num]->logStack[$lang][] = [$numUser ?? false, $message];
+            $this->gameStatus->users[$num]->fullLog[$lang][] = [$numUser ?? false, $message];
         }
     }
 
@@ -841,7 +860,11 @@ class Game
             } else {
                 $this->storeGameResults($this->User);
                 foreach (T::SUPPORTED_LANGS as $lang) {
-                    $this->addToLog(T::S('is the only one left in the game - Victory!', null, $lang), $lang, $this->numUser);
+                    $this->addToLog(
+                        T::S('is the only one left in the game - Victory!', null, $lang),
+                        $lang,
+                        $this->numUser
+                    );
                 }
 
                 return; // todo что делать если нет ни одного юзера - заканчиваем игру
@@ -909,11 +932,13 @@ class Game
                         DB::transactionCommit();
 
                         foreach (T::SUPPORTED_LANGS as $lang) {
-                            $this->addToLog(T::S('gets a win', null, $lang) . ': ' . T::S('{{sudoku_icon_15}}') . $sudokuCount, $lang);
+                            $this->addToLog(
+                                T::S('gets a win', null, $lang) . ': ' . T::S('{{sudoku_icon_15}}') . $sudokuCount,
+                                $lang
+                            );
                         }
                     }
                 }
-
             } else {
                 $results['lostUsers'][] = $user->ID;
             }
@@ -982,7 +1007,11 @@ class Game
                         $lang
                     )
                     . ' '
-                    . T::S('is attempting to make a turn out of his turn (turn #', [], $lang) . $this->gameStatus->turnNumber . ')',
+                    . T::S(
+                        'is attempting to make a turn out of his turn (turn #',
+                        [],
+                        $lang
+                    ) . $this->gameStatus->turnNumber . ')',
                     $lang
                 );
             }
@@ -1057,7 +1086,10 @@ class Game
             }
 
             foreach (T::SUPPORTED_LANGS as $lang) {
-                $this->gameStatus->users[$this->gameStatus->activeUser]->addComment(T::S('Time for the turn ran out', null, $lang), $lang);
+                $this->gameStatus->users[$this->gameStatus->activeUser]->addComment(
+                    T::S('Time for the turn ran out', null, $lang),
+                    $lang
+                );
             }
 
             // Добавили коммент о пропуске хода всем игрокам
@@ -1272,7 +1304,9 @@ class Game
 
         return $res . T::S('New game has started!', null, $lang) . ' <br />'
             . T::S('Get', null, $lang) . ' '
-            . VH::strong(T::S('[[number]] [[point]]', [$this->gameStatus->gameGoal, $this->gameStatus->gameGoal], $lang))
+            . VH::strong(
+                T::S('[[number]] [[point]]', [$this->gameStatus->gameGoal, $this->gameStatus->gameGoal], $lang)
+            )
             . VH::br()
             . $this->gameStatus->users[$this->gameStatus->activeUser]->usernameLangArray[$lang]
             . T::S(' is making a turn.', null, $lang)
@@ -1295,7 +1329,7 @@ class Game
 
     public function isWindowHidden(): bool
     {
-        return (BC::$Request[BC::PAGE_HIDDEN_PARAM] ?? '') === 'hidden';
+        return (BC::$Request[BC::PAGE_HIDDEN_PARAM] ?? '') === 'true';
     }
 
     public function getBankString(): ?string
