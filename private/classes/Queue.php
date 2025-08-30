@@ -63,7 +63,7 @@ class Queue
                 + $POST
             );
 
-            Cache::rpush('QueueUserCreation', $this->queueUser); // SUD-48
+            // Cache::rpush('QueueUserCreation', $this->queueUser); // SUD-48
         } catch (\Throwable $exception) {
             Cache::rpush('QueueUserErrors', $exception->__toString()); // SUD-48
         }
@@ -172,15 +172,6 @@ class Queue
         }
 
         return;
-
-        // SUD-418
-        if (isset($this->POST[self::TURN_TIME_PARAM_NAME])) {
-            Cache::setex(
-                static::PREFS_KEY . $this->User,
-                static::PREFERENCES_TTL,
-                $this->POST
-            );
-        }
     }
 
     public function getUserPrefs(?string $User = null): ?QueueUser
@@ -747,6 +738,13 @@ class Queue
         if (!$queueUser) {
 
             $queueUser = $this->getUserPrefs($User);
+
+            // Заполняем необходимые атрибуты
+            $queueUser->time = date('U');
+            $queueUser->cookie = $User;
+            $queueUser->last_ping_time = date('U');
+            $queueUser->common_id = PlayerModel::getPlayerCommonId($this->User, true);
+            $queueUser->rating = CommonIdRatingModel::getRating($queueUser->common_id, $this->caller::GAME_NAME);
 
             self::addUserToQueue(static::QUEUES['inviteplayers_waiters'], $queueUser);
         }
