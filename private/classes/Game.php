@@ -170,6 +170,11 @@ class Game
         } else {
             $this->currentGameUsers = $this->getGameUsers();
 
+            // Если пришел пакет с номером большим, чем предыдущий пакет, то состояние игры сохраняем, иначе нет
+            if (isset(BC::$Request[BC::QUERY_NUMBER_PARAM]) && BC::$Request[BC::QUERY_NUMBER_PARAM] > ($this->gameStatus->users[$this->numUser]->lastRequestNum ?? 0)) {
+                $this->doSaveGameState = true;
+            }
+
             if (!Cache::lock($this->currentGame)) {
                 //Вышли с Десинком, если не смогли получить Лок игры
                 $this->Response = $this->desync() + ['reason' => 'Game lock failed'];
@@ -177,10 +182,6 @@ class Game
                 return $this;
             }
 
-            // Если пришел пакет с номером большим, чем предыдущий пакет, то состояние игры сохраняем, иначе нет
-            if (isset(BC::$Request[BC::QUERY_NUMBER_PARAM]) && BC::$Request[BC::QUERY_NUMBER_PARAM] > ($this->gameStatus->users[$this->numUser]->lastRequestNum ?? 0)) {
-                $this->doSaveGameState = true;
-            }
 
             //Забрали статус игры из кэша
             $this->gameStatus = $this->getGameStatus();
@@ -212,8 +213,12 @@ class Game
 
                 // Проверяем очередность пакетов и выбрасываем ошибку при ее нарушении
                 //if (isset($_GET['page_hidden']) && $_GET['page_hidden'] == 'true') {
-                if (isset(BC::$Request[BC::QUERY_NUMBER_PARAM]) && BC::$Request[BC::QUERY_NUMBER_PARAM] <= ($this->gameStatus->users[$this->numUser]->lastRequestNum ?? 0)) {
-                    throw new BadRequest('Num packet error when returned from page_hidden state');
+                if (BC::$instance->Action === 'statusCheckerAction' && isset(BC::$Request[BC::QUERY_NUMBER_PARAM]) && BC::$Request[BC::QUERY_NUMBER_PARAM] <= ($this->gameStatus->users[$this->numUser]->lastRequestNum ?? 0)) {
+                    throw new BadRequest(
+                        'Num packet error when returned from page_hidden state. '
+                        . 'You sent: ' . BC::$Request[BC::QUERY_NUMBER_PARAM]
+                        . ' Player has: ' . ($this->gameStatus->users[$this->numUser]->lastRequestNum ?? 0)
+                    );
                 }
                 //}
             } catch (BadRequest $e) {

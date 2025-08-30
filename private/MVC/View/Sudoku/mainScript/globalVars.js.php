@@ -82,7 +82,6 @@ const STATS_TPL =  BASE_URL + COMMON_TPL_DIR + 'stats-modal-tpl.html';
 const SUBMIT_SCRIPT = 'turnSubmitter';
 const WORD_CHECKER_SCRIPT = 'word_checker.php';
 const STATUS_CHECKER_SCRIPT = 'statusChecker';
-const STATUS_HIDDEN_CHECKER_SCRIPT = 'statusHiddenChecker';
 const INIT_GAME_SCRIPT = 'initGame';
 const CABINET_SCRIPT = 'playerCabinet';
 const PLAYER_RATING_SCRIPT = 'players/info'; // todo ...

@@ -31,10 +31,10 @@ async function fetchGlobal(script, param_name = '', param_data = '') {
             : 500
     )
 
-    if (pageActive != 'hidden') {
+    //if (pageActive != 'hidden') {
         requestSended = true;
         requestTimestamp = (new Date()).getTime();
-    }
+    //}
 
     if (useLocalStorage) {
         return await fetchGlobalYowser(script, param_name, param_data);

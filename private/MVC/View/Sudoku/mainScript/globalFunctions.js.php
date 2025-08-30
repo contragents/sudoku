@@ -162,18 +162,22 @@ function genDivGlobal(i, isChange = false) {
         + (isChange ? styleEnd : divEnd));
 
 }
-
-document.addEventListener("visibilitychange", function () {
-    if (pageActive !== document.visibilityState) {
-        pageActive = document.visibilityState;
-        onVisibilityChange();
-    }
-});
+if(!isSteamGlobal()) {
+    document.addEventListener("visibilitychange", function () {
+        console.log('visibilitychange', 'pageActive:', pageActive, 'document.visibilityState:', document.visibilityState);
+        if (pageActive !== document.visibilityState) {
+            pageActive = document.visibilityState;
+            onVisibilityChange("visibilitychange");
+        }
+    });
+}
 
 function newVisibilityStatus(status) {
+    console.log('newVisibilityStatus','pageActive:', pageActive, 'new status:', pageActive);
+
     if (pageActive !== status) {
         pageActive = status;
-        onVisibilityChange();
+        onVisibilityChange('newVisibilityStatus');
     }
 }
 
@@ -181,9 +185,9 @@ if(isSteamGlobal()) {
     window.electronAPI.windowFocus(newVisibilityStatus);
 }
 
-function onVisibilityChange() {
+function onVisibilityChange(caller = '') {
     reportVisibilityChangeYandex();
-
+console.log('caller:', caller, 'onVisibilityChange', 'pageActive:', pageActive, 'document.visibilityState:', document.visibilityState)
     if (!requestSended && [MY_TURN_STATE, PRE_MY_TURN_STATE, OTHER_TURN_STATE, INIT_GAME_STATE, INIT_RATING_GAME_STATE].indexOf(gameState) >= 0) {
         if (pageActive === 'hidden') {
             fetchGlobal(STATUS_CHECKER_SCRIPT)

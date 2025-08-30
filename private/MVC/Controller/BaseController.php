@@ -80,6 +80,9 @@ class BaseController
 
         static::$Request = $request;
 
+        if ((self::$Request[self::PAGE_HIDDEN_PARAM] ?? false) === 'true') {
+            sleep(self::PAGE_HIDDEN_SLEEP_TIME);
+        }
 
         self::$Referer = self::decodeRefererQuery();
 
@@ -103,8 +106,6 @@ class BaseController
 
         $this->Action = $action . 'Action';
         $this->ActionRaw = $action;
-
-        sleep(self::SLEEP_ACTIONS[$action] ?? 0);
     }
 
     public static function saveGameStatus()
@@ -357,7 +358,7 @@ class BaseController
             }
 
             // Помещаем в очередь инвайтов обоих игроков
-            $this->Game->Queue->storePlayerToInviteQueue($whoFirstInvited);
+            // $this->Game->Queue->storePlayerToInviteQueue($whoFirstInvited);
 
             return $this->Game->Queue->storePlayerToInviteQueue(self::$User);
         }
@@ -408,13 +409,6 @@ class BaseController
         return Response::jsonResp([], $this->Game);
     }
 
-    public function statusHiddenCheckerAction(): string
-    {
-        sleep(10);
-
-        return $this->statusCheckerAction();
-    }
-
     public function playerCabinetAction(): string
     {
         return Response::jsonResp(UserProfile::playerCabinetInfo($this->Game), $this->Game);
@@ -422,10 +416,6 @@ class BaseController
 
     public function statusCheckerAction(): string
     {
-        if ((self::$Request[self::PAGE_HIDDEN_PARAM] ?? false) === 'true') {
-            sleep(self::PAGE_HIDDEN_SLEEP_TIME);
-        }
-
         return Response::jsonResp($this->Game->checkGameStatus(), $this->Game);
     }
 

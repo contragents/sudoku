@@ -1014,17 +1014,19 @@ function commonCallback(data) {
         return;
     }
 
-    if ('query_number' in data && data.query_number != queryNumber) {
-        logChatProcess(data);
+    if('hidden_request' in data && !data.hidden_request) {
+        if ('query_number' in data && data.query_number != queryNumber) {
+            logChatProcess(data);
 
-        if (!requestSended && pageActive === 'hidden' && gameState !== CHOOSE_GAME_STATE) {
-            fetchGlobal(STATUS_CHECKER_SCRIPT)
-                .then((data) => {
-                    commonCallback(data);
-                });
+            /*if (!requestSended && pageActive === 'hidden' && gameState !== CHOOSE_GAME_STATE) {
+                fetchGlobal(STATUS_CHECKER_SCRIPT)
+                    .then((data) => {
+                        commonCallback(data);
+                    });
+            }*/
+
+            return;
         }
-
-        return;
     }
 
     if (noNetworkImgOpponent !== false && 'is_opponent_active' in data && !data.is_opponent_active) {
