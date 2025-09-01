@@ -30,7 +30,7 @@ if (strpos($pathParts[1], 'ndex.php')) {
 $controller = ($pathParts[1] ?? false)
     ? (ucfirst($pathParts[1]) . 'Controller')
     : BaseController::DEFAULT_CONTROLLER;
-$action = $pathParts[2] ?: $controller::DEFAULT_ACTION;
+$action = ($pathParts[2] ?? '') ?: $controller::DEFAULT_ACTION;
 $subAction = $pathParts[3] ?? '';
 
 if (class_exists($controller) && method_exists($controller, $action . 'Action')) {

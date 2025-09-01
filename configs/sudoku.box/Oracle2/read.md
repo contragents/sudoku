@@ -24,4 +24,14 @@ pecl install redis
 nano /etc/php.ini
 вставить после [PHP] "extension=redis.so"
 
+Разрешить коннекты из php-fpm к mysql на другом хосте
+sudo setsebool httpd_can_network_connect_db 1
+
+Разрешить ЛЮБЫЕ коннекты по сети для php-fpm для REDIS
+sudo setsebool httpd_can_network_connect 1
+todo ПРОВЕРИТЬ, что эти настройки сохраняются после перезагрузки!!!
+
+
+
+
 
