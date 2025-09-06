@@ -43,6 +43,8 @@ class BaseController
     const PAGE_HIDDEN_PARAM = 'page_hidden'; // = 'true' - значит вкладки скрыта/закрыта
     const QUERY_NUMBER_PARAM = 'queryNumber'; // Номер запроса в текущей сессии
     const PAGE_HIDDEN_SLEEP_TIME = 10; // Если страница скрыта (невидна), мы ждем 10 секунд и отдаем норамльный ответ
+    const FLUSH_PARAM = 'flush';
+    const APCU_LIST_PARAM = 'apcu_list';
 
     public static ?BaseController $instance = null;
     public Game $Game;
@@ -579,6 +581,22 @@ class BaseController
         exit;
     }
 
+    function adminAction(): string
+    {
+        // todo Сделать админ панель с кнопками...
+        if(isset(self::$Request[self::FLUSH_PARAM])) {
+            \classes\ApcuCache::flushAll();
+
+            return 'OK';
+        }
+
+        if(isset(self::$Request[self::APCU_LIST_PARAM])) {
+            return print_r(apcu_cache_info(), true);
+        }
+
+        // todo Если параметры не заданы, отдаем view админ-панели
+    }
+
     function testAction(): string
     {
         if (isset(self::$Request['flush'])) {
@@ -586,7 +604,5 @@ class BaseController
         }
 
         return (count(apcu_cache_info()['cache_list']));
-
-        return '0';
     }
 }

@@ -399,7 +399,7 @@ class BaseModel
     }
 
     /**
-     * Simple custom selector wich makes when with field=value [AND field2=value2...] clause
+     * Simple custom selector which makes when with field=value [AND field2=value2...] clause
      * @param mixed $field - field name or array with field names
      * @param mixed $value - field desired value or array with corresponding values
      * @param false $isRaw
