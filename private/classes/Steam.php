@@ -24,7 +24,7 @@ class Steam
 
         $refererParams = [];
         parse_str(
-            parse_url(urldecode($_SERVER['HTTP_REFERER'] ?? ($_SERVER['REQUEST_URI'] ?? '')), PHP_URL_QUERY) ?? '',
+            parse_url(urldecode($_SERVER['HTTP_REFERER'] ?: ($_SERVER['REQUEST_URI'] ?? '')), PHP_URL_QUERY) ?? '',
             $refererParams
         );
 
@@ -108,10 +108,10 @@ class Steam
      * @param string|null $playerName
      * @return bool
      */
-    private static function refreshAvatar(int $commonId, ?int $steamUserId = null, ?string $playerName = null)
+    private static function refreshAvatar(int $commonId, ?int $steamUserId = null, ?string $playerName = null): bool
     {
         try {
-            // Все параметры заданы - создаем новую запись
+            // Все параметры заданы - получаем модель или создаем новую запись
             if ($steamUserId && isset($playerName)) {
                 $userModel = UserModel::getOneO($commonId)
                     ?: UserModel::new(
@@ -123,9 +123,11 @@ class Steam
                         ]
                     );
 
-                $userModel->save();
-            } // Иначе обновляем аватар по сохраненным данным
-            else {
+                // Обновляем ник Стим-юзера, если он прислан и изменился
+                if ($playerName && $userModel->_name !== $playerName) {
+                    $userModel->_name = $playerName;
+                }
+            } else {
                 $userModel = UserModel::getOneO(self::$commonId);
 
                 if (!$userModel) {
@@ -133,6 +135,7 @@ class Steam
                 }
             }
 
+            // Обновляем аватар
             $userModel->_avatar_url = self::getAvatarUrlFromApi($userModel->_tg_id);
 
             return $userModel->save();
