@@ -1,5 +1,7 @@
 
 this.input.on('dragstart', function (pointer, gameObject) {
+    dragBegin = gameObject.getData('letter');
+
     gameObject.depth = 100;
     let cellX = Math.round((gameObject.x - stepX - correctionX) / yacheikaWidth) - 1;
     let cellY = Math.round((gameObject.y - stepY - correctionY) / yacheikaWidth) - 1;
@@ -38,6 +40,8 @@ this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
 });
 
 this.input.on('dragend', function (pointer, gameObject) {
+    dragBegin = false;
+
     if (gameObject.x > stepX && gameObject.y < (ground.height + stepY)) {
         let cellX = Math.round((gameObject.x - stepX - correctionX) / yacheikaWidth) - 1;
         if (cellX < 0) {

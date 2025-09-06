@@ -699,7 +699,7 @@ var gameStates = {
         message: '<?= T::S('Your turn!') ?>',
         refresh: 15,
         action: function (data) {
-            gameStates['gameResults']['action'](data);
+            gameStates.gameResults.action(data);
             setSubmitButtonState();
             setCheckButtonState();
         },
@@ -708,10 +708,6 @@ var gameStates = {
             gameStates.myTurn.from_noGame(data);
         },
         from_initRatingGame: function (data) {
-            gameStates.startGame.from_initGame();
-            gameStates.myTurn.from_noGame(data);
-        },
-        from_initCoinGame: function (data) {
             gameStates.startGame.from_initGame();
             gameStates.myTurn.from_noGame(data);
         },
@@ -754,10 +750,6 @@ var gameStates = {
             placeFishki();
         },
         from_initRatingGame: function (data) {
-            gameStates.startGame.from_initGame();
-            gameStates.myTurn.from_noGame(data);
-        },
-        from_initCoinGame: function (data) {
             gameStates.startGame.from_initGame();
             gameStates.myTurn.from_noGame(data);
         },
@@ -1018,13 +1010,6 @@ function commonCallback(data) {
         if ('query_number' in data && data.query_number != queryNumber) {
             logChatProcess(data);
 
-            /*if (!requestSended && pageActive === 'hidden' && gameState !== CHOOSE_GAME_STATE) {
-                fetchGlobal(STATUS_CHECKER_SCRIPT)
-                    .then((data) => {
-                        commonCallback(data);
-                    });
-            }*/
-
             return;
         }
     }
@@ -1192,7 +1177,7 @@ function commonCallback(data) {
                 } else {
                     gameStates.gameResults.results(data);
                 }
-            } else if (!('noDialog' in gameStates[gameState])) {
+            } else if (!('noDialog' in gameStates[gameState]) && !dragBegin) {
                 setTimeout(function () {
                         bootbox.hideAll();
 

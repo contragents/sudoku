@@ -427,6 +427,23 @@ function initLotok() {
 function lotokFindSlotXY() {
     let XY = [];
     outer:
+        for (let i = 0; i < lotokCapacityY; i++)
+            for (let j = 0; j < lotokCapacityX; j++)
+                if (lotokCells[i][j] === false) {
+                    XY[0] = j;
+                    XY[1] = i;
+                    lotokCells[i][j] = true;
+
+                    break outer;
+                }
+
+    return XY;
+}
+
+
+function _lotokFindSlotXY() {
+    let XY = [];
+    outer:
         for (var i = 0; i < lotokCapacityY; i++)
             for (var j = 0; j < lotokCapacityX; j++)
                 if (lotokCells[i][j] === false) {
@@ -465,6 +482,12 @@ function lotokGetY(X, Y) {
 
 function lotokFreeXY(X, Y) {
     lotokCells[Y][X] = false;
+}
+
+function lotokFreeTotal() {
+    for (let i = 0; i < lotokCapacityY; i++)
+        for (let j = 0; j < lotokCapacityX; j++)
+            lotokFreeXY(j, i);
 }
 
 function placeToLotok(fishka) {
@@ -509,8 +532,34 @@ function enableButtons() {
     }
 }
 
-
 function placeFishki() {
+    let n = 9;
+
+    for (let i in container) {
+        if (container[i].getData('cellX')) {
+            cells[container[i].getData('cellX')][container[i].getData('cellY')][0] = false;
+            cells[container[i].getData('cellX')][container[i].getData('cellY')][1] = false;
+        }
+    }
+
+    lotokFreeTotal();
+
+    while (container.length) {
+        container.pop().destroy();
+    }
+
+    for (let i = 1; i <= n; i++) {
+        let lotokXY = lotokFindSlotXY();
+
+        container.push(getFishkaGlobal(i, lotokGetX(lotokXY[0], lotokXY[1]), lotokGetY(lotokXY[0], lotokXY[1]), this.game.scene.scenes[gameScene], true)
+            .setData('lotokX', lotokXY[0])
+            .setData('lotokY', lotokXY[1])
+        );
+    }
+}
+
+
+function _placeFishki() {
     let maxI = 0;
     let n = 9;
 
@@ -681,7 +730,6 @@ function clearContainerVarsGlobal() {
 //<?php include('globals/parseDeskGlobalFunction.js.php')?>
 //<?php include('globals/initCellsGlobalFunction.js')?>
 //<?php include('globals/findPlaceGlobalFunction.js')?>
-//<?php include('globals/changeFishkiGlobalFunction.js')?>
 //<?php include(ROOT_DIR . '/js/common_functions/bootBoxIsOpenedGlobalFunction.js.php')?>
 //<?php include(ROOT_DIR . '/js/common_functions/gadgetTypeFunctions.js.php')?>
 

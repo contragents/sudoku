@@ -1,5 +1,6 @@
 <?php
 
+use classes\ApcuCache;
 use classes\Cache;
 use classes\Config;
 use classes\Cookie;
@@ -585,7 +586,7 @@ class BaseController
     {
         // todo Сделать админ панель с кнопками...
         if(isset(self::$Request[self::FLUSH_PARAM])) {
-            \classes\ApcuCache::flushAll();
+            ApcuCache::flushAll();
 
             return 'OK';
         }
@@ -600,7 +601,7 @@ class BaseController
     function testAction(): string
     {
         if (isset(self::$Request['flush'])) {
-            \classes\ApcuCache::flushAll();
+            ApcuCache::flushAll();
         }
 
         return (count(apcu_cache_info()['cache_list']));

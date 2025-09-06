@@ -25,7 +25,9 @@ function submitButtonFunction() {
                     dialog = bootbox.alert({
                         message: ('message' in data && data['message'] !== '')
                             ? (data['message'] + '<br /> <?= T::S('Try sending again') ?>')
-                            : '<strong><?= T::S('Error connecting to server!') ?><br /> <?= T::S('Try sending again') ?></strong>',
+                            : '<strong><?= T::S('Error connecting to server!') ?><br /> <?= T::S(
+                                'Try sending again'
+                            ) ?></strong>',
                         size: 'small',
                         className: 'modal-settings modal-profile text-white',
                     });
@@ -102,7 +104,7 @@ function checkButtonFunction() {
     buttons.checkButton.setEnabled();
 }
 
-let cancelCallback = function() {
+let cancelCallback = function () {
     buttons.newGameButton.svgObject.setInteractive();
 
     return true;
@@ -125,7 +127,7 @@ function newGameButtonFunction(ignoreDialog = false) {
             size: 'medium',
             className: 'modal-settings modal-profile text-white',
             closeButton: false,
-            onEscape: function() {
+            onEscape: function () {
                 return cancelCallback();
             },
             buttons: {
@@ -200,8 +202,35 @@ function newGameButtonFunction(ignoreDialog = false) {
     }
 };
 
-
 function resetButtonFunction(ignoreBootBox = false) {
+    if (ignoreBootBox === false)
+        if (bootBoxIsOpenedGlobal())
+            return;
+
+    for (let k in container) {
+        if(dragBegin && container.getData('letter') === dragBegin) {
+            continue;
+        }
+
+        if ((container[k].getData('lotokX') === false) && (container[k].getData('lotokY') === false)) {
+
+            if ((container[k].getData('cellX') !== false) && (container[k].getData('cellY') !== false)) {
+                cells[container[k].getData('cellX')][container[k].getData('cellY')][0] = false;
+                cells[container[k].getData('cellX')][container[k].getData('cellY')][1] = false;
+            }
+
+            container[k].setData('cellX', false);
+            container[k].setData('cellY', false);
+            container[k].setInteractive();
+            placeToLotok(container[k]);
+        }
+    }
+
+    setSubmitButtonState();
+    setCheckButtonState();
+};
+
+function _resetButtonFunction(ignoreBootBox = false) {
     if (ignoreBootBox === false)
         if (bootBoxIsOpenedGlobal())
             return;
@@ -253,18 +282,24 @@ function chatButtonFunction() {
 
     let isSelectedPlaced = false;
     if (ochki_arr.length > 1) {
-        radioButtons += '<div style="font-size: 70%;" class="form-check form-check-inline"><input class="form-check-input" type="radio" id="chatall" name="chatTo" value="NULL" checked> <label class="form-check-label" for="chatall"><?= T::S('For everyone') ?></label></div>';
+        radioButtons += '<div style="font-size: 70%;" class="form-check form-check-inline"><input class="form-check-input" type="radio" id="chatall" name="chatTo" value="NULL" checked> <label class="form-check-label" for="chatall"><?= T::S(
+            'For everyone'
+        ) ?></label></div>';
         isSelectedPlaced = true;
     }
 
     for (k in ochki_arr) {
         if (k != myUserNum) {
-            radioButtons += '<div style="font-size: 70%;" class="form-check form-check-inline"><input class="form-check-input" type="radio" id="to_' + (k == 0 ? '0' : k) + '" name="chatTo" value="' + (k == 0 ? '0' : k) + '" ' + (isSelectedPlaced ? '' : ' checked ') + '> <label class="form-check-label" for="to_' + (k == 0 ? '0' : k) + '"><?= T::S('To Player') ?>' + (parseInt(k, 10) + 1) + '</label></div>';
+            radioButtons += '<div style="font-size: 70%;" class="form-check form-check-inline"><input class="form-check-input" type="radio" id="to_' + (k == 0 ? '0' : k) + '" name="chatTo" value="' + (k == 0 ? '0' : k) + '" ' + (isSelectedPlaced ? '' : ' checked ') + '> <label class="form-check-label" for="to_' + (k == 0 ? '0' : k) + '"><?= T::S(
+                'To Player'
+            ) ?>' + (parseInt(k, 10) + 1) + '</label></div>';
             isSelectedPlaced = true;
         }
     }
 
-    // radioButtons += '<div style="font-size: 70%;" class="form-check form-check-inline"><input class="form-check-input" type="radio" id="to_words" name="chatTo" value="words" ' + (isSelectedPlaced ? '' : ' checked ') + '> <label class="form-check-label" for="to_words"><?= T::S('Word matching') ?></label></div>';
+    // radioButtons += '<div style="font-size: 70%;" class="form-check form-check-inline"><input class="form-check-input" type="radio" id="to_words" name="chatTo" value="words" ' + (isSelectedPlaced ? '' : ' checked ') + '> <label class="form-check-label" for="to_words"><?= T::S(
+    'Word matching'
+) ?></label></div>';
 
     let textInput = '<div class="input-group input-group-lg">  <div class="input-group-prepend"></div>  <input type="text" id="chattext" class="form-control" name="messageText"></div>';
 
@@ -272,7 +307,9 @@ function chatButtonFunction() {
 
     dialog = bootbox.dialog({
         title: '</h5>'
-            + '<h6>&nbsp;&nbsp;<?= T::S('Player support and chat at') ?> <a target="_blank" title="<?= T::S('Join group') ?>" href="'
+            + '<h6>&nbsp;&nbsp;<?= T::S('Player support and chat at') ?> <a target="_blank" title="<?= T::S(
+                'Join group'
+            ) ?>" href="'
             + '<?= T::S('game_bot_url') ?>'
             + '">Telegram</a> </h6>'
             + '<h5><?= T::S('Send an in-game message') ?>',
@@ -530,8 +567,7 @@ function playersButtonFunction() {
 }
 
 function claimIncome() {
-    if(!commonId || !commonIdHash)
-    {
+    if (!commonId || !commonIdHash) {
         return;
     }
 

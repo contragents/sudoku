@@ -103,7 +103,6 @@ const PRIZES_SCRIPT_URL = 'stats/leaders'
 const NEW_GAME_SCRIPT = 'newGame';
 const INVITE_SCRIPT = 'inviteToNewGame';
 
-const CHANGE_FISHKI_SCRIPT = 'change_fishki.php';
 const COOKIE_CHECKER_SCRIPT = 'cookie_checker.php';
 const SET_AVATAR_SCRIPT = 'set_player_avatar_url.php';
 const HOR = 'horizontal';
@@ -192,6 +191,7 @@ var cells = [];
 var newCells = [];
 var fixedContainer = [];
 var container = [];
+var dragBegin = false;
 var yacheikaWidth = 32 * 2;
 var correctionX = 6 * 2;
 var correctionY = -7 * 2;
@@ -215,8 +215,6 @@ if (windowInnerWidth > windowInnerHeight) {
     var lotokY = fishkiXY.y + 20 * 2;
     var lotokCellStep = 40 * 2;
     var lotokCellStepY = lotokCellStep;
-    var lotokCapacityX = 10;
-    var lotokCapacityY = 2;
     var fullscreenXY = {x: gameWidth - gameHeight - fullscreenButtonSize / 2, y: fullscreenButtonSize / 2 + 16};
     var backY = (gameHeight - 2000) * Math.random();
     var backX = (gameWidth - 2000) * Math.random();
@@ -252,22 +250,22 @@ if (windowInnerWidth > windowInnerHeight) {
     if (buttonHeightKoef == 1) {
     fishkaScale = 1.2;
     var lotokCellStep = 40 * 2;
-    var lotokCapacityX = 9;
 } else {
     fishkaScale = buttonHeightKoef;
     var lotokCellStep = 40 * 2 * buttonHeightKoef;
-    var lotokCapacityX = 9;
 }
 
     var lotokCellStepY = lotokCellStep * buttonHeightKoef;
     buttonStepY = buttonStepY * buttonHeightKoef;
 
-    var lotokCapacityY = 1;
     var fullscreenXY = {x: gameWidth - fullscreenButtonSize / 2 - 8, y: gameHeight - fullscreenButtonSize / 2 - 8};
     var backY = 100 + (gameWidth - 50) * Math.random();
     var backX = -1 * gameWidth * Math.random();
     var backScale = 1; // не используем, хз как работает setscale в Фазере
 }
+
+var lotokCapacityX = 9;
+var lotokCapacityY = 1;
 
 var buttonHeight = topHeight;
 
