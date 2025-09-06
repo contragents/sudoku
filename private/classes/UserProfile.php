@@ -34,16 +34,16 @@ class UserProfile
 
         $refs = RefModel::getCustomO(RefModel::COMMON_ID_FIELD, '=', BaseController::$commonId, true);
         try {
-        $message['refs'] = [];
-        if ($refs) {
-            foreach ($refs as $ref) {
-                $message['refs'][] = [
-                    $ref->_name,
-                    MonetizationService::REWARD[AchievesModel::DAY_PERIOD] . '&nbsp;' . T::S('{{sudoku_icon_20}}')
-                ];
+            $message['refs'] = [];
+            if ($refs) {
+                foreach ($refs as $ref) {
+                    $message['refs'][] = [
+                        $ref->_name,
+                        MonetizationService::REWARD[AchievesModel::DAY_PERIOD] . '&nbsp;' . T::S('{{sudoku_icon_20}}')
+                    ];
+                }
             }
-        }
-            } catch(\Throwable $e) {
+        } catch (\Throwable $e) {
         }
 
         $transactions = PaymentModel::selectO(
@@ -93,9 +93,7 @@ class UserProfile
         }
 
         $message['name'] = ($userData->_name ?? null)
-            ?: PlayerModel::getPlayerName(
-                new GameUser(['ID' => BaseController::$User, 'common_id' => BaseController::$commonId])
-            );
+            ?: PlayerModel::getPlayerName(new GameUser(['common_id' => BaseController::$commonId]));
 
         $message['text'] = '';
         $message['form'][] = [

@@ -1370,7 +1370,7 @@ function Leaderboard() {
         },
 
         getModal: function () {
-            return fetch(BASE_URL + 'tpl/common/leaderboard-modal-tpl_' + lang + '.html')
+            return fetch(LEADERBOARD_TPL + lang + '.html')
                 .then((response) => response.text())
                 .then((template) => {
                     return this.fetchDefault().then(async () => {

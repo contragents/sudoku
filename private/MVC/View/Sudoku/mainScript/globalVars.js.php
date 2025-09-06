@@ -78,6 +78,7 @@ const COMMON_TPL_DIR = 'tpl/common/';
 const PROFILE_TPL =  BASE_URL + COMMON_TPL_DIR + ((!isYandexAppGlobal() && !isSteamGlobal()) ? 'profile-modal-tpl_1.html' : 'profile-modal-tpl_yandex.html');
 const FAQ_TPL = BASE_URL + COMMON_TPL_DIR + 'faq-modal-tpl_';
 const STATS_TPL =  BASE_URL + COMMON_TPL_DIR + 'stats-modal-tpl.html';
+var LEADERBOARD_TPL = BASE_URL + COMMON_TPL_DIR + 'leaderboard-modal-tpl_';
 
 const SUBMIT_SCRIPT = 'turnSubmitter';
 const WORD_CHECKER_SCRIPT = 'word_checker.php';

@@ -461,18 +461,10 @@ class AchievesModel extends BaseModel
         return $res;
     }
 
+    // todo можно заменить везде сразу на PlayerModel::getPlayerName(
     public static function getPlayerNameByCommonId(int $commonId): string
     {
-        $cookie = PlayerModel::getOne($commonId)['cookie'] ?? '';
-
-        return PlayerModel::getPlayerName(
-            new GameUser(
-                [
-                    'ID' => $cookie,
-                    'common_id' => $commonId
-                ]
-            )
-        );
+        return PlayerModel::getPlayerName(new GameUser(['common_id' => $commonId]));
     }
 
     public static function getActive(string $gameName, string $type = '', string $period = ''): array

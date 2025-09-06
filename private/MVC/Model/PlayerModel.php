@@ -20,7 +20,6 @@ use classes\T;
 class PlayerModel extends BaseModel
 {
     const TABLE_NAME = 'players';
-    const PLAYER_NAMES_TABLE_NAME = 'player_names';
 
     const RATING_CACHE_PREFIX = 'erudit.rating_cache_';
 
@@ -59,7 +58,7 @@ class PlayerModel extends BaseModel
      */
     public static function getPlayerCommonId(string $cookie, bool $createIfNotExist = false): ?int
     {
-        if($commonId = ApcuCache::get($cookie)) {
+        if ($commonId = ApcuCache::get($cookie)) {
             return $commonId;
         }
 
@@ -218,7 +217,7 @@ class PlayerModel extends BaseModel
 
     public static function getPlayerName(GameUser $user)
     {
-        if (Game::isBot($user->ID)) {
+        if (Game::isBot($user->ID ?? '')) {
             $config = include(__DIR__ . '/../../../configs/conf.php');
 
             return T::translit(
@@ -227,78 +226,51 @@ class PlayerModel extends BaseModel
             );
         }
 
-        $commonId = $user->common_id;
-
-        $userModel = UserModel::getOneO($commonId);
+        $userModel = UserModel::getOneO($user->common_id);
         if ($userModel && !empty($userModel->_name)) {
             return $userModel->_name;
         }
 
-        $idSource = $user->ID;
+        $sintName = md5($user->common_id);
+        $letterName = '';
 
-        if (
-        $res = DB::queryValue(
-            "SELECT name FROM player_names 
-            WHERE
-            some_id=" . Game::hash_str_2_int($idSource)
-            . " LIMIT 1"
-        )
-        ) {
-            return $res;
-        } else {
-            $sintName = $user->ID;
-            $letterName = '';
+        foreach (str_split($sintName) as $index => $lowByte) {
+            $letterNumber = base_convert("0x" . $lowByte, 16, 10)
+                + base_convert("0x" . substr($sintName, $index < 5 ? $index : 0, 1), 16, 10);
 
-            foreach (str_split($sintName) as $index => $lowByte) {
-                $letterNumber = base_convert("0x" . $lowByte, 16, 10)
-                    + base_convert("0x" . substr($sintName, $index < 5 ? $index : 0, 1), 16, 10);
-
-                if (!isset(Ru::$bukvy[$letterNumber])) {
-                    //Английская версия
-                    $letterNumber = number_format(round(34 + $letterNumber * (59 - 34 + 1) / 30, 0), 0);
-                }
-
-                if (Ru::$bukvy[$letterNumber][3] == false) { // нет ошибки - класс неизвестен
-                    $letterNumber = 31; // меняем плохую букву на букву Я
-                }
-
-                if ($letterName == '') {
-                    if ($letterNumber == 28) {
-                        continue; // Не ставим Ь в начало ника
-                    }
-                    $letterName = Ru::$bukvy[$letterNumber][0];
-                    $soglas = Ru::$bukvy[$letterNumber][3];
-                    continue;
-                }
-
-                if (mb_strlen($letterName) >= 6) {
-                    break;
-                }
-
-                if (Ru::$bukvy[$letterNumber][3] <> $soglas) {
-                    $letterName .= Ru::$bukvy[$letterNumber][0];
-                    $soglas = Ru::$bukvy[$letterNumber][3];
-                    continue;
-                }
+            if (!isset(Ru::$bukvy[$letterNumber])) {
+                //Английская версия
+                $letterNumber = number_format(round(34 + $letterNumber * (59 - 34 + 1) / 30, 0), 0);
             }
 
-            // Перевести автогенеренные ники на латиницу
-            $letterName = T::translit($letterName, T::$lang !== T::RU_LANG);
+            if (Ru::$bukvy[$letterNumber][3] == false) { // нет ошибки - класс неизвестен
+                $letterNumber = 31; // меняем плохую букву на букву Я
+            }
 
-            return mb_strtoupper(mb_substr($letterName, 0, 1), 'UTF-8') . mb_substr($letterName, 1);
-        }
-    }
+            if ($letterName == '') {
+                if ($letterNumber == 28) {
+                    continue; // Не ставим Ь в начало ника
+                }
+                $letterName = Ru::$bukvy[$letterNumber][0];
+                $soglas = Ru::$bukvy[$letterNumber][3];
+                continue;
+            }
 
-    private static function enrichTopRatings(array $topRatings)
-    {
-        foreach ($topRatings as $num => &$playerArr) {
-            foreach ($playerArr as $numPlayer => &$player) {
-                $player['avatar_url'] = self::getAvatarUrl($player[self::COMMON_ID_FIELD]);
-                $player['name'] = self::getPlayerName(new GameUser(['common_id' => $player[self::COMMON_ID_FIELD]]));
+            if (mb_strlen($letterName) >= 6) {
+                break;
+            }
+
+            if (Ru::$bukvy[$letterNumber][3] <> $soglas) {
+                $letterName .= Ru::$bukvy[$letterNumber][0];
+                $soglas = Ru::$bukvy[$letterNumber][3];
+                continue;
             }
         }
 
-        return $topRatings;
+        // Перевести автогенеренные ники на латиницу
+        $letterName = T::translit($letterName, T::$lang !== T::RU_LANG);
+
+        return mb_strtoupper(mb_substr($letterName, 0, 1), 'UTF-8') . mb_substr($letterName, 1);
     }
 
     public static function getTop($rating)
