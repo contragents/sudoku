@@ -177,6 +177,7 @@ var buttonStepX = 10 * 2;
 var buttonStepY = 50 * 2;
 
 var requestSended = false;
+var hiddenRequestSended = false;
 var requestTimestamp = (new Date()).getTime();
 const normalRequestTimeout = 500;
 
@@ -310,6 +311,8 @@ var fullImgID = false;
 var fullImgWidth = 0;
 
 var soundPlayed = false;
+var lastSoundPlayedTimestamp = 0;
+const SOUND_TIMEOUT = 10000;
 var instruction = '';
 
 //<?php include('globals/tgGlobalFunction.js')?>

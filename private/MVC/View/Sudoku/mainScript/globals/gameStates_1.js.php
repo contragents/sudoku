@@ -1006,7 +1006,7 @@ function commonCallback(data) {
         return;
     }
 
-    if('hidden_request' in data && !data.hidden_request) {
+    if ('hidden_request' in data && !data.hidden_request) {
         if ('query_number' in data && data.query_number != queryNumber) {
             logChatProcess(data);
 
@@ -1037,7 +1037,8 @@ function commonCallback(data) {
 
     if (gameState === MY_TURN_STATE) {
         if (pageActive === 'hidden') {
-            if (!isYandexAppGlobal()) {
+            if (!isYandexAppGlobal() && (((new Date()).getTime() - lastSoundPlayedTimestamp) > SOUND_TIMEOUT)) {
+                lastSoundPlayedTimestamp = (new Date()).getTime();
                 snd.play();
             }
         } else if (!soundPlayed) {
@@ -1047,6 +1048,7 @@ function commonCallback(data) {
         }
 
         soundPlayed = true;
+
     }
 
     if ('lang' in data && data.lang !== lang) {
@@ -1399,7 +1401,7 @@ function commonCallback(data) {
 
     responseData = data;
 
-    if (!requestSended && pageActive == 'hidden' && gameState != CHOOSE_GAME_STATE) {
+    if (!requestSended && pageActive === 'hidden' && gameState !== CHOOSE_GAME_STATE) {
         fetchGlobal(STATUS_CHECKER_SCRIPT)
             .then((data) => {
                 commonCallback(data);

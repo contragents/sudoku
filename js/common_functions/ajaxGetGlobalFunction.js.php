@@ -31,10 +31,11 @@ async function fetchGlobal(script, param_name = '', param_data = '') {
             : 500
     )
 
-    //if (pageActive != 'hidden') {
-        requestSended = true;
-        requestTimestamp = (new Date()).getTime();
-    //}
+    if (pageActive === 'hidden') {
+        hiddenRequestSended = true;
+    }
+    requestSended = true;
+    requestTimestamp = (new Date()).getTime();
 
     if (useLocalStorage) {
         return await fetchGlobalYowser(script, param_name, param_data);
@@ -60,6 +61,7 @@ async function fetchGlobalMVC(urlPart, param_name, param_data) {
     );
 
     requestSended = false;
+    hiddenRequestSended = false;
 
     if (response.status === BAD_REQUEST || response.status === PAGE_NOT_FOUND) {
         return {message: response.statusText, status: "error", http_status: response.status};
@@ -111,6 +113,7 @@ async function fetchGlobalNominal(script, param_name, param_data) {
     );
 
     requestSended = false;
+    hiddenRequestSended = false;
 
     if (response.status === BAD_REQUEST || response.status === PAGE_NOT_FOUND) {
         return {message: response.statusText, status: "error", http_status: response.status};
@@ -153,6 +156,7 @@ async function fetchGlobalYowser(script, param_name, param_data) {
     );
 
     requestSended = false;
+    hiddenRequestSended = false;
 
     if (response.status === BAD_REQUEST || response.status === PAGE_NOT_FOUND) {
         return {message: response.statusText, status: "error", http_status: response.status};

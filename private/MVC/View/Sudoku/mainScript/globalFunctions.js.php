@@ -290,10 +290,11 @@ function savePlayerAvatar() {
 
     var formData = new FormData($('#superForm')[0]);
 
-    if (pageActive != 'hidden') {
-        requestSended = true;
-        requestTimestamp = (new Date()).getTime();
+    if (pageActive === 'hidden') {
+        hiddenRequestSended = true;
     }
+    requestSended = true;
+    requestTimestamp = (new Date()).getTime();
 
     // todo cooki url-parameters for yandex browser in yandex game
     let URL = BASE_URL + AVATAR_UPLOAD_SCRIPT

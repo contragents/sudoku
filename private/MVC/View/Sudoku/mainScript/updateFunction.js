@@ -2,7 +2,13 @@
 function (time, delta) {
 
     let dateGetTime = (new Date()).getTime();
-    if (isUserBlockActive && requestSended && (dateGetTime - requestTimestamp > normalRequestTimeout)) {
+    if (
+        isUserBlockActive
+        && requestSended
+        && !hiddenRequestSended
+        && (dateGetTime - requestTimestamp > normalRequestTimeout)
+        && pageActive !== 'hidden'
+    ) {
         noNetworkImg.visible = true;
         noNetworkImg.alpha = (dateGetTime - requestTimestamp) < (normalRequestTimeout * 2)
             ? (dateGetTime - requestTimestamp - normalRequestTimeout) / 1000
@@ -24,7 +30,7 @@ function (time, delta) {
         )
         || (queryNumber === 0)
     ) {
-        if((isYandexAppGlobal() && uniqID) || !isYandexAppGlobal() || isYandexFakeGlobal()) {
+        if ((isYandexAppGlobal() && uniqID) || !isYandexAppGlobal() || isYandexFakeGlobal()) {
             if (requestToServerEnabled) {
                 lastQueryTime = flor;
                 fetchGlobal(STATUS_CHECKER_SCRIPT)
@@ -50,22 +56,22 @@ function (time, delta) {
         }
     }
 
-    if (gameState == MY_TURN_STATE) {
-        if ((vremiaMinutes === 0) && (vremiaSeconds <= 10) && buttons['submitButton']['svgObject'].input.enabled) {
+    if (gameState === MY_TURN_STATE) {
+        if ((vremiaMinutes === 0) && (vremiaSeconds <= 10) && buttons.submitButton.svgObject.input.enabled) {
             if ((flor % 2) === 0) {
-                buttons['submitButton']['svgObject']
-                    .bringToTop(buttons['submitButton']['svgObject']
+                buttons.submitButton.svgObject
+                    .bringToTop(buttons.submitButton.svgObject
                         .getByName('submitButton' + ALARM_MODE));
             } else {
-                buttons['submitButton']['svgObject']
-                    .bringToTop(buttons['submitButton']['svgObject']
+                buttons.submitButton.svgObject
+                    .bringToTop(buttons.submitButton.svgObject
                         .getByName('submitButton' + OTJAT_MODE));
             }
         }
     }
 
-    if (gameState == MY_TURN_STATE || gameState == PRE_MY_TURN_STATE || gameState == OTHER_TURN_STATE) {
-        let activeUserBlockName = (gameState == MY_TURN_STATE) ? 'youBlock' : ('player' + (+activeUser + 1) + 'Block');
+    if ([MY_TURN_STATE, PRE_MY_TURN_STATE, OTHER_TURN_STATE].indexOf(gameState) >= 0) {
+        let activeUserBlockName = (gameState === MY_TURN_STATE) ? 'youBlock' : ('player' + (+activeUser + 1) + 'Block');
         let timerContainer = players.timerBlock.svgObject;
 
         if ((flor % 2) === 0) {
@@ -79,7 +85,7 @@ function (time, delta) {
         }
     }
 
-    if (gameState == 'gameResults') {
+    if (gameState === GAME_RESULTS_STATE) {
         if ((flor % 2) === 0) {
             buttons.newGameButton.svgObject
                 .bringToTop(buttons.newGameButton.svgObject
