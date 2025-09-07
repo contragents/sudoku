@@ -208,20 +208,20 @@ function resetButtonFunction(ignoreBootBox = false) {
             return;
 
     for (let k in container) {
-        if(dragBegin && container.getData('letter') === dragBegin) {
+        if ((container[k].getData('cellX') !== false) && (container[k].getData('cellY') !== false)) {
+            cells[container[k].getData('cellX')][container[k].getData('cellY')][0] = false;
+            cells[container[k].getData('cellX')][container[k].getData('cellY')][1] = false;
+        }
+
+        container[k].setData('cellX', false);
+        container[k].setData('cellY', false);
+        container[k].setInteractive();
+
+        if(dragBegin && container[k].getData('letter') === dragBegin) {
             continue;
         }
 
         if ((container[k].getData('lotokX') === false) && (container[k].getData('lotokY') === false)) {
-
-            if ((container[k].getData('cellX') !== false) && (container[k].getData('cellY') !== false)) {
-                cells[container[k].getData('cellX')][container[k].getData('cellY')][0] = false;
-                cells[container[k].getData('cellX')][container[k].getData('cellY')][1] = false;
-            }
-
-            container[k].setData('cellX', false);
-            container[k].setData('cellY', false);
-            container[k].setInteractive();
             placeToLotok(container[k]);
         }
     }

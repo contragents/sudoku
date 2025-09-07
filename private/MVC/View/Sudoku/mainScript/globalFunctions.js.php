@@ -558,7 +558,6 @@ function placeFishki() {
     }
 }
 
-
 function _placeFishki() {
     let maxI = 0;
     let n = 9;
