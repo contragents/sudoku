@@ -217,11 +217,14 @@ class PlayerModel extends BaseModel
 
     public static function getPlayerName(GameUser $user)
     {
-        if (Game::isBot($user->ID ?? '')) {
-            $config = include(__DIR__ . '/../../../configs/conf.php');
-
+        $config = include(__DIR__ . '/../../../configs/conf.php');
+        if (Game::isBot($user->ID ?? '') || in_array($user->common_id, $config['bot_common_ids'])) {
             return T::translit(
-                $config['botNames'][str_replace('botV3#', '', $user->ID)] ?? 'John Doe',
+                $config['botNames'][str_replace(
+                    'botV3#',
+                    '',
+                    $user->ID ?? (self::getFirstCommonIdRecordO($user->common_id)->_cookie ?? '')
+                )] ?? 'John Doe',
                 T::$lang !== T::RU_LANG
             );
         }
