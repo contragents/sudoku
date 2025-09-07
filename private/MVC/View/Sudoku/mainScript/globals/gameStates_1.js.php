@@ -1092,7 +1092,7 @@ function commonCallback(data) {
         }
 
         if (canOpenDialog) {
-            if (gameState == 'initGame' || gameState == 'initRatingGame') {
+            if (gameState === INIT_GAME_STATE || gameState === INIT_RATING_GAME_STATE) {
                 dialog = bootbox.dialog({
                     message: ('comments' in data) ? data.comments : gameStates[gameState].message,
                     onEscape: false,
@@ -1101,7 +1101,7 @@ function commonCallback(data) {
                     className: 'modal-settings modal-profile text-white',
                     buttons: {
                         cancel: {
-                            label: '<?= T::S('New game') ?>',
+                            label: '<?= T::S('Cancel') ?>',
                             className: 'btn-danger',
                             callback: function () {
                                 newGameButtonFunction(true);
