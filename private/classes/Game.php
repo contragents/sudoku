@@ -1231,10 +1231,13 @@ class Game
             )
             . VH::br()
             . T::S('rating_changed', null, $lang)
-            . "{$ratingsChanged['prev_rating']} -> "
-            . VH::strong(
-                "{$ratingsChanged['new_rating']} (" . ($isWinner ? '+' : '') . "{$ratingsChanged['delta_rating']})",
-                ['style' => 'color:' . ($isWinner ? '#00ff00' : 'red') . ';']
+            . VH::span(
+                "{$ratingsChanged['prev_rating']} -> "
+                . VH::strong(
+                    "{$ratingsChanged['new_rating']} (" . ($isWinner ? '+' : '') . "{$ratingsChanged['delta_rating']})",
+                    ['style' => 'color:' . ($isWinner ? '#00ff00' : 'red') . ';']
+                ),
+                ['style' => 'white-space: nowrap;']
             )
             . ($this->gameStatus->bid
                 ? (

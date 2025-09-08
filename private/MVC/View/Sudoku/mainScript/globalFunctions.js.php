@@ -173,7 +173,7 @@ if(!isSteamGlobal()) {
 }
 
 function newVisibilityStatus(status) {
-    console.log('newVisibilityStatus','pageActive:', pageActive, 'new status:', pageActive);
+    console.log('newVisibilityStatus','pageActive:', pageActive, 'new status:', status);
 
     if (pageActive !== status) {
         pageActive = status;
@@ -187,7 +187,7 @@ if(isSteamGlobal()) {
 
 function onVisibilityChange(caller = '') {
     reportVisibilityChangeYandex();
-console.log('caller:', caller, 'onVisibilityChange', 'pageActive:', pageActive, 'document.visibilityState:', document.visibilityState)
+    console.log('caller:', caller, 'onVisibilityChange', 'pageActive:', pageActive, 'document.visibilityState:', document.visibilityState)
     if (!requestSended && [MY_TURN_STATE, PRE_MY_TURN_STATE, OTHER_TURN_STATE, INIT_GAME_STATE, INIT_RATING_GAME_STATE].indexOf(gameState) >= 0) {
         if (pageActive === 'hidden') {
             fetchGlobal(STATUS_CHECKER_SCRIPT)

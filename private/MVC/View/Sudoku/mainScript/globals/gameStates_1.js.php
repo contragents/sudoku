@@ -684,7 +684,7 @@ var gameStates = {
             buttons.submitButton.setDisabled();
         },
         message: '<?= T::S('Game selection - please wait') ?>',
-        refresh: 10
+        refresh: 3
     },
     initRatingGame: {
         1: 'waiting', 2: 'done',
