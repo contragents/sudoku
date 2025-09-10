@@ -30,48 +30,13 @@
 						</div>
 						<div class="d-flex flex-column flex-grow-1 flex-shrink-1 pl-2">
 							<p class="main-info-id flex-fill">{{Player ID}} <span>{{common_id}}</span></p>
-							<div class="flex-grow-0">
-								<label class="file-label">
-									<input class="form-control form-control-sm" id="player_avatar_file" name="url"
-										type="file" placeholder="" style="opacity:0;">
-								</label>
-							</div>
-							<div class="d-flex flex-fill">
-								<button type="submit" id="file_upload_action_button" class="btn btn-sm ml-auto"
-									onclick="savePlayerAvatar();return false;" disabled>
-                                    {{Save}}</button>
-                                <script>
-                                    $(function () {
-                                        $('input[type="file"]').change(function () {
-                                            if ($(this).val() != "") {
-                                                $(this).css('opacity', '100%');
-                                                $('#file_upload_action_button').removeAttr('disabled');
-                                            }else{
-                                                $(this).css('opacity', '0');
-                                                $('#file_upload_action_button').attr('disabled','disabled');
-                                            }
-                                        });
-                                    })
-                                </script>
-							</div>
 						</div>
-
 					</div>
 				</div>
 				<div class="box mb-0">
 					<span class="nickname d-block mb-1" id="playersNikname">{{name}}</span>
 					<div class="d-flex">
 						<div class="flex-eq"></div>
-						<div class="nickname-inpit-wrap">
-							<input id="player_name" type="text" name="name" class="form-control"
-								placeholder="{{Input new nickname}}" maxlength="16">
-						</div>
-						<div class="flex-eq d-flex">
-							<button type="submit" class="btn btn-sm ml-auto"
-								onclick="savePlayerName($('#player_name').val(),{{common_id}});return false;">
-                                {{Save}}
-							</button>
-						</div>
 					</div>
 					<div class="rating-list-wrap">
 						<ul class="rating-list d-flex flex-column">

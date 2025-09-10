@@ -11,7 +11,7 @@ bootbox.setLocale(convertLang2Bootbox());
 
 var version = '<?= BC::$version ?>';
 
-const SUPPORTED_LANGS = <?= T::getSupportedLangsForJS() ?> ;
+const SUPPORTED_LANGS = <?= T::getSupportedLangsForJS() ?>;
 
 const BASE_URL = '<?= SudokuController::GAME_URL() ?>';
 
@@ -42,7 +42,7 @@ var blinkCellsCounter = 0;
 const FALL_BACK_COOKIE = '<?= COOKIE::getPersonalCookie() ?>';
 var cookieStored = false;
 var useLocalStorage = false;
-if(localStorage != 'undefined') {
+if (localStorage != 'undefined') {
     useLocalStorage = !!localStorage.<?= Cookie::COOKIE_NAME ?>;
     if (useLocalStorage) {
         cookieStored = localStorage.<?= Cookie::COOKIE_NAME ?>;
@@ -65,19 +65,25 @@ var playerScores = {
 // vars initializing in chooseGame state END
 
 // SUDOKU VARS
-const sudokuSet1Column = new Set([1,4,7]);
-const sudokuSet2Column = new Set([2,5,8]);
-const sudokuSet3Column = new Set([3,6,9]);
-const sudoku1RowCorrectionLower = new Set([3,4,5,6,7]);
+const sudokuSet1Column = new Set([1, 4, 7]);
+const sudokuSet2Column = new Set([2, 5, 8]);
+const sudokuSet3Column = new Set([3, 6, 9]);
+const sudoku1RowCorrectionLower = new Set([3, 4, 5, 6, 7]);
 var sudokuMistakesContainer = [];
 var sudokuChecksContainer = [];
 // SUDOKU VARS END
 
 const SUDOKU_PRICE = <?= MonetizationService::SUDOKU_PRICE ?>;
 const COMMON_TPL_DIR = 'tpl/common/';
-const PROFILE_TPL =  BASE_URL + COMMON_TPL_DIR + ((!isYandexAppGlobal() && !isSteamGlobal()) ? 'profile-modal-tpl_1.html' : 'profile-modal-tpl_yandex.html');
+const PROFILE_TPL = BASE_URL + COMMON_TPL_DIR
++ (isYandexAppGlobal()
+    ? 'profile-modal-tpl_yandex.html'
+    : (isSteamGlobal()
+        ? 'profile-modal-tpl_steam.html'
+        : 'profile-modal-tpl_1.html')
+    );
 const FAQ_TPL = BASE_URL + COMMON_TPL_DIR + 'faq-modal-tpl_';
-const STATS_TPL =  BASE_URL + COMMON_TPL_DIR + 'stats-modal-tpl.html';
+const STATS_TPL = BASE_URL + COMMON_TPL_DIR + 'stats-modal-tpl.html';
 var LEADERBOARD_TPL = BASE_URL + COMMON_TPL_DIR + 'leaderboard-modal-tpl_';
 
 const SUBMIT_SCRIPT = 'turnSubmitter';
@@ -112,9 +118,9 @@ const MY_TURN_STATE = 'myTurn';
 const PRE_MY_TURN_STATE = 'preMyTurn';
 const OTHER_TURN_STATE = 'otherTurn';
 const INIT_GAME_STATE = 'initGame';
-const INIT_RATING_GAME_STATE= 'initRatingGame';
+const INIT_RATING_GAME_STATE = 'initRatingGame';
 const GAME_RESULTS_STATE = 'gameResults';
-const START_GAME_STATE= 'startGame';
+const START_GAME_STATE = 'startGame';
 const CHOOSE_GAME_STATE = 'chooseGame';
 
 const BAD_REQUEST = 400;
@@ -221,15 +227,15 @@ if (windowInnerWidth > windowInnerHeight) {
     var backX = (gameWidth - 2000) * Math.random();
 } else {
     if (isYandexAppGlobal()) {
-    propKoef = window.outerHeight / window.outerWidth;
-} else if (isIOSDevice()) {
-    propKoef = window.innerHeight / window.innerWidth;
-} else {
-    const outerHeight = (window.screen.availHeight - window.outerHeight) / 2 + window.outerHeight;
-    propKoef = outerHeight / window.outerWidth;
+        propKoef = window.outerHeight / window.outerWidth;
+    } else if (isIOSDevice()) {
+        propKoef = window.innerHeight / window.innerWidth;
+    } else {
+        const outerHeight = (window.screen.availHeight - window.outerHeight) / 2 + window.outerHeight;
+        propKoef = outerHeight / window.outerWidth;
 
-    propKoef = window.innerHeight / window.innerWidth;
-}
+        propKoef = window.innerHeight / window.innerWidth;
+    }
 
     buttonHeightKoef = propKoef / (standardVerticalHeight / standardVerticalWidth);
 
@@ -249,12 +255,12 @@ if (windowInnerWidth > windowInnerHeight) {
     var lotokY = fishkiXY.y + 20 * buttonHeightKoef * 2;
 
     if (buttonHeightKoef == 1) {
-    fishkaScale = 1.2;
-    var lotokCellStep = 40 * 2;
-} else {
-    fishkaScale = buttonHeightKoef;
-    var lotokCellStep = 40 * 2 * buttonHeightKoef;
-}
+        fishkaScale = 1.2;
+        var lotokCellStep = 40 * 2;
+    } else {
+        fishkaScale = buttonHeightKoef;
+        var lotokCellStep = 40 * 2 * buttonHeightKoef;
+    }
 
     var lotokCellStepY = lotokCellStep * buttonHeightKoef;
     buttonStepY = buttonStepY * buttonHeightKoef;
@@ -318,7 +324,9 @@ var instruction = '';
 //<?php include('globals/tgGlobalFunction.js')?>
 //<?php include('globals/buttonSettingsGlobal.js')?>
 //<?php include('globals/gameStates_1.js.php')?>
-//<?php if(!Steam::isSteamApp()) {include('globals/wav.js');}?>
+//<?php if (!Steam::isSteamApp()) {
+    include('globals/wav.js');
+}?>
 
 yacheikaWidth = 32 * 2 * 15 / 9 * 0.96;
 correctionX = 4;
