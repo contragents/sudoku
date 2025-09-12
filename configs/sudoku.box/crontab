@@ -20,6 +20,8 @@ SHELL=/bin/sh
 25 6	* * *	root	test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )
 47 6	* * 7	root	test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
 52 6	1 * *	root	test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
+10 13 20 apr,jul,aug,oct,nov,jan * root certbot renew
+10 13 20 mar,jun,sep,dec * root certbot renew
 #*/20 * * * * root php /var/www/invest.legal/private/command/LastPriceWorker.php > /dev/null 2>&1
 */20 * * * * root php /var/www/invest.legal/private/command/CakePriceWorker.php > /dev/null 2>&1
 */20 * * * * root php /var/www/invest.legal/private/command/LendingWorker.php > /dev/null 2>&1
