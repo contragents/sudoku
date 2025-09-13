@@ -4,6 +4,7 @@ use classes\Config;
 use classes\Cookie;
 use classes\Game;
 use classes\MonetizationService;
+use classes\Steam;
 use classes\T;
 use BaseController as BC;
 use classes\Tg;
@@ -53,7 +54,7 @@ class PlayersController extends BaseSubController
                     $files['url']['tmp_name'],
                     $_SERVER['DOCUMENT_ROOT']
                     . '/../'
-                    . (Config::DOMAIN() === Config::DOMAIN_SUDOKU_BOX ? 'sudoku' : 'erudit.club')
+                    . (in_array(Config::DOMAIN(), Steam::PROD_DOMAINS) ? 'sudoku' : 'erudit.club')
                     . self::UPLOAD_DIR
                     . $filename
                 )) {

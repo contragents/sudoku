@@ -12,7 +12,7 @@ class Tg
     public const TG_USER_INFO_ = 'tg_user_info_';
     public const TG_USER_CACHE_TTL = 7 * 24 * 60 * 60;
 
-    private const BOT_URL = 'https://' . Config::ERUDIT_DOMAIN . '/bot/send?';
+    private const BOT_URL = 'https://' . Config::DOMAIN_ERUDIT . '/bot/send?';
     private const GAME_PARAM = 'game';
     private const TEXT_PARAM = 'text';
     private const TG_ID_PARAM = 'tg_id';

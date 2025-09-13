@@ -3,6 +3,7 @@
 use classes\Config;
 use classes\DB;
 use classes\ORM;
+use classes\Steam;
 
 
 /**
@@ -44,8 +45,8 @@ class AvatarModel extends BaseModel
         $maxImgId = 34768;
         $imgId = $commonId % $maxImgId;
 
-        $siteField = Config::DOMAIN() === Config::DOMAIN_SUDOKU_BOX
-            ? "'https://" . Config::DOMAIN_SUDOKU_BOX . "'"
+        $siteField = in_array(Config::DOMAIN(), Steam::PROD_DOMAINS)
+            ? "'https://" . Config::DOMAIN() . "'"
             : self::SITE_FIELD;
 
         $miniUrl = self::MINI_IMG_URL_FIELD;

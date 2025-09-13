@@ -12,6 +12,7 @@ class Steam
     const PLAYER_NAME_PARAM = 'playerName';
     const GREETING_BONUS = 1000;
     const APCU_TTL = 3600;
+    const PROD_DOMAINS = [Config::DOMAIN_SUDOKU_BOX, Config::DOMAIN_SUDOKU_5_5_SU, Config::DOMAIN_SKIPBO_ETH_BOX];
 
     public static ?string $steamUser = null;
     public static ?int $commonId = null;

@@ -4,9 +4,11 @@ namespace classes;
 
 class Config
 {
-    const ERUDIT_DOMAIN = 'xn--d1aiwkc2d.club';
+    const DOMAIN_ERUDIT = 'xn--d1aiwkc2d.club';
     const DOMAIN_5_5_SU = '5-5.su';
     const DOMAIN_SUDOKU_BOX = 'sudoku.box';
+    const DOMAIN_SUDOKU_5_5_SU = 'sudoku.5-5.su';
+    const DOMAIN_SKIPBO_ETH_BOX = 'skipbo.eth.box';
 
     public static array $config = []; // основной конфиг
     private static array $envConfig = []; // временный конфиг
@@ -32,6 +34,17 @@ class Config
 
     public static function DOMAIN(): string
     {
+        // SUD-101 multi-domain for Steam release
+        $refDomain = parse_url($_SERVER['HTTP_REFERER'] ?? '', PHP_URL_HOST);
+        if(in_array($refDomain, Steam::PROD_DOMAINS)) {
+            return $refDomain;
+        }
+
+        $requestDomain = $_SERVER['HTTP_HOST'] ?? '';
+        if(in_array($requestDomain, Steam::PROD_DOMAINS)) {
+            return $requestDomain;
+        }
+
         return self::$config['DOMAIN'] ?? '';
     }
 
