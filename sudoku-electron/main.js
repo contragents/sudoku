@@ -1,6 +1,7 @@
 require('dotenv').config();
 
-const DOMAIN = process.env.DOMAIN; // '5-5.su' для локальной разработки, 'sudoku.box' - для PROD
+var DOMAINS = process.env.DOMAIN.split(';'); // '5-5.su' для локальной разработки, 'sudoku.box' - для PROD
+var DOMAIN = false;
 var isOnline = null;
 var isSteam = true;
 var errorMessage = 'no_internet';
@@ -8,17 +9,35 @@ var lang = false;
 
 const net = require('net');
 
-function checkInternetConnection(callback) {
-    const socket = net.createConnection(443, DOMAIN);
+const axios = require('axios');
 
+function checkInternetConnection(callback) {
+    DOMAIN = DOMAINS.shift();
+    if (!DOMAIN) {
+        callback(false);
+    }
+
+    const socket = net.createConnection(443, DOMAIN);
     socket.on('connect', () => {
         socket.end();
-        callback(true);
+        let timestamp = (new Date()).getTime();
+        axios.get(`https://${DOMAIN}/sudoku/checkAlive?ts=${timestamp}`)
+            .then(function (res) {
+                if (+res.data === timestamp) {
+                    callback(true);
+                } else {
+                    checkInternetConnection(callback);
+                }
+            })
+            .catch((error) => {
+                log(error);
+                checkInternetConnection(callback);
+            });
     });
 
     socket.on('error', () => {
         socket.destroy();
-        callback(false);
+        checkInternetConnection(callback);
     });
 }
 
@@ -132,7 +151,7 @@ app.whenReady().then(() => {
         }
     }
 
-    createW = function() {
+    createW = function () {
         createWindow();
         app.on('activate', () => {
             if (BrowserWindow.getAllWindows().length === 0) {

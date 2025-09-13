@@ -582,6 +582,16 @@ class BaseController
         exit;
     }
 
+    function checkAliveAction(): string
+    {
+        // todo remove SUD-101
+        /*if(Config::DOMAIN() !== Config::DOMAIN_SUDOKU_BOX) {
+            header('HTTP/1.1 500 Internal Server Error');
+        }*/
+
+        return self::$Request['ts'] ?? 'error';
+    }
+
     function adminAction(): string
     {
         // todo Сделать админ панель с кнопками...
