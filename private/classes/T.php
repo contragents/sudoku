@@ -61,15 +61,23 @@ class T
     public static function S($keyPhrase, ?array $params = null, ?string $forceLang = null): string
     {
         $lang = $forceLang ?? self::$lang;
-
-        if (isset(self::PHRASES[$keyPhrase][BC::gameName()][$lang]) || isset(self::PHRASES[$keyPhrase][$lang])) {
+        // Проверяем на совпадение по appId (все языки только в классе T)
+        if (isset(self::PHRASES[$keyPhrase][BC::appId() ?? 'not set'][$lang])) {
+            $res = self::PHRASES[$keyPhrase][BC::appId()][$lang];
+        }
+        // Проверяем по совпадению с названием игры.язык и просто язык в классе T
+        elseif (isset(self::PHRASES[$keyPhrase][BC::gameName()][$lang]) || isset(self::PHRASES[$keyPhrase][$lang])) {
             $res = self::PHRASES[$keyPhrase][BC::gameName()][$lang]
                 ?? (self::PHRASES[$keyPhrase][$lang] ?? $keyPhrase);
-        } elseif (class_exists(self::class . '_' . $lang)) {
+        }
+        // Проверяем существование класса заданного языка и возвращаем перевод (игра, фраза-перевод, поисковая фраза)
+        elseif (class_exists(self::class . '_' . $lang)) {
             $classLang = self::class . '_' . $lang;
 
             $res = $classLang::PHRASES[$keyPhrase][BC::gameName()] ?? ($classLang::PHRASES[$keyPhrase] ?? $keyPhrase);
-        } else {
+        }
+        // Возвращаем поисковую фразу
+        else {
             $res = $keyPhrase;
         }
 
@@ -134,6 +142,20 @@ class T
             self::RU_LANG => 'Доступ запрещен',
         ],
         'game_title' => [
+            4048410 => [ // названия игры для Судоку ДЕМО
+                self::EN_LANG => 'Sudoku online with friends Demo',
+                self::RU_LANG => 'Судоку онлайн с друзьями Демо',
+                self::TR_LANG => 'Arkadaşlarla çevrimiçi Sudoku Demosu',
+                self::FR_LANG => 'Sudoku en ligne avec des amis Démo',
+                self::IT_LANG => 'Sudoku online con gli amici Demo',
+                self::DE_LANG => 'Sudoku online mit Freunden Demo',
+                self::ES_LANG => 'Sudoku online con amigos Demo',
+                self::PT_LANG => 'Sudoku online com amigos Demo',
+                self::PT_BR_LANG => 'Sudoku online com amigos Demonstração',
+                self::ZH_CN_LANG => '在线与好友玩数独 演示版',
+                self::ZH_TW_LANG => '與朋友線上玩數獨 試用版',
+                self::KO_LANG => '친구와 함께하는 온라인 스도쿠 데모',
+            ],
             SudokuGame::GAME_NAME => [
                 self::EN_LANG => 'Sudoku Online with friends',
                 self::RU_LANG => 'Судоку онлайн с друзьями',

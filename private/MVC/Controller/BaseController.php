@@ -611,6 +611,17 @@ class BaseController
             || (self::STEAM_APP_VERSIONS[self::$Referer[self::STEAM_APP_ID_PARAM]] ?? '') === self::DEMO_MODE;
     }
 
+    public static function appId(): ?int
+    {
+        $requestAppId = self::$Request[self::STEAM_APP_ID_PARAM] ?: null;
+
+        if ($requestAppId) {
+            return $requestAppId;
+        } else {
+            return (self::$Referer[self::STEAM_APP_ID_PARAM] ?: null);
+        }
+    }
+
     public function debugAction(): array
     {
         return [
