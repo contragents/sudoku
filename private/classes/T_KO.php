@@ -9,6 +9,10 @@ use UserModel;
 class T_KO
 {
     const PHRASES = [
+        'demo_expire_in_[[number]]_[[day]]'
+        => '이것은 수독의 데모 버전입니다. 체험 기간은 [[number]][[day]] 후에 종료됩니다.',
+        'demo_expired_message'
+        => '이것은 수독의 데모 버전입니다. 체험 기간이 종료되었습니다. 정식 버전을 구매하시거나 게임 웹사이트를 방문해 주세요.',
         'Invalid URL format! <br />It must begin with <strong>http(s)://</strong>' => '잘못된 URL 형식입니다!<br><strong>http(s)://</strong>로 시작해야 합니다.',
         '</strong> or <strong>' => '</strong> 또는 <strong>',
         'MB</strong>)</li><li>extension -<strong>' => 'MB</strong>)</li><li>파일 확장자 -<strong>',

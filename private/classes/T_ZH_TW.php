@@ -9,6 +9,10 @@ use UserModel;
 class T_ZH_TW
 {
     const PHRASES = [
+        'demo_expire_in_[[number]]_[[day]]'
+        => '此為數獨試玩版。試用期將於[[number]][[day]]後結束。',
+        'demo_expired_message'
+        => '此為數獨試玩版。試用期已結束。請購買完整版或造訪遊戲官網。',
         'Invalid URL format! <br />It must begin with <strong>http(s)://</strong>' => 'URL 格式無效！<br>它必須以 <strong>http(s)://</strong> 開頭。',
         '</strong> or <strong>' => '</strong> 或 <strong>',
         'MB</strong>)</li><li>extension -<strong>' => 'MB</strong>)</li><li>延伸 -<strong>',

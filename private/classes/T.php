@@ -101,6 +101,14 @@ class T
     }
 
     const PHRASES = [
+        'demo_expire_in_[[number]]_[[day]]' => [
+            self::EN_LANG => 'This is a DEMO version of SUDOKU. The trial period will end in [[number]] [[day]].',
+            self::RU_LANG => 'Это ДЕМО-версия СУДОКУ. Пробный период закончится через [[number]] [[day]]',
+        ],
+        'demo_expired_message' => [
+            self::EN_LANG => 'This is a DEMO version of SUDOKU. The trial period has ended. Please purchase the full version or visit the Game website.',
+            self::RU_LANG => 'Это ДЕМО-версия СУДОКУ. Пробный период закончился. Пожалуйста купите полную версию или посетите сайт Игры',
+        ],
         'Invalid URL format! <br />It must begin with <strong>http(s)://</strong>' => [
             self::RU_LANG => 'Неверный формат URL! <br />Должно начинаться с <strong>http(s)://</strong>',
         ],
@@ -1319,6 +1327,20 @@ class T
     }
 
     const PLURALS = [
+        'day' => [
+            self::EN_LANG => [0 => 'days', 1 => 'day', 2 => 'days'],
+            self::RU_LANG => [0 => 'дней', 1 => 'день', 2 => 'дня', 5 => 'дней'],
+            self::TR_LANG => [0 => 'gün', 1 => 'gün', 2 => 'gün'],
+            self::FR_LANG => [0 => 'jours', 1 => 'jour', 2 => 'jours'],
+            self::IT_LANG => [0 => 'giorni', 1 => 'giorno', 2 => 'giorni'],
+            self::DE_LANG => [0 => 'Tage', 1 => 'Tag', 2 => 'Tage'],
+            self::ES_LANG => [0 => 'días', 1 => 'día', 2 => 'días'],
+            self::PT_LANG => [0 => 'dias', 1 => 'dia', 2 => 'dias'],
+            self::PT_BR_LANG => [0 => 'dias', 1 => 'dia', 2 => 'dias'],
+            self::ZH_CN_LANG => [0 => '天', 1 => '天', 2 => '天'],
+            self::ZH_TW_LANG => [0 => '天', 1 => '天', 2 => '天'],
+            self::KO_LANG => [0 => '일', 1 => '일', 2 => '일'],
+        ],
         'point' => [
             self::EN_LANG => [0 => 'points', 1 => 'point', 2 => 'points'],
             self::RU_LANG => [0 => 'очков', 1 => 'очко', 2 => 'очка', 5 => 'очков'],

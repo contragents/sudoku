@@ -9,6 +9,8 @@ use UserModel;
 class T_TR
 {
     const PHRASES = [
+        'demo_expire_in_[[number]]_[[day]]' => 'Bu, SUDOKU\'nun DEMO sürümüdür. Deneme süresi [[number]] [[day]] sonra sona erecektir.',
+        'demo_expired_message' => 'Bu, SUDOKU\'nun DEMO sürümüdür. Deneme süresi sona ermiştir. Lütfen tam sürümü satın alın veya oyunun web sitesini ziyaret edin.',
         'Invalid URL format! <br />It must begin with <strong>http(s)://</strong>' => 'Geçersiz URL biçimi! <br /><strong>http(s)://</strong> ile başlamalıdır.',
         '</strong> or <strong>' => '</strong> veya <strong>',
         'MB</strong>)</li><li>extension -<strong>' => 'megabayt</strong>)</li><li>çözünürlüğü -<strong>',

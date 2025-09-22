@@ -8,12 +8,6 @@ class Response
 {
     public static function jsonResp(array $response, ?Game $game = null, bool $forceUnlock = false): string
     {
-        // __destruct() отрабатывает - пока force не нужен
-        if ($forceUnlock) {
-            //BaseController::saveGameStatus();
-            //Cache::unlockAll();
-        }
-
         return json_encode($response + ($game === null ? [] : self::enrichResponse($game)), JSON_UNESCAPED_UNICODE + JSON_PRETTY_PRINT);
     }
 

@@ -50,6 +50,11 @@ if (localStorage != 'undefined') {
 }
 var useYandexStorage = false;
 
+// common vars
+var isDemo = false;
+var isDemoEnded = false;
+// common vars end
+
 // vars initializing in chooseGame state
 var isInviteGameWaiting = false;
 var tWaiting = false;

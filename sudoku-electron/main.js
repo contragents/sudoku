@@ -58,7 +58,7 @@ const {languages} = require('./locale.js');
 try {
     const steamworks = require("steamworks.js");
 
-    const client = steamworks.init();
+    var client = steamworks.init();
     var playerName = client.localplayer.getName();
     var steamId64 = client.localplayer.getSteamId().steamId64;
 
@@ -106,6 +106,7 @@ createWindow = () => {
             + '&steamId64=' + steamId64
             + '&playerName=' + encodeURIComponent(playerName)
             + '&l=' + lang
+            + '&app_id=' + client.utils.getAppId()
             + curVersion();
         mainWindow.loadURL(url);
     } else {

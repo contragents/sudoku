@@ -40,12 +40,21 @@ class BaseController
 
     const VERSION_DEFAULT_YANDEX = '1.0.0.3'; //Версия для яндекса для совместимости до модерации
     const VERSION_DEFAULT = '1.0.0.3'; // Версия для остальных
+    const DEMO_MODE = 'demo';
+    const STEAM_APP_VERSIONS = [
+        3841140 => 'prod',
+        4048410 => self::DEMO_MODE,
+    ];
+
     const APP_PARAM = 'app';
     const PAGE_HIDDEN_PARAM = 'page_hidden'; // = 'true' - значит вкладки скрыта/закрыта
     const QUERY_NUMBER_PARAM = 'queryNumber'; // Номер запроса в текущей сессии
     const PAGE_HIDDEN_SLEEP_TIME = 10; // Если страница скрыта (невидна), мы ждем 10 секунд и отдаем норамльный ответ
     const FLUSH_PARAM = 'flush';
     const APCU_LIST_PARAM = 'apcu_list';
+
+    const DEMO_SECONDS_TRIAL = 30 * 24 * 60 * 60; // 30 дней на ДЕМО (1 месяц)
+    const STEAM_APP_ID_PARAM = 'app_id';
 
     public static ?BaseController $instance = null;
     public Game $Game;
@@ -102,8 +111,8 @@ class BaseController
 
         self::$commonId = Steam::$commonId // авторизован через Steam или...
             ?? (Tg::$commonId // авторизован через Телеграм или...
-            ?? (Yandex::$commonId // авторизован через Яндекс или...
-                ?? PlayerModel::getPlayerCommonId(self::$User, true)));
+                ?? (Yandex::$commonId // авторизован через Яндекс или...
+                    ?? PlayerModel::getPlayerCommonId(self::$User, true)));
 
         self::$instance = $this;
 
@@ -122,6 +131,28 @@ class BaseController
         parse_str(parse_url(urldecode($_SERVER['HTTP_REFERER'] ?? ''), PHP_URL_QUERY) ?? '', $refererParams);
 
         return $refererParams;
+    }
+
+    private static function getDemoParams(): array
+    {
+        if (!self::isDemo()) {
+            return [];
+        }
+
+        $firstPlayTimestamp = RatingHistoryModel::getFirstPlayTimestamp(self::$commonId)
+            ?: date('U');
+        $isDemoExpired = date('U') > $firstPlayTimestamp + self::DEMO_SECONDS_TRIAL;
+        $demoDaysLeft = ceil(round(($firstPlayTimestamp + self::DEMO_SECONDS_TRIAL - date('U')) / (24 * 60 * 60)));
+
+        return [
+            'is_demo' => true,
+            'demo_expire_date' => date('Y-m-d', $firstPlayTimestamp + self::DEMO_SECONDS_TRIAL),
+            'is_demo_expired' => $isDemoExpired,
+            'demo_days_left' => $demoDaysLeft,
+            'demo_message' => $isDemoExpired
+                ? T::S('demo_expired_message')
+                : T::S('demo_expire_in_[[number]]_[[day]]', [$demoDaysLeft, $demoDaysLeft]),
+        ];
     }
 
     public static function FB_IMG_URL(): string
@@ -419,7 +450,13 @@ class BaseController
 
     public function statusCheckerAction(): string
     {
-        return Response::jsonResp($this->Game->checkGameStatus(), $this->Game);
+        return Response::jsonResp(
+            $this->Game->checkGameStatus()
+            + (self::isDemo()
+                ? self::getDemoParams()
+                : []),
+            $this->Game
+        );
     }
 
     public function turnSubmitterAction(): string
@@ -568,6 +605,12 @@ class BaseController
         }
     }
 
+    public static function isDemo(): bool
+    {
+        return (self::STEAM_APP_VERSIONS[self::$Request[self::STEAM_APP_ID_PARAM]] ?? '') === self::DEMO_MODE
+            || (self::STEAM_APP_VERSIONS[self::$Referer[self::STEAM_APP_ID_PARAM]] ?? '') === self::DEMO_MODE;
+    }
+
     public function debugAction(): array
     {
         return [
@@ -584,27 +627,23 @@ class BaseController
 
     function checkAliveAction(): string
     {
-        // todo remove SUD-101
-        /*if(Config::DOMAIN() !== Config::DOMAIN_SUDOKU_BOX) {
-            header('HTTP/1.1 500 Internal Server Error');
-        }*/
-
         return self::$Request['ts'] ?? 'error';
     }
 
     function adminAction(): string
     {
         // todo Сделать админ панель с кнопками...
-        if(isset(self::$Request[self::FLUSH_PARAM])) {
+        if (isset(self::$Request[self::FLUSH_PARAM])) {
             ApcuCache::flushAll();
 
             return 'OK';
         }
 
-        if(isset(self::$Request[self::APCU_LIST_PARAM])) {
+        if (isset(self::$Request[self::APCU_LIST_PARAM])) {
             return print_r(apcu_cache_info(), true);
         }
 
+        return '';
         // todo Если параметры не заданы, отдаем view админ-панели
     }
 

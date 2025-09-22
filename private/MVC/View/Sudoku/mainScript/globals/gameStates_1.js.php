@@ -97,6 +97,15 @@ var gameStates = {
             let title = '';
             let onlinePlayers = '';
             let chooseDisabled = '';
+
+            let demoMessage = '';
+            if ('is_demo' in data && data.is_demo) {
+                isDemo = true;
+                isDemoEnded = data.is_demo_expired;
+                const demoDaysLeft = data.demo_days_left;
+                demoMessage = data.demo_message;
+            }
+
             if ('players' in data) {
                 if ('thisUserRating' in data.players && data.players.thisUserRating < 1800) {
                     chooseDisabled = 'disabled';
@@ -353,7 +362,10 @@ var gameStates = {
             reportGameStopYandex();
 
             dialog = bootbox.dialog({
-                title: gameStates.chooseGame.message,
+                title: gameStates.chooseGame.message
+                + isDemo
+                    ? `<div class="text-white px-3 mt-3">${demoMessage}</div>`
+                    : '',
                 message: gameform,
                 className: 'modal-settings',
                 size: 'medium',
@@ -536,7 +548,7 @@ var gameStates = {
                     },
                     beginGame: {
                         label: '<?= T::S('Start') ?>',
-                        className: 'btn-red' /*'btn-primary'*/,
+                        className: 'btn-red',
                         callback: function () {
                             reportGameStartYandex();
 
@@ -674,6 +686,10 @@ var gameStates = {
                     }),
                 },
             });
+
+            if (isDemoEnded) {
+                $('.btn-red').prop("disabled", true);
+            }
         },
     },
     initGame: {

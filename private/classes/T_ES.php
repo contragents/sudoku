@@ -9,6 +9,10 @@ use UserModel;
 class T_ES
 {
     const PHRASES = [
+        'demo_expire_in_[[number]]_[[day]]'
+        => 'Esta es una versión demo de SUDOKU. El periodo de prueba finalizará en [[number]] [[day]].',
+        'demo_expired_message'
+        => 'Esta es una versión DEMO de SUDOKU. El periodo de prueba ha finalizado. Adquiera la versión completa o visite el sitio web del juego.',
         'Invalid URL format! <br />It must begin with <strong>http(s)://</strong>' => 'Formato de URL no válido! <br />Debe empezar por <strong>http(s)://</strong>',
         '</strong> or <strong>' => '</strong> o <strong>',
         'MB</strong>)</li><li>extension -<strong>' => 'MB</strong>)</li><li>extensión -<strong>',
