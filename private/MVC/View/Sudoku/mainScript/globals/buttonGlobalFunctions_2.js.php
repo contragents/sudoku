@@ -56,6 +56,10 @@ function checkButtonFunction() {
         return;
     }
 
+    if (bootBoxIsOpenedGlobal()) {
+        return;
+    }
+
     buttons.checkButton.setDisabled();
 
     for (let k in container) {
