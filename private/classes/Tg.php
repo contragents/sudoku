@@ -60,7 +60,7 @@ class Tg
                 );
 
                 self::$commonId = PlayerModel::getPlayerCommonID(self::$tgUser['user']['id'], true);
-                TgUserModel::refresh(self::$tgUser);
+                TgUserModel::refreshLegacy(self::$tgUser);
 
                 return true;
             }

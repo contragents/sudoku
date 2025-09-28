@@ -327,7 +327,7 @@ const SOUND_TIMEOUT = 10000;
 var instruction = '';
 
 //<?php include('globals/tgGlobalFunction.js')?>
-//<?php include('globals/buttonSettingsGlobal.js')?>
+//<?php include('globals/buttonSettingsGlobal.js.php')?>
 //<?php include('globals/gameStates_1.js.php')?>
 //<?php if (!Steam::isSteamApp()) {
     include('globals/wav.js');

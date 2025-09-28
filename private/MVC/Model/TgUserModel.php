@@ -25,7 +25,7 @@ class TgUserModel extends BaseModel
     public ?int $_common_id = null;
     public array $_data = [];
 
-    public static function refresh(array $tgUser): bool
+    public static function refreshLegacy(array $tgUser): bool
     {
         $data = json_encode($tgUser, JSON_UNESCAPED_UNICODE);
 

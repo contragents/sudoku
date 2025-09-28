@@ -3,6 +3,18 @@
 use classes\T;
 ?>
 
+async function copyTextToClipboard(text) {
+    try {
+        await navigator.clipboard.writeText(text);
+    } catch (err) {
+        console.error('Error while using buffer:', err);
+    }
+}
+
+const inviteLink = function () {
+    return window.location.href.split('?')[0].split('#')[0] + (commonId ? `?friend=${commonId}` : '');
+}
+
 function closeDialogs() {
     bootbox.hideAll();
     canOpenDialog = true;

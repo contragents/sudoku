@@ -109,6 +109,19 @@ class T
     }
 
     const PHRASES = [
+        'Your invitation link has been copied to clipboard' => [
+            self::RU_LANG => 'Ваша ссылка-приглашение скопирована в буфер',
+            self::DE_LANG => 'Ihr Einladungslink wurde in die Zwischenablage kopiert.',
+            self::ES_LANG => 'Tu enlace de invitación se ha copiado al portapapeles.',
+            self::FR_LANG => 'Votre lien d\'invitation a été copié dans le presse-papiers.',
+            self::IT_LANG => 'Il tuo link di invito è stato copiato negli appunti.',
+            self::KO_LANG => '초대 링크가 클립보드에 복사되었습니다',
+            self::PT_LANG => 'O seu link de convite foi copiado para a área de transferência',
+            self::PT_BR_LANG => 'Seu link de convite foi copiado para a área de transferência.',
+            self::TR_LANG => 'Davet bağlantınız panoya kopyalandı.',
+            self::ZH_CN_LANG => '您的邀请链接已复制到剪贴板',
+            self::ZH_TW_LANG => '您的邀請連結已複製到剪貼簿',
+        ],
         'demo_expire_in_[[number]]_[[day]]' => [
             self::EN_LANG => 'This is a DEMO version of SUDOKU. The trial period will end in [[number]] [[day]].',
             self::RU_LANG => 'Это ДЕМО-версия СУДОКУ. Пробный период закончится через [[number]] [[day]]',

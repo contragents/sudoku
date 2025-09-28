@@ -607,18 +607,18 @@ class BaseController
 
     public static function isDemo(): bool
     {
-        return (self::STEAM_APP_VERSIONS[self::$Request[self::STEAM_APP_ID_PARAM]] ?? '') === self::DEMO_MODE
-            || (self::STEAM_APP_VERSIONS[self::$Referer[self::STEAM_APP_ID_PARAM]] ?? '') === self::DEMO_MODE;
+        return (self::STEAM_APP_VERSIONS[self::$Request[self::STEAM_APP_ID_PARAM] ?? ''] ?? '') === self::DEMO_MODE
+            || (self::STEAM_APP_VERSIONS[self::$Referer[self::STEAM_APP_ID_PARAM] ?? ''] ?? '') === self::DEMO_MODE;
     }
 
     public static function appId(): ?int
     {
-        $requestAppId = self::$Request[self::STEAM_APP_ID_PARAM] ?: null;
+        $requestAppId = self::$Request[self::STEAM_APP_ID_PARAM] ?? null;
 
         if ($requestAppId) {
             return $requestAppId;
         } else {
-            return (self::$Referer[self::STEAM_APP_ID_PARAM] ?: null);
+            return (self::$Referer[self::STEAM_APP_ID_PARAM] ?? null);
         }
     }
 

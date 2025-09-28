@@ -1,3 +1,6 @@
+<?php
+use classes\T;
+?>
 //
 var topButtons = {
     newGameButton: {displayWidth: 0},
@@ -67,11 +70,26 @@ var buttons = {
             svgObject: false,
             pointerupFunction: function () {
                 {
-                    if (bootBoxIsOpenedGlobal()) {
-                        return;
-                    }
+                    if (!isTgBot()) {
+                        buttons.inviteButton.svgObject.disableInteractive();
+                        var copyLinkDialog = bootbox.alert(
+                            {
+                                className: 'modal-settings modal-profile text-white',
+                                message: '<?= T::S('Your invitation link has been copied to clipboard') ?>',
+                            }
+                        );
 
-                    shareTgGlobal();
+                        setTimeout(
+                            function () {
+                                copyTextToClipboard(inviteLink());
+                                copyLinkDialog.find(".bootbox-close-button").trigger("click");
+                                buttons.inviteButton.svgObject.setInteractive();
+                            }
+                            , 2000
+                        );
+                    } else {
+                        shareTgGlobal();
+                    }
 
                     return false;
                 }
