@@ -273,7 +273,6 @@ class BaseController
             }
         }
 
-
         if (!isset($_COOKIE[Cookie::COOKIE_NAME])) {
             $_COOKIE = Cookie::setGetCook(null, Cookie::COOKIE_NAME);
         } elseif (rand(1, 100) <= 2) {
