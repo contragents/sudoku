@@ -29,7 +29,13 @@ class Queue
     const RATING_QUEUE = 'ratingQueue';
     const TURN_TIME_PARAM_NAME = 'turn_time';
 
-    const PREFS_ATTRS = ['time', 'from_rating', 'bid', 'num_players', self::TURN_TIME_PARAM_NAME]; // Атрибуты QueuePlayer, ннужные для его префсов
+    const PREFS_ATTRS = [
+        'time',
+        'from_rating',
+        'bid',
+        'num_players',
+        self::TURN_TIME_PARAM_NAME
+    ]; // Атрибуты QueuePlayer, ннужные для его префсов
     const LAST_PING_TIMEOUT = 20; // SUD-46 Если игрок не подавал запросы за последние 20 сек, не собирать  с ним игру.
     const LAST_PING_TOO_OLD = 60; // SUD-46 Если игрок не подавал запросы более минуты - выкинуть его из очереди
 
@@ -62,8 +68,6 @@ class Queue
                 ]
                 + $POST
             );
-
-            // Cache::rpush('QueueUserCreation', $this->queueUser); // SUD-48
         } catch (\Throwable $exception) {
             Cache::rpush('QueueUserErrors', $exception->__toString()); // SUD-48
         }
@@ -89,7 +93,7 @@ class Queue
     {
         $queuePlayers = Cache::hgetall($queue) ?: [];
 
-        foreach($queuePlayers as $num => &$player) {
+        foreach ($queuePlayers as $num => &$player) {
             /** @var ?QueueUser $player */
             $player = @unserialize($player) ?: null;
 
@@ -164,8 +168,8 @@ class Queue
             );
         } else {
             $prefsArray = $this->getUserPrefsArray($this->getUserPrefs());
-            foreach($prefsArray as $prefAttr => $prefValue) {
-                if(isset($prefValue)) {
+            foreach ($prefsArray as $prefAttr => $prefValue) {
+                if (isset($prefValue)) {
                     @($this->queueUser->$prefAttr = $prefValue);
                 }
             }
@@ -229,7 +233,10 @@ class Queue
         if ($this->checkInviteQueue()) {
             if ($this->inviteQueueFull()) {
                 if (Cache::lock(self::SEMAPHORE_KEY)) {
-                    return $this->makeGame(static::QUEUE_NUMS['invite'], 2); // todo использовать константу макс. колва игроков для каждой игры
+                    return $this->makeGame(
+                        static::QUEUE_NUMS['invite'],
+                        2
+                    ); // todo использовать константу макс. колва игроков для каждой игры
                 }
             }
 
@@ -244,8 +251,7 @@ class Queue
                 ];
         }
 
-        if ($ratingWanted = $this->waitRatingPlayer($this->User))
-        {
+        if ($ratingWanted = $this->waitRatingPlayer($this->User)) {
             if ($ratingPlayer = $this->findRatingPlayer($ratingWanted)) {
                 if (Cache::lock(self::SEMAPHORE_KEY)) {
                     return $this->makeRatingGame($ratingPlayer);
@@ -259,7 +265,10 @@ class Queue
             return $this->stillWaitRatingPlayer();
         }
 
-        if ($this->queueUser->rating > 1900 && ($ratingPlayer = $this->findWaitingRaitingPlayer($this->queueUser->rating))) {
+        if (
+            $this->queueUser->rating > 1900
+            && ($ratingPlayer = $this->findWaitingRaitingPlayer($this->queueUser->rating))
+        ) {
             if (Cache::lock(self::SEMAPHORE_KEY)) {
                 return $this->makeReverseRatingGame($ratingPlayer);
             }
@@ -370,8 +379,7 @@ class Queue
         $players2Waiting = self::getQueuePlayers(static::QUEUES["2players_waiters"]);
         if ($players2Waiting) {
             foreach ($players2Waiting as $player => $playerInfo) {
-
-                if(!isset($playerInfo->rating)) {
+                if (!isset($playerInfo->rating)) {
                     $playerInfo->rating = PlayerModel::getRatingByCookie($player);
                 }
                 if ($playerInfo->rating >= $ratingWanted) {
@@ -385,7 +393,7 @@ class Queue
         if (($playersRatingWaiting = self::getQueuePlayers(static::QUEUES["rating_waiters"]))) {
             foreach ($playersRatingWaiting as $player => $playerInfo) {
                 if ($player != $this->User) {
-                    if(!isset($playerInfo->rating)) {
+                    if (!isset($playerInfo->rating)) {
                         $playerInfo->rating = PlayerModel::getRatingByCookie($player);
                     }
                     if (
@@ -625,19 +633,21 @@ class Queue
         $bid = 0;
         $noCoinGame = false;
         foreach ($game_users as $num => $user) {
-            $user->balance = BalanceModel::getBalance(PlayerModel::getPlayerCommonId($user->cookie, true));
+            $user->balance = BalanceModel::getBalance(
+                $user->common_id ?? PlayerModel::getPlayerCommonId($user->cookie, true)
+            );
 
             // todo иногда ставка делает баланс игрока отрицательным. Нужно не давать балансу уходить в минус
 
-            if (!isset($user->bid)) {
+            if (!isset($user->bid) || !$user->bid || $user->bid > $user->balance) {
                 if ($user->balance > 0) {
-                    $user->bid = self::getBid($user->balance);
+                    $user->bid = self::getBid($user->balance, Game::isBot($user->cookie));
+                } else {
+                    unset($user->bid);
                 }
-            } elseif ($user->bid > $user->balance) {
-                unset($user->bid);
             }
 
-            if (!isset($user->bid)) {
+            if (!($user->bid ?? 0) || $noCoinGame) {
                 $noCoinGame = true;
             } elseif ($bid == 0 || $bid > $user->bid || $bid > $user->balance) {
                 $bid = $user->bid;
@@ -653,7 +663,7 @@ class Queue
         }
 
         foreach ($game_users as $num => $user) {
-            if(!isset($user->common_id)) {
+            if (!isset($user->common_id)) {
                 $user->common_id = PlayerModel::getPlayerCommonId($user->cookie, true);
             }
             if (!isset($user->rating)) {
@@ -675,7 +685,8 @@ class Queue
                         )
                     ),
                     'avatarUrl' => false,
-                    'wishTurnTime' => $user->turn_time ?: array_sum(array_map(fn(QueueUser $user) => $user->turn_time ?? 0, $game_users)),
+                    'wishTurnTime' => $user->turn_time
+                        ?: array_sum(array_map(fn(QueueUser $user) => $user->turn_time ?? 0, $game_users)),
                     'rating' => $user->rating,
                 ]
             );
@@ -710,7 +721,7 @@ class Queue
             // Назначили статусы всем игрокам
         }
 
-        if($queue === self::QUEUE_NUMS['invite']) {
+        if ($queue === self::QUEUE_NUMS['invite']) {
             $this->caller->gameStatus->isInviteGame = true;
         }
 
@@ -736,7 +747,6 @@ class Queue
     {
         $queueUser = self::getUserFromQueue(static::QUEUES["inviteplayers_waiters"], $User);
         if (!$queueUser) {
-
             $queueUser = $this->getUserPrefs($User);
 
             // Заполняем необходимые атрибуты
@@ -796,7 +806,7 @@ class Queue
 
     protected static function addUserToQueue(string $queue, QueueUser $queueUser, $lockNeeded = true): bool
     {
-        if(!Game::isBot($queueUser->cookie)) {
+        if (!Game::isBot($queueUser->cookie)) {
             if (!self::checkLastPingTime($queueUser)) {
                 return false;
             }
@@ -847,14 +857,16 @@ class Queue
         return $botQueueUser;
     }
 
-    protected static function getBid(int $maxBid): ?int
+    protected static function getBid(int $maxBid, bool $isBot = false): ?int
     {
         $bidsArr = MonetizationService::BIDS;
         arsort($bidsArr);
 
-        foreach ($bidsArr as $bid) {
-            if ($bid <= floor($maxBid / 20)) {
-                return $bid;
+        if (!$isBot) {
+            foreach ($bidsArr as $bid) {
+                if ($bid <= floor($maxBid / 20)) {
+                    return $bid;
+                }
             }
         }
 
@@ -870,7 +882,7 @@ class Queue
     protected function refreshLastPingTime(): bool
     {
         foreach (static::QUEUES as $queue) {
-            if($queueUser = self::getUserFromQueue($queue, $this->User)) {
+            if ($queueUser = self::getUserFromQueue($queue, $this->User)) {
                 if ((date('U') - ($queueUser->last_ping_time ?? date('U'))) > self::LAST_PING_TOO_OLD) {
                     return false;
                 }

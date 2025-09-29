@@ -7,18 +7,18 @@ use Throwable;
 /**
  * Class QueueUser
  * @package classes
- * @property ?int $time Время первичного помещения в очередь
- * @property ?int $queue_time Время помещения игрока в текущую очередь
- * @property ?int $last_ping_time Время последнего пинга от игрока - обновлять при каждом обращении
- * @property ?string $cookie
- * @property ?int $common_id
- * @property ?int $rating
- * @property ?int $balance
- * @property ?int $from_rating Желаемый рейтинг (от)
- * @property ?int $bid Максимальная ставка
- * @property ?int $num_players  2 для Судоку, Гомоку - пока для всех
- * @property ?int $turn_time 120, 60
- * @property ?string $queue название очереди, из которой забрали игрока
+ * @property int $time Время первичного помещения в очередь
+ * @property int $queue_time Время помещения игрока в текущую очередь
+ * @property int $last_ping_time Время последнего пинга от игрока - обновлять при каждом обращении
+ * @property string $cookie
+ * @property int $common_id
+ * @property int $rating
+ * @property int $balance
+ * @property int $from_rating Желаемый рейтинг (от)
+ * @property int $bid Максимальная ставка
+ * @property int $num_players  2 для Судоку, Гомоку - пока для всех
+ * @property int $turn_time 120, 60
+ * @property string $queue название очереди, из которой забрали игрока
  */
 
 class QueueUser
