@@ -228,7 +228,7 @@ class StatsController extends BaseSubController
 
             // Собираем обладателей достижений
             if (in_array(self::$Request[self::DATA_TYPE_PARAM] ?? '', [self::ACHIEVE_PARAM, ''])) {
-                $achieves = AchievesModel::getActiveO(BC::gameName());
+                $achieves = AchievesModel::getActiveAchieves(BC::gameName());
 
                 foreach ($achieves as $achieveModel) {
                     // Игнорируем ТОПов по рейтингу

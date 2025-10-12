@@ -34,7 +34,7 @@ trait QueryTrait
     /**
      * @var bool|null if current element is valid
      */
-    private ?bool $isValid = null;
+    private ?bool $isValid = false;
 
     /**
      * @param string[] $fields
@@ -233,7 +233,7 @@ trait QueryTrait
      * @link https://php.net/manual/en/iterator.next.php
      * @return void Any returned value is ignored.
      */
-    public function next()
+    public function next(): void
     {
         unset ($this->Value);
         if ($this->isValid === false) {
@@ -258,6 +258,7 @@ trait QueryTrait
      * @link https://php.net/manual/en/iterator.key.php
      * @return string|float|int|bool|null scalar on success, or null on failure.
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->valid() ? $this->Iteration : null;
@@ -269,7 +270,7 @@ trait QueryTrait
      * @return bool The return value will be casted to boolean and then evaluated.
      * Returns true on success or false on failure.
      */
-    public function valid()
+    public function valid(): bool
     {
         return $this->isValid ?? false;
     }
@@ -279,7 +280,7 @@ trait QueryTrait
      * @link https://php.net/manual/en/iterator.rewind.php
      * @return void Any returned value is ignored.
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->Iteration = 0;
 

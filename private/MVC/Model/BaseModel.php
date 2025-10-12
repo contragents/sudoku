@@ -2,6 +2,7 @@
 
 use classes\Cache;
 use classes\DB;
+use classes\GomokuGame;
 use classes\ORM;
 use classes\SudokuGame;
 

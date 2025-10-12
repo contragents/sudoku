@@ -484,7 +484,7 @@ class AchievesModel extends BaseModel
      * @param string $period
      * @return self[]
      */
-    public static function getActiveO(string $gameName, string $type = '', string $period = ''): array
+    public static function getActiveAchieves(string $gameName, string $type = '', string $period = ''): array
     {
         $rows = self::getActive($gameName, $type, $period);
         $res = [];

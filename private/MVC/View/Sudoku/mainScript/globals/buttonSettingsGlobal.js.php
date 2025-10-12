@@ -70,6 +70,10 @@ var buttons = {
             svgObject: false,
             pointerupFunction: function () {
                 {
+                    if (bootBoxIsOpenedGlobal()) {
+                        return;
+                    }
+
                     if (!isTgBot()) {
                         buttons.inviteButton.svgObject.disableInteractive();
                         var copyLinkDialog = bootbox.alert(
