@@ -553,7 +553,7 @@ var gameStates = {
                             reportGameStartYandex();
 
                             activateFullScreenForMobiles();
-                            gameState = 'noGame';
+                            gameState = NO_GAME_STATE;
                             fetchGlobal(
                                 INIT_GAME_SCRIPT,
                                 '',
@@ -1007,7 +1007,7 @@ var gameStates = {
     }
 }
 
-var gameState = 'noGame';
+var gameState = NO_GAME_STATE;
 var gameSubState = 'waiting';
 var queryNumber = 0;
 var lastQueryTime = 0;

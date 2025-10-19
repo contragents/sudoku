@@ -58,7 +58,6 @@ var buttons = {
         pointerupFunction: prizesButtonHandler,
     },
     ...(!isYandexAppGlobal() && !isSteamGlobal() && {
-
         inviteButton: {
             filename: 'invite2',
             modes: [OTJAT_MODE, 'Navedenie', 'Najatie'],
@@ -109,6 +108,16 @@ var buttons = {
         object: false, svgObject: false,
         pointerupFunction: function () {
             submitButtonFunction();
+        },
+        disabled: {
+            preMyTurn: 1,
+            otherTurn: 1,
+            gameResults: 1,
+            noGame: 1,
+            initGame: 1,
+            initRatingGame: 1,
+            chooseGame: 1,
+            startGame: 1,
         },
         setEnabled: function () {
             if (this.svgObject === false) {
@@ -161,7 +170,14 @@ var buttons = {
         width: buttonWidth,
         object: false,
         svgObject: false,
-        //enabled: {myTurn: 1, preMyTurn: 1, otherTurn: 1},
+        disabled: {
+            gameResults: 1,
+            noGame: 1,
+            initGame: 1,
+            initRatingGame: 1,
+            chooseGame: 1,
+            startGame: 1,
+        },
         pointerupFunction: function () {
             checkButtonFunction();
         },

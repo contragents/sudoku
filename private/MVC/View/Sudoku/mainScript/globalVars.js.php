@@ -27,6 +27,8 @@ const STATS_GET_ERROR = '<?= T::S('Stats getting error')?>';
 const ALARM_MODE = 'Alarm';
 const OTJAT_MODE = 'Otjat';
 const INACTIVE_MODE = 'Inactive';
+const NAJATO_MODE = 'Najatie';
+const NAVEDENO_MODE = 'Navedenie';
 
 const BLINK_COUNT = 3000;
 var dontBlink = true;
@@ -127,6 +129,7 @@ const INIT_RATING_GAME_STATE = 'initRatingGame';
 const GAME_RESULTS_STATE = 'gameResults';
 const START_GAME_STATE = 'startGame';
 const CHOOSE_GAME_STATE = 'chooseGame';
+const NO_GAME_STATE = 'noGame';
 
 const BAD_REQUEST = 400;
 const PAGE_NOT_FOUND = 404;

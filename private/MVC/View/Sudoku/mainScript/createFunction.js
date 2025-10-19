@@ -30,37 +30,87 @@ function () {
         if ('preCalc' in buttons[k])
             buttons[k]['preCalc']();
 
-        buttons[k].svgObject = getSVGButton(buttons[k]['x'], buttons[k]['y'], k, this);
+        buttons[k].svgObject = getSVGButton(buttons[k].x, buttons[k].y, k, this);
 
         buttons[k].svgObject.on('pointerup', function () {
-            buttons[k].svgObject.bringToTop(buttons[k].svgObject.getByName(k + OTJAT_MODE));
-            if ('pointerupFunction' in buttons[k])
+            let mode = OTJAT_MODE;
+            if ('disabled' in buttons[k]) {
+                if (gameState in buttons[k].disabled)
+                    mode = INACTIVE_MODE;
+            }
+
+            if (mode === INACTIVE_MODE && 'setDisabled' in buttons[k]) {
+                buttons[k].setDisabled();
+
+                return;
+            }
+
+            buttons[k].svgObject.bringToTop(buttons[k].svgObject.getByName(k + mode));
+
+            if (mode === OTJAT_MODE && 'pointerupFunction' in buttons[k])
                 buttons[k].pointerupFunction();
         });
 
         buttons[k].svgObject.on('pointerdown', function () {
-            buttons[k].svgObject.bringToTop(buttons[k].svgObject.getByName(k + 'Najatie'));
+            let mode = NAJATO_MODE;
+            if ('disabled' in buttons[k]) {
+                if (gameState in buttons[k].disabled)
+                    mode = INACTIVE_MODE;
+            }
+
+            if (mode === INACTIVE_MODE && 'setDisabled' in buttons[k]) {
+                buttons[k].setDisabled();
+
+                return;
+            }
+
+            buttons[k].svgObject.bringToTop(buttons[k].svgObject.getByName(k + mode));
         });
 
         buttons[k].svgObject.on('pointerover', function () {
+            let mode = NAVEDENO_MODE;
             if (k === 'chatButton') {
                 if (buttons.chatButton.svgObject.getByName('chatButton' + ALARM_MODE).getData('alarm') !== true)
-                    buttons[k].svgObject.bringToTop(buttons[k].svgObject.getByName(k + 'Navedenie'));
-            } else {
-                buttons[k].svgObject.bringToTop(buttons[k].svgObject.getByName(k + 'Navedenie'));
+                    buttons[k].svgObject.bringToTop(buttons[k].svgObject.getByName(k + mode));
+
+                return;
             }
+
+            if ('disabled' in buttons[k]) {
+                if (gameState in buttons[k].disabled)
+                    mode = INACTIVE_MODE;
+            }
+
+            if (mode === INACTIVE_MODE && 'setDisabled' in buttons[k]) {
+                buttons[k].setDisabled();
+
+                return;
+            }
+
+            buttons[k].svgObject.bringToTop(buttons[k].svgObject.getByName(k + mode));
         });
 
         buttons[k].svgObject.on('pointerout', function () {
+            let mode = OTJAT_MODE;
             if (k === 'chatButton') {
                 if (buttons.chatButton.svgObject.getByName('chatButton' + ALARM_MODE).getData('alarm') !== true)
-                    buttons[k].svgObject.bringToTop(buttons[k].svgObject.getByName(k + OTJAT_MODE));
-            } else if ('enabled' in buttons[k]) {
-                if (gameState in buttons[k].enabled)
-                    buttons[k].svgObject.bringToTop(buttons[k].svgObject.getByName(k + OTJAT_MODE));
-            } else {
-                buttons[k].svgObject.bringToTop(buttons[k].svgObject.getByName(k + OTJAT_MODE));
+                    buttons[k].svgObject.bringToTop(buttons[k].svgObject.getByName(k + mode));
+
+                return;
             }
+
+            if ('disabled' in buttons[k]) {
+                if (gameState in buttons[k].disabled)
+                    mode = INACTIVE_MODE;
+            }
+
+            if (mode === INACTIVE_MODE && 'setDisabled' in buttons[k]) {
+                buttons[k].setDisabled();
+
+                return;
+            }
+
+            buttons[k].svgObject.bringToTop(buttons[k].svgObject.getByName(k + mode));
         });
     }
 
