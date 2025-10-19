@@ -3,7 +3,7 @@
 use classes\Config;
 use classes\FrontResourceSudoku;
 use classes\StateMachine;
-use classes\SudokuGame;
+use classes\GameSudoku;
 use classes\T;
 
 class SudokuController extends BaseController
@@ -13,7 +13,7 @@ class SudokuController extends BaseController
 
     public static function FB_IMG_URL(): string
     {
-        return 'https://' . Config::DOMAIN() . '/'. SudokuGame::GAME_NAME . '/img/share/sudoku_640_360.png';
+        return 'https://' . Config::DOMAIN() . '/'. GameSudoku::GAME_NAME . '/img/share/sudoku_640_360.png';
     }
 
     public static function SITE_NAME(): string
@@ -23,12 +23,12 @@ class SudokuController extends BaseController
 
     public static function GAME_URL(): string
     {
-        return Config::BASE_URL() . SudokuGame::GAME_NAME . '/';
+        return Config::BASE_URL() . GameSudoku::GAME_NAME . '/';
     }
 
     public function __construct($action, array $request)
     {
-        BaseController::$SM = new StateMachine(SudokuGame::GAME_NAME);
+        BaseController::$SM = new StateMachine(GameSudoku::GAME_NAME);
         BaseController::$FR = new FrontResourceSudoku();
 
         parent::__construct($action, $request);
@@ -36,7 +36,7 @@ class SudokuController extends BaseController
 
     public function Run()
     {
-        $this->Game = new SudokuGame();
+        $this->Game = new GameSudoku();
 
         return parent::Run();
     }

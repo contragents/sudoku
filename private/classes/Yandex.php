@@ -11,16 +11,16 @@ class Yandex
 
     const METRIKA_COUNTERS = [
         Config::DOMAIN_5_5_SU => [
-            SudokuGame::GAME_NAME => '102483438', // Счетчик для игры Судоку
+            GameSudoku::GAME_NAME => '102483438', // Счетчик для игры Судоку
         ],
         Config::DOMAIN_SUDOKU_BOX => [
-            SudokuGame::GAME_NAME => '103668291'
+            GameSudoku::GAME_NAME => '103668291'
         ],
         Config::DOMAIN_SUDOKU_5_5_SU => [
-            SudokuGame::GAME_NAME => '103668291'
+            GameSudoku::GAME_NAME => '103668291'
         ],
         Config::DOMAIN_SKIPBO_ETH_BOX => [
-            SudokuGame::GAME_NAME => '103668291'
+            GameSudoku::GAME_NAME => '103668291'
         ],
     ];
 

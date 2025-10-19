@@ -21,10 +21,10 @@ class T_TR
         'Empty value is forbidden' => 'Boş değer yasaktır',
         'Forbidden' => 'Yasak',
         'game_title' => [
-            SudokuGame::GAME_NAME => 'Arkadaşlarla Online Sudoku',
+            GameSudoku::GAME_NAME => 'Arkadaşlarla Online Sudoku',
         ],
         'secret_prompt' => [
-            SudokuGame::GAME_NAME => '&#42;<a href="https://t.me/sudoku_app_bot">Telegram&#39;da</a> daha fazla hesap geri yüklemesi için bu anahtarı kaydedin',
+            GameSudoku::GAME_NAME => '&#42;<a href="https://t.me/sudoku_app_bot">Telegram&#39;da</a> daha fazla hesap geri yüklemesi için bu anahtarı kaydedin',
         ],
         'COIN Balance' => 'Para bakiyesi',
         PaymentModel::INIT_STATUS => 'Başladı',
@@ -46,10 +46,10 @@ class T_TR
         'Server connecting error. Please try again' => 'Sunucu bağlanma hatası. Lütfen tekrar deneyin',
         'Error changing settings. Try again later' => 'Ayarları değiştirirken hata oluştu. Daha sonra tekrar deneyin',
         'invite_friend_prompt' => [
-            SudokuGame::GAME_NAME => 'Telegram&#39;da çevrimiçi oyun SUDOKU&#39;ya katılın! Maksimum puanı alın, jeton kazanın ve jetonları cüzdanınıza çekin',
+            GameSudoku::GAME_NAME => 'Telegram&#39;da çevrimiçi oyun SUDOKU&#39;ya katılın! Maksimum puanı alın, jeton kazanın ve jetonları cüzdanınıza çekin',
         ],
         'game_bot_url' => [
-            SudokuGame::GAME_NAME => 'https://t.me/sudoku_app_bot',
+            GameSudoku::GAME_NAME => 'https://t.me/sudoku_app_bot',
         ],
         'loading_text' => 'SUDOKU yükleniyor...',
         'switch_tg_button' => 'Telegram&#39;a geç',
@@ -351,7 +351,7 @@ class T_TR
         "The players' task is to take turns making moves and accumulating points to open black squares" => 'Oyuncuların görevi sırayla hamle yapmak ve bir bloktaki diğer 8 rakamın tümünü hesaplayarak siyah kareleri',
         'The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated' => 'Klasik SUDOKU kuralları geçerlidir - dokuz hücreli bir blokta (dikey, yatay ve 3x3&#39;lük bir karede) sayılar tekrarlanmamalıdır',
         'faq_rules' => [
-            SudokuGame::GAME_NAME => <<<TR
+            GameSudoku::GAME_NAME => <<<TR
 
 <h2 id="nav1">Oyun hakkında</h2>
 Klasik SUDOKU kuralları geçerlidir - dokuz hücreli bir blokta (dikey, yatay ve 3x3 karede) sayılar tekrarlanmamalıdır
@@ -394,7 +394,7 @@ Yeni başlayan birinin deneyimli bir ustayla dövüşmesi güvenlidir.
 TR
         ,
         'faq_rewards' => [
-            SudokuGame::GAME_NAME => <<<TR
+            GameSudoku::GAME_NAME => <<<TR
 Oyuncular belirli başarılar (rekorlar) için ödüllendirilir.
 <br><br>
 Oyuncunun ödülleri, “STATS” bölümünde şu adaylıklar altında gösterilir: altın/gümüş/bronz/taş.
@@ -421,7 +421,7 @@ TR
         ],
         'Reward' => 'Ödül',
         'faq_coins' => [
-            SudokuGame::GAME_NAME => <<<TR
+            GameSudoku::GAME_NAME => <<<TR
 Coin <strong>SUDOKU</strong> {{sudoku_icon}}{{yandex_exclude}}{{ , <strong>Scrabble, Sudoku</strong> gibi oyunlardan oluşan bir oyun ağında kullanılan oyun içi para birimidir<br><br>
 Tüm oyunlar için tek bir hesap, tek bir para birimi, tek bir cüzdan}}
 <br><br>

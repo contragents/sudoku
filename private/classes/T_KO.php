@@ -24,10 +24,10 @@ class T_KO
         'Empty value is forbidden' => '빈 값은 금지됩니다.',
         'Forbidden' => '금지됨',
         'game_title' => [
-            SudokuGame::GAME_NAME => '친구와 함께하는 온라인 스도쿠',
+            GameSudoku::GAME_NAME => '친구와 함께하는 온라인 스도쿠',
         ],
         'secret_prompt' => [
-            SudokuGame::GAME_NAME => '&#42;<a href="https://t.me/sudoku_app_bot">텔레그램</a>에서 추가 계정 복원을 위해 이 키를 저장하세요.',
+            GameSudoku::GAME_NAME => '&#42;<a href="https://t.me/sudoku_app_bot">텔레그램</a>에서 추가 계정 복원을 위해 이 키를 저장하세요.',
         ],
         'COIN Balance' => '코인 계정 잔액',
         PaymentModel::INIT_STATUS => '시작됨',
@@ -49,12 +49,12 @@ class T_KO
         'Server connecting error. Please try again' => '서버 연결 오류가 발생했습니다. 다시 시도해 주시기 바랍니다.',
         'Error changing settings. Try again later' => '설정 변경 중 오류가 발생했습니다. 나중에 다시 시도해 주세요.',
         'invite_friend_prompt' => [
-            SudokuGame::GAME_NAME => '텔레그램에서 온라인 게임 수독에 참여하세요! 최고 점수를 획득하고 코인을 획득한 후 토큰을 지갑으로 인출하세요.',
+            GameSudoku::GAME_NAME => '텔레그램에서 온라인 게임 수독에 참여하세요! 최고 점수를 획득하고 코인을 획득한 후 토큰을 지갑으로 인출하세요.',
         ],
         'game_bot_url' => [
-            SudokuGame::GAME_NAME => 'https://t.me/sudoku_app_bot',
+            GameSudoku::GAME_NAME => 'https://t.me/sudoku_app_bot',
         ],
-        'loading_text' => [SudokuGame::GAME_NAME => '수독이 로딩 중입니다...'],
+        'loading_text' => [GameSudoku::GAME_NAME => '수독이 로딩 중입니다...'],
         'switch_tg_button' => '텔레그램으로 전환하세요',
         'Invite a friend' => '친구 초대하기',
         'you_lost' => '당신은 졌습니다!',
@@ -360,7 +360,7 @@ class T_KO
         'The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated'
         => '클래식 수독 규칙이 적용됩니다 - 9개의 셀로 구성된 블록(수직, 수평 및 3x3 정사각형) 내에서 숫자가 중복되어서는 안 됩니다.',
         'faq_rules' => [
-            SudokuGame::GAME_NAME => <<<KO
+            GameSudoku::GAME_NAME => <<<KO
 <h2 id="nav1">게임에 대해</h2>
 클래식 수독 규칙이 적용됩니다 - 9개의 셀로 구성된 블록(수직, 수평 및 3x3 정사각형) 내에서 숫자가 중복되어서는 안 됩니다
 <br><br>
@@ -404,7 +404,7 @@ Elo 등급 시스템, Elo 계수 - 게임에서 플레이어의 상대적 강도
 KO
         ,
         'faq_rewards' => [
-            SudokuGame::GAME_NAME => <<<KO
+            GameSudoku::GAME_NAME => <<<KO
 플레이어는 특정 성과(기록)에 대해 보상을 받습니다.
 <br><br>
 플레이어의 보상은 “통계” 섹션의 다음과 같은 부문에서 반영됩니다: 금/은/동/석.
@@ -432,7 +432,7 @@ KO
         ],
         'Reward' => '보상',
         'faq_coins' => [
-            SudokuGame::GAME_NAME => <<<KO
+            GameSudoku::GAME_NAME => <<<KO
 코인 [[SUDOKU {{sudoku_icon}}은 게임 내 통화 {{yandex_exclude}}{{로, <strong>스크래블, 수독</strong> 등 게임 네트워크에서 사용됩니다.
 <br><br>
 모든 게임에 하나의 계정, 하나의 통화, 하나의 지갑}}

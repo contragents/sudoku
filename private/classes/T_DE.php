@@ -24,10 +24,10 @@ class T_DE
         'Empty value is forbidden' => 'Leerer Wert ist verboten',
         'Forbidden' => 'Verboten',
         'game_title' => [
-            SudokuGame::GAME_NAME => 'Sudoku online mit Freunden',
+            GameSudoku::GAME_NAME => 'Sudoku online mit Freunden',
         ],
         'secret_prompt' => [
-            SudokuGame::GAME_NAME => '&#42;Speichern Sie diesen Schlüssel für die weitere Wiederherstellung Ihres Kontos in <a href="https://t.me/sudoku_app_bot">Telegram</a>.',
+            GameSudoku::GAME_NAME => '&#42;Speichern Sie diesen Schlüssel für die weitere Wiederherstellung Ihres Kontos in <a href="https://t.me/sudoku_app_bot">Telegram</a>.',
         ],
         'COIN Balance' => 'Münzbestand',
         PaymentModel::INIT_STATUS => 'Gestartet',
@@ -49,10 +49,10 @@ class T_DE
         'Server connecting error. Please try again' => 'Fehler beim Herstellen der Verbindung zum Server. Bitte versuchen Sie es erneut.',
         'Error changing settings. Try again later' => 'Fehler beim Ändern der Einstellungen. Versuchen Sie es später erneut.',
         'invite_friend_prompt' => [
-            SudokuGame::GAME_NAME => 'Nimm am Online-Spiel SUDOKU auf Telegram teil! Erreiche die maximale Bewertung, verdiene Münzen und ziehe Token auf dein Wallet ab.',
+            GameSudoku::GAME_NAME => 'Nimm am Online-Spiel SUDOKU auf Telegram teil! Erreiche die maximale Bewertung, verdiene Münzen und ziehe Token auf dein Wallet ab.',
         ],
         'game_bot_url' => [
-            SudokuGame::GAME_NAME => 'https://t.me/sudoku_app_bot',
+            GameSudoku::GAME_NAME => 'https://t.me/sudoku_app_bot',
         ],
         'loading_text' => 'SUDOKU wird geladen...',
         'switch_tg_button' => 'Wechseln Sie zu Telegram',
@@ -360,7 +360,7 @@ class T_DE
         'The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated'
         => 'Es gelten die klassischen SUDOKU-Regeln - in einem Block von neun Zellen (vertikal, horizontal und in einem 3x3-Quadrat) dürfen sich die Zahlen nicht wiederholen',
         'faq_rules' => [
-            SudokuGame::GAME_NAME => <<<DE
+            GameSudoku::GAME_NAME => <<<DE
 <h2 id="nav1">Über das Spiel</h2>
 Es gelten die klassischen SUDOKU-Regeln - in einem Block von neun Zellen (vertikal, horizontal und in einem 3x3-Quadrat) dürfen sich die Zahlen nicht wiederholen
 <br><br>
@@ -404,7 +404,7 @@ Aber im Falle eines Sieges, wird der Meister großzügig die Rangpunkte teilen
 DE
         ,
         'faq_rewards' => [
-            SudokuGame::GAME_NAME => <<<DE
+            GameSudoku::GAME_NAME => <<<DE
 Spieler werden für bestimmte Leistungen (Rekorde) belohnt.
 <br><br>
 Die Auszeichnungen des Spielers werden in der Rubrik „STATS“ in den folgenden Nominierungen angezeigt: Gold/Silber/Bronze/Stein.
@@ -432,7 +432,7 @@ DE
         ],
         'Reward' => 'Belohnung',
         'faq_coins' => [
-            SudokuGame::GAME_NAME => <<<DE
+            GameSudoku::GAME_NAME => <<<DE
 Die Münze <strong>SUDOKU</strong> {{sudoku_icon}} ist eine In-Game Währung{{yandex_exclude}}{{ für ein Netzwerk von Spielen - <strong>Scrabble, Sudoku</strong>
 <br><br>
 Ein Konto für alle Spiele, eine Währung, eine Geldbörse}}

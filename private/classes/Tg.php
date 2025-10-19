@@ -23,7 +23,7 @@ class Tg
     public static function botSendMessage(
         string $textHtml,
         ?int $tgId = null,
-        string $gameName = SudokuGame::GAME_NAME
+        string $gameName = GameSudoku::GAME_NAME
     ): bool {
         $params = [
                 self::TEXT_PARAM => urlencode($textHtml),

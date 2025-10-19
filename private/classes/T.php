@@ -169,7 +169,7 @@ class T
                 self::ZH_TW_LANG => '與朋友線上玩數獨 試用版',
                 self::KO_LANG => '친구와 함께하는 온라인 스도쿠 데모',
             ],
-            SudokuGame::GAME_NAME => [
+            GameSudoku::GAME_NAME => [
                 self::EN_LANG => 'Sudoku Online with friends',
                 self::RU_LANG => 'Судоку онлайн с друзьями',
             ],
@@ -182,7 +182,7 @@ class T
             self::EN_LANG => '&#42;Save this key for further account restoration in Telegram</a>',
             self::RU_LANG => '&#42;Сохраните ключ для восстановления аккаунта в Telegram</a>',
 
-            SudokuGame::GAME_NAME => [
+            GameSudoku::GAME_NAME => [
                 self::EN_LANG => '&#42;Save this key for further account restoration in <a href="https://t.me/sudoku_app_bot">Telegram</a>',
                 self::RU_LANG => '&#42;Сохраните ключ для восстановления аккаунта в <a href="https://t.me/sudoku_app_bot">Telegram</a>',
             ]
@@ -256,7 +256,7 @@ class T
             self::RU_LANG => 'Ошибка. Пожалуйста попробуйте позднее',
         ],
         'invite_friend_prompt' => [
-            SudokuGame::GAME_NAME => [
+            GameSudoku::GAME_NAME => [
                 self::EN_LANG => 'Join the online game SUDOKU on Telegram! Get the maximum rating, earn coins and withdraw tokens to your wallet',
                 self::RU_LANG => 'Присоединяйся к онлайн игре SUDOKU в Telegram! Набери максимальный рейтинг, зарабатывай монеты и выводи токены на кошелек',
             ],
@@ -265,7 +265,7 @@ class T
             self::RU_LANG => 'Присоединяйся к нашей онлайн игре в Telegram! Набери максимальный рейтинг, зарабатывай монеты и выводи токены на кошелек',
         ],
         'game_bot_url' => [
-            SudokuGame::GAME_NAME => [
+            GameSudoku::GAME_NAME => [
                 self::EN_LANG => 'https://t.me/sudoku_app_bot',
                 self::RU_LANG => 'https://t.me/sudoku_app_bot',
             ],
@@ -273,7 +273,7 @@ class T
             self::RU_LANG => 'https://t.me/sudoku_app_bot',
         ],
         'loading_text' => [
-            SudokuGame::GAME_NAME => [
+            GameSudoku::GAME_NAME => [
                 self::EN_LANG => 'SUDOKU is loading...',
                 self::RU_LANG => 'Загружаем СУДОКУ...',
             ],
@@ -1167,7 +1167,7 @@ class T
             self::RU_LANG => 'Действуют классические правила СУДОКУ - в блоке из девяти ячеек (по вертикали, по горизонтали и в квадрате 3х3) цифры не должны повторяться'
         ],
         'faq_rules' => [
-            SudokuGame::GAME_NAME => [
+            GameSudoku::GAME_NAME => [
                 self::EN_LANG => Faq::RULES[self::EN_LANG],
                 self::RU_LANG => Faq::RULES[self::RU_LANG],
             ],

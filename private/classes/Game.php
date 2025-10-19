@@ -109,7 +109,7 @@ class Game
     public ?int $numUser = null;
     public Queue $Queue;
 
-    public ?GameStatus $gameStatus = null;
+    public ?GameStatusSkipbo $gameStatus = null;
     public StateMachine $SM;
 
     public ?array $Response = null;

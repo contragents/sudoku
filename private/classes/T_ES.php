@@ -24,10 +24,10 @@ class T_ES
         'Empty value is forbidden' => 'El valor vacío está prohibido',
         'Forbidden' => 'Prohibido',
         'game_title' => [
-            SudokuGame::GAME_NAME => 'Sudoku en línea con amigos',
+            GameSudoku::GAME_NAME => 'Sudoku en línea con amigos',
         ],
         'secret_prompt' => [
-            SudokuGame::GAME_NAME => '&#42;Guarda esta clave para restablecer la cuenta en <a href="https://t.me/sudoku_app_bot">Telegrama</a>.',
+            GameSudoku::GAME_NAME => '&#42;Guarda esta clave para restablecer la cuenta en <a href="https://t.me/sudoku_app_bot">Telegrama</a>.',
         ],
         'COIN Balance' => 'Saldo de monedas',
         PaymentModel::INIT_STATUS => 'Comenzó',
@@ -49,12 +49,12 @@ class T_ES
         'Server connecting error. Please try again' => 'Error de conexión del servidor. Por favor, inténtelo de nuevo',
         'Error changing settings. Try again later' => 'Error al cambiar la configuración. Vuelva a intentarlo más tarde',
         'invite_friend_prompt' => [
-            SudokuGame::GAME_NAME => '¡Únete al juego online SUDOKU en Telegram! Consigue la máxima puntuación, gana monedas y retira tokens a tu monedero.',
+            GameSudoku::GAME_NAME => '¡Únete al juego online SUDOKU en Telegram! Consigue la máxima puntuación, gana monedas y retira tokens a tu monedero.',
         ],
         'game_bot_url' => [
-            SudokuGame::GAME_NAME => 'https://t.me/sudoku_app_bot',
+            GameSudoku::GAME_NAME => 'https://t.me/sudoku_app_bot',
         ],
-        'loading_text' => [SudokuGame::GAME_NAME => 'SUDOKU está cargando...'],
+        'loading_text' => [GameSudoku::GAME_NAME => 'SUDOKU está cargando...'],
         'switch_tg_button' => 'Cambiar a Telegram',
         'Invite a friend' => 'Invitar a un amigo',
         'you_lost' => '¡Has perdido!',
@@ -360,7 +360,7 @@ class T_ES
         'The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated'
         => 'Se aplican las reglas clásicas del SUDOKU - en un bloque de nueve casillas (vertical, horizontal y en un cuadrado de 3x3) los números no deben repetirse',
         'faq_rules' => [
-            SudokuGame::GAME_NAME => <<<ES
+            GameSudoku::GAME_NAME => <<<ES
 <h2 id="nav1">Sobre el juego</h2>
 Se aplican las reglas clásicas de SUDOKU - en un bloque de nueve casillas (vertical, horizontal y en un cuadrado de 3x3) los números no deben repetirse
 <br><br>
@@ -404,7 +404,7 @@ Pero, en caso de victoria, el maestro compartirá generosamente los puntos de ra
 ES
         ,
         'faq_rewards' => [
-            SudokuGame::GAME_NAME => <<<ES
+            GameSudoku::GAME_NAME => <<<ES
 Los jugadores son recompensados por determinados logros (récords).
 <br><br>
 Las recompensas del jugador se reflejan en la sección «STATS» en las siguientes nominaciones: oro/plata/bronce/piedra.
@@ -432,7 +432,7 @@ ES
         ],
         'Reward' => 'Recompensa',
         'faq_coins' => [
-            SudokuGame::GAME_NAME => <<<ES
+            GameSudoku::GAME_NAME => <<<ES
 Moneda <strong>SUDOKU</strong> {{sudoku_icon}} es una moneda dentro del juego{{yandex_exclude}}{{para una red de juegos - <strong>Scrabble, Sudoku</strong>
 <br><br>
 Una cuenta para todos los juegos, una moneda, un monedero}}.

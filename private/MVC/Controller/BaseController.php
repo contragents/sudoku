@@ -9,7 +9,7 @@ use classes\Game;
 use classes\Response;
 use classes\StateMachine;
 use classes\Steam;
-use classes\SudokuGame;
+use classes\GameSudoku;
 use classes\T;
 use classes\Tg;
 use classes\UserProfile;
@@ -158,7 +158,7 @@ class BaseController
     public static function FB_IMG_URL(): string
     {
         return 'https://' . Config::DOMAIN(
-            ) . '/' . SudokuGame::GAME_NAME . '/img/share/hor_640_360.png'; // todo Подставить имя игры
+            ) . '/' . GameSudoku::GAME_NAME . '/img/share/hor_640_360.png'; // todo Подставить имя игры
     }
 
     public static function GAME_URL(): string

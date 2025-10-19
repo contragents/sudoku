@@ -24,10 +24,10 @@ class T_ZH_TW
         'Empty value is forbidden' => '禁止使用空值',
         'Forbidden' => '禁止',
         'game_title' => [
-            SudokuGame::GAME_NAME => '與朋友線上數獨',
+            GameSudoku::GAME_NAME => '與朋友線上數獨',
         ],
         'secret_prompt' => [
-            SudokuGame::GAME_NAME => '&#42;保存此密鑰，以便在 <a href="https://t.me/sudoku_app_bot">Telegram</a> 中進一步還原帳戶',
+            GameSudoku::GAME_NAME => '&#42;保存此密鑰，以便在 <a href="https://t.me/sudoku_app_bot">Telegram</a> 中進一步還原帳戶',
         ],
         'COIN Balance' => '硬幣帳戶餘額',
         PaymentModel::INIT_STATUS => '開始',
@@ -49,12 +49,12 @@ class T_ZH_TW
         'Server connecting error. Please try again' => '伺服器連線錯誤。請重試',
         'Error changing settings. Try again later' => '變更設定出錯。稍後再試',
         'invite_friend_prompt' => [
-            SudokuGame::GAME_NAME => '加入 Telegram 上的線上遊戲 SUDOKU！獲得最高評分、賺取硬幣並將代幣存入您的錢包',
+            GameSudoku::GAME_NAME => '加入 Telegram 上的線上遊戲 SUDOKU！獲得最高評分、賺取硬幣並將代幣存入您的錢包',
         ],
         'game_bot_url' => [
-            SudokuGame::GAME_NAME => 'https://t.me/sudoku_app_bot',
+            GameSudoku::GAME_NAME => 'https://t.me/sudoku_app_bot',
         ],
-        'loading_text' => [SudokuGame::GAME_NAME => '數獨正在載入中...'],
+        'loading_text' => [GameSudoku::GAME_NAME => '數獨正在載入中...'],
         'switch_tg_button' => '切換至 Telegram',
         'Invite a friend' => '邀請朋友',
         'you_lost' => '你輸了',
@@ -360,7 +360,7 @@ class T_ZH_TW
         'The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated'
         => '經典的數獨規則適用 - 在一組 9 個單元格（垂直、水平和 3x3 正方形）中，數字不得重複。',
         'faq_rules' => [
-            SudokuGame::GAME_NAME => <<<ZHTW
+            GameSudoku::GAME_NAME => <<<ZHTW
 <h2 id="nav1">關於遊戲</h2>
 適用經典的 數獨 規則 - 在一個由 9 個小格組成的區塊中（縱向、橫向和 3x3 方塊中），數字不能重複出現
 <br><br>
@@ -404,7 +404,7 @@ Elo 評分系統，Elo 系數 - 是一種計算棋手在對局中相對實力的
 ZHTW
         ,
         'faq_rewards' => [
-            SudokuGame::GAME_NAME => <<<ZHTW
+            GameSudoku::GAME_NAME => <<<ZHTW
 玩家會因為某些成就（記錄）而獲得獎勵。
 <br><br>
 玩家的獎勵會以下列提名反映在「統計」部分：金/銀/銅/石。
@@ -432,7 +432,7 @@ ZHTW
         ],
         'Reward' => '獎勵',
         'faq_coins' => [
-            SudokuGame::GAME_NAME => <<<ZHTW
+            GameSudoku::GAME_NAME => <<<ZHTW
 硬幣 <strong>SUDOKU</strong>{{sudoku_icon}}是一種遊戲中的貨幣{{yandex_exclude}}{{用於遊戲網路 - <strong>拼字遊戲、數獨遊戲</strong>
 <br><br>
 一個帳戶適用於所有遊戲，一種貨幣，一個錢包}}。

@@ -4,7 +4,7 @@ use classes\Cache;
 use classes\DB;
 use classes\GomokuGame;
 use classes\ORM;
-use classes\SudokuGame;
+use classes\GameSudoku;
 
 
 /**
@@ -53,7 +53,7 @@ class BaseModel implements Iterator
     const GAME_IDS = [
         self::ERUDIT => 1,
         self::SCRABBLE => 2,
-        SudokuGame::GAME_NAME => 3,
+        GameSudoku::GAME_NAME => 3,
         GomokuGame::GAME_NAME => 4,
     ];
 

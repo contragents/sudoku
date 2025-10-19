@@ -2,7 +2,7 @@
 
 use classes\DB;
 use classes\ORM;
-use classes\SudokuGame;
+use classes\GameSudoku;
 use classes\T;
 
 /**
@@ -18,7 +18,7 @@ class TgUserModel extends BaseModel
     const TG_ID_FIELD = 'tg_id';
     const DATA_FIELD = 'data';
 
-    const BOT_TOKEN_CONFIG_KEY = [SudokuGame::GAME_NAME => 'SUDOKU_BOT_TOKEN'];
+    const BOT_TOKEN_CONFIG_KEY = [GameSudoku::GAME_NAME => 'SUDOKU_BOT_TOKEN'];
 
     // public ?int $_id = null; // наследует
     public ?int $_tg_id = null;

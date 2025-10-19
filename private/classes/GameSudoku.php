@@ -4,9 +4,8 @@ namespace classes;
 
 use BaseController as BC;
 use classes\ViewHelper as VH;
-use CommonIdRatingModel;
 
-class SudokuGame extends Game
+class GameSudoku extends Game
 {
     public const GAME_NAME = 'sudoku';
     const KEY_OPEN_POINTS = 10; // 10 очков за открытый ключ;

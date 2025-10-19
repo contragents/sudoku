@@ -24,10 +24,10 @@ class T_ZH_CN
         'Empty value is forbidden' => '禁止使用空值',
         'Forbidden' => '禁止',
         'game_title' => [
-            SudokuGame::GAME_NAME => '与朋友一起在线玩数独',
+            GameSudoku::GAME_NAME => '与朋友一起在线玩数独',
         ],
         'secret_prompt' => [
-            SudokuGame::GAME_NAME => '&#42;保存此密钥，以便在 <a href="https://t.me/sudoku_app_bot">Telegram</a> 中进一步恢复帐户',
+            GameSudoku::GAME_NAME => '&#42;保存此密钥，以便在 <a href="https://t.me/sudoku_app_bot">Telegram</a> 中进一步恢复帐户',
         ],
         'COIN Balance' => '硬币余额',
         PaymentModel::INIT_STATUS => '已开始',
@@ -49,12 +49,12 @@ class T_ZH_CN
         'Server connecting error. Please try again' => '服务器连接错误。请重试',
         'Error changing settings. Try again later' => '更改设置出错。稍后再试',
         'invite_friend_prompt' => [
-            SudokuGame::GAME_NAME => '加入 Telegram 上的在线数独游戏！获得最高评分，赚取金币并将代币存入钱包',
+            GameSudoku::GAME_NAME => '加入 Telegram 上的在线数独游戏！获得最高评分，赚取金币并将代币存入钱包',
         ],
         'game_bot_url' => [
-            SudokuGame::GAME_NAME => 'https://t.me/sudoku_app_bot',
+            GameSudoku::GAME_NAME => 'https://t.me/sudoku_app_bot',
         ],
-        'loading_text' => [SudokuGame::GAME_NAME => '数独正在加载...'],
+        'loading_text' => [GameSudoku::GAME_NAME => '数独正在加载...'],
         'switch_tg_button' => '转至 Telegram',
         'Invite a friend' => '邀请朋友',
         'you_lost' => '你输了',
@@ -360,7 +360,7 @@ class T_ZH_CN
         'The classic SUDOKU rules apply - in a block of nine cells (vertically, horizontally and in a 3x3 square) the numbers must not be repeated'
         => '<strong>适用经典数独规则</strong> - 在九个单元格（纵向、横向和 3x3 正方形）中，数字不得重复',
         'faq_rules' => [
-            SudokuGame::GAME_NAME => <<<ZHCN
+            GameSudoku::GAME_NAME => <<<ZHCN
 <h2 id="nav1">关于游戏</h2>
 
 经典数独规则适用 - 在九个单元格（垂直、水平和 3x3 正方形）中，数字不得重复
@@ -405,7 +405,7 @@ ZHCN
 ZHCN
         ,
         'faq_rewards' => [
-            SudokuGame::GAME_NAME => <<<ZHCN
+            GameSudoku::GAME_NAME => <<<ZHCN
 球员的某些成就（记录）会得到奖励。
 <br><br>
 玩家获得的奖励会在 “STATS（统计）”部分以下列提名方式体现：金/银/铜/石。
@@ -433,7 +433,7 @@ ZHCN
         ],
         'Reward' => '奖励',
         'faq_coins' => [
-            SudokuGame::GAME_NAME => <<<ZHCN
+            GameSudoku::GAME_NAME => <<<ZHCN
 硬币 <strong>SUDOKU</strong>{{sudoku_icon}}是一种游戏内货币{{yandex_exclude}}{{用于网络游戏 - <strong>拼字游戏、数独</strong>
 <br><br>
 一个账户对应所有游戏，一种货币，一个钱包}}。
