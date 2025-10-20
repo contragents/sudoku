@@ -4,7 +4,7 @@ use classes\Config;
 use classes\FrontResource;
 use classes\FrontResourceGomoku;
 use classes\StateMachine;
-use classes\GomokuGame;
+use classes\GameGomoku;
 
 class GomokuController extends BaseController
 {
@@ -19,17 +19,17 @@ class GomokuController extends BaseController
 
     public static function GAME_URL(): string
     {
-        return Config::BASE_URL() . GomokuGame::GAME_NAME . '/';
+        return Config::BASE_URL() . GameGomoku::GAME_NAME . '/';
     }
 
     public function __construct($action, array $request)
     {
-        BaseController::$SM = new StateMachine( GomokuGame::GAME_NAME);
+        BaseController::$SM = new StateMachine(GameGomoku::GAME_NAME);
         BaseController::$FR = new FrontResourceGomoku();
 
         parent::__construct($action, $request);
 
-        $this->Game = new GomokuGame();
+        $this->Game = new GameGomoku();
     }
 
     public function Run()

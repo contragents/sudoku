@@ -2,7 +2,8 @@
 
 use classes\Cache;
 use classes\DB;
-use classes\GomokuGame;
+use classes\GameSkipbo;
+use classes\GameGomoku;
 use classes\ORM;
 use classes\GameSudoku;
 
@@ -54,7 +55,8 @@ class BaseModel implements Iterator
         self::ERUDIT => 1,
         self::SCRABBLE => 2,
         GameSudoku::GAME_NAME => 3,
-        GomokuGame::GAME_NAME => 4,
+        GameGomoku::GAME_NAME => 4,
+        GameSkipbo::GAME_NAME => 5,
     ];
 
     public ?int $_id = null;

@@ -299,11 +299,11 @@ class GameSkipbo extends Game
         return new DeskSkipbo;
     }
 
-    public function getGameStatus(int $gameNumber = null): GameStatus
+    public function getGameStatus(?int $gameNumber = null): GameStatus
     {
         try {
             $gameStatus = @Cache::get(
-                self::getCacheKey(self::GAME_DATA_KEY . ($gameNumber ?: $this->currentGame))
+                self::getCacheKey(self::GAME_DATA_KEY . ($gameNumber ?? $this->currentGame))
             );
         } catch (\Throwable $e) {
             $gameStatus = null;

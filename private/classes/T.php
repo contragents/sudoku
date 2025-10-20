@@ -173,7 +173,11 @@ class T
                 self::EN_LANG => 'Sudoku Online with friends',
                 self::RU_LANG => 'Судоку онлайн с друзьями',
             ],
-            GomokuGame::GAME_NAME => [
+            GameSkipbo::GAME_NAME => [
+                self::EN_LANG => 'Skip-Bo',
+                self::RU_LANG => 'Скип-Бо (Skip-Bo)',
+            ],
+            GameGomoku::GAME_NAME => [
                 self::EN_LANG => 'Gomoku online | X-0',
                 self::RU_LANG => 'Крестики-нолики онлайн с друзьями',
             ],
@@ -277,8 +281,12 @@ class T
                 self::EN_LANG => 'SUDOKU is loading...',
                 self::RU_LANG => 'Загружаем СУДОКУ...',
             ],
-            self::EN_LANG => 'SUDOKU is loading...',
-            self::RU_LANG => 'Загружаем СУДОКУ...',
+            GameSkipbo::GAME_NAME => [
+                self::EN_LANG => 'Skip-Bo is loading...',
+                self::RU_LANG => 'Загружаем Скип-Бо (Skip-Bo)...',
+            ],
+            self::EN_LANG => 'The Game is loading...',
+            self::RU_LANG => 'Загружаем Игру...',
         ],
         'switch_tg_button' => [
             self::EN_LANG => 'Switch to Telegram',
@@ -1170,6 +1178,10 @@ class T
             GameSudoku::GAME_NAME => [
                 self::EN_LANG => Faq::RULES[self::EN_LANG],
                 self::RU_LANG => Faq::RULES[self::RU_LANG],
+            ],
+            GameSkipbo::GAME_NAME => [
+                self::EN_LANG => 'Skip-Bo rules',
+                self::RU_LANG => 'Правила Скип-Бо',
             ],
         ],
         'faq_rating' => [
