@@ -10,7 +10,6 @@ namespace classes;
  */
 class GameStatusSkipbo extends GameStatus
 {
-
     public ?int $stackLen = null;
 
     public array $playersCards = [];

@@ -14,4 +14,3 @@ class QueueSkipbo extends Queue
 
     const USER_QUEUE_STATUS_PREFIX = GameSkipbo::GAME_NAME . parent::USER_QUEUE_STATUS_PREFIX;
 }
-

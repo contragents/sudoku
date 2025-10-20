@@ -13,7 +13,7 @@ var version = '<?= BC::$version ?>';
 
 const SUPPORTED_LANGS = <?= T::getSupportedLangsForJS() ?>;
 
-const BASE_URL = '<?= SudokuController::GAME_URL() ?>';
+const BASE_URL = '<?= SkipboController::GAME_URL() ?>';
 
 const chooseFile = "'<?= T::S('Choose file') ?>'";
 document.documentElement.style.setProperty('--choose-file', chooseFile);

@@ -12,6 +12,5 @@ class PlayerCards
 {
     public array $stack = [];
     public array $hand = [];
-    public array $bank = [1 => [], 2 => [], 3 => [], 4 => []];
-
+    public array $bank = [0 => [], 1 => [], 2 => [], 3 => []];
 }
