@@ -6,7 +6,7 @@ function () {
     var frames = atlasTexture.getFrameNames();
 
     noNetworkImg = this.add.image(200, 200, 'no_network');
-    noNetworkImgOpponent = this.add.image(200, 200, 'no_network');
+    // noNetworkImgOpponent = this.add.image(200, 200, 'no_network'); // todo переделать на массив по числу соперников
 
     WebView.postEvent('web_app_set_header_color', false, {
         color: '#2C3C6C',

@@ -1030,11 +1030,12 @@ function commonCallback(data) {
         }
     }
 
+    /* todo нужно анализировать активность каждого оппонента
     if (noNetworkImgOpponent !== false && 'is_opponent_active' in data && !data.is_opponent_active) {
         noNetworkImgOpponent.visible = true;
     } else {
         noNetworkImgOpponent.visible = false;
-    }
+    }*/
 
     gameOldState = gameState;
     gameOldSubState = gameSubState;
@@ -1496,11 +1497,13 @@ function userScores(data) {
                 if (!isOpponentBlockActive && (+k < 2)) {
                     isOpponentBlockActive = true;
 
+                    /*
                     noNetworkImgOpponent.setScale(opponentBlock.height / 232 / 4);
                     noNetworkImgOpponent.x = opponentBlock.x + opponentBlock.width / 2 + noNetworkImgOpponent.displayWidth / 2;
                     noNetworkImgOpponent.y = opponentBlock.y;
                     noNetworkImgOpponent.setDepth(10000);
                     noNetworkImgOpponent.visible = false;
+                    */
                 }
             }
         }
@@ -1516,10 +1519,6 @@ function userScores(data) {
 
 function clickGlobal(id) {
     return true;
-
-    console.log('clicked', id);
-    // div_bid_0 - bid ids
-    // div_from_0 - rating ids
 
     if (id.indexOf('bid') > 0) {
         bid = id.substring(8);

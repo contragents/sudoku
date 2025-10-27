@@ -2,7 +2,7 @@
 function (time, delta) {
 
     let dateGetTime = (new Date()).getTime();
-    if (
+    if ( false && // todo SB-3 remove
         isUserBlockActive
         && requestSended
         && !hiddenRequestSended
@@ -16,19 +16,20 @@ function (time, delta) {
     } else {
         noNetworkImg.visible = false;
     }
-
-    if (gameState == 'chooseGame' && (queryNumber > 0)) {
+    // noNetworkImg.visible = false; // todo SB-3 remove
+    if (gameState === CHOOSE_GAME_STATE && (queryNumber > 0)) {
         return;
     }
 
     let flor = Math.floor(time / 1000);
 
-    if (
+    if (false && (// todo SB-3 убрать
         (
             (flor > lastQueryTime)
             && ((flor % gameStates[gameState]['refresh']) === 0)
         )
         || (queryNumber === 0)
+    )
     ) {
         if ((isYandexAppGlobal() && uniqID) || !isYandexAppGlobal() || isYandexFakeGlobal()) {
             if (requestToServerEnabled) {

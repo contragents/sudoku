@@ -22,7 +22,8 @@ if (windowInnerWidth > windowInnerHeight) {
     screenOrient = HOR;
     var gameWidth = standardHorizontalWidth;
     var gameHeight = standardHorizontalHeight;
-    var knopkiWidth = gameWidth - gameHeight;
+    var knopkiWidth = gameWidth / 2; // 4 top-left buttons width
+    var rightKnopkiWidth = gameWidth / 3; // 3 top-right buttons width
 
     var topHeight = gameHeight * TOP_PERCENT;
     var fishkiHeight = gameHeight * FISHKI_PERCENT;
