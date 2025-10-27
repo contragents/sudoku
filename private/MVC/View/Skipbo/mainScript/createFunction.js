@@ -12,16 +12,16 @@ function () {
         color: '#2C3C6C',
     });
 
-    var ground = this.add.image(385, 375, 'ground');
+    /* var ground = this.add.image(385, 375, 'ground');
     ground.setOrigin(0, 0);
     ground.x = game.config.width - ground.width;
     ground.y = screenOrient === HOR
         ? 0
         : topHeight;
     ground.setCrop(16 * 2, 3 * 2, 550 * 2, 550 * 2);
-
-    stepX = game.config.width - ground.width;
-    stepY = (screenOrient === HOR) ? 0 : topHeight;
+*/
+    stepX = 0; //game.config.width - ground.width; // Где начало игрового поля по X
+    stepY = (screenOrient === HOR) ? 0 : topHeight; // Где начало игрового поля по Y
     initLotok();
 
     initCellsGlobal();

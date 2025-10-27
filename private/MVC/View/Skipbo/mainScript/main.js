@@ -29,7 +29,7 @@ var UIScene = new Phaser.Class({
 
 var game = new Phaser.Game(config);
 
-document.body.style.backgroundImage = screenOrient === HOR ? "url('img/back_gorizont_2.svg')" : "url('img/back2.svg')";
+document.body.style.backgroundImage = screenOrient === HOR ? "url('img/skipbo/back_gorizont_v3.svg')" : "url('img/back2.svg')";
 document.body.style.backgroundSize = 'cover';
 document.body.style.backgroundPosition = 'center';
 document.body.style.backgroundOrigin = 'border-box';

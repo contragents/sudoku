@@ -1,0 +1,693 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="1980"
+   height="1080"
+   viewBox="0 0 1980 1080"
+   version="1.1"
+   id="svg52"
+   sodipodi:docname="back_gorizont_SB_v5.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview52"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.34791667"
+     inkscape:cx="865.1497"
+     inkscape:cy="576.28743"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg52" />
+  <defs
+     id="defs29">
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#fabricTexture"
+       id="pattern52"
+       patternTransform="scale(1)" />
+    <!-- Base gradient with more emerald tones -->
+    <linearGradient
+       id="baseGradient"
+       x1="0"
+       y1="0"
+       x2="1440"
+       y2="1440"
+       gradientTransform="matrix(1.375,0,0,0.75,2.8,-0.619)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0%"
+         style="stop-color:#1a5240;stop-opacity:1"
+         id="stop1" />
+      <stop
+         offset="20%"
+         style="stop-color:#2d6e4f;stop-opacity:1"
+         id="stop2" />
+      <stop
+         offset="40%"
+         style="stop-color:#1a4d35;stop-opacity:1"
+         id="stop3" />
+      <stop
+         offset="60%"
+         style="stop-color:#2a6952;stop-opacity:1"
+         id="stop4" />
+      <stop
+         offset="80%"
+         style="stop-color:#1e5943;stop-opacity:1"
+         id="stop5" />
+      <stop
+         offset="100%"
+         style="stop-color:#24614a;stop-opacity:1"
+         id="stop6" />
+    </linearGradient>
+    <!-- Fabric fold gradients - horizontal folds -->
+    <linearGradient
+       id="fold1"
+       x1="0"
+       y1="0"
+       x2="0"
+       y2="1">
+      <stop
+         offset="0%"
+         style="stop-color:#3a8065;stop-opacity:0.6"
+         id="stop7" />
+      <stop
+         offset="50%"
+         style="stop-color:#2d6e4f;stop-opacity:0.3"
+         id="stop8" />
+      <stop
+         offset="100%"
+         style="stop-color:#1a4d35;stop-opacity:0.5"
+         id="stop9" />
+    </linearGradient>
+    <linearGradient
+       id="fold2"
+       x1="0"
+       y1="0"
+       x2="0"
+       y2="1">
+      <stop
+         offset="0%"
+         style="stop-color:#1a4d35;stop-opacity:0.5"
+         id="stop10" />
+      <stop
+         offset="50%"
+         style="stop-color:#3a8065;stop-opacity:0.4"
+         id="stop11" />
+      <stop
+         offset="100%"
+         style="stop-color:#2d6e4f;stop-opacity:0.6"
+         id="stop12" />
+    </linearGradient>
+    <linearGradient
+       id="fold3"
+       x1="0"
+       y1="0"
+       x2="0"
+       y2="1">
+      <stop
+         offset="0%"
+         style="stop-color:#2a6952;stop-opacity:0.4"
+         id="stop13" />
+      <stop
+         offset="50%"
+         style="stop-color:#1e5943;stop-opacity:0.3"
+         id="stop14" />
+      <stop
+         offset="100%"
+         style="stop-color:#3a8065;stop-opacity:0.5"
+         id="stop15" />
+    </linearGradient>
+    <!-- Diagonal fold gradients -->
+    <linearGradient
+       id="diagFold1"
+       x1="0"
+       y1="0"
+       x2="1"
+       y2="1">
+      <stop
+         offset="0%"
+         style="stop-color:#3a8065;stop-opacity:0.4"
+         id="stop16" />
+      <stop
+         offset="50%"
+         style="stop-color:#1a4d35;stop-opacity:0.2"
+         id="stop17" />
+      <stop
+         offset="100%"
+         style="stop-color:#2d6e4f;stop-opacity:0.4"
+         id="stop18" />
+    </linearGradient>
+    <linearGradient
+       id="diagFold2"
+       x1="1"
+       y1="0"
+       x2="0"
+       y2="1">
+      <stop
+         offset="0%"
+         style="stop-color:#2a6952;stop-opacity:0.5"
+         id="stop19" />
+      <stop
+         offset="50%"
+         style="stop-color:#3a8065;stop-opacity:0.3"
+         id="stop20" />
+      <stop
+         offset="100%"
+         style="stop-color:#1e5943;stop-opacity:0.4"
+         id="stop21" />
+    </linearGradient>
+    <!-- Vertical fold gradients -->
+    <linearGradient
+       id="vertFold1"
+       x1="0"
+       y1="0"
+       x2="1"
+       y2="0">
+      <stop
+         offset="0%"
+         style="stop-color:#1a5240;stop-opacity:0.6"
+         id="stop22" />
+      <stop
+         offset="50%"
+         style="stop-color:#3a8065;stop-opacity:0.3"
+         id="stop23" />
+      <stop
+         offset="100%"
+         style="stop-color:#2d6e4f;stop-opacity:0.5"
+         id="stop24" />
+    </linearGradient>
+    <!-- Pattern for fine fabric texture -->
+    <pattern
+       id="fabricTexture"
+       patternUnits="userSpaceOnUse"
+       width="30"
+       height="30">
+      <rect
+         width="30"
+         height="30"
+         fill="#2d6e4f"
+         id="rect24" />
+      <line
+         x1="0"
+         y1="7.5"
+         x2="30"
+         y2="7.5"
+         stroke="#1a4d35"
+         stroke-width="0.4"
+         opacity="0.4"
+         id="line24" />
+      <line
+         x1="0"
+         y1="15"
+         x2="30"
+         y2="15"
+         stroke="#3a8065"
+         stroke-width="0.3"
+         opacity="0.3"
+         id="line25" />
+      <line
+         x1="0"
+         y1="22.5"
+         x2="30"
+         y2="22.5"
+         stroke="#2a6952"
+         stroke-width="0.4"
+         opacity="0.3"
+         id="line26" />
+      <line
+         x1="7.5"
+         y1="0"
+         x2="7.5"
+         y2="30"
+         stroke="#1e5943"
+         stroke-width="0.3"
+         opacity="0.3"
+         id="line27" />
+      <line
+         x1="15"
+         y1="0"
+         x2="15"
+         y2="30"
+         stroke="#24614a"
+         stroke-width="0.3"
+         opacity="0.2"
+         id="line28" />
+      <line
+         x1="22.5"
+         y1="0"
+         x2="22.5"
+         y2="30"
+         stroke="#3a8065"
+         stroke-width="0.3"
+         opacity="0.3"
+         id="line29" />
+    </pattern>
+    <!-- Noise filter for fabric texture -->
+    <filter
+       id="fabricNoise"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feTurbulence
+         baseFrequency="0.95"
+         numOctaves="5"
+         seed="2"
+         result="noise"
+         id="feTurbulence29" />
+      <feColorMatrix
+         in="noise"
+         type="saturate"
+         values="0"
+         id="feColorMatrix29" />
+      <feComponentTransfer
+         id="feComponentTransfer29">
+        <feFuncA
+           type="discrete"
+           tableValues="0.05 0.1 0.15 0.1 0.05 0.08"
+           id="feFuncA29" />
+      </feComponentTransfer>
+      <feComposite
+         in2="SourceGraphic"
+         id="feComposite29" />
+    </filter>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#fold1"
+       id="linearGradient52"
+       x1="0"
+       y1="320"
+       x2="0"
+       y2="800"
+       gradientTransform="matrix(4.125,0,0,0.2578125,0,-4.375)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#fold2"
+       id="linearGradient53"
+       x1="0"
+       y1="1154.7004"
+       x2="0"
+       y2="1570.3927"
+       gradientTransform="scale(4.7631398,0.21650635)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#fold1"
+       id="linearGradient54"
+       x1="0"
+       y1="1555.3778"
+       x2="0"
+       y2="2073.8369"
+       gradientTransform="scale(3.8190079,0.27003086)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#fold3"
+       id="linearGradient55"
+       x1="0"
+       y1="2632.0542"
+       x2="0"
+       y2="3091.6191"
+       gradientTransform="scale(4.3084219,0.23935678)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#fold2"
+       id="linearGradient56"
+       x1="0"
+       y1="3151.322"
+       x2="0"
+       y2="3650.9219"
+       gradientTransform="scale(3.9631718,0.26020825)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#fold3"
+       id="linearGradient57"
+       x1="0"
+       y1="1018.2338"
+       x2="0"
+       y2="1357.645"
+       gradientTransform="scale(5.8336309,0.1767767)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#fold1"
+       id="linearGradient58"
+       x1="0"
+       y1="2723.3594"
+       x2="0"
+       y2="3089.9653"
+       gradientTransform="scale(5.4008928,0.19094065)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#fold2"
+       id="linearGradient59"
+       x1="0"
+       y1="4431.2935"
+       x2="0"
+       y2="4756.2554"
+       gradientTransform="scale(6.0930288,0.1692508)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#fold3"
+       id="linearGradient60"
+       x1="0"
+       y1="5326.231"
+       x2="0"
+       y2="5679.5015"
+       gradientTransform="scale(5.6047714,0.18399502)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#vertFold1"
+       id="linearGradient61"
+       x1="367.42346"
+       y1="0"
+       x2="808.3316"
+       y2="0"
+       gradientTransform="scale(0.40824829,2.4494897)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#vertFold1"
+       id="linearGradient62"
+       x1="1333.1809"
+       y1="0"
+       x2="1722.0254"
+       y2="0"
+       gradientTransform="scale(0.36004115,2.7774603)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#vertFold1"
+       id="linearGradient63"
+       x1="1975.2216"
+       y1="0"
+       x2="2439.9795"
+       y2="0"
+       gradientTransform="scale(0.43033148,2.32379)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#vertFold1"
+       id="linearGradient64"
+       x1="3117.6914"
+       y1="0"
+       x2="3533.3835"
+       y2="0"
+       gradientTransform="scale(0.38490018,2.5980762)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#vertFold1"
+       id="linearGradient65"
+       x1="3695.4453"
+       y1="0"
+       x2="4148.4351"
+       y2="0"
+       gradientTransform="scale(0.41943525,2.3841582)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#diagFold1"
+       id="linearGradient66"
+       x1="0"
+       y1="0"
+       x2="657.26709"
+       y2="657.26709"
+       gradientTransform="scale(0.60858062,1.6431677)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#diagFold2"
+       id="linearGradient67"
+       x1="1643.1677"
+       y1="0"
+       x2="985.90057"
+       y2="657.26709"
+       gradientTransform="scale(0.60858062,1.6431677)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#diagFold1"
+       id="linearGradient68"
+       x1="1971.8011"
+       y1="0"
+       x2="2629.0684"
+       y2="657.26709"
+       gradientTransform="scale(0.60858062,1.6431677)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#diagFold2"
+       id="linearGradient69"
+       x1="4254.042"
+       y1="0"
+       x2="3766.5996"
+       y2="487.44229"
+       gradientTransform="scale(0.45133547,2.2156468)"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <!-- Base emerald layer -->
+  <rect
+     width="1980"
+     height="1080"
+     fill="url(#baseGradient)"
+     id="rect29"
+     x="2.8"
+     y="-0.61900002"
+     style="fill:url(#baseGradient);stroke-width:1.0155" />
+  <!-- Fabric texture overlay -->
+  <rect
+     width="1980"
+     height="1080"
+     fill="url(#fabricTexture)"
+     opacity="0.5"
+     id="rect30"
+     x="2.8"
+     y="-0.61900002"
+     style="fill:url(#pattern52);stroke-width:1.0155" />
+  <!-- Horizontal fabric folds (multiple layers) -->
+  <rect
+     x="0"
+     y="78.125"
+     width="1980"
+     height="123.75"
+     fill="url(#fold1)"
+     opacity="0.7"
+     id="rect31"
+     style="fill:url(#linearGradient52);stroke-width:1.03125" />
+  <rect
+     x="0"
+     y="250"
+     width="1980"
+     height="90"
+     fill="url(#fold2)"
+     opacity="0.6"
+     id="rect32"
+     style="fill:url(#linearGradient53);stroke-width:1.0155" />
+  <rect
+     x="0"
+     y="420"
+     width="1980"
+     height="140"
+     fill="url(#fold1)"
+     opacity="0.5"
+     id="rect33"
+     style="fill:url(#linearGradient54);stroke-width:1.0155" />
+  <rect
+     x="0"
+     y="630"
+     width="1980"
+     height="110"
+     fill="url(#fold3)"
+     opacity="0.7"
+     id="rect34"
+     style="fill:url(#linearGradient55);stroke-width:1.0155" />
+  <rect
+     x="0"
+     y="820"
+     width="1980"
+     height="130"
+     fill="url(#fold2)"
+     opacity="0.6"
+     id="rect35"
+     style="fill:url(#linearGradient56);stroke-width:1.0155" />
+  <!-- Additional horizontal folds -->
+  <rect
+     x="0"
+     y="180"
+     width="1980"
+     height="60"
+     fill="url(#fold3)"
+     opacity="0.5"
+     id="rect36"
+     style="fill:url(#linearGradient57);stroke-width:1.0155" />
+  <rect
+     x="0"
+     y="520"
+     width="1980"
+     height="70"
+     fill="url(#fold1)"
+     opacity="0.6"
+     id="rect37"
+     style="fill:url(#linearGradient58);stroke-width:1.0155" />
+  <rect
+     x="0"
+     y="750"
+     width="1980"
+     height="55"
+     fill="url(#fold2)"
+     opacity="0.5"
+     id="rect38"
+     style="fill:url(#linearGradient59);stroke-width:1.0155" />
+  <rect
+     x="0"
+     y="980"
+     width="1980"
+     height="65"
+     fill="url(#fold3)"
+     opacity="0.6"
+     id="rect39"
+     style="fill:url(#linearGradient60);stroke-width:1.0155" />
+  <!-- Vertical fabric folds -->
+  <rect
+     x="150"
+     y="0"
+     width="180"
+     height="1080"
+     fill="url(#vertFold1)"
+     opacity="0.4"
+     id="rect40"
+     style="fill:url(#linearGradient61)" />
+  <rect
+     x="480"
+     y="0"
+     width="140"
+     height="1080"
+     fill="url(#vertFold1)"
+     opacity="0.3"
+     id="rect41"
+     style="fill:url(#linearGradient62)" />
+  <rect
+     x="850"
+     y="0"
+     width="200"
+     height="1080"
+     fill="url(#vertFold1)"
+     opacity="0.5"
+     id="rect42"
+     style="fill:url(#linearGradient63)" />
+  <rect
+     x="1200"
+     y="0"
+     width="160"
+     height="1080"
+     fill="url(#vertFold1)"
+     opacity="0.4"
+     id="rect43"
+     style="fill:url(#linearGradient64)" />
+  <rect
+     x="1550"
+     y="0"
+     width="190"
+     height="1080"
+     fill="url(#vertFold1)"
+     opacity="0.3"
+     id="rect44"
+     style="fill:url(#linearGradient65)" />
+  <!-- Diagonal fold patterns for natural fabric look -->
+  <polygon
+     points="0,1080 0,0 400,0 300,1080 "
+     fill="url(#diagFold1)"
+     opacity="0.3"
+     id="polygon44"
+     style="fill:url(#linearGradient66)" />
+  <polygon
+     points="700,1080 600,0 1000,0 900,1080 "
+     fill="url(#diagFold2)"
+     opacity="0.25"
+     id="polygon45"
+     style="fill:url(#linearGradient67)" />
+  <polygon
+     points="1300,1080 1200,0 1600,0 1500,1080 "
+     fill="url(#diagFold1)"
+     opacity="0.3"
+     id="polygon46"
+     style="fill:url(#linearGradient68)" />
+  <polygon
+     points="1700,0 1920,0 1920,1080 1800,1080 "
+     fill="url(#diagFold2)"
+     opacity="0.28"
+     id="polygon47"
+     style="fill:url(#linearGradient69)"
+     transform="matrix(1.2727273,0,0,1,-463.63636,0)" />
+  <!-- Subtle wave-like folds for more natural appearance -->
+  <path
+     d="m 0,150 q 495,-10 990,10 495,20 990,-10 v 50 Q 1485,190 990,210 495,230 0,200 Z"
+     fill="#3a8065"
+     opacity="0.4"
+     id="path47"
+     style="stroke-width:1.0155" />
+  <path
+     d="m 0,350 q 495,-10 990,10 495,20 990,-10 v 40 Q 1485,380 990,400 495,420 0,390 Z"
+     fill="#1a4d35"
+     opacity="0.35"
+     id="path48"
+     style="stroke-width:1.0155" />
+  <path
+     d="m 0,550 q 495,-10 990,10 495,20 990,-10 v 50 Q 1485,590 990,610 495,630 0,600 Z"
+     fill="#2a6952"
+     opacity="0.4"
+     id="path49"
+     style="stroke-width:1.0155" />
+  <path
+     d="m 0,750 q 495,-10 990,10 495,20 990,-10 v 50 Q 1485,790 990,810 495,830 0,800 Z"
+     fill="#3a8065"
+     opacity="0.38"
+     id="path50"
+     style="stroke-width:1.0155" />
+  <path
+     d="m 0,920 q 495,-10 990,10 495,20 990,-10 v 50 Q 1485,960 990,980 495,1000 0,970 Z"
+     fill="#1e5943"
+     opacity="0.36"
+     id="path51"
+     style="stroke-width:1.0155" />
+  <!-- Apply noise filter for realistic fabric texture -->
+  <rect
+     width="1920"
+     height="1080"
+     fill="#2d6e4f"
+     opacity="0.08"
+     filter="url(#fabricNoise)"
+     id="rect51"
+     x="0"
+     y="0"
+     transform="matrix(1.03125,0,0,1,2.8,-0.619)" />
+  <!-- Final emerald tone overlay -->
+  <rect
+     width="1980"
+     height="1080"
+     fill="#2a6952"
+     opacity="0.12"
+     id="rect52"
+     x="2.8"
+     y="-0.61900002"
+     style="stroke-width:1.0155" />
+</svg>
