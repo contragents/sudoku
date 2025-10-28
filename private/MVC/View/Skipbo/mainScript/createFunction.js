@@ -114,23 +114,37 @@ function () {
         });
     }
 
-    let numTopButtons = 0;
-    let sumWidth = 0;
-    for (let tbK in topButtons) {
-        numTopButtons++;
-        topButtons[tbK].displayWidth = buttons[tbK].svgObject.displayWidth;
-        sumWidth += topButtons[tbK].displayWidth;
+    // Top-Left buttons positioning..
+    let numTopLeftButtons = 0;
+    let sumLeftWidth = 0;
+    for (let tbK in topLeftButtons) {
+        numTopLeftButtons++;
+        topLeftButtons[tbK].displayWidth = buttons[tbK].svgObject.displayWidth;
+        sumLeftWidth += topLeftButtons[tbK].displayWidth;
     }
-    let stepXTopButtons = (knopkiWidth - sumWidth) / (numTopButtons + 1);
+    let stepXTopLeftButtons = (knopkiLeftWidth - sumLeftWidth) / (numTopLeftButtons + 1);
 
-    let currentWidth = 0;
-    for (let tbK in topButtons) {
-        buttons[tbK].svgObject.x = stepXTopButtons + currentWidth + buttons[tbK].svgObject.displayWidth / 2;
-        currentWidth += stepXTopButtons + buttons[tbK].svgObject.displayWidth;
+    let currentLeftWidth = 0;
+    for (let tbK in topLeftButtons) {
+        buttons[tbK].svgObject.x = stepXTopLeftButtons + currentLeftWidth + buttons[tbK].svgObject.displayWidth / 2;
+        currentLeftWidth += stepXTopLeftButtons + buttons[tbK].svgObject.displayWidth;
     }
 
-    if (buttons.submitButton.svgObject !== false) {
-        buttons.submitButton.setDisabled();
+    // Top-Right buttons positioning
+
+    let numTopRightButtons = 0;
+    let sumRightWidth = 0;
+    for (let tbK in topRightButtons) {
+        numTopRightButtons++;
+        topRightButtons[tbK].displayWidth = buttons[tbK].svgObject.displayWidth;
+        sumRightWidth += topRightButtons[tbK].displayWidth;
+    }
+    let stepXTopRightButtons = (knopkiRightWidth - sumRightWidth) / (numTopRightButtons + 1);
+
+    let currentRightWidth = 0;
+    for (let tbK in topRightButtons) {
+        buttons[tbK].svgObject.x = gameWidth - knopkiRightWidth + stepXTopRightButtons + currentRightWidth + buttons[tbK].svgObject.displayWidth / 2;
+        currentRightWidth += stepXTopRightButtons + buttons[tbK].svgObject.displayWidth;
     }
 
     for (let k in players) {
@@ -141,6 +155,14 @@ function () {
         players[k].svgObject = getSVGBlockGlobal(players[k]['x'], players[k]['y'], k, this, players[k].scalable, 'numbers' in players[k]);
         players[k].svgObject.bringToTop(players[k].svgObject.getByName(k + OTJAT_MODE));
         players[k].svgObject.getByName(k + ALARM_MODE).setVisible(false);
+    }
+
+    players.timerBlock.svgObject.setAlpha(1);
+    displayTimeGlobal(117, true);
+    players.youBlock.svgObject.setAlpha(1);
+
+    for (let k in cards) {
+        cards[k].svgObject = getSVGCardBlockGlobal(cards[k]['x'], cards[k]['y'], k, this, 'scalable' in cards[k] && cards[k].scalable);
     }
 
 //    <?php include('create/fishkaDragEvents.js')?>

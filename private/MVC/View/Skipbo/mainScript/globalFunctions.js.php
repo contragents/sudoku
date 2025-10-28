@@ -604,6 +604,27 @@ function _placeFishki() {
     }
 }
 
+function getSVGCardBlockGlobal(X, Y, buttonName, _this, scalable) {
+
+
+    let element = _this.add.image(0, 0, cards[buttonName].imgName)
+        .setName(buttonName);
+    if (scalable) {
+        element.setScale(1, buttonHeightKoef);
+    } else if('width' in cards[buttonName]) {
+        element.width = cards[buttonName].width;
+    }
+
+    let container = _this.add.container(X, Y, element);
+    if ('width' in cards[buttonName]) {
+        container.setScale(cards[buttonName].width / element.displayWidth);
+    } else {
+        container.setSize(element.displayWidth, element.displayHeight);
+    }
+
+    return container;
+}
+
 function getSVGBlockGlobal(X, Y, buttonName, _this, scalable, hasDigits = false) {
     let elements = [];
     let elementNumber = 0;
@@ -619,10 +640,10 @@ function getSVGBlockGlobal(X, Y, buttonName, _this, scalable, hasDigits = false)
 
     if (hasDigits) {
         let imgName = 'numbersX3' in players[buttonName] ? 'timer_' : 'player_';
-        let y = 'numbersY' in players[buttonName] ? players[buttonName].numbersY : 0;
-        let x3 = 'numbersX3' in players[buttonName] ? players[buttonName].numbersX3 : elements[0].displayWidth * 0.75 * 0.5;
-        let x2 = 'numbersX2' in players[buttonName] ? players[buttonName].numbersX2 : elements[0].displayWidth * 0.6 * 0.5;
-        let x1 = 'numbersX1' in players[buttonName] ? players[buttonName].numbersX1 : elements[0].displayWidth * 0.45 * 0.5;
+        let y = 'numbersY' in players[buttonName] ? players[buttonName].numbersY() : 0;
+        let x3 = 'numbersX3' in players[buttonName] ? players[buttonName].numbersX3() : elements[0].displayWidth * 0.75 * 0.5;
+        let x2 = 'numbersX2' in players[buttonName] ? players[buttonName].numbersX2() : elements[0].displayWidth * 0.6 * 0.5;
+        let x1 = 'numbersX1' in players[buttonName] ? players[buttonName].numbersX1() : elements[0].displayWidth * 0.45 * 0.5;
 
         playerBlockModes.forEach(mode => {
             if ('dvoetochX' in players[buttonName]) {

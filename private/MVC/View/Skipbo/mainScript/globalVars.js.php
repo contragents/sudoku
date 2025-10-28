@@ -20,12 +20,39 @@ const BASE_URL = '<?= SkipboController::GAME_URL() ?>';
 
 if (windowInnerWidth > windowInnerHeight) {
     screenOrient = HOR;
-    var gameWidth = standardHorizontalWidth;
-    var gameHeight = standardHorizontalHeight;
-    var knopkiWidth = gameWidth / 2; // 4 top-left buttons width
-    var rightKnopkiWidth = gameWidth / 3; // 3 top-right buttons width
 
+    var gameWidth = standardHorizontalWidth;
+    var gameHeight = 9 / 16 * gameWidth; // standardHorizontalHeight;
     var topHeight = gameHeight * TOP_PERCENT;
+    var buttonHeight = topHeight;
+    var cardWidth = buttonWidth * 1 / 2; // Ширина карты (полного размера)
+    var cardStep = cardWidth / 10; // Расстояние между картами
+
+    var knopkiLeftWidth = gameWidth / 2; // 4 top-left buttons width
+    var knopkiRightWidth = gameWidth / 3; // 3 top-right buttons width
+    var centerPlayerBackplateCenterX = gameWidth / 2;
+    var centerPlayerBackplateCenterY = gameHeight / 4 + 6 * cardStep;
+    var playerBackplateWidth = gameWidth / 3 * 0.9;
+    var kolodaCardsBlockWidth = 6 * cardWidth + 10 * cardStep;// gameWidth * 2 / 3; // Ширина центрального блока - Колода, 4 карты, активная карта Игрока
+    var kolodaCardsBlockCenterX = gameWidth / 2;
+    var kolodaCardsBlockX = kolodaCardsBlockCenterX - kolodaCardsBlockWidth / 2; // Х-координата центрального блока
+    var kolodaCardsBlockY = gameHeight / 2;
+    var kolodaCardsBlockHeight = gameHeight / 4; // Высота центрального блока
+    var timerHeight = kolodaCardsBlockHeight; // Высота таймера
+    var timerXCenter = kolodaCardsBlockX / 2; // Центр X блока таймера
+    var timerYCenter = kolodaCardsBlockY + kolodaCardsBlockHeight / 2; // Центр Y блока таймера
+    var bankGoalBlockXCenter = gameWidth - kolodaCardsBlockX / 2;
+    var bankGoalBlockYCenter = timerYCenter;
+    var youBlockXCenter = buttonWidth / 2 + cardStep;
+    var youBlockYCenter = gameHeight - kolodaCardsBlockHeight - cardStep * 6;
+    var cardCommonBlockYCenter = kolodaCardsBlockY + kolodaCardsBlockHeight / 2 + kolodaCardsBlockHeight / 6;
+    var card1CommonBlockXCenter = kolodaCardsBlockCenterX - cardStep / 2 - cardWidth - cardStep - cardWidth / 2;
+    var handCard1CenterX = cardWidth / 2 + cardStep;
+    var handCardCenterY = gameHeight - gameHeight / 8;
+    var bankCard4CenterX = gameWidth - cardWidth / 2 - cardStep;
+    var bankCardCenterY = handCardCenterY;
+
+    // var topHeight = gameHeight * TOP_PERCENT;
     var fishkiHeight = gameHeight * FISHKI_PERCENT;
     var botHeight = gameHeight * BOTTOM_PERCENT;
     var topXY = {x: 0, y: 0};
@@ -88,7 +115,7 @@ if (windowInnerWidth > windowInnerHeight) {
 var lotokCapacityX = 9;
 var lotokCapacityY = 1;
 
-var buttonHeight = topHeight;
+// var buttonHeight = topHeight;
 
 var lotokCells = [];
 

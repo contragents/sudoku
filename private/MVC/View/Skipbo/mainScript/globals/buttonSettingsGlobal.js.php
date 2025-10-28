@@ -2,13 +2,21 @@
 use classes\T;
 ?>
 //
-var topButtons = {
+var topLeftButtons = {
     newGameButton: {displayWidth: 0},
     instructButton: {displayWidth: 0},
     prizesButton: {displayWidth: 0},
     ...(!isYandexAppGlobal() && !isSteamGlobal() && {
         inviteButton: {displayWidth: 0}
     }),
+};
+
+var topRightButtons = {
+    logButton: {displayWidth: 0},
+    ...(!isYandexAppGlobal() && !isSteamGlobal() && {
+        chatButton: {displayWidth: 0}
+    }),
+    playersButton: {displayWidth: 0},
 };
 
 var modes = [OTJAT_MODE, ALARM_MODE, 'Inactive', 'Navedenie', 'Najatie'];
@@ -48,7 +56,7 @@ var buttons = {
     prizesButton: {
         filename: 'prizes2',
         modes: [OTJAT_MODE, 'Navedenie', 'Najatie'],
-        x: (topXY.x + knopkiWidth) / 2,
+        x: (topXY.x + knopkiLeftWidth) / 2,
         y: (topXY.y + topHeight) / 2,
         caption: 'Prizes',
         width: buttonWidth / 2,
@@ -61,7 +69,7 @@ var buttons = {
         inviteButton: {
             filename: 'invite2',
             modes: [OTJAT_MODE, 'Navedenie', 'Najatie'],
-            x: topXY.x + knopkiWidth - buttonWidth,
+            x: topXY.x + knopkiLeftWidth - buttonWidth,
             y: topXY.y + topHeight / 2,
             caption: 'Invite',
             width: buttonWidth / 2,
@@ -99,61 +107,10 @@ var buttons = {
             }
         },
     }),
-    submitButton: {
-        filename: 'otpravit2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + (version > '1.0.0.2' ? lang : lang.toLowerCase())) : ''),
-        x: botXY.x + knopkiWidth - buttonWidth / 2 - buttonStepX,
-        y: botXY.y + botHeight * 0.125,
-        caption: 'send',
-        width: buttonWidth,
-        object: false, svgObject: false,
-        pointerupFunction: function () {
-            submitButtonFunction();
-        },
-        disabled: {
-            preMyTurn: 1,
-            otherTurn: 1,
-            gameResults: 1,
-            noGame: 1,
-            initGame: 1,
-            initRatingGame: 1,
-            chooseGame: 1,
-            startGame: 1,
-        },
-        setEnabled: function () {
-            if (this.svgObject === false) {
-                return;
-            }
-
-            this.svgObject.setInteractive();
-            this.svgObject.bringToTop(this.svgObject.getByName('submitButton' + OTJAT_MODE));
-        },
-        setDisabled: function () {
-            if (this.svgObject === false) {
-                return;
-            }
-
-            this.svgObject.disableInteractive();
-            this.svgObject.bringToTop(this.svgObject.getByName('submitButton' + INACTIVE_MODE));
-        }
-    },
-    resetButton: {
-        filename: 'steret2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + (version > '1.0.0.2' ? lang : lang.toLowerCase())) : ''),
-        modes: [OTJAT_MODE, 'Inactive', 'Navedenie', 'Najatie'],
-        x: botXY.x + knopkiWidth - buttonWidth / 2 - buttonStepX,
-        y: botXY.y + botHeight * (0.25 + 0.125),
-        caption: 'clear',
-        width: buttonWidth,
-        object: false,
-        svgObject: false,
-        enabled: {myTurn: 1, preMyTurn: 1, otherTurn: 1},
-        pointerupFunction: function () {
-            resetButtonFunction();
-        }
-    },
     playersButton: {
         filename: 'igroki2',
-        x: botXY.x + knopkiWidth - buttonWidth / 2 - buttonStepX,
-        y: botXY.y + botHeight * (0.75 + 0.125),
+        x: botXY.x + knopkiLeftWidth - buttonWidth / 2 - buttonStepX,
+        y: (topXY.y + topHeight) / 2,
         caption: 'players',
         width: buttonWidth / 2,
         object: false, svgObject: false,
@@ -161,48 +118,11 @@ var buttons = {
             playersButtonFunction();
         }
     },
-    checkButton: {
-        filename: 'proveryt2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + (version > '1.0.0.2' ? lang : lang.toLowerCase())) : ''),
-        modes: [OTJAT_MODE, 'Inactive', 'Navedenie', 'Najatie'],
-        x: botXY.x + knopkiWidth / 2,
-        y: botXY.y + botHeight * 0.125,
-        caption: 'check',
-        width: buttonWidth,
-        object: false,
-        svgObject: false,
-        disabled: {
-            gameResults: 1,
-            noGame: 1,
-            initGame: 1,
-            initRatingGame: 1,
-            chooseGame: 1,
-            startGame: 1,
-        },
-        pointerupFunction: function () {
-            checkButtonFunction();
-        },
-        setEnabled: function () {
-            if (this.svgObject === false) {
-                return;
-            }
-
-            this.svgObject.setInteractive();
-            this.svgObject.bringToTop(this.svgObject.getByName('checkButton' + OTJAT_MODE));
-        },
-        setDisabled: function () {
-            if (this.svgObject === false) {
-                return;
-            }
-
-            this.svgObject.disableInteractive();
-            this.svgObject.bringToTop(this.svgObject.getByName('checkButton' + INACTIVE_MODE));
-        }
-    },
     ...(!isYandexAppGlobal() && !isSteamGlobal() && {
         chatButton: {
             filename: 'chat2',
-            x: botXY.x + knopkiWidth / 2,
-            y: botXY.y + botHeight * (0.75 + 0.125),
+            x: botXY.x + knopkiLeftWidth / 2,
+            y: (topXY.y + topHeight) / 2,
             caption: 'chat',
             width: buttonWidth / 2,
             object: false,
@@ -216,7 +136,7 @@ var buttons = {
         filename: 'log2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + (version > '1.0.0.2' ? lang : lang.toLowerCase())) : ''),
         modes: [OTJAT_MODE, 'Inactive', 'Navedenie', 'Najatie'],
         x: botXY.x + buttonStepX + buttonWidth / 2,
-        y: botXY.y + botHeight * (0.75 + 0.125),
+        y: (topXY.y + topHeight) / 2,
         caption: 'log',
         width: buttonWidth / 2,
         object: false,
@@ -289,11 +209,190 @@ var modesColors = {
     Otjat: 'yellow',
 }
 
+var cards = {
+    card1CommonBlock: {
+        imgName: 'card_area',
+        x: card1CommonBlockXCenter,
+        y: cardCommonBlockYCenter,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+    },
+    card2CommonBlock: {
+        imgName: 'card_area',
+        x: card1CommonBlockXCenter + cardStep + cardWidth,
+        y: cardCommonBlockYCenter,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+    },
+    card3CommonBlock: {
+        imgName: 'card_area',
+        x: card1CommonBlockXCenter + 2 * (cardStep + cardWidth),
+        y: cardCommonBlockYCenter,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+    },
+    card4CommonBlock: {
+        imgName: 'card_area',
+        x: card1CommonBlockXCenter + 3 * (cardStep + cardWidth),
+        y: cardCommonBlockYCenter,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+    },
+    kolodaCard1: {
+        imgName: 'card_back',
+        x: card1CommonBlockXCenter - 5 * cardStep - cardWidth,
+        y: cardCommonBlockYCenter - cardStep,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+    },
+    kolodaCard2: {
+        imgName: 'card_back',
+        x: card1CommonBlockXCenter - 5 * cardStep - cardWidth,
+        y: cardCommonBlockYCenter - 2 * cardStep,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+    },
+    kolodaCard3: {
+        imgName: 'card_back',
+        x: card1CommonBlockXCenter - 5 * cardStep - cardWidth,
+        y: cardCommonBlockYCenter - 3 * cardStep,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+    },
+    goalCard: {
+        imgName: 'card_10',
+        x: card1CommonBlockXCenter + 3 * (cardStep + cardWidth) + 5 * cardStep + cardWidth,
+        y: cardCommonBlockYCenter - 3 * cardStep,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+    },
+    playerCenterBackplate: {
+        imgName: 'back_player',
+        x: centerPlayerBackplateCenterX,
+        y: centerPlayerBackplateCenterY,
+        width: playerBackplateWidth,
+        object: false,
+        svgObject: false,
+    },
+    playerLeftBackplate: {
+        imgName: 'back_player',
+        x: centerPlayerBackplateCenterX - 4 * cardStep - playerBackplateWidth,
+        y: centerPlayerBackplateCenterY,
+        width: playerBackplateWidth,
+        object: false,
+        svgObject: false,
+    },
+    playerRightBackplate: {
+        imgName: 'back_player',
+        x: centerPlayerBackplateCenterX + 4 * cardStep + playerBackplateWidth,
+        y: centerPlayerBackplateCenterY,
+        width: playerBackplateWidth,
+        object: false,
+        svgObject: false,
+    },
+    handCard1: {
+        imgName: 'card_1',
+        x: handCard1CenterX,
+        y: handCardCenterY,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+    },
+    handCard2: {
+        imgName: 'card_2',
+        x: handCard1CenterX + cardStep + cardWidth,
+        y: handCardCenterY,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+    },
+    handCard3: {
+        imgName: 'card_5',
+        x: handCard1CenterX + 2 * (cardStep + cardWidth),
+        y: handCardCenterY,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+    },
+    handCard4: {
+        imgName: 'card_skipbo',
+        x: handCard1CenterX  + 3 * (cardStep + cardWidth),
+        y: handCardCenterY,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+    },
+    handCard5: {
+        imgName: 'card_12',
+        x: handCard1CenterX + 4 * (cardStep + cardWidth),
+        y: handCardCenterY,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+    },
+    bankCard4: {
+        imgName: 'card_area',
+        x: bankCard4CenterX,
+        y: bankCardCenterY,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+    },
+    bankCard3: {
+        imgName: 'card_area',
+        x: bankCard4CenterX - (cardStep + cardWidth),
+        y: bankCardCenterY,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+    },
+    bankCard2: {
+        imgName: 'card_area',
+        x: bankCard4CenterX - 2 * (cardStep + cardWidth),
+        y: bankCardCenterY,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+    },
+    bankCard1: {
+        imgName: 'card_area',
+        x: bankCard4CenterX - 3 * (cardStep + cardWidth),
+        y: bankCardCenterY,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+    },
+    active1: {
+        imgName: 'frame_card',
+        x: bankCard4CenterX - 3 * (cardStep + cardWidth),
+        y: bankCardCenterY,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+    },
+    active2: {
+        imgName: 'frame_card',
+        x: card1CommonBlockXCenter + cardStep + cardWidth,
+        y: cardCommonBlockYCenter,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+    }
+}
+
 var players = {
     youBlock: {
         filename: 'you' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + (version > '1.0.0.2' ? lang : lang.toLowerCase())) : ''),
-        x: botXY.x + buttonStepX + buttonWidth / 2,
-        y: botXY.y + botHeight * 0.75 * 0.1,
+        x: youBlockXCenter,
+        y: youBlockYCenter + buttonHeight / 2,
         width: buttonWidth,
         object: false,
         svgObject: false,
@@ -319,42 +418,39 @@ var players = {
     },
     goalBlock: {
         modes: [OTJAT_MODE],
-        filename: 'goal_',
-        x: botXY.x + buttonStepX + buttonWidth / 2,
-        y: botXY.y + botHeight * 0.75 * (0.8 + 0.1),
+        filename: 'goal_30',
+        x: bankGoalBlockXCenter,
+        y: bankGoalBlockYCenter + buttonHeight / 3,
         width: buttonWidth,
         object: false,
         svgObject: false,
-        preload: false,
+        preload: true,
     },
     bankBlock: {
-        filename: 'bank_',
-        x: botXY.x + buttonStepX + buttonWidth / 2,
-        y: botXY.y + botHeight * 0.75 * (1 + 0.1),
+        modes: [OTJAT_MODE],
+        filename: 'bank_500_RU',
+        x: bankGoalBlockXCenter,
+        y: bankGoalBlockYCenter - buttonHeight / 3,
         width: buttonWidth,
         object: false,
         svgObject: false, // array of 1 object - needs to properly destroy
-        preload: false,
-        pointerupFunction: function () {
-            console.log(gameBid);
-        },
+        preload: true,
     },
     timerBlock: {
-        // todo сделать мигающие цифры таймера
         filename: 'timer',
-        x: botXY.x + knopkiWidth / 2,
-        y: botXY.y + botHeight * 0.75 * 0.5 + buttonHeight / 2,
-        width: buttonWidth * 2,
-        height: buttonHeight * 2,
+        x: timerXCenter,
+        y: timerYCenter,
+        width: buttonWidth * 1.5,
+        height: buttonHeight * 1.5,
         object: false,
         svgObject: false,
         scalable: false,
         numbers: true,
-        numbersX1: 0 - buttonWidth * 2 / 2 * 0.15 * (buttonHeightKoef < 1 ? 1 : 1.4) + buttonWidth * 2 / 2 * 0.05,
-        dvoetochX: 0 - buttonWidth * 2 / 2 * 0.025 * (buttonHeightKoef < 1 ? 1 : 2.1),
-        numbersX2: 0 + buttonWidth * 2 / 2 * 0.05,
-        numbersX3: buttonWidth * 2 / 2 * 0.1 * (buttonHeightKoef < 1 ? 1 : 1.4) + buttonWidth * 2 / 2 * 0.035,
-        numbersY: buttonHeight * 2 / 5,
+        numbersX1: () => 0 - timerDigitStep() / 2 - dvoetochWidth() - timerDigitStep() - timerDigitWidth() / 2,
+        dvoetochX: () => 0 - timerDigitStep() / 2 - dvoetochWidth() / 2,
+        numbersX2: () => 0 + timerDigitStep() / 2 + timerDigitWidth() / 2,
+        numbersX3: () => 0 + timerDigitStep() / 2 + timerDigitWidth() + timerDigitStep() + timerDigitWidth() / 2,
+        numbersY: () => players.timerBlock.height / 5,
     },
 };
 

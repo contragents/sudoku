@@ -15,7 +15,7 @@ class FrontResourceSkipbo extends FrontResource
         foreach (DeskSkipbo::CARDS as $card) {
             $imgArr["card_{$card}"] = [
                 'type' => 'svg',
-                'url' => "img/skipbo/$card.svg",
+                'url' => "img/skipbo/card_$card.svg",
             ];
         }
 
@@ -32,7 +32,19 @@ class FrontResourceSkipbo extends FrontResource
                 ],
                 'card_back' => [
                     'type' => 'svg',
-                    'url' => 'img/skipbo/back.svg',
+                    'url' => 'img/skipbo/back_card_v5.svg',
+                ],
+                'card_area' => [
+                    'type' => 'svg',
+                    'url' => 'img/skipbo/card_area_v1.svg',
+                ],
+                'frame_card' => [
+                    'type' => 'svg',
+                    'url' => 'img/skipbo/frame_card.svg',
+                ],
+                'back_player' => [
+                    'type' => 'svg',
+                    'url' => 'img/skipbo/back_player_v2.svg',
                 ],
             ]
             + parent::getImgsPreload();

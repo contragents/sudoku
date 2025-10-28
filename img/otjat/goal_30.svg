@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   id="_200_300"
+   viewBox="0 0 108 20"
+   version="1.1"
+   sodipodi:docname="arrows30.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview10"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="6.8888889"
+     inkscape:cx="54"
+     inkscape:cy="9.9435484"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="_200_300" />
+  <defs
+     id="defs7">
+    <style
+       id="style1">.cls-1{fill:url(#_Безымянный_градиент_11-2);}.cls-1,.cls-2,.cls-3,.cls-4{stroke-width:0px;}.cls-2{fill:#ffde03;}.cls-3{fill:url(#_Безымянный_градиент_11);}.cls-4{fill:#b3bde0;}.cls-5{fill:none;stroke:#ffde03;stroke-linecap:round;stroke-linejoin:round;stroke-width:.5px;}</style>
+    <linearGradient
+       id="_Безымянный_градиент_11"
+       x1="24.96"
+       y1="5.99"
+       x2="24.96"
+       y2="14.01"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0"
+         stop-color="#b3bde0"
+         id="stop1" />
+      <stop
+         offset=".11"
+         stop-color="#acbcda"
+         id="stop2" />
+      <stop
+         offset=".28"
+         stop-color="#99b9ca"
+         id="stop3" />
+      <stop
+         offset=".46"
+         stop-color="#7bb5af"
+         id="stop4" />
+      <stop
+         offset=".68"
+         stop-color="#51af8b"
+         id="stop5" />
+      <stop
+         offset=".9"
+         stop-color="#1ba75c"
+         id="stop6" />
+      <stop
+         offset="1"
+         stop-color="#02a446"
+         id="stop7" />
+    </linearGradient>
+    <linearGradient
+       id="_Безымянный_градиент_11-2"
+       x1="37.04"
+       x2="37.04"
+       xlink:href="#_Безымянный_градиент_11"
+       gradientTransform="translate(-7.8)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#_Безымянный_градиент_11"
+       id="linearGradient10"
+       gradientUnits="userSpaceOnUse"
+       x1="24.96"
+       y1="5.99"
+       x2="24.96"
+       y2="14.01"
+       gradientTransform="translate(-7.8)" />
+  </defs>
+  <path
+     class="cls-4"
+     d="M98,1.5c4.69,0,8.5,3.81,8.5,8.5s-3.81,8.5-8.5,8.5H10c-4.69,0-8.5-3.81-8.5-8.5S5.31,1.5,10,1.5h88M98,1H10C5.03,1,1,5.03,1,10h0c0,4.97,4.03,9,9,9h88c4.97,0,9-4.03,9-9h0c0-4.97-4.03-9-9-9h0Z"
+     id="path7" />
+  <g
+     id="g10"
+     transform="translate(8.305)">
+    <polygon
+       class="cls-3"
+       points="18.54,5.99 18.54,5.99 22.55,10 18.54,14.01 18.54,14.01 27.37,14.01 27.37,14.01 31.38,10 27.37,5.99 "
+       id="polygon7"
+       style="fill:url(#linearGradient10)"
+       transform="translate(-0.505)" />
+    <polygon
+       class="cls-1"
+       points="30.62,5.99 30.62,5.99 34.63,10 30.62,14.01 30.62,14.01 39.45,14.01 39.45,14.01 43.46,10 39.45,5.99 "
+       id="polygon8"
+       style="fill:url(#_%D0%91%D0%B5%D0%B7%D1%8B%D0%BC%D1%8F%D0%BD%D0%BD%D1%8B%D0%B9_%D0%B3%D1%80%D0%B0%D0%B4%D0%B8%D0%B5%D0%BD%D1%82_11-2)"
+       transform="translate(-0.505)" />
+    <path
+       class="cls-2"
+       d="M 58.275,10.52 V 9.01 h 1.41 c 0.99,0 2.05,-0.27 2.06,-1.18 0,-0.56 -0.45,-1.3 -2.02,-1.3 -0.87,0 -2.04,0.31 -2.04,1.21 h -1.85 c 0,-2.12 2.1,-2.89 3.91,-2.89 1.81,0 3.84,0.9 3.85,2.98 0,0.77 -0.5,1.67 -1.36,1.93 0.94,0.31 1.6,1.23 1.6,2.06 0,2.4 -2.26,3.11 -4.15,3.11 -1.89,0 -3.99,-0.78 -4.01,-3.01 h 1.86 c 0,1.01 1.36,1.36 2.16,1.36 0.94,0 2.19,-0.39 2.19,-1.44 0,-0.59 -0.32,-1.32 -2.09,-1.32 h -1.53 z"
+       id="path8" />
+    <path
+       class="cls-2"
+       d="m 64.755,9.18 c 0,-5.86 8.6,-5.84 8.6,0 v 1.42 c 0,5.84 -8.6,5.86 -8.6,0 z m 1.83,1.41 c 0,3.56 4.93,3.56 4.93,0 V 9.17 c 0,-3.5 -4.93,-3.54 -4.93,0 z"
+       id="path9" />
+    <line
+       class="cls-5"
+       x1="55.662518"
+       y1="16.787518"
+       x2="72.754265"
+       y2="16.787518"
+       id="line10" />
+  </g>
+</svg>
