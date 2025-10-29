@@ -36,6 +36,8 @@ if (windowInnerWidth > windowInnerHeight) {
     var buttonHeight = topHeight;
     var cardWidth = buttonWidth * 1 / 2; // Ширина карты (полного размера)
     var cardStep = cardWidth / 10; // Расстояние между картами
+    var smallCardWidth = cardWidth / 2; // Малая карта
+    var mediumCardWidth = cardWidth * 2 / 3; // Средняя карта
 
     var knopkiLeftWidth = gameWidth / 2; // 4 top-left buttons width
     var knopkiRightWidth = gameWidth / 3; // 3 top-right buttons width

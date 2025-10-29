@@ -172,7 +172,43 @@ function () {
             playerContainer.setAlpha(1);
             faserObject.children.bringToTop(playerContainer)
             displayScoreGlobal(Math.round(Math.random() * 30), 'player' + player + 'Block', true);
-            getContainerFromSVG(backplateContainer.x, backplateContainer.y, 'nicknameBlock', this, 'Player' + player);
+
+            // Получаем никнеймы
+            getContainerFromSVG(backplateContainer.x - backplateContainer.displayWidth / 2 + playerContainer.width / 2 + cardStep,
+                backplateContainer.y - backplateContainer.displayHeight / 2 + playerContainer.displayHeight / 4 + cardStep,
+                'nicknameBlock',
+                this,
+                'Nick' + player + '🙃'
+            );
+
+            // Получаем подложки под банк-карты соперников
+            for (let i = 1; i <= 4; i++) {
+                getContainerFromSVG(
+                    backplateContainer.x - backplateContainer.displayWidth / 2 + (mediumCardWidth / 2 + cardStep) + (i - 1) * (mediumCardWidth + cardStep),
+                    backplateContainer.y + backplateContainer.displayHeight / 2 - mediumCardWidth,
+                    'bankCard',
+                    this
+                );
+            }
+
+            // Выводим очередную целевую карту
+            getContainerFromSVG(
+                backplateContainer.x + backplateContainer.displayWidth / 2 - (mediumCardWidth / 2 + cardStep),
+                backplateContainer.y + backplateContainer.displayHeight / 2 - cardWidth,
+                'goalCard',
+                this,
+                'card_' + (player * 2)
+            );
+
+            // Выводим карты на руках противника рубашкой кверху
+            for (let i = 1; i <= 5; i++) {
+                getContainerFromSVG(
+                    backplateContainer.x + (i - 1) * (smallCardWidth - cardStep * 2),
+                    backplateContainer.y - backplateContainer.displayHeight / 6,
+                    'kolodaCard',
+                    this
+                );
+            }
         }
     }
 

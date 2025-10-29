@@ -41,14 +41,18 @@ class PlayersController extends BaseSubController
 
     public function nicknameAction(): string
     {
-        $svg = '{{}}';
+        $fontSize = ceil(6 * 18 / mb_strlen(self::$Request[self::NICKNAME_PARAM], 'UTF-8'));
+        if ($fontSize > 14) {
+            $fontSize = 14;
+        }
+
         try {
             $svg = file_get_contents(__DIR__ . '/../../../img/otjat/player_nickname.svg');
             return str_replace(
                 ['{{}}', '[[]]'],
                 [
                     self::$Request[self::NICKNAME_PARAM],
-                    ceil(6 * 16 / strlen(self::$Request[self::NICKNAME_PARAM]))
+                    $fontSize
                 ],
                 $svg
             );

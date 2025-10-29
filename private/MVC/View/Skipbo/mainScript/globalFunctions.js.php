@@ -607,9 +607,39 @@ function _placeFishki() {
 }
 
 function getContainerFromSVG(X, Y, blockName, _this, param = '') {
-    let resourceName = blockName + param + Date.now();
+    function myCallback(X, Y, resourceName, blockName) {
+        console.log(X, Y, resourceName, blockName);
 
-    preloaderObject.load.svg(resourceName + ALARM_MODE, players[blockName].filename + param,
+        if (players[blockName].svgObject === false) {
+            players[blockName].svgObject = [];
+        }
+
+        let element = _this.add.image(0, 0, resourceName);
+
+        let container = _this.add.container(X, Y, [element]);
+
+        if('width' in players[blockName]) {
+            container.setScale(players[blockName].width / element.displayWidth, players[blockName].width / element.displayWidth);
+        } else {
+            container.setSize(element.displayWidth, element.displayHeight);
+        }
+
+        if (players[blockName].svgObject === false) {
+            players[blockName].svgObject = [];
+        }
+
+        players[blockName].svgObject.push(container);
+    }
+
+
+    if ('preloaded' in players[blockName] && players[blockName].preloaded) {
+        myCallback(X, Y, param ? param : players[blockName].filename, blockName);
+
+        return;
+    }
+
+    let resourceName = blockName + param + Date.now();
+    preloaderObject.load.svg(resourceName, players[blockName].filename + encodeURIComponent(param),
         {
             ...('width' in players[blockName] && {
                 'width': players[blockName].width,
@@ -620,19 +650,6 @@ function getContainerFromSVG(X, Y, blockName, _this, param = '') {
     );
 
     preloaderObject.load.start();
-
-    function myCallback(X, Y, resourceName, blockName) {
-        console.log(X, Y, resourceName, blockName);
-        playerBlockModes = [ALARM_MODE];
-
-        if (players[blockName].svgObject === false) {
-            players[blockName].svgObject = [];
-        }
-
-        players[blockName].svgObject.push(getSVGBlockGlobal(X, Y, resourceName, faserObject, false, false));
-
-        playerBlockModes = [OTJAT_MODE, ALARM_MODE];
-    }
 
     preloaderObject.load.on('complete', () => myCallback(X, Y, resourceName, blockName));
 }

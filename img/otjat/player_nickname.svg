@@ -43,16 +43,17 @@ xmlns:svg="http://www.w3.org/2000/svg">
         style="fill:none;fill-opacity:1" />
 
 <text
+        text-anchor="middle"
+        dominant-baseline="middle"
         xml:space="preserve"
-        style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
-        x="1.3105459"
-        y="1.548409"
+        style="font-size:[[]]px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+        x="53"
+        y="11"
         id="text3788"
         sodipodi:linespacing="100%"><tspan
      sodipodi:role="line"
 
      id="tspan3790"
-     x="11.3105459"
-     y="14.548409"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial">Player2</tspan></text>
+
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial">{{}}</tspan></text>
 </svg>

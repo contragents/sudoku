@@ -389,15 +389,47 @@ var cards = {
 }
 
 var players = {
+    // todo вынести в отдельнй объект - это элементы плашек соперников.
+    // todo вести массивы координат всех объектов отдельно, чтобы выполнять анимацию движения карт, управлять элементами на плашках
+    kolodaCard: {
+        preloaded: true, // изображения загружены
+        filename: 'card_back',
+        x: 1,
+        y: 1,
+        width: smallCardWidth,
+        svgObject: false, // массив карточек, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    goalCard: {
+        preloaded: true, // изображения загружены
+        filename: 'card_10',
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false, // массив карточек, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    bankCard:{
+        preloaded: true, // изображение загружено
+        filename: 'card_area',
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        object: false,
+        svgObject: false, // массив карточек, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
     nicknameBlock:{
+        preloaded: false, // загружать каждый раз с сервера
         filename: NICKNAME_SVG,
         x: 1,
         y: 1,
         width: buttonWidth,
         object: false,
-        svgObject: false,
-        preload: false,
+        svgObject: false, // массив никнеймов, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
     },
+    // вынести в отдельнй объект - конец
     youBlock: {
         filename: 'you' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang) : ''),
         x: youBlockXCenter,
