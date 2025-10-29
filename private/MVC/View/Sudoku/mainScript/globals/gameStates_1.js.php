@@ -1346,7 +1346,7 @@ function commonCallback(data) {
 
         let langModifier = (gameBank < 1000 && lang !== 'EN')
             ? (lang in SUPPORTED_LANGS
-                    ? ('_' + (version > '1.0.0.2' ? lang : lang.toLowerCase()))
+                    ? ('_' + lang)
                     : ''
             )
             : '';

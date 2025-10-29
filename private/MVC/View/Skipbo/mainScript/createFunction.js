@@ -157,9 +157,11 @@ function () {
         players[k].svgObject.getByName(k + ALARM_MODE).setVisible(false);
     }
 
+    // todo SB-3 this code for testing
     players.timerBlock.svgObject.setAlpha(1);
     displayTimeGlobal(117, true);
     players.youBlock.svgObject.setAlpha(1);
+    displayScoreGlobal(25, 'youBlock', true);
 
     for (let k in cards) {
         cards[k].svgObject = getSVGCardBlockGlobal(cards[k]['x'], cards[k]['y'], k, this, 'scalable' in cards[k] && cards[k].scalable);

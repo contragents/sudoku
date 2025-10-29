@@ -194,6 +194,8 @@ var correctionY = -7 * 2;
 
 var screenOrient = VERT;
 
+var digitHeight = () => buttonHeight * 0.5 / (buttonHeightKoef < 1 ? 0.5 : 1);
+var digitWidth = () => buttonHeight * 0.23 * 0.5 / (buttonHeightKoef < 1 ? 0.5 : 1);
 var timerDigitHeight = () => buttonHeight * 0.5 / (buttonHeightKoef < 1 ? 0.8 : 1);
 var timerDigitWidth = () => buttonHeight * 0.4 * 0.5 / (buttonHeightKoef < 1 ? 0.8 : 1);
 var dvoetochWidth = () => buttonHeight * 0.15 * 0.5 / (buttonHeightKoef < 1 ? 0.8 : 1);
