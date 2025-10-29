@@ -35,6 +35,8 @@ function initNewGameVarsGlobal() {
         youBlock: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
         player1Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
         player2Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+        player3Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+        player4Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
     };
     initScoresGlobal();
 
@@ -174,7 +176,7 @@ function genDivGlobal(i, isChange = false) {
         + (isChange ? styleEnd : divEnd));
 
 }
-if(!isSteamGlobal()) {
+if (!isSteamGlobal()) {
     document.addEventListener("visibilitychange", function () {
         console.log('visibilitychange', 'pageActive:', pageActive, 'document.visibilityState:', document.visibilityState);
         if (pageActive !== document.visibilityState) {
@@ -185,7 +187,7 @@ if(!isSteamGlobal()) {
 }
 
 function newVisibilityStatus(status) {
-    console.log('newVisibilityStatus','pageActive:', pageActive, 'new status:', status);
+    console.log('newVisibilityStatus', 'pageActive:', pageActive, 'new status:', status);
 
     if (pageActive !== status) {
         pageActive = status;
@@ -193,7 +195,7 @@ function newVisibilityStatus(status) {
     }
 }
 
-if(isSteamGlobal()) {
+if (isSteamGlobal()) {
     window.electronAPI.windowFocus(newVisibilityStatus);
 }
 
@@ -604,20 +606,50 @@ function _placeFishki() {
     }
 }
 
+function getContainerFromSVG(X, Y, blockName, _this, param = '') {
+    let resourceName = blockName + param + Date.now();
+
+    preloaderObject.load.svg(resourceName + ALARM_MODE, players[blockName].filename + param,
+        {
+            ...('width' in players[blockName] && {
+                'width': players[blockName].width,
+            }),
+            'height':
+                'height' in players[blockName] ? players[blockName].height : buttonHeight,
+        }
+    );
+
+    preloaderObject.load.start();
+
+    function myCallback(X, Y, resourceName, blockName) {
+        console.log(X, Y, resourceName, blockName);
+        playerBlockModes = [ALARM_MODE];
+
+        if (players[blockName].svgObject === false) {
+            players[blockName].svgObject = [];
+        }
+
+        players[blockName].svgObject.push(getSVGBlockGlobal(X, Y, resourceName, faserObject, false, false));
+
+        playerBlockModes = [OTJAT_MODE, ALARM_MODE];
+    }
+
+    preloaderObject.load.on('complete', () => myCallback(X, Y, resourceName, blockName));
+}
+
 function getSVGCardBlockGlobal(X, Y, buttonName, _this, scalable) {
-
-
     let element = _this.add.image(0, 0, cards[buttonName].imgName)
         .setName(buttonName);
     if (scalable) {
         element.setScale(1, buttonHeightKoef);
-    } else if('width' in cards[buttonName]) {
+    } else if ('width' in cards[buttonName]) {
         element.width = cards[buttonName].width;
     }
 
     let container = _this.add.container(X, Y, element);
     if ('width' in cards[buttonName]) {
         container.setScale(cards[buttonName].width / element.displayWidth);
+        container.setSize(cards[buttonName].width, element.displayHeight);
     } else {
         container.setSize(element.displayWidth, element.displayHeight);
     }

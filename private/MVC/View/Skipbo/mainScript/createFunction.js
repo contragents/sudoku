@@ -1,6 +1,7 @@
 //
 function () {
-    var letters = [];
+    faserObject = this;
+
     var atlasTexture = this.textures.get('megaset');
 
     var frames = atlasTexture.getFrameNames();
@@ -12,14 +13,6 @@ function () {
         color: '#2C3C6C',
     });
 
-    /* var ground = this.add.image(385, 375, 'ground');
-    ground.setOrigin(0, 0);
-    ground.x = game.config.width - ground.width;
-    ground.y = screenOrient === HOR
-        ? 0
-        : topHeight;
-    ground.setCrop(16 * 2, 3 * 2, 550 * 2, 550 * 2);
-*/
     stepX = 0; //game.config.width - ground.width; // Где начало игрового поля по X
     stepY = (screenOrient === HOR) ? 0 : topHeight; // Где начало игрового поля по Y
     initLotok();
@@ -167,11 +160,25 @@ function () {
         cards[k].svgObject = getSVGCardBlockGlobal(cards[k]['x'], cards[k]['y'], k, this, 'scalable' in cards[k] && cards[k].scalable);
     }
 
+    // Расставляем соперников по плашкам
+    // todo (оформить в виде функции)
+    for (let player in playersMap) {
+        if (playersMap[player] !== YOU) {
+            let playerContainer = players['player' + player + 'Block'].svgObject;
+            let backplateContainer = cards[playersMap[player]].svgObject; // Контейнер плашки соперника
+            console.log(backplateContainer.width);
+            playerContainer.x = backplateContainer.x + backplateContainer.displayWidth / 2 - playerContainer.width / 2 - cardStep;
+            playerContainer.y = backplateContainer.y - backplateContainer.displayHeight / 2 + playerContainer.displayHeight / 4 + cardStep;
+            playerContainer.setAlpha(1);
+            faserObject.children.bringToTop(playerContainer)
+            displayScoreGlobal(Math.round(Math.random() * 30), 'player' + player + 'Block', true);
+            getContainerFromSVG(backplateContainer.x, backplateContainer.y, 'nicknameBlock', this, 'Player' + player);
+        }
+    }
+
 //    <?php include('create/fishkaDragEvents.js')?>
 
 //    <?php include(ROOT_DIR . '/js/common_functions/getSVGButtonFunction.js')?>
-
-    faserObject = this;
 
     reportGameIsReadyYandex();
 }

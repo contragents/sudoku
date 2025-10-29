@@ -18,6 +18,15 @@ const BASE_URL = '<?= SkipboController::GAME_URL() ?>';
 
 //<?php include(ROOT_DIR . '/js/common_functions/globalVarsCommon.js.php'); ?>
 
+var playersMap = {1: YOU, 2: 'playerLeftBackplate', 3: 'playerCenterBackplate', 4: 'playerRightBackplate'};
+playerScores = {
+    youBlock: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+    player1Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+    player2Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+    player3Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+    player4Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+};
+
 if (windowInnerWidth > windowInnerHeight) {
     screenOrient = HOR;
 

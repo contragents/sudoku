@@ -389,6 +389,15 @@ var cards = {
 }
 
 var players = {
+    nicknameBlock:{
+        filename: NICKNAME_SVG,
+        x: 1,
+        y: 1,
+        width: buttonWidth,
+        object: false,
+        svgObject: false,
+        preload: false,
+    },
     youBlock: {
         filename: 'you' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang) : ''),
         x: youBlockXCenter,
@@ -417,7 +426,7 @@ var players = {
         numbers: true,
     },
     player3Block: {
-        filename: 'player2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang) : ''),
+        filename: 'player3' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang) : ''),
         x: botXY.x + buttonStepX + buttonWidth / 2,
         y: botXY.y + botHeight * 0.75 * (0.2 + 0.1),
         width: buttonWidth,
@@ -426,7 +435,7 @@ var players = {
         numbers: true,
     },
     player4Block: {
-        filename: 'player2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang) : ''),
+        filename: 'player4' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang) : ''),
         x: botXY.x + buttonStepX + buttonWidth / 2,
         y: botXY.y + botHeight * 0.75 * (0.2 + 0.1),
         width: buttonWidth,

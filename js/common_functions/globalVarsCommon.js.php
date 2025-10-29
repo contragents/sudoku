@@ -14,22 +14,16 @@ const LOADING_TEXT = '<?= T::S('loading_text') ?>';
 const errorServerMessage = '<?= T::S('Server connecting error. Please try again')?>';
 const STATS_GET_ERROR = '<?= T::S('Stats getting error')?>';
 
+const YOU = 'you';
+
 const ALARM_MODE = 'Alarm';
 const OTJAT_MODE = 'Otjat';
 const INACTIVE_MODE = 'Inactive';
 const NAJATO_MODE = 'Najatie';
 const NAVEDENO_MODE = 'Navedenie';
 
-const BLINK_COUNT = 3000;
-var dontBlink = true;
 var preloaderObject = false;
 var lastComment = false;
-var prevErrors = {};
-var errorsToBlink = [];
-var blinkErrorsCounter = 0;
-var prevCellsOpened = {};
-var cellsToBlink = [];
-var blinkCellsCounter = 0;
 
 const FALL_BACK_COOKIE = '<?= COOKIE::getPersonalCookie() ?>';
 var cookieStored = false;
@@ -83,6 +77,7 @@ const PLAYER_RATING_SCRIPT = 'players/info'; // todo ...
 const HIDE_BALANCE_SCRIPT = 'players/hideBalance';
 const CLAIM_SCRIPT = 'pay/claim';
 const PAY_SCRIPT = 'pay/pay';
+const NICKNAME_SVG = BASE_URL + 'players/nickname?nickname=';
 
 const CHAT_SCRIPT = 'sendChatMessage';
 const COMPLAIN_SCRIPT = 'complain';

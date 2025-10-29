@@ -37,6 +37,25 @@ class PlayersController extends BaseSubController
         'ico' => 'ico',
         'bmp' => 'bmp'
     ];
+    const NICKNAME_PARAM = 'nickname';
+
+    public function nicknameAction(): string
+    {
+        $svg = '{{}}';
+        try {
+            $svg = file_get_contents(__DIR__ . '/../../../img/otjat/player_nickname.svg');
+            return str_replace(
+                ['{{}}', '[[]]'],
+                [
+                    self::$Request[self::NICKNAME_PARAM],
+                    ceil(6 * 16 / strlen(self::$Request[self::NICKNAME_PARAM]))
+                ],
+                $svg
+            );
+        } catch (Throwable $e) {
+            return $e->__toString();
+        }
+    }
 
     public static function avatarUploadAction(): string
     {
@@ -70,7 +89,9 @@ class PlayersController extends BaseSubController
             return json_encode(
                 [
                     'result' => $status,
-                    'message' => T::S('<strong>File upload error!</strong><br /> Please review:<br /> <ul><li>file size (no more than <strong>')
+                    'message' => T::S(
+                            '<strong>File upload error!</strong><br /> Please review:<br /> <ul><li>file size (no more than <strong>'
+                        )
                         . round(
                             self::MAX_UPLOAD_SIZE / 1024 / 1024,
                             1
@@ -80,7 +101,7 @@ class PlayersController extends BaseSubController
                         . '</strong></li></ul>'
                 ]
             );
-        } catch(Throwable $e) {
+        } catch (Throwable $e) {
             return json_encode(
                 [
                     'result' => 'error',
@@ -170,23 +191,38 @@ class PlayersController extends BaseSubController
         $salt = Config::$config['SALT'];
         $method = 'addRef';
 
-        $sign = md5($salt . $method . implode('', array_map(fn($key) => $key . self::$Request[$key] ?? '', self::ADD_REF_PARAMS_ORDER)));
+        $sign = md5(
+            $salt . $method . implode(
+                '',
+                array_map(fn($key) => $key . self::$Request[$key] ?? '', self::ADD_REF_PARAMS_ORDER)
+            )
+        );
         $res = ['result' => 'error'];
 
-        if($sign !== self::$Request[self::SIGN_PARAM]) {
+        if ($sign !== self::$Request[self::SIGN_PARAM]) {
             return json_encode($res);
         }
 
         /**
          * @var ?RefModel $ref
          */
-        $ref = RefModel::getCustomO(RefModel::REF_TG_ID_FIELD, '=', self::$Request[self::REF_TG_ID_PARAM], true)[0] ?? null;
+        $ref = RefModel::getCustomO(
+            RefModel::REF_TG_ID_FIELD,
+            '=',
+            self::$Request[self::REF_TG_ID_PARAM],
+            true
+        )[0] ?? null;
 
         if (!$ref) {
             return json_encode($res);
         }
 
-        if (BalanceModel::changeBalance(self::$Request[self::COMMON_ID_PARAM], MonetizationService::REWARD[AchievesModel::DAY_PERIOD], 'Referral bonus for ' . $ref->_name, BalanceHistoryModel::TYPE_IDS[BalanceHistoryModel::MOTIVATION_TYPE])) {
+        if (BalanceModel::changeBalance(
+            self::$Request[self::COMMON_ID_PARAM],
+            MonetizationService::REWARD[AchievesModel::DAY_PERIOD],
+            'Referral bonus for ' . $ref->_name,
+            BalanceHistoryModel::TYPE_IDS[BalanceHistoryModel::MOTIVATION_TYPE]
+        )) {
             $res['result'] = 'success';
         }
 
@@ -202,7 +238,10 @@ class PlayersController extends BaseSubController
 
         $commonId = self::$Request[self::COMMON_ID_PARAM] ?? false;
 
-        if($commonId && PlayerModel::validateCommonIdByCookie($commonId, $_COOKIE[Cookie::COOKIE_NAME] ?? 'aaabbbccc')) {
+        if ($commonId && PlayerModel::validateCommonIdByCookie(
+                $commonId,
+                $_COOKIE[Cookie::COOKIE_NAME] ?? 'aaabbbccc'
+            )) {
             if (in_array($hide, self::PARAM_VALUES[self::HIDE_PARAM])) {
                 $user = UserModel::getOneO($commonId, true);
 
@@ -319,13 +358,13 @@ class PlayersController extends BaseSubController
         }
 
         $oldCommonID = UserModel::getCustom(
-                'id',
-                '=',
-                $decrypted_message,
-                false,
-                false,
-                ['id']
-            )[0]['id'] ?? false;
+            'id',
+            '=',
+            $decrypted_message,
+            false,
+            false,
+            ['id']
+        )[0]['id'] ?? false;
 
         if ($oldCommonID === false) {
             return

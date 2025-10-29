@@ -24,6 +24,14 @@ const sudokuSet3Column = new Set([3, 6, 9]);
 const sudoku1RowCorrectionLower = new Set([3, 4, 5, 6, 7]);
 var sudokuMistakesContainer = [];
 var sudokuChecksContainer = [];
+const BLINK_COUNT = 3000;
+var dontBlink = true;
+var prevErrors = {};
+var errorsToBlink = [];
+var blinkErrorsCounter = 0;
+var prevCellsOpened = {};
+var cellsToBlink = [];
+var blinkCellsCounter = 0;
 // SUDOKU VARS END
 
 if (windowInnerWidth > windowInnerHeight) {
