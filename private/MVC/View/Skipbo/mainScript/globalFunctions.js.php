@@ -606,55 +606,62 @@ function _placeFishki() {
     }
 }
 
-function getContainerFromSVG(X, Y, blockName, _this, param = '') {
-    function myCallback(X, Y, resourceName, blockName) {
+function getContainerFromSVG(X, Y, blockName, _this, param = '', props = false) {
+    function myCallback(X, Y, resourceName, blockName, props) {
         console.log(X, Y, resourceName, blockName);
 
-        if (players[blockName].svgObject === false) {
-            players[blockName].svgObject = [];
+        if (entities[blockName].svgObject === false) {
+            entities[blockName].svgObject = [];
         }
 
         let element = _this.add.image(0, 0, resourceName);
 
         let container = _this.add.container(X, Y, [element]);
 
-        if('width' in players[blockName]) {
-            container.setScale(players[blockName].width / element.displayWidth, players[blockName].width / element.displayWidth);
+        if ('width' in entities[blockName]) {
+            container.setScale(entities[blockName].width / element.displayWidth, entities[blockName].width / element.displayWidth);
         } else {
             container.setSize(element.displayWidth, element.displayHeight);
         }
 
-        if (players[blockName].svgObject === false) {
-            players[blockName].svgObject = [];
+        if (props) {
+            for (let prop in props) {
+                container[prop] = props[prop];
+                console.log(prop, container[prop]);
+            }
         }
 
-        players[blockName].svgObject.push(container);
+        if (entities[blockName].svgObject === false) {
+            entities[blockName].svgObject = [];
+        }
+
+        entities[blockName].svgObject.push(container);
     }
 
 
-    if ('preloaded' in players[blockName] && players[blockName].preloaded) {
-        myCallback(X, Y, param ? param : players[blockName].filename, blockName);
+    if ('preloaded' in entities[blockName] && entities[blockName].preloaded) {
+        myCallback(X, Y, param ? param : entities[blockName].filename, blockName, props);
 
         return;
     }
 
     let resourceName = blockName + param + Date.now();
-    preloaderObject.load.svg(resourceName, players[blockName].filename + encodeURIComponent(param),
+    preloaderObject.load.svg(resourceName, entities[blockName].filename + encodeURIComponent(param),
         {
-            ...('width' in players[blockName] && {
-                'width': players[blockName].width,
+            ...('width' in entities[blockName] && {
+                'width': entities[blockName].width,
             }),
             'height':
-                'height' in players[blockName] ? players[blockName].height : buttonHeight,
+                'height' in entities[blockName] ? entities[blockName].height : buttonHeight,
         }
     );
 
     preloaderObject.load.start();
 
-    preloaderObject.load.on('complete', () => myCallback(X, Y, resourceName, blockName));
+    preloaderObject.load.on('complete', () => myCallback(X, Y, resourceName, blockName, props));
 }
 
-function getSVGCardBlockGlobal(X, Y, buttonName, _this, scalable) {
+function getSVGCardBlockGlobal(X, Y, buttonName, _this, scalable = false, props = false, draggable = false) {
     let element = _this.add.image(0, 0, cards[buttonName].imgName)
         .setName(buttonName);
     if (scalable) {
@@ -669,6 +676,18 @@ function getSVGCardBlockGlobal(X, Y, buttonName, _this, scalable) {
         container.setSize(cards[buttonName].width, element.displayHeight);
     } else {
         container.setSize(element.displayWidth, element.displayHeight);
+    }
+
+    if (props) {
+        for (let prop in props) {
+            container[prop] = props[prop];
+            console.log(prop, container[prop]);
+        }
+    }
+
+    if (draggable) {
+        container.setInteractive();
+        _this.input.setDraggable(container);
     }
 
     return container;

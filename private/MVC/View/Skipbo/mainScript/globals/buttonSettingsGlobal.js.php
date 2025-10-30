@@ -209,8 +209,13 @@ var modesColors = {
     Otjat: 'yellow',
 }
 
+function handCardDragStart(handCardObject) {
+    let container = cards[handCardObject].svgObject;
+    console.log('dragstart: ', container.cardVlue);
+}
+
 var cards = {
-    card1CommonBlock: {
+    cardCommon1: {
         imgName: 'card_area',
         x: card1CommonBlockXCenter,
         y: cardCommonBlockYCenter,
@@ -218,7 +223,7 @@ var cards = {
         object: false,
         svgObject: false,
     },
-    card2CommonBlock: {
+    cardCommon2: {
         imgName: 'card_area',
         x: card1CommonBlockXCenter + cardStep + cardWidth,
         y: cardCommonBlockYCenter,
@@ -226,7 +231,7 @@ var cards = {
         object: false,
         svgObject: false,
     },
-    card3CommonBlock: {
+    cardCommon3: {
         imgName: 'card_area',
         x: card1CommonBlockXCenter + 2 * (cardStep + cardWidth),
         y: cardCommonBlockYCenter,
@@ -234,7 +239,7 @@ var cards = {
         object: false,
         svgObject: false,
     },
-    card4CommonBlock: {
+    cardCommon4: {
         imgName: 'card_area',
         x: card1CommonBlockXCenter + 3 * (cardStep + cardWidth),
         y: cardCommonBlockYCenter,
@@ -305,14 +310,18 @@ var cards = {
         width: cardWidth,
         object: false,
         svgObject: false,
+        dragStartFunction: () => handCardDragStart('handCard1'),
+        props: {entity: 'handCard1', cardVlue: 1},
     },
     handCard2: {
-        imgName: 'card_2',
+        imgName: 'card_skipbo_2',
         x: handCard1CenterX + cardStep + cardWidth,
         y: handCardCenterY,
         width: cardWidth,
         object: false,
         svgObject: false,
+        dragStartFunction: () => handCardDragStart('handCard2'),
+        props: {entity: 'handCard2', cardVlue: SKIPBO + 2},
     },
     handCard3: {
         imgName: 'card_5',
@@ -321,14 +330,18 @@ var cards = {
         width: cardWidth,
         object: false,
         svgObject: false,
+        dragStartFunction: () => handCardDragStart('handCard3'),
+        props: {entity: 'handCard3', cardVlue: 5},
     },
     handCard4: {
         imgName: 'card_skipbo',
-        x: handCard1CenterX  + 3 * (cardStep + cardWidth),
+        x: handCard1CenterX + 3 * (cardStep + cardWidth),
         y: handCardCenterY,
         width: cardWidth,
         object: false,
         svgObject: false,
+        dragStartFunction: () => handCardDragStart('handCard4'),
+        props: {entity: 'handCard4', cardVlue: SKIPBO},
     },
     handCard5: {
         imgName: 'card_12',
@@ -337,6 +350,8 @@ var cards = {
         width: cardWidth,
         object: false,
         svgObject: false,
+        dragStartFunction: () => handCardDragStart('handCard5'),
+        props: {entity: 'handCard5', cardVlue: 12},
     },
     bankCard4: {
         imgName: 'card_area',
@@ -370,28 +385,80 @@ var cards = {
         object: false,
         svgObject: false,
     },
-    active1: {
+    activeCardCommon1: {
         imgName: 'frame_card',
-        x: bankCard4CenterX - 3 * (cardStep + cardWidth),
-        y: bankCardCenterY,
+        x: card1CommonBlockXCenter,
+        y: cardCommonBlockYCenter,
         width: cardWidth,
         object: false,
         svgObject: false,
     },
-    active2: {
+    activeCardCommon2: {
         imgName: 'frame_card',
         x: card1CommonBlockXCenter + cardStep + cardWidth,
         y: cardCommonBlockYCenter,
         width: cardWidth,
         object: false,
         svgObject: false,
-    }
+    },
+    activeCardCommon3: {
+        imgName: 'frame_card',
+        x: card1CommonBlockXCenter + 2 * (cardStep + cardWidth),
+        y: cardCommonBlockYCenter,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+    },
+    activeCardCommon4: {
+        imgName: 'frame_card',
+        x: card1CommonBlockXCenter + 3 * (cardStep + cardWidth),
+        y: cardCommonBlockYCenter,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+    },
+    activeYouBank1: {
+        imgName: 'frame_card',
+        x: 1,
+        y: 1,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+        preload: false,
+    },
+    activeYouBank2: {
+        imgName: 'frame_card',
+        x: 1,
+        y: 1,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+        preload: false,
+    },
+    activeYouBank3: {
+        imgName: 'frame_card',
+        x: 1,
+        y: 1,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+        preload: false,
+    },
+    activeYouBank4: {
+        imgName: 'frame_card',
+        x: 1,
+        y: 1,
+        width: cardWidth,
+        object: false,
+        svgObject: false,
+        preload: false,
+    },
 }
 
-var players = {
+var entities = {
     // todo вынести в отдельнй объект - это элементы плашек соперников.
     // todo вести массивы координат всех объектов отдельно, чтобы выполнять анимацию движения карт, управлять элементами на плашках
-    cardCounter:{
+    cardCounter: {
         preloaded: false, // загружать каждый раз с сервера
         filename: CARD_COUNTER_SVG,
         x: 1,
@@ -401,7 +468,7 @@ var players = {
         svgObject: false, // массив счетчиков, удалять через pop().destroy();
         preload: false, // Не обрабатывать массово
     },
-    kolodaCard: {
+    handCard: {
         preloaded: true, // изображения загружены
         filename: 'card_back',
         x: 1,
@@ -419,7 +486,7 @@ var players = {
         svgObject: false, // массив карточек, удалять через pop().destroy();
         preload: false, // Не обрабатывать массово
     },
-    bankCard:{
+    bankCard: {
         preloaded: true, // изображение загружено
         filename: 'card_area',
         x: 1,
@@ -429,7 +496,7 @@ var players = {
         svgObject: false, // массив карточек, удалять через pop().destroy();
         preload: false, // Не обрабатывать массово
     },
-    nicknameBlock:{
+    nicknameBlock: {
         preloaded: false, // загружать каждый раз с сервера
         filename: NICKNAME_SVG,
         x: 1,
@@ -439,7 +506,9 @@ var players = {
         svgObject: false, // массив никнеймов, удалять через pop().destroy();
         preload: false, // Не обрабатывать массово
     },
-    // вынести в отдельнй объект - конец
+}
+
+var players = {
     youBlock: {
         filename: 'you' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang) : ''),
         x: youBlockXCenter,

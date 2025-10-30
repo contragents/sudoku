@@ -157,13 +157,50 @@ function () {
     displayScoreGlobal(25, 'youBlock', true);
 
     for (let k in cards) {
-        cards[k].svgObject = getSVGCardBlockGlobal(cards[k]['x'], cards[k]['y'], k, this, 'scalable' in cards[k] && cards[k].scalable);
+        if ('preload' in cards[k] && cards[k].preload === false) {
+            continue;
+        }
+
+        cards[k].svgObject = getSVGCardBlockGlobal(
+            cards[k]['x'],
+            cards[k]['y'],
+            k,
+            this,
+            'scalable' in cards[k] && cards[k].scalable,
+            'props' in cards[k] ? cards[k].props : false,
+            'dragStartFunction' in cards[k]
+        );
+    }
+
+    coordinates.cardCommon1 = {x: cards.cardCommon1.svgObject.x, y: cards.cardCommon1.svgObject.y};
+    coordinates.cardCommon2 = {x: cards.cardCommon2.svgObject.x, y: cards.cardCommon2.svgObject.y};
+    coordinates.cardCommon3 = {x: cards.cardCommon3.svgObject.x, y: cards.cardCommon3.svgObject.y};
+    coordinates.cardCommon4 = {x: cards.cardCommon4.svgObject.x, y: cards.cardCommon4.svgObject.y};
+    coordinates.kolodaCard = {x: cards.kolodaCard3.svgObject.x, y: cards.kolodaCard3.svgObject.y};
+
+    coordinates.you = {};
+    coordinates.you.goalCard = {x: cards.goalCard.svgObject.x, y: cards.goalCard.svgObject.y};
+
+    coordinates.you.handCard1 = {x: cards.handCard1.svgObject.x, y: cards.handCard1.svgObject.y};
+    coordinates.you.handCard2 = {x: cards.handCard2.svgObject.x, y: cards.handCard2.svgObject.y};
+    coordinates.you.handCard3 = {x: cards.handCard3.svgObject.x, y: cards.handCard3.svgObject.y};
+    coordinates.you.handCard4 = {x: cards.handCard4.svgObject.x, y: cards.handCard4.svgObject.y};
+    coordinates.you.handCard5 = {x: cards.handCard5.svgObject.x, y: cards.handCard5.svgObject.y};
+
+    for (let i = 1; i <= 4; i++) {
+        coordinates.you['bankCard' + i] = {x: cards['bankCard' + i].svgObject.x, y: cards['bankCard' + i].svgObject.y};
+        cards['activeYouBank' + i].svgObject = getSVGCardBlockGlobal(
+            coordinates.you['bankCard' + i].x,
+            coordinates.you['bankCard' + i].y,
+            'activeYouBank' + i,
+            this
+        );
     }
 
     // Выводим счетчик карт над целевой картой противника
     getContainerFromSVG(
         cards.goalCard.x,
-        cards.goalCard.y - cardWidth * cardSideFactor / 2 - 70/90 * players.cardCounter.width / 2,
+        cards.goalCard.y - cardWidth * cardSideFactor / 2 - 70 / 90 * entities.cardCounter.width / 2,
         'cardCounter',
         this,
         winScore - (playerScores['youBlock'].digit2 * 10 + playerScores['youBlock'].digit3)
@@ -179,7 +216,7 @@ function () {
             playerContainer.x = backplateContainer.x + backplateContainer.displayWidth / 2 - playerContainer.width / 2 - cardStep;
             playerContainer.y = backplateContainer.y - backplateContainer.displayHeight / 2 + playerContainer.displayHeight / 4 + cardStep;
             playerContainer.setAlpha(1);
-            faserObject.children.bringToTop(playerContainer)
+            faserObject.children.bringToTop(playerContainer); // Поднять созданный ранее контейнер
             displayScoreGlobal(Math.round(Math.random() * 30), 'player' + player + 'Block', true);
 
             // Получаем никнеймы
@@ -190,28 +227,39 @@ function () {
                 'Nick' + player + '🙃'
             );
 
+            coordinates[player] = {};
+
             // Получаем подложки под банк-карты соперников
             for (let i = 1; i <= 4; i++) {
+                coordinates[player]['bankCard' + i] = {
+                    x: backplateContainer.x - backplateContainer.displayWidth / 2 + (mediumCardWidth / 2 + cardStep) + (i - 1) * (mediumCardWidth + cardStep),
+                    y: backplateContainer.y + backplateContainer.displayHeight / 2 - mediumCardWidth
+                };
                 getContainerFromSVG(
-                    backplateContainer.x - backplateContainer.displayWidth / 2 + (mediumCardWidth / 2 + cardStep) + (i - 1) * (mediumCardWidth + cardStep),
-                    backplateContainer.y + backplateContainer.displayHeight / 2 - mediumCardWidth,
+                    coordinates[player]['bankCard' + i].x,
+                    coordinates[player]['bankCard' + i].y,
                     'bankCard',
                     this
                 );
             }
 
             // Выводим очередную целевую карту
+            coordinates[player].goalCard = {
+                x: backplateContainer.x + backplateContainer.displayWidth / 2 - (mediumCardWidth / 2 + cardStep),
+                y: backplateContainer.y + backplateContainer.displayHeight / 2 - cardWidth
+            };
             getContainerFromSVG(
-                backplateContainer.x + backplateContainer.displayWidth / 2 - (mediumCardWidth / 2 + cardStep),
-                backplateContainer.y + backplateContainer.displayHeight / 2 - cardWidth,
+                coordinates[player].goalCard.x,
+                coordinates[player].goalCard.y,
                 'goalCard',
                 this,
-                'card_' + (player * 2)
+                'card_' + (player * 2),
+                {cardValue: player * 2}
             );
             // Выводим счетчик карт над целевой картой противника
             getContainerFromSVG(
                 backplateContainer.x + backplateContainer.displayWidth / 2 - (mediumCardWidth / 2 + cardStep),
-                backplateContainer.y + backplateContainer.displayHeight / 2 - cardWidth - mediumCardWidth * cardSideFactor + 70/90 * players.cardCounter.width / 2,
+                backplateContainer.y + backplateContainer.displayHeight / 2 - cardWidth - mediumCardWidth * cardSideFactor + 70 / 90 * entities.cardCounter.width / 2,
                 'cardCounter',
                 this,
                 winScore - (playerScores['player' + player + 'Block'].digit2 * 10 + playerScores['player' + player + 'Block'].digit3)
@@ -219,10 +267,14 @@ function () {
 
             // Выводим карты на руках противника рубашкой кверху
             for (let i = 1; i <= 5; i++) {
+                coordinates[player]['handCard' + i] = {
+                    x: backplateContainer.x + (i - 1) * (smallCardWidth - cardStep * 2),
+                    y: backplateContainer.y - backplateContainer.displayHeight / 6
+                };
                 getContainerFromSVG(
-                    backplateContainer.x + (i - 1) * (smallCardWidth - cardStep * 2),
-                    backplateContainer.y - backplateContainer.displayHeight / 6,
-                    'kolodaCard',
+                    coordinates[player]['handCard' + i].x,
+                    coordinates[player]['handCard' + i].y,
+                    'handCard',
                     this
                 );
             }

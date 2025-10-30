@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="90mm"
+   height="70mm"
+   viewBox="0 0 90 70"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="card_counter_v3.svg"
+   inkscape:export-filename="card_counter_v1.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="1.0242632"
+     inkscape:cx="40.028773"
+     inkscape:cy="174.27161"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <filter
+       y="-0.21241584"
+       height="1.4248317"
+       inkscape:menu-tooltip="Darkens the edge with an inner blur and adds a flexible glow"
+       inkscape:menu="Shadows and Glows"
+       inkscape:label="Dark and Glow"
+       style="color-interpolation-filters:sRGB"
+       id="filter12"
+       x="-0.14077824"
+       width="1.2815565">
+      <feGaussianBlur
+         stdDeviation="5"
+         result="result6"
+         id="feGaussianBlur11" />
+      <feComposite
+         result="result8"
+         in="SourceGraphic"
+         operator="atop"
+         in2="result6"
+         id="feComposite11" />
+      <feComposite
+         result="result9"
+         operator="over"
+         in2="SourceAlpha"
+         in="result8"
+         id="feComposite12" />
+      <feColorMatrix
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 "
+         result="result10"
+         id="feColorMatrix12" />
+      <feBlend
+         in="result10"
+         mode="normal"
+         in2="result6"
+         id="feBlend12" />
+    </filter>
+    <filter
+       inkscape:menu-tooltip="In and out glow with a possible offset and colorizable flood"
+       inkscape:menu="Shadows and Glows"
+       inkscape:label="Cutout Glow"
+       style="color-interpolation-filters:sRGB;"
+       id="filter15"
+       x="-0.1292544"
+       y="-0.17342391"
+       width="1.2967124"
+       height="1.3981066">
+      <feOffset
+         dy="3"
+         dx="3"
+         id="feOffset15" />
+      <feGaussianBlur
+         stdDeviation="3.9221491"
+         result="blur"
+         id="feGaussianBlur15" />
+      <feFlood
+         flood-color="rgb(0,0,0)"
+         flood-opacity="1"
+         result="flood"
+         id="feFlood15" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite"
+         id="feComposite15" />
+      <feBlend
+         in="blur"
+         in2="composite"
+         mode="normal"
+         id="feBlend15" />
+    </filter>
+    <filter
+       inkscape:menu-tooltip="In and out glow with a possible offset and colorizable flood"
+       inkscape:menu="Shadows and Glows"
+       inkscape:label="Cutout Glow"
+       style="color-interpolation-filters:sRGB;"
+       id="filter16"
+       x="-0.09108714"
+       y="-0.11775538"
+       width="1.2161448"
+       height="1.279427">
+      <feOffset
+         dy="3"
+         dx="3"
+         id="feOffset16" />
+      <feGaussianBlur
+         stdDeviation="3"
+         result="blur"
+         id="feGaussianBlur16" />
+      <feFlood
+         flood-color="rgb(0,0,0)"
+         flood-opacity="1"
+         result="flood"
+         id="feFlood16" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite"
+         id="feComposite16" />
+      <feBlend
+         in="blur"
+         in2="composite"
+         mode="normal"
+         id="feBlend16" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Слой 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-134.51269,-86.159345)"
+     inkscape:export-filename="card_counter_v3.png"
+     inkscape:export-xdpi="96"
+     inkscape:export-ydpi="96">
+    <path
+       id="rect16"
+       style="display:inline;fill:#f4ed56;fill-opacity:1;stroke:none;stroke-width:1.22601;stroke-linejoin:bevel;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:0.804286;paint-order:markers fill stroke"
+       d="m 139.80384,86.159345 c -2.93116,0 -5.29115,2.01131 -5.29115,4.509465 v 41.28867 c 0,0.36704 0.0645,0.71847 0.16071,1.05964 -0.0318,0.5454 0.38764,1.19306 1.21905,1.95967 0.11571,0.10889 0.23567,0.21166 0.36329,0.31041 2.57135,2.18666 8.19529,5.28485 16.22174,9.69745 27.10649,14.90201 27.10656,14.90203 54.13365,-0.0145 7.90271,-4.36161 13.47142,-7.44067 16.07499,-9.62415 0.35901,-0.26663 0.68634,-0.56168 0.94981,-0.90158 0.47875,-0.5378 0.7323,-1.01394 0.71572,-1.42776 0.0961,-0.34105 0.16123,-0.69225 0.16123,-1.05913 V 90.66881 c 0,-2.498155 -2.35999,-4.509465 -5.29115,-4.509465 z" />
+    <path
+       id="rect16-7-5-5"
+       style="display:inline;fill:none;fill-opacity:1;stroke:#1907a7;stroke-width:0.5;stroke-linejoin:bevel;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:0.804286;paint-order:markers fill stroke"
+       d="m 144.6808,91.68622 c -2.57115,0 -4.64127,1.693701 -4.64127,3.79737 v 34.76874 c 0,0.30909 0.0565,0.60502 0.14096,0.89234 -0.0279,0.45927 0.34004,1.00465 1.06934,1.65021 0.10148,0.0917 0.2067,0.17823 0.31867,0.26138 2.25552,1.84137 7.18871,4.45032 14.22936,8.16613 23.77727,12.54883 23.77733,12.54884 47.48494,-0.0122 6.9321,-3.67286 11.81685,-6.2657 14.10065,-8.10439 0.31492,-0.22453 0.60203,-0.47298 0.83315,-0.75922 0.41994,-0.45288 0.64236,-0.85381 0.62782,-1.2023 0.0843,-0.28718 0.14141,-0.58293 0.14141,-0.89187 V 95.48356 c 0,-2.103669 -2.07012,-3.79737 -4.64127,-3.79737 z" />
+    <path
+       id="rect16-7"
+       style="display:inline;fill:none;fill-opacity:1;stroke:#a70b07;stroke-width:1.20721;stroke-linejoin:bevel;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:0.804286;paint-order:markers fill stroke"
+       d="m 140.33646,86.762951 c -2.89184,0 -5.22017,1.976623 -5.22017,4.431694 v 40.576605 c 0,0.36071 0.0636,0.70608 0.15856,1.04137 -0.0314,0.53599 0.38243,1.17248 1.20269,1.92587 0.11416,0.10701 0.23251,0.208 0.35842,0.30506 2.53685,2.14894 8.08534,5.1937 16.00411,9.5302 26.74285,14.64501 26.74292,14.64503 53.40743,-0.0142 7.79668,-4.28639 13.29068,-7.31235 15.85933,-9.45817 0.35419,-0.26203 0.67713,-0.55199 0.93706,-0.88603 0.47233,-0.52853 0.72248,-0.99645 0.70612,-1.40314 0.0948,-0.33516 0.15907,-0.68031 0.15907,-1.04086 V 91.194645 c 0,-2.455071 -2.32833,-4.431694 -5.22017,-4.431694 z" />
+    <path
+       id="rect16-7-5"
+       style="display:inline;fill:none;fill-opacity:1;stroke:#1907a7;stroke-width:1.11514;stroke-linejoin:bevel;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:0.804286;paint-order:markers fill stroke"
+       d="m 142.94309,89.716947 c -2.69942,0 -4.87283,1.806867 -4.87283,4.051095 v 37.091848 c 0,0.32974 0.0594,0.64545 0.148,0.95196 -0.0293,0.48996 0.357,1.07178 1.12268,1.76047 0.10655,0.0979 0.21702,0.19014 0.33457,0.27885 2.36805,1.9644 7.54735,4.74767 14.93925,8.71175 24.96348,13.38729 24.96355,13.38731 49.8539,-0.013 7.27793,-3.91826 12.40638,-6.68435 14.80411,-8.6459 0.33063,-0.23952 0.63207,-0.50458 0.87471,-0.80994 0.4409,-0.48314 0.67441,-0.91086 0.65915,-1.28263 0.0885,-0.30637 0.14847,-0.62189 0.14847,-0.95147 V 93.76801 c 0,-2.244228 -2.17341,-4.051095 -4.87283,-4.051095 z" />
+    <text
+            text-anchor="middle"
+            dominant-baseline="middle"
+       xml:space="preserve"
+       style="font-weight:bold;font-size:45.5438px;font-family:'HP Simplified';-inkscape-font-specification:'HP Simplified, Bold';fill:#f00000;fill-opacity:1;stroke:#aa150e;stroke-width:1.058;stroke-linejoin:bevel;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+       x="178.9"
+       y="117.9"
+       id="text1-0"><tspan
+         sodipodi:role="line"
+         id="tspan1-2"
+         style="fill:#f00000;fill-opacity:1;stroke:#aa150e;stroke-width:1.058;stroke-dasharray:none;stroke-opacity:1"
+         >{{}}</tspan></text>
+  </g>
+</svg>

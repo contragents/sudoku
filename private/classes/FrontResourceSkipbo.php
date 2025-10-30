@@ -17,13 +17,18 @@ class FrontResourceSkipbo extends FrontResource
                 'type' => 'svg',
                 'url' => "img/skipbo/card_$card.svg",
             ];
+
+            $imgArr["card_skipbo_{$card}"] = [
+                'type' => 'svg',
+                'url' => "img/skipbo/card_skipbo_$card.svg",
+            ];
         }
 
         return $imgArr
             + [
                 'card_skipbo' => [
                     'type' => 'svg',
-                    'url' => 'img/skipbo/skipbo.svg',
+                    'url' => 'img/skipbo/card_skipbo_v3.svg',
                 ],
                 'card_back' => [
                     'type' => 'svg',
