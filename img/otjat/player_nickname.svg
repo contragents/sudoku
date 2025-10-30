@@ -31,7 +31,7 @@ xmlns:svg="http://www.w3.org/2000/svg">
     <style
             id="style1">.cls-1{fill:none;stroke:#b3bde0;stroke-miterlimit:10;stroke-width:1px;}.cls-2{fill:#fff;stroke-width:0px;}</style>
 </defs>
-<rect
+<!--<rect
         class="cls-1"
         x="1.5"
         y="1.08"
@@ -41,7 +41,7 @@ xmlns:svg="http://www.w3.org/2000/svg">
         ry="8.92"
         id="rect1"
         style="fill:none;fill-opacity:1" />
-
+-->
 <text
         text-anchor="middle"
         dominant-baseline="middle"

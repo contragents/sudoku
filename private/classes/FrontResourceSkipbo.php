@@ -21,11 +21,6 @@ class FrontResourceSkipbo extends FrontResource
 
         return $imgArr
             + [
-                'ground' => [
-                    'type' => 'svg',
-                    'url' => 'img/field_source_nd_23.svg',
-                    'options' => "{'width': 513 * 2, 'height': 500 * 2}"
-                ],
                 'card_skipbo' => [
                     'type' => 'svg',
                     'url' => 'img/skipbo/skipbo.svg',
@@ -44,7 +39,7 @@ class FrontResourceSkipbo extends FrontResource
                 ],
                 'back_player' => [
                     'type' => 'svg',
-                    'url' => 'img/skipbo/back_player_v2.svg',
+                    'url' => 'img/skipbo/back_player_v3.svg',
                 ],
             ]
             + parent::getImgsPreload();
