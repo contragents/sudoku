@@ -160,6 +160,15 @@ function () {
         cards[k].svgObject = getSVGCardBlockGlobal(cards[k]['x'], cards[k]['y'], k, this, 'scalable' in cards[k] && cards[k].scalable);
     }
 
+    // Выводим счетчик карт над целевой картой противника
+    getContainerFromSVG(
+        cards.goalCard.x,
+        cards.goalCard.y - cardWidth * cardSideFactor / 2 - 70/90 * players.cardCounter.width / 2,
+        'cardCounter',
+        this,
+        winScore - (playerScores['youBlock'].digit2 * 10 + playerScores['youBlock'].digit3)
+    );
+
     // Расставляем соперников по плашкам
     // todo (оформить в виде функции)
     for (let player in playersMap) {
@@ -198,6 +207,14 @@ function () {
                 'goalCard',
                 this,
                 'card_' + (player * 2)
+            );
+            // Выводим счетчик карт над целевой картой противника
+            getContainerFromSVG(
+                backplateContainer.x + backplateContainer.displayWidth / 2 - (mediumCardWidth / 2 + cardStep),
+                backplateContainer.y + backplateContainer.displayHeight / 2 - cardWidth - mediumCardWidth * cardSideFactor + 70/90 * players.cardCounter.width / 2,
+                'cardCounter',
+                this,
+                winScore - (playerScores['player' + player + 'Block'].digit2 * 10 + playerScores['player' + player + 'Block'].digit3)
             );
 
             // Выводим карты на руках противника рубашкой кверху

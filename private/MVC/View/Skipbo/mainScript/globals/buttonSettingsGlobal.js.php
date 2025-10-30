@@ -269,7 +269,7 @@ var cards = {
     goalCard: {
         imgName: 'card_10',
         x: card1CommonBlockXCenter + 3 * (cardStep + cardWidth) + 5 * cardStep + cardWidth,
-        y: cardCommonBlockYCenter - 3 * cardStep,
+        y: cardCommonBlockYCenter - cardStep,
         width: cardWidth,
         object: false,
         svgObject: false,
@@ -391,6 +391,16 @@ var cards = {
 var players = {
     // todo вынести в отдельнй объект - это элементы плашек соперников.
     // todo вести массивы координат всех объектов отдельно, чтобы выполнять анимацию движения карт, управлять элементами на плашках
+    cardCounter:{
+        preloaded: false, // загружать каждый раз с сервера
+        filename: CARD_COUNTER_SVG,
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        object: false,
+        svgObject: false, // массив счетчиков, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
     kolodaCard: {
         preloaded: true, // изображения загружены
         filename: 'card_back',

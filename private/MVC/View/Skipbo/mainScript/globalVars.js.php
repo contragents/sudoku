@@ -17,6 +17,7 @@ const SUPPORTED_LANGS = <?= T::getSupportedLangsForJS() ?>;
 const BASE_URL = '<?= SkipboController::GAME_URL() ?>';
 
 //<?php include(ROOT_DIR . '/js/common_functions/globalVarsCommon.js.php'); ?>
+winScore = 30; // todo SB-3 убрать, только для теста
 
 var playersMap = {1: YOU, 2: 'playerLeftBackplate', 3: 'playerCenterBackplate', 4: 'playerRightBackplate'};
 playerScores = {
@@ -35,6 +36,7 @@ if (windowInnerWidth > windowInnerHeight) {
     var topHeight = gameHeight * TOP_PERCENT;
     var buttonHeight = topHeight;
     var cardWidth = buttonWidth * 1 / 2; // Ширина карты (полного размера)
+    var cardSideFactor = 1.5; // Соотношение сторон карты Высота / Ширина
     var cardStep = cardWidth / 10; // Расстояние между картами
     var smallCardWidth = cardWidth / 2; // Малая карта
     var mediumCardWidth = cardWidth * 2 / 3; // Средняя карта

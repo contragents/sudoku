@@ -78,6 +78,7 @@ const HIDE_BALANCE_SCRIPT = 'players/hideBalance';
 const CLAIM_SCRIPT = 'pay/claim';
 const PAY_SCRIPT = 'pay/pay';
 const NICKNAME_SVG = BASE_URL + 'players/nickname?nickname=';
+const CARD_COUNTER_SVG = BASE_URL + 'players/counter?counter=';
 
 const CHAT_SCRIPT = 'sendChatMessage';
 const COMPLAIN_SCRIPT = 'complain';

@@ -38,6 +38,21 @@ class PlayersController extends BaseSubController
         'bmp' => 'bmp'
     ];
     const NICKNAME_PARAM = 'nickname';
+    const COUNTER_PARAM = 'counter';
+
+    public function counterAction(): string
+    {
+        try {
+            $svg = file_get_contents(__DIR__ . '/../../../img/skipbo/card_counter_v3.svg');
+            return str_replace(
+                '{{}}',
+                self::$Request[self::COUNTER_PARAM],
+                $svg
+            );
+        } catch (Throwable $e) {
+            return $e->__toString();
+        }
+    }
 
     public function nicknameAction(): string
     {
