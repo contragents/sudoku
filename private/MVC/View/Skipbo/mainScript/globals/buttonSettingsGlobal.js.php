@@ -204,7 +204,7 @@ var modesColors = {
 
 function handCardDragStart(handCardObject) {
     let container = cards[handCardObject].svgObject;
-    console.log('dragstart: ', container.cardVlue);
+    console.log('dragstart: ', container.cardValue);
 }
 
 var cards = {
@@ -324,7 +324,7 @@ var cards = {
         width: cardWidth,
         svgObject: false,
         dragStartFunction: () => handCardDragStart('handCard1'),
-        props: {entity: 'handCard1', cardVlue: 1},
+        props: {entity: 'handCard1', cardValue: 1},
     },
     handCard2: {
         imgName: 'card_skipbo_2',
@@ -333,7 +333,7 @@ var cards = {
         width: cardWidth,
         svgObject: false,
         dragStartFunction: () => handCardDragStart('handCard2'),
-        props: {entity: 'handCard2', cardVlue: SKIPBO + 2},
+        props: {entity: 'handCard2', cardValue: SKIPBO + 2},
     },
     handCard3: {
         imgName: 'card_5',
@@ -342,7 +342,7 @@ var cards = {
         width: cardWidth,
         svgObject: false,
         dragStartFunction: () => handCardDragStart('handCard3'),
-        props: {entity: 'handCard3', cardVlue: 5},
+        props: {entity: 'handCard3', cardValue: 5},
     },
     handCard4: {
         imgName: 'card_skipbo',
@@ -351,7 +351,7 @@ var cards = {
         width: cardWidth,
         svgObject: false,
         dragStartFunction: () => handCardDragStart('handCard4'),
-        props: {entity: 'handCard4', cardVlue: SKIPBO},
+        props: {entity: 'handCard4', cardValue: SKIPBO},
     },
     handCard5: {
         imgName: 'card_12',
@@ -360,7 +360,7 @@ var cards = {
         width: cardWidth,
         svgObject: false,
         dragStartFunction: () => handCardDragStart('handCard5'),
-        props: {entity: 'handCard5', cardVlue: 12},
+        props: {entity: 'handCard5', cardValue: 12},
     },
     bankCard4: {
         imgName: 'card_area',
@@ -390,35 +390,35 @@ var cards = {
         width: cardWidth,
         svgObject: false,
     },
-    activeCardCommon1: {
+    activeFrameCommon1: {
         imgName: 'frame_card',
         x: card1CommonBlockXCenter,
         y: cardCommonBlockYCenter,
         width: cardWidth,
         svgObject: false,
     },
-    activeCardCommon2: {
+    activeFrameCommon2: {
         imgName: 'frame_card',
         x: card1CommonBlockXCenter + cardStep + cardWidth,
         y: cardCommonBlockYCenter,
         width: cardWidth,
         svgObject: false,
     },
-    activeCardCommon3: {
+    activeFrameCommon3: {
         imgName: 'frame_card',
         x: card1CommonBlockXCenter + 2 * (cardStep + cardWidth),
         y: cardCommonBlockYCenter,
         width: cardWidth,
         svgObject: false,
     },
-    activeCardCommon4: {
+    activeFrameCommon4: {
         imgName: 'frame_card',
         x: card1CommonBlockXCenter + 3 * (cardStep + cardWidth),
         y: cardCommonBlockYCenter,
         width: cardWidth,
         svgObject: false,
     },
-    activeYouBank1: {
+    activeFrameYouBank1: {
         imgName: 'frame_card',
         x: 1,
         y: 1,
@@ -426,7 +426,7 @@ var cards = {
         svgObject: false,
         preload: false,
     },
-    activeYouBank2: {
+    activeFrameYouBank2: {
         imgName: 'frame_card',
         x: 1,
         y: 1,
@@ -434,7 +434,7 @@ var cards = {
         svgObject: false,
         preload: false,
     },
-    activeYouBank3: {
+    activeFrameYouBank3: {
         imgName: 'frame_card',
         x: 1,
         y: 1,
@@ -442,7 +442,7 @@ var cards = {
         svgObject: false,
         preload: false,
     },
-    activeYouBank4: {
+    activeFrameYouBank4: {
         imgName: 'frame_card',
         x: 1,
         y: 1,
@@ -681,9 +681,3 @@ function initScoresGlobal() {
         }
     }
 }
-
-
-
-
-
-

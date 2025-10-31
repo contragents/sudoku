@@ -673,7 +673,7 @@ function getSVGCardBlockGlobal(X, Y, buttonName, _this, scalable = false, props 
     let container = _this.add.container(X, Y, element);
     if ('width' in cards[buttonName]) {
         container.setScale(cards[buttonName].width / element.displayWidth);
-        container.setSize(cards[buttonName].width, element.displayHeight);
+        container.setSize(element.displayWidth, element.displayHeight);
     } else {
         container.setSize(element.displayWidth, element.displayHeight);
     }
@@ -686,7 +686,10 @@ function getSVGCardBlockGlobal(X, Y, buttonName, _this, scalable = false, props 
     }
 
     if (draggable) {
-        container.setInteractive();
+        container.setInteractive(
+            // new Phaser.Geom.Rectangle(-1 * cardWidth / 2, -1 * cardWidth * cardSideFactor/ 2, cardWidth / 2, cardWidth * cardSideFactor / 2)
+            // , Phaser.Geom.Rectangle.Contains
+        );
         _this.input.setDraggable(container);
     }
 

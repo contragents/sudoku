@@ -39,7 +39,8 @@ if (windowInnerWidth > windowInnerHeight) {
     var topHeight = gameHeight * TOP_PERCENT;
     var buttonHeight = topHeight;
     var cardWidth = buttonWidth * 1 / 2; // Ширина карты (полного размера)
-    var cardSideFactor = 1.5; // Соотношение сторон карты Высота / Ширина
+    /** @var float cardSideFactor Соотношение сторон карты Высота / Ширина */
+    var cardSideFactor = 1.5;
     var cardStep = cardWidth / 10; // Расстояние между картами
     var smallCardWidth = cardWidth / 2; // Малая карта
     var mediumCardWidth = cardWidth * 2 / 3; // Средняя карта

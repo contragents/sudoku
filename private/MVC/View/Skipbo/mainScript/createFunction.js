@@ -172,10 +172,10 @@ function () {
         );
     }
 
-    coordinates.cardCommon1 = {x: cards.areaCommon1.svgObject.x, y: cards.areaCommon1.svgObject.y};
-    coordinates.cardCommon2 = {x: cards.areaCommon2.svgObject.x, y: cards.areaCommon2.svgObject.y};
-    coordinates.cardCommon3 = {x: cards.areaCommon3.svgObject.x, y: cards.areaCommon3.svgObject.y};
-    coordinates.cardCommon4 = {x: cards.areaCommon4.svgObject.x, y: cards.areaCommon4.svgObject.y};
+    coordinates.areaCommon1 = {x: cards.areaCommon1.svgObject.x, y: cards.areaCommon1.svgObject.y};
+    coordinates.areaCommon2 = {x: cards.areaCommon2.svgObject.x, y: cards.areaCommon2.svgObject.y};
+    coordinates.areaCommon3 = {x: cards.areaCommon3.svgObject.x, y: cards.areaCommon3.svgObject.y};
+    coordinates.areaCommon4 = {x: cards.areaCommon4.svgObject.x, y: cards.areaCommon4.svgObject.y};
     coordinates.kolodaCard = {x: cards.kolodaCard3.svgObject.x, y: cards.kolodaCard3.svgObject.y};
 
     coordinates.you = {};
@@ -189,10 +189,10 @@ function () {
 
     for (let i = 1; i <= 4; i++) {
         coordinates.you['bankCard' + i] = {x: cards['bankCard' + i].svgObject.x, y: cards['bankCard' + i].svgObject.y};
-        cards['activeYouBank' + i].svgObject = getSVGCardBlockGlobal(
+        cards['activeFrameYouBank' + i].svgObject = getSVGCardBlockGlobal(
             coordinates.you['bankCard' + i].x,
             coordinates.you['bankCard' + i].y,
-            'activeYouBank' + i,
+            'activeFrameYouBank' + i,
             this
         );
     }
@@ -280,6 +280,8 @@ function () {
             }
         }
     }
+
+    switchOffFrames();
 
 //    <?php include('create/fishkaDragEvents.js')?>
 
