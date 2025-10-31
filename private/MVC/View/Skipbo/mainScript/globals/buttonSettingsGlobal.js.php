@@ -452,7 +452,61 @@ var cards = {
     },
 }
 
+var avatars = {
+
+}
+
 var entities = {
+    avatarYou: {
+        preloaded: false, // загружать каждый раз с сервера
+        filename: 'https://sudoku.box/img/sudoku-coin.png',
+        x: gameWidth / 2,
+        y: handCardCenterY,
+        width: cardWidth * 2,
+        height: cardWidth * 2,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    avatarPlayer1: {
+        preloaded: false, // загружать каждый раз с сервера
+        filename: ANONYM_AVATAR_URL,
+        x: 1,
+        y: 1,
+        width: mediumCardWidth * 1.7,
+        height: mediumCardWidth * 1.7,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    avatarPlayer2: {
+        preloaded: false, // загружать каждый раз с сервера
+        filename: ANONYM_AVATAR_URL,
+        x: 1,
+        y: 1,
+        width: mediumCardWidth * 1.7,
+        height: mediumCardWidth * 1.7,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    avatarPlayer3: {
+        preloaded: false, // загружать каждый раз с сервера
+        filename: ANONYM_AVATAR_URL,
+        x: 1,
+        y: 1,
+        width: mediumCardWidth * 1.7,
+        height: mediumCardWidth * 1.7,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    avatarPlayer4: {
+        preloaded: false, // загружать каждый раз с сервера
+        filename: ANONYM_AVATAR_URL,
+        x: 1,
+        y: 1,
+        width: mediumCardWidth * 1.7,
+        height: mediumCardWidth * 1.7,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
     cardCounter: {
         preloaded: false, // загружать каждый раз с сервера
         filename: CARD_COUNTER_SVG,

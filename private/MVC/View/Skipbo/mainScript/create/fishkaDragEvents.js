@@ -63,6 +63,7 @@ function switchOnYouBankFrames() {
         if (cards['activeFrameYouBank' + i].svgObject) {
             cards['activeFrameYouBank' + i].svgObject.visible = true;
             faserObject.children.bringToTop(cards['activeFrameYouBank' + i].svgObject);
+            cards['activeFrameYouBank' + i].svgObject.depth = 100;
         }
     }
 }
@@ -72,6 +73,7 @@ function switchOnCommonFrames(frameNums = [1, 2, 3, 4]) {
         if (cards['activeFrameCommon' + frameNums[i]].svgObject) {
             cards['activeFrameCommon' + frameNums[i]].svgObject.visible = true;
             faserObject.children.bringToTop(cards['activeFrameCommon' + frameNums[i]].svgObject);
+            cards['activeFrameCommon' + frameNums[i]].svgObject.depth = 100;
         }
     }
 }

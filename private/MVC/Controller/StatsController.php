@@ -23,7 +23,7 @@ class StatsController extends BaseSubController
     const DATA_TYPE_PARAM = 'data_type';
     const COIN_POSITION_FROM_PARAM = 'coin_position_from';
     const COIN_POSITION_TO_PARAM = 'coin_position_to';
-    const ANONYM_AVATAR_URL = 'https://avatarko.ru/img/avatar/1/avatarko_anonim.jpg';
+    const ANONYM_AVATAR_URL = 'https://sudoku.box/img/avatar/1/avatarko_anonim.jpg';
 
     public static function addTranslationsToAchieves(array &$achieves): void
     {

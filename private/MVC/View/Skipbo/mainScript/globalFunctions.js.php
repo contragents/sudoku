@@ -646,15 +646,23 @@ function getContainerFromSVG(X, Y, blockName, _this, param = '', props = false) 
     }
 
     let resourceName = blockName + param + Date.now();
-    preloaderObject.load.svg(resourceName, entities[blockName].filename + encodeURIComponent(param),
-        {
-            ...('width' in entities[blockName] && {
-                'width': entities[blockName].width,
-            }),
-            'height':
-                'height' in entities[blockName] ? entities[blockName].height : buttonHeight,
-        }
-    );
+    if (
+        !(entities[blockName].filename.indexOf('.jpg') >= 1)
+        &&
+        !(entities[blockName].filename.indexOf('.png') >= 1)
+    ) {
+        preloaderObject.load.svg(resourceName, entities[blockName].filename + encodeURIComponent(param),
+            {
+                ...('width' in entities[blockName] && {
+                    'width': entities[blockName].width,
+                }),
+                'height':
+                    'height' in entities[blockName] ? entities[blockName].height : buttonHeight,
+            }
+        );
+    } else {
+        preloaderObject.load.image(resourceName, entities[blockName].filename + encodeURIComponent(param));
+    }
 
     preloaderObject.load.start();
 

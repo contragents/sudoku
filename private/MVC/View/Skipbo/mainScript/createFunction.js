@@ -197,13 +197,21 @@ function () {
         );
     }
 
-    // Выводим счетчик карт над целевой картой противника
+    // Выводим счетчик карт над целевой картой Игрока
     getContainerFromSVG(
         cards.goalCard.x,
         cards.goalCard.y - cardWidth * cardSideFactor / 2 - 70 / 90 * entities.cardCounter.width / 2,
         'cardCounter',
         this,
         winScore - (playerScores['youBlock'].digit2 * 10 + playerScores['youBlock'].digit3)
+    );
+
+    // Выводим аватар Игрока
+    getContainerFromSVG(
+        entities.avatarYou.x,
+        entities.avatarYou.y,
+        'avatarYou',
+        this
     );
 
     // Расставляем соперников по плашкам
@@ -219,12 +227,21 @@ function () {
             faserObject.children.bringToTop(playerContainer); // Поднять созданный ранее контейнер
             displayScoreGlobal(Math.round(Math.random() * 30), 'player' + player + 'Block', true);
 
-            // Получаем никнеймы
-            getContainerFromSVG(backplateContainer.x - backplateContainer.displayWidth / 2 + playerContainer.width / 2 + cardStep,
+            // Получаем никнеймы соперников
+            getContainerFromSVG(
+                backplateContainer.x - backplateContainer.displayWidth / 2 + playerContainer.width / 2 + cardStep,
                 backplateContainer.y - backplateContainer.displayHeight / 2 + playerContainer.displayHeight / 4 + cardStep,
                 'nicknameBlock',
                 this,
                 'Nick' + player + '🙃'
+            );
+
+            // Выводим аватар соперника
+            getContainerFromSVG(
+                backplateContainer.x - backplateContainer.displayWidth / 2 + playerContainer.width / 2 + cardStep,
+                backplateContainer.y - backplateContainer.displayHeight / 6 - smallCardWidth * cardSideFactor / 2 + entities['avatarPlayer' + player].height / 2,
+                'avatarPlayer' + player,
+                this
             );
 
             coordinates[player] = {};
@@ -232,7 +249,7 @@ function () {
             // Получаем подложки под банк-карты соперников
             for (let i = 1; i <= 4; i++) {
                 coordinates[player]['bankCard' + i] = {
-                    x: backplateContainer.x - backplateContainer.displayWidth / 2 + (mediumCardWidth / 2 + cardStep) + (i - 1) * (mediumCardWidth + cardStep),
+                    x: backplateContainer.x - backplateContainer.displayWidth / 2 + (mediumCardWidth / 2 + 2 * cardStep) + (i - 1) * (mediumCardWidth + cardStep),
                     y: backplateContainer.y + backplateContainer.displayHeight / 2 - mediumCardWidth
                 };
                 getContainerFromSVG(
@@ -245,7 +262,7 @@ function () {
 
             // Выводим очередную целевую карту
             coordinates[player].goalCard = {
-                x: backplateContainer.x + backplateContainer.displayWidth / 2 - (mediumCardWidth / 2 + cardStep),
+                x: backplateContainer.x + backplateContainer.displayWidth / 2 - (mediumCardWidth / 2 + 2 * cardStep),
                 y: backplateContainer.y + backplateContainer.displayHeight / 2 - cardWidth
             };
             getContainerFromSVG(
@@ -258,7 +275,7 @@ function () {
             );
             // Выводим счетчик карт над целевой картой противника
             getContainerFromSVG(
-                backplateContainer.x + backplateContainer.displayWidth / 2 - (mediumCardWidth / 2 + cardStep),
+                coordinates[player].goalCard.x,
                 backplateContainer.y + backplateContainer.displayHeight / 2 - cardWidth - mediumCardWidth * cardSideFactor + 70 / 90 * entities.cardCounter.width / 2,
                 'cardCounter',
                 this,
