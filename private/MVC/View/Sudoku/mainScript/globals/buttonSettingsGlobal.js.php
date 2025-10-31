@@ -16,12 +16,12 @@ var modes = [OTJAT_MODE, ALARM_MODE, 'Inactive', 'Navedenie', 'Najatie'];
 var buttons = {
     newGameButton: {
         filename: 'new_game2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang) : ''),
-        modes: [OTJAT_MODE, INACTIVE_MODE, 'Navedenie', 'Najatie', ALARM_MODE],
+        modes: [OTJAT_MODE, INACTIVE_MODE, NAVEDENO_MODE, NAJATO_MODE, ALARM_MODE],
         x: topXY.x + lotokX + buttonWidth / 2 - lotokCellStep / 2 + 5,
         y: (topXY.y + topHeight) / 2,
         caption: 'New#Game',
         width: buttonWidth,
-        object: false, svgObject: false,
+        svgObject: false,
         pointerupFunction: function () {
             newGameButtonFunction();
         },
@@ -29,13 +29,12 @@ var buttons = {
     },
     instructButton: {
         filename: 'instrukt2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang) : ''),
-        modes: [OTJAT_MODE, 'Navedenie', 'Najatie'],
+        modes: [OTJAT_MODE, NAVEDENO_MODE, NAJATO_MODE],
         x: topXY.x + lotokX + buttonWidth / 2 - lotokCellStep / 2 + 5 + buttonWidth,
         y: (topXY.y + topHeight) / 2,
         caption: 'инструкция',
         //height:
         width: buttonWidth / 2,
-        object: false,
         svgObject: false,
         pointerupFunction: function () {
             if (bootBoxIsOpenedGlobal()) {
@@ -47,25 +46,22 @@ var buttons = {
     },
     prizesButton: {
         filename: 'prizes2',
-        modes: [OTJAT_MODE, 'Navedenie', 'Najatie'],
+        modes: [OTJAT_MODE, NAVEDENO_MODE, NAJATO_MODE],
         x: (topXY.x + knopkiWidth) / 2,
         y: (topXY.y + topHeight) / 2,
         caption: 'Prizes',
         width: buttonWidth / 2,
-        //height: topHeight,
-        object: false,
         svgObject: false,
         pointerupFunction: prizesButtonHandler,
     },
     ...(!isYandexAppGlobal() && !isSteamGlobal() && {
         inviteButton: {
             filename: 'invite2',
-            modes: [OTJAT_MODE, 'Navedenie', 'Najatie'],
+            modes: [OTJAT_MODE, NAVEDENO_MODE, NAJATO_MODE],
             x: topXY.x + knopkiWidth - buttonWidth,
             y: topXY.y + topHeight / 2,
             caption: 'Invite',
             width: buttonWidth / 2,
-            object: false,
             svgObject: false,
             pointerupFunction: function () {
                 {
@@ -105,7 +101,7 @@ var buttons = {
         y: botXY.y + botHeight * 0.125,
         caption: 'send',
         width: buttonWidth,
-        object: false, svgObject: false,
+        svgObject: false,
         pointerupFunction: function () {
             submitButtonFunction();
         },
@@ -138,12 +134,12 @@ var buttons = {
     },
     resetButton: {
         filename: 'steret2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang) : ''),
-        modes: [OTJAT_MODE, 'Inactive', 'Navedenie', 'Najatie'],
+        modes: [OTJAT_MODE, INACTIVE_MODE, NAVEDENO_MODE, NAJATO_MODE],
         x: botXY.x + knopkiWidth - buttonWidth / 2 - buttonStepX,
         y: botXY.y + botHeight * (0.25 + 0.125),
         caption: 'clear',
         width: buttonWidth,
-        object: false,
+
         svgObject: false,
         enabled: {myTurn: 1, preMyTurn: 1, otherTurn: 1},
         pointerupFunction: function () {
@@ -156,19 +152,18 @@ var buttons = {
         y: botXY.y + botHeight * (0.75 + 0.125),
         caption: 'players',
         width: buttonWidth / 2,
-        object: false, svgObject: false,
+        svgObject: false,
         pointerupFunction: function () {
             playersButtonFunction();
         }
     },
     checkButton: {
         filename: 'proveryt2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang) : ''),
-        modes: [OTJAT_MODE, 'Inactive', 'Navedenie', 'Najatie'],
+        modes: [OTJAT_MODE, INACTIVE_MODE,NAVEDENO_MODE, NAJATO_MODE],
         x: botXY.x + knopkiWidth / 2,
         y: botXY.y + botHeight * 0.125,
         caption: 'check',
         width: buttonWidth,
-        object: false,
         svgObject: false,
         disabled: {
             gameResults: 1,
@@ -205,7 +200,6 @@ var buttons = {
             y: botXY.y + botHeight * (0.75 + 0.125),
             caption: 'chat',
             width: buttonWidth / 2,
-            object: false,
             svgObject: false,
             pointerupFunction: function () {
                 chatButtonFunction();
@@ -219,7 +213,6 @@ var buttons = {
         y: botXY.y + botHeight * (0.75 + 0.125),
         caption: 'log',
         width: buttonWidth / 2,
-        object: false,
         svgObject: false,
         pointerupFunction: function () {
             logButtonFunction();
@@ -295,7 +288,6 @@ var players = {
         x: botXY.x + buttonStepX + buttonWidth / 2,
         y: botXY.y + botHeight * 0.75 * 0.1,
         width: buttonWidth,
-        object: false,
         svgObject: false,
         numbers: true,
     },
@@ -304,7 +296,6 @@ var players = {
         x: botXY.x + buttonStepX + buttonWidth / 2,
         y: botXY.y + botHeight * 0.75 * 0.1,
         width: buttonWidth,
-        object: false,
         svgObject: false,
         numbers: true,
     },
@@ -313,7 +304,6 @@ var players = {
         x: botXY.x + buttonStepX + buttonWidth / 2,
         y: botXY.y + botHeight * 0.75 * (0.2 + 0.1),
         width: buttonWidth,
-        object: false,
         svgObject: false,
         numbers: true,
     },
@@ -323,7 +313,6 @@ var players = {
         x: botXY.x + buttonStepX + buttonWidth / 2,
         y: botXY.y + botHeight * 0.75 * (0.8 + 0.1),
         width: buttonWidth,
-        object: false,
         svgObject: false,
         preload: false,
     },
@@ -332,7 +321,6 @@ var players = {
         x: botXY.x + buttonStepX + buttonWidth / 2,
         y: botXY.y + botHeight * 0.75 * (1 + 0.1),
         width: buttonWidth,
-        object: false,
         svgObject: false, // array of 1 object - needs to properly destroy
         preload: false,
         pointerupFunction: function () {
@@ -340,13 +328,11 @@ var players = {
         },
     },
     timerBlock: {
-        // todo сделать мигающие цифры таймера
         filename: 'timer',
         x: botXY.x + knopkiWidth / 2,
         y: botXY.y + botHeight * 0.75 * 0.5 + buttonHeight / 2,
         width: buttonWidth * 2,
         height: buttonHeight * 2,
-        object: false,
         svgObject: false,
         scalable: false,
         numbers: true,

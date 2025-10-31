@@ -29,7 +29,7 @@ var buttons = {
         y: (topXY.y + topHeight) / 2,
         caption: 'New#Game',
         width: buttonWidth,
-        object: false, svgObject: false,
+        svgObject: false,
         pointerupFunction: function () {
             newGameButtonFunction();
         },
@@ -37,13 +37,11 @@ var buttons = {
     },
     instructButton: {
         filename: 'instrukt2' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang) : ''),
-        modes: [OTJAT_MODE, 'Navedenie', 'Najatie'],
+        modes: [OTJAT_MODE, NAVEDENO_MODE, NAJATO_MODE],
         x: topXY.x + lotokX + buttonWidth / 2 - lotokCellStep / 2 + 5 + buttonWidth,
         y: (topXY.y + topHeight) / 2,
         caption: 'инструкция',
-        //height:
         width: buttonWidth / 2,
-        object: false,
         svgObject: false,
         pointerupFunction: function () {
             if (bootBoxIsOpenedGlobal()) {
@@ -60,20 +58,17 @@ var buttons = {
         y: (topXY.y + topHeight) / 2,
         caption: 'Prizes',
         width: buttonWidth / 2,
-        //height: topHeight,
-        object: false,
         svgObject: false,
         pointerupFunction: prizesButtonHandler,
     },
     ...(!isYandexAppGlobal() && !isSteamGlobal() && {
         inviteButton: {
             filename: 'invite2',
-            modes: [OTJAT_MODE, 'Navedenie', 'Najatie'],
+            modes: [OTJAT_MODE, NAVEDENO_MODE, NAJATO_MODE],
             x: topXY.x + knopkiLeftWidth - buttonWidth,
             y: topXY.y + topHeight / 2,
             caption: 'Invite',
             width: buttonWidth / 2,
-            object: false,
             svgObject: false,
             pointerupFunction: function () {
                 {
@@ -113,7 +108,7 @@ var buttons = {
         y: (topXY.y + topHeight) / 2,
         caption: 'players',
         width: buttonWidth / 2,
-        object: false, svgObject: false,
+        svgObject: false,
         pointerupFunction: function () {
             playersButtonFunction();
         }
@@ -125,7 +120,6 @@ var buttons = {
             y: (topXY.y + topHeight) / 2,
             caption: 'chat',
             width: buttonWidth / 2,
-            object: false,
             svgObject: false,
             pointerupFunction: function () {
                 chatButtonFunction();
@@ -139,7 +133,6 @@ var buttons = {
         y: (topXY.y + topHeight) / 2,
         caption: 'log',
         width: buttonWidth / 2,
-        object: false,
         svgObject: false,
         pointerupFunction: function () {
             logButtonFunction();
@@ -215,36 +208,64 @@ function handCardDragStart(handCardObject) {
 }
 
 var cards = {
-    cardCommon1: {
+    cardCommon1: { // Общая открытая карта на столе №1
+        imgName: false,
+        x: card1CommonBlockXCenter,
+        y: cardCommonBlockYCenter,
+        width: cardWidth,
+        svgObject: false,
+        preload: false,
+    },
+    cardCommon2: {
+        imgName: false,
+        x: card1CommonBlockXCenter + cardStep + cardWidth,
+        y: cardCommonBlockYCenter,
+        width: cardWidth,
+        svgObject: false,
+        preload: false,
+    },
+    cardCommon3: {
+        imgName: false,
+        x: card1CommonBlockXCenter + 2 * (cardStep + cardWidth),
+        y: cardCommonBlockYCenter,
+        width: cardWidth,
+        svgObject: false,
+        preload: false,
+    },
+    cardCommon4: {
+        imgName: false,
+        x: card1CommonBlockXCenter + 3 * (cardStep + cardWidth),
+        y: cardCommonBlockYCenter,
+        width: cardWidth,
+        svgObject: false,
+        preload: false,
+    },
+    areaCommon1: {
         imgName: 'card_area',
         x: card1CommonBlockXCenter,
         y: cardCommonBlockYCenter,
         width: cardWidth,
-        object: false,
         svgObject: false,
     },
-    cardCommon2: {
+    areaCommon2: {
         imgName: 'card_area',
         x: card1CommonBlockXCenter + cardStep + cardWidth,
         y: cardCommonBlockYCenter,
         width: cardWidth,
-        object: false,
         svgObject: false,
     },
-    cardCommon3: {
+    areaCommon3: {
         imgName: 'card_area',
         x: card1CommonBlockXCenter + 2 * (cardStep + cardWidth),
         y: cardCommonBlockYCenter,
         width: cardWidth,
-        object: false,
         svgObject: false,
     },
-    cardCommon4: {
+    areaCommon4: {
         imgName: 'card_area',
         x: card1CommonBlockXCenter + 3 * (cardStep + cardWidth),
         y: cardCommonBlockYCenter,
         width: cardWidth,
-        object: false,
         svgObject: false,
     },
     kolodaCard1: {
@@ -252,7 +273,6 @@ var cards = {
         x: card1CommonBlockXCenter - 5 * cardStep - cardWidth,
         y: cardCommonBlockYCenter - cardStep,
         width: cardWidth,
-        object: false,
         svgObject: false,
     },
     kolodaCard2: {
@@ -260,7 +280,6 @@ var cards = {
         x: card1CommonBlockXCenter - 5 * cardStep - cardWidth,
         y: cardCommonBlockYCenter - 2 * cardStep,
         width: cardWidth,
-        object: false,
         svgObject: false,
     },
     kolodaCard3: {
@@ -268,7 +287,6 @@ var cards = {
         x: card1CommonBlockXCenter - 5 * cardStep - cardWidth,
         y: cardCommonBlockYCenter - 3 * cardStep,
         width: cardWidth,
-        object: false,
         svgObject: false,
     },
     goalCard: {
@@ -276,7 +294,6 @@ var cards = {
         x: card1CommonBlockXCenter + 3 * (cardStep + cardWidth) + 5 * cardStep + cardWidth,
         y: cardCommonBlockYCenter - cardStep,
         width: cardWidth,
-        object: false,
         svgObject: false,
     },
     playerCenterBackplate: {
@@ -284,7 +301,6 @@ var cards = {
         x: centerPlayerBackplateCenterX,
         y: centerPlayerBackplateCenterY,
         width: playerBackplateWidth,
-        object: false,
         svgObject: false,
     },
     playerLeftBackplate: {
@@ -292,7 +308,6 @@ var cards = {
         x: centerPlayerBackplateCenterX - 4 * cardStep - playerBackplateWidth,
         y: centerPlayerBackplateCenterY,
         width: playerBackplateWidth,
-        object: false,
         svgObject: false,
     },
     playerRightBackplate: {
@@ -300,7 +315,6 @@ var cards = {
         x: centerPlayerBackplateCenterX + 4 * cardStep + playerBackplateWidth,
         y: centerPlayerBackplateCenterY,
         width: playerBackplateWidth,
-        object: false,
         svgObject: false,
     },
     handCard1: {
@@ -308,7 +322,6 @@ var cards = {
         x: handCard1CenterX,
         y: handCardCenterY,
         width: cardWidth,
-        object: false,
         svgObject: false,
         dragStartFunction: () => handCardDragStart('handCard1'),
         props: {entity: 'handCard1', cardVlue: 1},
@@ -318,7 +331,6 @@ var cards = {
         x: handCard1CenterX + cardStep + cardWidth,
         y: handCardCenterY,
         width: cardWidth,
-        object: false,
         svgObject: false,
         dragStartFunction: () => handCardDragStart('handCard2'),
         props: {entity: 'handCard2', cardVlue: SKIPBO + 2},
@@ -328,7 +340,6 @@ var cards = {
         x: handCard1CenterX + 2 * (cardStep + cardWidth),
         y: handCardCenterY,
         width: cardWidth,
-        object: false,
         svgObject: false,
         dragStartFunction: () => handCardDragStart('handCard3'),
         props: {entity: 'handCard3', cardVlue: 5},
@@ -338,7 +349,6 @@ var cards = {
         x: handCard1CenterX + 3 * (cardStep + cardWidth),
         y: handCardCenterY,
         width: cardWidth,
-        object: false,
         svgObject: false,
         dragStartFunction: () => handCardDragStart('handCard4'),
         props: {entity: 'handCard4', cardVlue: SKIPBO},
@@ -348,7 +358,6 @@ var cards = {
         x: handCard1CenterX + 4 * (cardStep + cardWidth),
         y: handCardCenterY,
         width: cardWidth,
-        object: false,
         svgObject: false,
         dragStartFunction: () => handCardDragStart('handCard5'),
         props: {entity: 'handCard5', cardVlue: 12},
@@ -358,7 +367,6 @@ var cards = {
         x: bankCard4CenterX,
         y: bankCardCenterY,
         width: cardWidth,
-        object: false,
         svgObject: false,
     },
     bankCard3: {
@@ -366,7 +374,6 @@ var cards = {
         x: bankCard4CenterX - (cardStep + cardWidth),
         y: bankCardCenterY,
         width: cardWidth,
-        object: false,
         svgObject: false,
     },
     bankCard2: {
@@ -374,7 +381,6 @@ var cards = {
         x: bankCard4CenterX - 2 * (cardStep + cardWidth),
         y: bankCardCenterY,
         width: cardWidth,
-        object: false,
         svgObject: false,
     },
     bankCard1: {
@@ -382,7 +388,6 @@ var cards = {
         x: bankCard4CenterX - 3 * (cardStep + cardWidth),
         y: bankCardCenterY,
         width: cardWidth,
-        object: false,
         svgObject: false,
     },
     activeCardCommon1: {
@@ -390,7 +395,6 @@ var cards = {
         x: card1CommonBlockXCenter,
         y: cardCommonBlockYCenter,
         width: cardWidth,
-        object: false,
         svgObject: false,
     },
     activeCardCommon2: {
@@ -398,7 +402,6 @@ var cards = {
         x: card1CommonBlockXCenter + cardStep + cardWidth,
         y: cardCommonBlockYCenter,
         width: cardWidth,
-        object: false,
         svgObject: false,
     },
     activeCardCommon3: {
@@ -406,7 +409,6 @@ var cards = {
         x: card1CommonBlockXCenter + 2 * (cardStep + cardWidth),
         y: cardCommonBlockYCenter,
         width: cardWidth,
-        object: false,
         svgObject: false,
     },
     activeCardCommon4: {
@@ -414,7 +416,6 @@ var cards = {
         x: card1CommonBlockXCenter + 3 * (cardStep + cardWidth),
         y: cardCommonBlockYCenter,
         width: cardWidth,
-        object: false,
         svgObject: false,
     },
     activeYouBank1: {
@@ -422,7 +423,6 @@ var cards = {
         x: 1,
         y: 1,
         width: cardWidth,
-        object: false,
         svgObject: false,
         preload: false,
     },
@@ -431,7 +431,6 @@ var cards = {
         x: 1,
         y: 1,
         width: cardWidth,
-        object: false,
         svgObject: false,
         preload: false,
     },
@@ -440,7 +439,6 @@ var cards = {
         x: 1,
         y: 1,
         width: cardWidth,
-        object: false,
         svgObject: false,
         preload: false,
     },
@@ -449,22 +447,18 @@ var cards = {
         x: 1,
         y: 1,
         width: cardWidth,
-        object: false,
         svgObject: false,
         preload: false,
     },
 }
 
 var entities = {
-    // todo вынести в отдельнй объект - это элементы плашек соперников.
-    // todo вести массивы координат всех объектов отдельно, чтобы выполнять анимацию движения карт, управлять элементами на плашках
     cardCounter: {
         preloaded: false, // загружать каждый раз с сервера
         filename: CARD_COUNTER_SVG,
         x: 1,
         y: 1,
         width: mediumCardWidth,
-        object: false,
         svgObject: false, // массив счетчиков, удалять через pop().destroy();
         preload: false, // Не обрабатывать массово
     },
@@ -492,7 +486,6 @@ var entities = {
         x: 1,
         y: 1,
         width: mediumCardWidth,
-        object: false,
         svgObject: false, // массив карточек, удалять через pop().destroy();
         preload: false, // Не обрабатывать массово
     },
@@ -502,7 +495,6 @@ var entities = {
         x: 1,
         y: 1,
         width: buttonWidth,
-        object: false,
         svgObject: false, // массив никнеймов, удалять через pop().destroy();
         preload: false, // Не обрабатывать массово
     },
@@ -514,7 +506,6 @@ var players = {
         x: youBlockXCenter,
         y: youBlockYCenter + buttonHeight / 2,
         width: buttonWidth,
-        object: false,
         svgObject: false,
         numbers: true,
     },
@@ -523,7 +514,6 @@ var players = {
         x: botXY.x + buttonStepX + buttonWidth / 2,
         y: botXY.y + botHeight * 0.75 * 0.1,
         width: buttonWidth,
-        object: false,
         svgObject: false,
         numbers: true,
     },
@@ -532,7 +522,6 @@ var players = {
         x: botXY.x + buttonStepX + buttonWidth / 2,
         y: botXY.y + botHeight * 0.75 * (0.2 + 0.1),
         width: buttonWidth,
-        object: false,
         svgObject: false,
         numbers: true,
     },
@@ -541,7 +530,6 @@ var players = {
         x: botXY.x + buttonStepX + buttonWidth / 2,
         y: botXY.y + botHeight * 0.75 * (0.2 + 0.1),
         width: buttonWidth,
-        object: false,
         svgObject: false,
         numbers: true,
     },
@@ -550,7 +538,6 @@ var players = {
         x: botXY.x + buttonStepX + buttonWidth / 2,
         y: botXY.y + botHeight * 0.75 * (0.2 + 0.1),
         width: buttonWidth,
-        object: false,
         svgObject: false,
         numbers: true,
     },
@@ -560,7 +547,6 @@ var players = {
         x: bankGoalBlockXCenter,
         y: bankGoalBlockYCenter + buttonHeight / 3,
         width: buttonWidth,
-        object: false,
         svgObject: false, // array of 1 object - needs to properly destroy
         preload: true, // todo SB-3 need to be false - lazy loading
     },
@@ -570,7 +556,6 @@ var players = {
         x: bankGoalBlockXCenter,
         y: bankGoalBlockYCenter - buttonHeight / 3,
         width: buttonWidth,
-        object: false,
         svgObject: false, // array of 1 object - needs to properly destroy
         preload: true, // todo SB-3 need to be false - lazy loading
     },
@@ -580,7 +565,6 @@ var players = {
         y: timerYCenter,
         width: buttonWidth * 1.5,
         height: buttonHeight * 1.5,
-        object: false,
         svgObject: false,
         scalable: false,
         numbers: true,
