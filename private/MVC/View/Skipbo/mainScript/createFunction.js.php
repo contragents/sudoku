@@ -188,7 +188,7 @@ function () {
     coordinates.you.handCard5 = {x: cards.handCard5.svgObject.x, y: cards.handCard5.svgObject.y};
 
     for (let i = 1; i <= 4; i++) {
-        coordinates.you['bankCard' + i] = {x: cards['bankCard' + i].svgObject.x, y: cards['bankCard' + i].svgObject.y};
+        coordinates.you['bankCard' + i] = {x: cards['bankArea' + i].svgObject.x, y: cards['bankArea' + i].svgObject.y};
         cards['activeFrameYouBank' + i].svgObject = getSVGCardBlockGlobal(
             coordinates.you['bankCard' + i].x,
             coordinates.you['bankCard' + i].y,
@@ -267,7 +267,7 @@ function () {
                 getContainerFromSVG(
                     coordinates[player]['bankCard' + i].x,
                     coordinates[player]['bankCard' + i].y,
-                    'bankCard',
+                    'bankAreaMedium',
                     this
                 );
             }

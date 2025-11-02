@@ -362,27 +362,55 @@ var cards = {
         props: {entity: 'handCard5', cardValue: 12},
     },
     bankCard4: {
+        preload: false,
+        x: bankCard4CenterX,
+        y: bankCardCenterY,
+        width: cardWidth,
+        svgObject: [],
+    },
+    bankCard3: {
+        preload: false,
+        x: bankCard4CenterX - (cardStep + cardWidth),
+        y: bankCardCenterY,
+        width: cardWidth,
+        svgObject: [],
+    },
+    bankCard2: {
+        preload: false,
+        x: bankCard4CenterX - 2 * (cardStep + cardWidth),
+        y: bankCardCenterY,
+        width: cardWidth,
+        svgObject: [],
+    },
+    bankCard1: {
+        preload: false,
+        x: bankCard4CenterX - 3 * (cardStep + cardWidth),
+        y: bankCardCenterY,
+        width: cardWidth,
+        svgObject: [],
+    },
+    bankArea4: {
         imgName: 'card_area',
         x: bankCard4CenterX,
         y: bankCardCenterY,
         width: cardWidth,
         svgObject: false,
     },
-    bankCard3: {
+    bankArea3: {
         imgName: 'card_area',
         x: bankCard4CenterX - (cardStep + cardWidth),
         y: bankCardCenterY,
         width: cardWidth,
         svgObject: false,
     },
-    bankCard2: {
+    bankArea2: {
         imgName: 'card_area',
         x: bankCard4CenterX - 2 * (cardStep + cardWidth),
         y: bankCardCenterY,
         width: cardWidth,
         svgObject: false,
     },
-    bankCard1: {
+    bankArea1: {
         imgName: 'card_area',
         x: bankCard4CenterX - 3 * (cardStep + cardWidth),
         y: bankCardCenterY,
@@ -529,7 +557,7 @@ var entities = {
         svgObject: false, // массив карточек, удалять через pop().destroy();
         preload: false, // Не обрабатывать массово
     },
-    bankCard: {
+    bankAreaMedium: {
         preloaded: true, // изображение загружено
         filename: 'card_area',
         x: 1,

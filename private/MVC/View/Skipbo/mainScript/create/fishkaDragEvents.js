@@ -2,7 +2,7 @@
 this.input.on('dragstart', function (pointer, gameObject) {
     dragBegin = {x: gameObject.x, y: gameObject.y};
 
-    switchOnYouBankFrames();
+    switchOnYouBankFrames(getAvailableBankPlaces(gameObject));
     switchOnCommonFrames(getAvailablePlaces(gameObject.cardValue));
 
     if ('entity' in gameObject && gameObject.entity in cards) {
@@ -23,15 +23,21 @@ this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
 this.input.on('dragend', function (pointer, gameObject) {
     if (isDragPointInCommonCardsArea(gameObject.x, gameObject.y)) {
         let position = choosePlaceInCommonCardsArea(gameObject.x, gameObject.y);
-        if(getAvailablePlaces(gameObject.cardValue).includes(position)) {
-            moveCardToPosition(gameObject, coordinates['areaCommon' + position]);
+        if (getAvailablePlaces(gameObject.cardValue).includes(position)) {
+            moveCardToCommonArea(gameObject, position);
         } else {
             gameObject.x = dragBegin.x;
             gameObject.y = dragBegin.y;
         }
-    } else if(isDragPointInYouBankArea(gameObject.x, gameObject.y)) {
+    } else if (isDragPointInYouBankArea(gameObject.x, gameObject.y)) {
+
         let position = choosePlaceInYouBankArea(gameObject.x, gameObject.y);
-        moveCardToPosition(gameObject, coordinates.you['bankCard' + position]);
+        if (getAvailableBankPlaces(gameObject).includes(position)) {
+            moveCardToBank(gameObject, position);
+        } else {
+            gameObject.x = dragBegin.x;
+            gameObject.y = dragBegin.y;
+        }
     } else {
         gameObject.x = dragBegin.x;
         gameObject.y = dragBegin.y;
@@ -55,12 +61,12 @@ function switchOffFrames() {
     }
 }
 
-function switchOnYouBankFrames() {
-    for (let i = 1; i <= 4; i++) {
-        if (cards['activeFrameYouBank' + i].svgObject) {
-            cards['activeFrameYouBank' + i].svgObject.visible = true;
-            faserObject.children.bringToTop(cards['activeFrameYouBank' + i].svgObject);
-            cards['activeFrameYouBank' + i].svgObject.depth = 100;
+function switchOnYouBankFrames(frameNums = [1, 2, 3, 4]) {
+    for (let i in frameNums) {
+        if (cards['activeFrameYouBank' + frameNums[i]].svgObject) {
+            cards['activeFrameYouBank' + frameNums[i]].svgObject.visible = true;
+            faserObject.children.bringToTop(cards['activeFrameYouBank' + frameNums[i]].svgObject);
+            cards['activeFrameYouBank' + frameNums[i]].svgObject.depth = 100;
         }
     }
 }
@@ -75,12 +81,23 @@ function switchOnCommonFrames(frameNums = [1, 2, 3, 4]) {
     }
 }
 
+function getAvailableBankPlaces(gameObject) {
+    let res = [];
+
+    if (isHandCard(gameObject)) {
+        res = [1, 2, 3, 4];
+    }
+
+    return res;
+}
+
 function getAvailablePlaces(cardNum) {
     let res = [];
 
     for (let i = 1; i <= 4; i++) {
         let currentCard = cards['cardCommon' + i].svgObject;
 
+        // todo учесть SKIPBO + номер карты - такая ситуация исключена
         if (currentCard) {
             if (cardNum === SKIPBO && currentCard.cardValue !== SKIPBO) {
                 res.push(i);
@@ -143,6 +160,44 @@ function isDragPointInYouBankArea(x, y) {
     }
 
     return false;
+}
+
+function isBankCard(gameObject) {
+    return gameObject.entity.indexOf('bankCard') === 0;
+}
+
+function isHandCard(gameObject) {
+    return gameObject.entity.indexOf('handCard') === 0;
+}
+
+function moveCardToCommonArea(gameObject, position) {
+    let cardObject = gameObject.entity;
+    if (isBankCard(gameObject)) {
+        cards[cardObject].svgObject.pop();
+    } else if (isHandCard(gameObject)) {
+        cards[cardObject].svgObject = false;
+    }
+
+    gameObject.entity = 'commonCard' + position;
+    if (cards['cardCommon' + position].svgObject) {
+        cards['cardCommon' + position].svgObject.destroy();
+    }
+
+    cards['cardCommon' + position].svgObject = gameObject;
+    moveCardToPosition(gameObject, coordinates['areaCommon' + position]);
+    gameObject.disableInteractive();
+}
+
+function moveCardToBank(gameObject, position) {
+    let handCardObject = gameObject.entity;
+    gameObject.entity = 'bankCard' + position;
+
+    moveCardToPosition(gameObject, coordinates.you['bankCard' + position]);
+
+    cards['bankCard' + position].svgObject.push(gameObject);
+    // todo перерисовать bankCard position
+
+    cards[handCardObject].svgObject = false;
 }
 
 function moveCardToPosition(gameObject, coordinates = {x: 0, y: 0}) {
