@@ -14,7 +14,7 @@ var UIScene = new Phaser.Class({
     ,
 
     create: 
-    //<?php include('createFunction.js')?>
+    //<?php include('createFunction.js.php')?>
     ,
     
     update : 

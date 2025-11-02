@@ -5,7 +5,6 @@ this.input.on('dragstart', function (pointer, gameObject) {
     switchOnYouBankFrames();
     switchOnCommonFrames(getAvailablePlaces(gameObject.cardValue));
 
-    console.log('dragging', gameObject.entity);
     if ('entity' in gameObject && gameObject.entity in cards) {
         parentObject = cards[gameObject.entity];
         if ('dragStartFunction' in parentObject) {
@@ -22,8 +21,6 @@ this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
 });
 
 this.input.on('dragend', function (pointer, gameObject) {
-
-    console.log('x', gameObject.x, 'y', gameObject.y);
     if (isDragPointInCommonCardsArea(gameObject.x, gameObject.y)) {
         let position = choosePlaceInCommonCardsArea(gameObject.x, gameObject.y);
         if(getAvailablePlaces(gameObject.cardValue).includes(position)) {

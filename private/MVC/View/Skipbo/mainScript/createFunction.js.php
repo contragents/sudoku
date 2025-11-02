@@ -206,12 +206,22 @@ function () {
         winScore - (playerScores['youBlock'].digit2 * 10 + playerScores['youBlock'].digit3)
     );
 
+    // сгенерим URL случайных аватаров
+    let avatars = [];
+    avatars.push('https://xn--d1aiwkc2d.club/img/upload/3f8dd6efb0492cd1394ac4e0f85e10a5.jpg?ver=1741674943');
+    //avatars.push('https://sudoku.box' + '<?= AvatarModel::find([])->where([AvatarModel::NOT_LOADED_FIELD => false])->order('rand()')->limit(1)->one()->_mini_url ?>');
+    avatars.push('https://sudoku.box' + '<?= AvatarModel::find([])->where([AvatarModel::NOT_LOADED_FIELD => false])->order('rand()')->limit(1)->one()->_mini_url ?>');
+    avatars.push('https://sudoku.box' + '<?= AvatarModel::find([])->where([AvatarModel::NOT_LOADED_FIELD => false])->order('rand()')->limit(1)->one()->_mini_url ?>');
+    avatars.push('https://sudoku.box' + '<?= AvatarModel::find([])->where([AvatarModel::NOT_LOADED_FIELD => false])->order('rand()')->limit(1)->one()->_mini_url ?>');
+
     // Выводим аватар Игрока
     getContainerFromSVG(
         entities.avatarYou.x,
         entities.avatarYou.y,
         'avatarYou',
-        this
+        this,
+        avatars.pop(),
+        {isAvatar: true}
     );
 
     // Расставляем соперников по плашкам
@@ -220,7 +230,7 @@ function () {
         if (playersMap[player] !== YOU) {
             let playerContainer = players['player' + player + 'Block'].svgObject;
             let backplateContainer = cards[playersMap[player]].svgObject; // Контейнер плашки соперника
-            console.log(backplateContainer.width);
+
             playerContainer.x = backplateContainer.x + backplateContainer.displayWidth / 2 - playerContainer.width / 2 - cardStep;
             playerContainer.y = backplateContainer.y - backplateContainer.displayHeight / 2 + playerContainer.displayHeight / 4 + cardStep;
             playerContainer.setAlpha(1);
@@ -241,7 +251,9 @@ function () {
                 backplateContainer.x - backplateContainer.displayWidth / 2 + playerContainer.width / 2 + cardStep,
                 backplateContainer.y - backplateContainer.displayHeight / 6 - smallCardWidth * cardSideFactor / 2 + entities['avatarPlayer' + player].height / 2,
                 'avatarPlayer' + player,
-                this
+                this,
+                avatars.pop(),
+                {isAvatar: true}// ANONYM_AVATAR_URL
             );
 
             coordinates[player] = {};

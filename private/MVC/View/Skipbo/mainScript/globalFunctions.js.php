@@ -86,7 +86,6 @@ async function mobileShare() {
     try {
         await navigator.share(shareObj);
     } catch (err) {
-        console.log('share ERROR! ' + err);
     }
 }
 
@@ -178,7 +177,6 @@ function genDivGlobal(i, isChange = false) {
 }
 if (!isSteamGlobal()) {
     document.addEventListener("visibilitychange", function () {
-        console.log('visibilitychange', 'pageActive:', pageActive, 'document.visibilityState:', document.visibilityState);
         if (pageActive !== document.visibilityState) {
             pageActive = document.visibilityState;
             onVisibilityChange("visibilitychange");
@@ -187,8 +185,6 @@ if (!isSteamGlobal()) {
 }
 
 function newVisibilityStatus(status) {
-    console.log('newVisibilityStatus', 'pageActive:', pageActive, 'new status:', status);
-
     if (pageActive !== status) {
         pageActive = status;
         onVisibilityChange('newVisibilityStatus');
@@ -201,7 +197,6 @@ if (isSteamGlobal()) {
 
 function onVisibilityChange(caller = '') {
     reportVisibilityChangeYandex();
-    console.log('caller:', caller, 'onVisibilityChange', 'pageActive:', pageActive, 'document.visibilityState:', document.visibilityState)
     if (!requestSended && [MY_TURN_STATE, PRE_MY_TURN_STATE, OTHER_TURN_STATE, INIT_GAME_STATE, INIT_RATING_GAME_STATE].indexOf(gameState) >= 0) {
         if (pageActive === 'hidden') {
             fetchGlobal(STATUS_CHECKER_SCRIPT)
@@ -326,7 +321,6 @@ function savePlayerAvatar() {
         contentType: false,
         processData: false,
         success: function (returndata) {
-            console.log(returndata);
             resp = JSON.parse(returndata);
 
             if (resp['result'] === 'saved') {
@@ -606,17 +600,32 @@ function _placeFishki() {
     }
 }
 
+function makeRoundedCorners(image) {
+    // Create a Game Object to use as the mask source
+    // The alpha channel of this object will determine the masked area
+    const maskSource = faserObject.add.image(0, 0, 'avatar_frame');
+    maskSource.setVisible(false); // Hide the mask source if you don't want it visible
+
+    // Create the Bitmap Mask from the mask source
+    const mask = new Phaser.Display.Masks.BitmapMask(faserObject, maskSource);
+
+
+    // Apply the mask to the image
+    image.setMask(mask);
+}
+
 function getContainerFromSVG(X, Y, blockName, _this, param = '', props = false) {
     function myCallback(X, Y, resourceName, blockName, props) {
-        console.log(X, Y, resourceName, blockName);
+        let element = _this.add.image(0, 0, resourceName);
+        let elements = [element];
 
-        if (entities[blockName].svgObject === false) {
-            entities[blockName].svgObject = [];
+        if (props && 'isAvatar' in props && props.isAvatar) {
+            let frame = faserObject.add.image(0, 0, 'avatar_frame_you');
+            frame.setScale(element.width / frame.width, element.height / frame.height);
+            elements.push(frame);
         }
 
-        let element = _this.add.image(0, 0, resourceName);
-
-        let container = _this.add.container(X, Y, [element]);
+        let container = _this.add.container(X, Y, elements);
 
         if ('width' in entities[blockName]) {
             container.setScale(entities[blockName].width / element.displayWidth, entities[blockName].width / element.displayWidth);
@@ -624,10 +633,14 @@ function getContainerFromSVG(X, Y, blockName, _this, param = '', props = false) 
             container.setSize(element.displayWidth, element.displayHeight);
         }
 
+        // Проверка по высоте - аватар не должен быть выше height
+        if (props && 'isAvatar' in props && props.isAvatar && 'height' in entities[blockName] && container.first.displayHeight > container.first.displayWidth) {
+            container.setScale(entities[blockName].height / element.displayHeight, entities[blockName].height / element.displayHeight);
+        }
+
         if (props) {
             for (let prop in props) {
                 container[prop] = props[prop];
-                console.log(prop, container[prop]);
             }
         }
 
@@ -646,22 +659,27 @@ function getContainerFromSVG(X, Y, blockName, _this, param = '', props = false) 
     }
 
     let resourceName = blockName + param + Date.now();
+    let url = entities[blockName].filename + encodeURIComponent(param);
     if (
-        !(entities[blockName].filename.indexOf('.jpg') >= 1)
-        &&
-        !(entities[blockName].filename.indexOf('.png') >= 1)
+        url.indexOf('.svg') >= 1
+        ||
+        url.indexOf(SVG_RESOURCE_MASK) >= 1
     ) {
-        preloaderObject.load.svg(resourceName, entities[blockName].filename + encodeURIComponent(param),
+        preloaderObject.load.svg(resourceName, url,
+            {
+                ...('width' in entities[blockName] && {
+                    'width': entities[blockName].width,
+                })
+            }
+        );
+    } else {
+        preloaderObject.load.image(resourceName, url,
             {
                 ...('width' in entities[blockName] && {
                     'width': entities[blockName].width,
                 }),
-                'height':
-                    'height' in entities[blockName] ? entities[blockName].height : buttonHeight,
             }
         );
-    } else {
-        preloaderObject.load.image(resourceName, entities[blockName].filename + encodeURIComponent(param));
     }
 
     preloaderObject.load.start();
@@ -689,7 +707,6 @@ function getSVGCardBlockGlobal(X, Y, buttonName, _this, scalable = false, props 
     if (props) {
         for (let prop in props) {
             container[prop] = props[prop];
-            console.log(prop, container[prop]);
         }
     }
 
@@ -804,7 +821,6 @@ function clearContainerVarsGlobal() {
 //<?php include(ROOT_DIR . '/js/common_functions/ajaxGetGlobalFunction.js.php')?>
 //<?php include('globals/parseDeskGlobalFunction.js.php')?>
 //<?php include('globals/initCellsGlobalFunction.js')?>
-//<?php include('globals/findPlaceGlobalFunction.js')?>
 //<?php include(ROOT_DIR . '/js/common_functions/bootBoxIsOpenedGlobalFunction.js.php')?>
 //<?php include(ROOT_DIR . '/js/common_functions/gadgetTypeFunctions.js.php')?>
 

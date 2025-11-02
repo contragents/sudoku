@@ -78,8 +78,10 @@ const PLAYER_RATING_SCRIPT = 'players/info'; // todo ...
 const HIDE_BALANCE_SCRIPT = 'players/hideBalance';
 const CLAIM_SCRIPT = 'pay/claim';
 const PAY_SCRIPT = 'pay/pay';
-const NICKNAME_SVG = BASE_URL + 'players/nickname?nickname=';
-const CARD_COUNTER_SVG = BASE_URL + 'players/counter?counter=';
+const NICKNAME_SVG = BASE_URL + 'players/svgnickname?nickname=';
+const CARD_COUNTER_SVG = BASE_URL + 'players/svgcounter?counter=';
+const SVG_RESOURCE_MASK = 'players/svg';
+const AVATAR_IMPORT_SCRIPT = BASE_URL + 'players/avatar?url=';
 
 const CHAT_SCRIPT = 'sendChatMessage';
 const COMPLAIN_SCRIPT = 'complain';

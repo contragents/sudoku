@@ -204,7 +204,6 @@ var modesColors = {
 
 function handCardDragStart(handCardObject) {
     let container = cards[handCardObject].svgObject;
-    console.log('dragstart: ', container.cardValue);
 }
 
 var cards = {
@@ -452,14 +451,10 @@ var cards = {
     },
 }
 
-var avatars = {
-
-}
-
 var entities = {
     avatarYou: {
         preloaded: false, // загружать каждый раз с сервера
-        filename: 'https://sudoku.box/img/sudoku-coin.png',
+        filename: AVATAR_IMPORT_SCRIPT,//'https://sudoku.box/img/sudoku-coin.png',
         x: gameWidth / 2,
         y: handCardCenterY,
         width: cardWidth * 2,
@@ -469,7 +464,7 @@ var entities = {
     },
     avatarPlayer1: {
         preloaded: false, // загружать каждый раз с сервера
-        filename: ANONYM_AVATAR_URL,
+        filename: AVATAR_IMPORT_SCRIPT, // ANONYM_AVATAR_URL,
         x: 1,
         y: 1,
         width: mediumCardWidth * 1.7,
@@ -479,7 +474,7 @@ var entities = {
     },
     avatarPlayer2: {
         preloaded: false, // загружать каждый раз с сервера
-        filename: ANONYM_AVATAR_URL,
+        filename: AVATAR_IMPORT_SCRIPT,
         x: 1,
         y: 1,
         width: mediumCardWidth * 1.7,
@@ -489,7 +484,7 @@ var entities = {
     },
     avatarPlayer3: {
         preloaded: false, // загружать каждый раз с сервера
-        filename: ANONYM_AVATAR_URL,
+        filename: AVATAR_IMPORT_SCRIPT,
         x: 1,
         y: 1,
         width: mediumCardWidth * 1.7,
@@ -499,7 +494,7 @@ var entities = {
     },
     avatarPlayer4: {
         preloaded: false, // загружать каждый раз с сервера
-        filename: ANONYM_AVATAR_URL,
+        filename: AVATAR_IMPORT_SCRIPT,
         x: 1,
         y: 1,
         width: mediumCardWidth * 1.7,

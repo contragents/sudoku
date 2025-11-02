@@ -926,7 +926,6 @@ function PlayersPage(json) {
                     message: data.message,
                     className: 'modal-settings modal-stats',
                     callback: function () {
-                        console.log('stats loaded');
                     },
                     onShow: function (e) {
                         $('.modal-players.show, .modal-players.show + .modal-backdrop.show').hide();
@@ -1440,7 +1439,6 @@ function Leaderboard() {
                             });
                             return message;
                         } catch (error) {
-                            console.log(error);
                             return 'error';
                         }
                     });

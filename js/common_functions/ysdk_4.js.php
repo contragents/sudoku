@@ -23,9 +23,7 @@ if (isYandexAppGlobal() && typeof YaGames != 'undefined') {
                     } else {
                         isYandexAuthorized = true;
                     }
-                    console.log('USER ID:', uniqID);
                 }).catch(err => {
-                console.log('USER_NOT_AUTHORIZED');
             });
 
             ysdk.on('game_api_pause', pauseCallback);
@@ -78,7 +76,6 @@ function showStickyBannerYandex() {
                 // Реклама показывается
             } else if (reason) {
                 // Реклама не показывается.
-                console.log(reason)
             } else {
                 // Реклама не показывается.
                 ysdk.adv.showBannerAdv()
@@ -95,7 +92,6 @@ function hideStickyBannerYandex() {
                 ysdk.adv.hideBannerAdv();
             } else if (reason) {
                 // Реклама не показывается.
-                console.log(reason)
             } else {
                 // Реклама не показывается
             }
@@ -158,14 +154,11 @@ function reportVisibilityChangeYandex() {
 const pauseCallback = () => {
     pageActive = 'hidden';
     onVisibilityChange();
-    console.log('GAME PAUSED');
 };
 
 const resumeCallback = () => {
     pageActive = 'visible';
     onVisibilityChange();
-    console.log('GAME RESUMED');
-
     hideStickyBannerYandex();
 };
 

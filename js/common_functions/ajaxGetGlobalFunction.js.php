@@ -68,7 +68,6 @@ async function fetchGlobalMVC(urlPart, param_name, param_data) {
     }
 
     if (!response.ok) {
-        console.log(`An error has occured: ${response.status}`);
         return {message: errorServerMessage, status: "error"};
     }
 
@@ -120,8 +119,6 @@ async function fetchGlobalNominal(script, param_name, param_data) {
     }
 
     if (!response.ok) {
-        console.log(`An error has occured: ${response.status}`);
-
         if (isYandexAppGlobal()) {
             getLocalStorageValue('<?= Cookie::COOKIE_NAME ?>')
         }
@@ -163,7 +160,6 @@ async function fetchGlobalYowser(script, param_name, param_data) {
     }
 
     if (!response.ok) {
-        console.log(`An error has occured: ${response.status}`);
         return {message: errorServerMessage, status: "error"};
     }
 

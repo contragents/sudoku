@@ -26,6 +26,11 @@ class FrontResourceSkipbo extends FrontResource
 
         return $imgArr
             + [
+                'avatar_frame_you' => [
+                    'type' => 'svg',
+                    'url' => 'img/avatar_frame5.svg',
+                    'options' => "{'width': 240, 'height': 240}"
+                ],
                 'card_skipbo' => [
                     'type' => 'svg',
                     'url' => 'img/skipbo/card_skipbo_v3.svg',

@@ -39,9 +39,50 @@ class PlayersController extends BaseSubController
     ];
     const NICKNAME_PARAM = 'nickname';
     const COUNTER_PARAM = 'counter';
+    const URL_PARAM = 'url';
+    const SVG_EMPTY_TPL = '<svg></svg>';
 
-    public function counterAction(): string
+    const IMAGE_FORMATS = ['.png' => 'png', '.jpg' => 'jpeg', '.gif' => 'gif', '.svg' => 'svg+xml', '.jpeg' => 'jpeg'];
+
+
+    public function avatarAction(): string
     {
+        if (self::$Request[self::URL_PARAM] ?? false) {
+            $projectRootDir = __DIR__ . '/../../../';
+            $cacheDir = $projectRootDir . 'img/upload/';
+
+            try {
+                $filenameHash = md5(self::$Request[self::URL_PARAM]);
+                if (file_exists($cacheDir . $filenameHash)) {
+                    header('Content-type: image/' . self::getImgFormatFromUrl(self::$Request[self::URL_PARAM]));
+                    readfile($cacheDir . $filenameHash);
+
+                    return '';
+                }
+
+                $res = file_get_contents(self::$Request[self::URL_PARAM]);
+
+                file_put_contents($cacheDir . $filenameHash, $res);
+
+                foreach ($http_response_header as $header) {
+                    header($header);
+                }
+
+                return $res;
+            } catch (Throwable $e) {
+                header('Content-type: image/jpeg');
+
+                return file_get_contents(
+                    $projectRootDir . StatsController::ANONYM_AVATAR_FILEPATH
+                );
+            }
+        }
+    }
+
+    public function svgcounterAction(): string
+    {
+        header('Content-type: image/svg+xml');
+
         try {
             $svg = file_get_contents(__DIR__ . '/../../../img/skipbo/card_counter_v3.svg');
             return str_replace(
@@ -50,12 +91,14 @@ class PlayersController extends BaseSubController
                 $svg
             );
         } catch (Throwable $e) {
-            return $e->__toString();
+            return self::SVG_EMPTY_TPL;
         }
     }
 
-    public function nicknameAction(): string
+    public function svgnicknameAction(): string
     {
+        header('Content-type: image/svg+xml');
+
         $fontSize = ceil(6 * 18 / mb_strlen(self::$Request[self::NICKNAME_PARAM], 'UTF-8'));
         if ($fontSize > 14) {
             $fontSize = 14;
@@ -72,7 +115,7 @@ class PlayersController extends BaseSubController
                 $svg
             );
         } catch (Throwable $e) {
-            return $e->__toString();
+            return self::SVG_EMPTY_TPL;
         }
     }
 
@@ -417,4 +460,16 @@ class PlayersController extends BaseSubController
                 ];
         }
     }
+
+    private static function getImgFormatFromUrl(mixed $url): string
+    {
+        foreach (self::IMAGE_FORMATS as $ext => $format) {
+            if (str_contains($url, $ext)) {
+                return $format;
+            }
+        }
+
+        return '';
+    }
+
 }

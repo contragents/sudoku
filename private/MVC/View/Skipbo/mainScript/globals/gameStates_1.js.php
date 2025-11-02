@@ -227,7 +227,6 @@ var gameStates = {
                 const ratings = Object.keys(data.players).filter(
                     (item) => !isNaN(Number(item)) && data.players[item] > 0
                 );
-                // console.log(Object.keys(data.players), ratings);
 
                 ratings.shift();
                 onlinePlayers += getRatingList(
@@ -239,7 +238,6 @@ var gameStates = {
                 onlinePlayers += `	<div class="form-check">`;
 
                 if (ratings.slice(ratings.length / 2).length > 0) {
-                    // console.log(ratings.slice(ratings.length / 2));
                     onlinePlayers += getRatingList(
                         ratings.slice(ratings.length / 2),
                         data
@@ -579,7 +577,6 @@ var gameStates = {
                                         message: data.message,
                                         className: 'modal-settings  modal-stats',
                                         callback: function () {
-                                            console.log('stats loaded');
                                         },
                                         buttons: {
                                             removeFilter: {
@@ -1533,7 +1530,6 @@ function clickGlobal(id) {
             } else {
                 item.checked = false;
             }
-            console.log(item.id, item.checked);
         });
     }
 
@@ -1551,7 +1547,6 @@ function clickGlobal(id) {
             } else {
                 item.checked = false;
             }
-            console.log(item.id, item.checked);
         });
     }
 
@@ -1606,7 +1601,6 @@ function RobokassaPaymentGlobal(actionType) {
             body: getFormData(orderParams),
         }).then(response => response.json())
             .then(result => {
-                console.log('Success:', result);
                 if ('location' in result) {
                     location.href = result.location;
                 }

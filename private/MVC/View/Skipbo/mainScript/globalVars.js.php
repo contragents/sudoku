@@ -1,7 +1,4 @@
 <?php
-use classes\Cookie;
-use classes\GameSkipbo;
-use classes\MonetizationService;
 use classes\Steam;
 use classes\T;
 use BaseController as BC;
@@ -38,7 +35,7 @@ if (windowInnerWidth > windowInnerHeight) {
     var gameHeight = 9 / 16 * gameWidth; // standardHorizontalHeight;
     var topHeight = gameHeight * TOP_PERCENT;
     var buttonHeight = topHeight;
-    var cardWidth = buttonWidth * 1 / 2; // Ширина карты (полного размера)
+    var cardWidth = buttonWidth / 2; // Ширина карты (полного размера)
     /** @var float cardSideFactor Соотношение сторон карты Высота / Ширина */
     var cardSideFactor = 1.5;
     var cardStep = cardWidth / 10; // Расстояние между картами
