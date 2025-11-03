@@ -17,6 +17,8 @@ const BASE_URL = '<?= SkipboController::GAME_URL() ?>';
 
 winScore = 30; // todo SB-3 убрать, только для теста
 const SKIPBO = 1000;
+const HAND_CARDS_NUM = 5;
+const SKIPBO_CARDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, SKIPBO];
 
 var playersMap = {1: YOU, 2: 'playerLeftBackplate', 3: 'playerCenterBackplate', 4: 'playerRightBackplate'}; // todo SB-3 настраивается под каждую партию - номера соперников относительно Игрока
 playerScores = {

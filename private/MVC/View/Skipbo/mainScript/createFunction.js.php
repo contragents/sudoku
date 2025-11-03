@@ -295,7 +295,7 @@ function () {
             );
 
             // Выводим карты на руках противника рубашкой кверху
-            for (let i = 1; i <= 5; i++) {
+            for (let i = 1; i <= HAND_CARDS_NUM; i++) {
                 coordinates[player]['handCard' + i] = {
                     x: backplateContainer.x + (i - 1) * (smallCardWidth - cardStep * 2),
                     y: backplateContainer.y - backplateContainer.displayHeight / 6

@@ -99,9 +99,9 @@ function getAvailablePlaces(cardNum) {
 
         // todo учесть SKIPBO + номер карты - такая ситуация исключена
         if (currentCard) {
-            if (cardNum === SKIPBO && currentCard.cardValue !== SKIPBO) {
+            if (cardNum === SKIPBO && currentCard.cardValue < SKIPBO) {
                 res.push(i);
-            } else if (cardNum === SKIPBO || (cardNum - currentCard.cardValue === 1)) {
+            } else if (cardNum - (currentCard.cardValue % SKIPBO) === 1) {
                 res.push(i);
             }
         } else if (cardNum === 1 || cardNum === SKIPBO) {
@@ -172,6 +172,12 @@ function isHandCard(gameObject) {
 
 function moveCardToCommonArea(gameObject, position) {
     let cardObject = gameObject.entity;
+    let nextCardValue =
+        (cards['cardCommon' + position].svgObject && 'cardValue' in cards['cardCommon' + position].svgObject)
+            ? (cards['cardCommon' + position].svgObject.cardValue % SKIPBO) + 1
+            : 1;
+    nextCardValue += (gameObject.cardValue === SKIPBO ? SKIPBO : 0); // Признак SKIPBO
+
     if (isBankCard(gameObject)) {
         cards[cardObject].svgObject.pop();
     } else if (isHandCard(gameObject)) {
@@ -181,11 +187,18 @@ function moveCardToCommonArea(gameObject, position) {
     gameObject.entity = 'commonCard' + position;
     if (cards['cardCommon' + position].svgObject) {
         cards['cardCommon' + position].svgObject.destroy();
+        cards['cardCommon' + position].svgObject = false;
     }
 
-    cards['cardCommon' + position].svgObject = gameObject;
-    moveCardToPosition(gameObject, coordinates['areaCommon' + position]);
-    gameObject.disableInteractive();
+    if (nextCardValue < 12 || (nextCardValue > SKIPBO && nextCardValue < (SKIPBO + 12))) {
+        cards['cardCommon' + position].svgObject = gameObject;
+        cards['cardCommon' + position].svgObject.cardValue = nextCardValue;
+        moveCardToPosition(gameObject, coordinates['areaCommon' + position]);
+        gameObject.disableInteractive();
+    } else {
+        gameObject.visible = false;
+        gameObject.disableInteractive();
+    }
 }
 
 function moveCardToBank(gameObject, position) {
@@ -198,9 +211,32 @@ function moveCardToBank(gameObject, position) {
     // todo перерисовать bankCard position
 
     cards[handCardObject].svgObject = false;
+
+    giveHandCards(); // todo Карты должны прилетать с сервера
 }
 
 function moveCardToPosition(gameObject, coordinates = {x: 0, y: 0}) {
     gameObject.x = coordinates.x;
     gameObject.y = coordinates.y;
+}
+
+function giveHandCards() {
+    for (let i = 1; i <= HAND_CARDS_NUM; i++) {
+        if (cards['handCard' + i].svgObject === false) {
+            console.log('Empty handCard' + i);
+
+            let newCard = SKIPBO_CARDS[Math.floor(Math.random() * SKIPBO_CARDS.length)];
+            cards['handCard' + i].imgName = 'card_' + (newCard < SKIPBO ? newCard : 'skipbo');
+
+            cards['handCard' + i].svgObject = getSVGCardBlockGlobal(
+                cards['handCard' + i]['x'],
+                cards['handCard' + i]['y'],
+                'handCard' + i,
+                faserObject,
+                false,
+                {entity: 'handCard' + i, cardValue: newCard},
+                true
+            );
+        }
+    }
 }

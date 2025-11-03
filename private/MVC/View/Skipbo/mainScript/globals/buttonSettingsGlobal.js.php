@@ -326,13 +326,13 @@ var cards = {
         props: {entity: 'handCard1', cardValue: 1},
     },
     handCard2: {
-        imgName: 'card_skipbo_2',
+        imgName: 'card_2',
         x: handCard1CenterX + cardStep + cardWidth,
         y: handCardCenterY,
         width: cardWidth,
         svgObject: false,
         dragStartFunction: () => handCardDragStart('handCard2'),
-        props: {entity: 'handCard2', cardValue: SKIPBO + 2},
+        props: {entity: 'handCard2', cardValue: 2},
     },
     handCard3: {
         imgName: 'card_5',
