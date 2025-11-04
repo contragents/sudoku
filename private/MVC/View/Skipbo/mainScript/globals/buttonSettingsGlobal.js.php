@@ -642,8 +642,8 @@ var players = {
         x: bankGoalBlockXCenter,
         y: bankGoalBlockYCenter - buttonHeight / 3,
         width: buttonWidth,
-        svgObject: false, // array of 1 object - needs to properly destroy
-        preload: true, // todo SB-3 need to be false - lazy loading
+        svgObject: [],
+        preload: false,
     },
     timerBlock: {
         filename: 'timer',

@@ -11,6 +11,8 @@ use classes\ViewHelper as VH;
 
 class Queue
 {
+    protected static $GAME_STATUS_CLASS = GameStatus::class;
+
     const QUEUES = [
         'rating_waiters' => '.rating_waiters',
         '2players_waiters' => '.2players_waiters',
@@ -571,7 +573,7 @@ class Queue
         $this->caller->currentGame = $this->caller->getNewGameId();
         $this->caller->storeGameStatus(false);
 
-        $this->caller->gameStatus = new GameStatus();
+        $this->caller->gameStatus = new static::$GAME_STATUS_CLASS;
         $this->caller->gameStatus->gameName = $this->caller::GAME_NAME;
 
         $game_users = [];

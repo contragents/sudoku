@@ -12,6 +12,12 @@ class DeskSkipbo extends Desk
     public array $desk = [0 => [], 1 => [], 2 => [], 3 => []]; // Кучки карт №№1..4 (карты от 1 до 12)
     public array $koloda = []; // Колода из 168 карт с учетом розданных карт и карт, добавляемых при сборе кучек карт №№1..4
 
+    public function checkNewDesc(array $newDesk): bool
+    {
+        // todo SB-8 make check
+        return true;
+    }
+
     public function __construct()
     {
         // Создаем массив из NUM_KOLODA CARDS массивов

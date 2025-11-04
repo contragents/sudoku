@@ -694,7 +694,6 @@ var gameStates = {
         action: function (data) {
             initLotok();
             resetButtonFunction(true);
-            buttons.submitButton.setDisabled();
         },
         message: '<?= T::S('Game selection - please wait') ?>',
         refresh: 3
@@ -702,7 +701,6 @@ var gameStates = {
     initRatingGame: {
         1: 'waiting', 2: 'done',
         action: function (data) {
-            buttons.submitButton.setDisabled();
         },
         message: '<?= T::S('Game selection - please wait') ?>',
         refresh: 10
@@ -713,8 +711,6 @@ var gameStates = {
         refresh: 15,
         action: function (data) {
             gameStates.gameResults.action(data);
-            setSubmitButtonState();
-            setCheckButtonState();
         },
         from_inviteGame: function (data) {
             gameStates.startGame.from_initGame();
@@ -729,10 +725,10 @@ var gameStates = {
             gameStates.myTurn.from_noGame(data);
         },
         from_noGame: function (data) {
-            placeFishki();
+            // todo SB-8
         },
         from_desync: function (data) {
-            placeFishki();
+            // todo SB-8
         },
         from_gameResults: function () {
             gameStates.startGame.from_initGame();
@@ -760,7 +756,7 @@ var gameStates = {
             gameStates.myTurn.from_noGame(data);
         },
         from_desync: function (data) {
-            placeFishki();
+            // todo SB-8
         },
         from_initRatingGame: function (data) {
             gameStates.startGame.from_initGame();
@@ -799,7 +795,7 @@ var gameStates = {
             gameStates.myTurn.from_noGame(data);
         },
         from_desync: function (data) {
-            placeFishki();
+            // todo SB-8
         },
         from_initRatingGame: function (data) {
             gameStates.startGame.from_initGame();
@@ -1306,10 +1302,6 @@ function commonCallback(data) {
 
         if ('action' in gameStates[gameState])
             gameStates[gameState]['action'](data);
-
-        if ('mistakes' in data) {
-            processMistakesSudokuGlobal(data.mistakes);
-        }
     }
 
     if ('timeLeft' in data) {
@@ -1324,19 +1316,9 @@ function commonCallback(data) {
         gameBank = data.bank;
         gameBankString = data.bank_string;
 
-        if (players.bankBlock.svgObject === false) {
-            buttons.logButton.svgObject.x = ('chatButton' in buttons ? buttons.chatButton.svgObject.x : buttons.checkButton.svgObject.x) - (buttons.checkButton.svgObject.width - buttons.logButton.svgObject.width) / 2;
-            buttons.playersButton.svgObject.x += (buttons.resetButton.svgObject.width - buttons.playersButton.svgObject.width) / 2
-            if ('chatButton' in buttons) {
-                buttons.chatButton.svgObject.x = buttons.logButton.svgObject.x + (buttons.playersButton.svgObject.x - buttons.logButton.svgObject.x) / 2;
-            } else {
-                buttons.logButton.svgObject.x = buttons.logButton.svgObject.x + (buttons.playersButton.svgObject.x - buttons.logButton.svgObject.x) / 2;
-            }
-        } else {
             while (players.bankBlock.svgObject.length) {
                 players.bankBlock.svgObject.pop().setVisible(false).destroy();
             }
-        }
 
         players.bankBlock.svgObject = [];
 
@@ -1377,40 +1359,7 @@ function commonCallback(data) {
 
     if ('winScore' in data && winScore === false) {
         winScore = data.winScore;
-
-        if (players.goalBlock.svgObject !== false) {
-            while (players.goalBlock.svgObject.length) {
-                players.goalBlock.svgObject.pop().setVisible(false).destroy();
-            }
-        }
-
-        players.goalBlock.svgObject = [];
-
-        let resourceName = 'goalBlock_' + winScore + '_' + Date.now();
-
-        preloaderObject.load.svg(resourceName + OTJAT_MODE, BASE_URL + `img/otjat/${players.goalBlock.filename}${winScore}.svg`,
-            {
-                ...('width' in players.goalBlock && {
-                    'width': players.goalBlock.width,
-                }),
-                'height':
-                    'height' in players.goalBlock ? players.goalBlock.height : buttonHeight,
-            }
-        );
-
-        preloaderObject.load.start();
-
-        preloaderObject.load.on('complete', function () {
-            playerTmpBlockModes = playerBlockModes;
-            playerBlockModes = [OTJAT_MODE];
-
-            while (players.goalBlock.svgObject.length) {
-                players.goalBlock.svgObject.pop().setVisible(false).destroy();
-            }
-            players.goalBlock.svgObject.push(getSVGBlockGlobal(players.goalBlock.x, players.goalBlock.y, resourceName, faserObject, players.goalBlock.scalable, false));
-
-            playerBlockModes = playerTmpBlockModes;
-        });
+        // todo SB-8 adjust goalBLock
     }
 
     responseData = data;

@@ -19,8 +19,6 @@ function submitButtonFunction() {
         fetchGlobal(SUBMIT_SCRIPT, 'cells', cells)
             .then((data) => {
                 if ('http_status' in data && (data['http_status'] === BAD_REQUEST || data['http_status'] === PAGE_NOT_FOUND)) {
-                    setSubmitButtonState();
-                    setCheckButtonState();
 
                     dialog = bootbox.alert({
                         message: ('message' in data && data['message'] !== '')
@@ -211,54 +209,8 @@ function resetButtonFunction(ignoreBootBox = false) {
         if (bootBoxIsOpenedGlobal())
             return;
 
-    for (let k in container) {
-        if ((container[k].getData('cellX') !== false) && (container[k].getData('cellY') !== false)) {
-            cells[container[k].getData('cellX')][container[k].getData('cellY')][0] = false;
-            cells[container[k].getData('cellX')][container[k].getData('cellY')][1] = false;
-        }
-
-        container[k].setData('cellX', false);
-        container[k].setData('cellY', false);
-        container[k].setInteractive();
-
-        if(dragBegin && container[k].getData('letter') === dragBegin) {
-            continue;
-        }
-
-        if ((container[k].getData('lotokX') === false) && (container[k].getData('lotokY') === false)) {
-            placeToLotok(container[k]);
-        }
-    }
-
-    setSubmitButtonState();
-    setCheckButtonState();
-};
-
-function _resetButtonFunction(ignoreBootBox = false) {
-    if (ignoreBootBox === false)
-        if (bootBoxIsOpenedGlobal())
-            return;
-
-    for (let k = container.length + 10; k >= 0; k--) {
-        if (k in container) {
-            if ((container[k].getData('lotokX') === false) && (container[k].getData('lotokY') === false)) {
-
-                if ((container[k].getData('cellX') !== false) && (container[k].getData('cellY') !== false)) {
-                    cells[container[k].getData('cellX')][container[k].getData('cellY')][0] = false;
-                    cells[container[k].getData('cellX')][container[k].getData('cellY')][1] = false;
-                }
-
-                container[k].setData('cellX', false);
-                container[k].setData('cellY', false);
-                container[k].setInteractive();
-                placeToLotok(container[k]);
-            }
-        }
-    }
-
-    setSubmitButtonState();
-    setCheckButtonState();
-};
+    // todo SB-8
+}
 
 function chatButtonFunction() {
     if (bootBoxIsOpenedGlobal())

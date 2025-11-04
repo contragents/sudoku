@@ -25,6 +25,7 @@ class GameSkipbo extends Game
 
     private function makeBotMove(): array
     {
+        return $this->gameStatus->desk->desk;
     }
 
     public function submitTurn(): array
@@ -132,88 +133,13 @@ class GameSkipbo extends Game
         $this->gameStatus->users[$botUserNum]->lastActiveTime = date('U');
         $this->gameStatus->users[$botUserNum]->inactiveTurn = 1000;
 
-        $numCellsSolved = 0;
-        $numKeysSolved = 0;
         $newDesk = $this->makeBotMove();
 
         if ($this->gameStatus->desk->checkNewDesc($newDesk)) {
-            $turnRes = $this->gameStatus->desk->checkNewDigit($numCellsSolved);
-
-            if ($turnRes === $this->gameStatus->desk::KEY_SOLVED_RESPONSE) {
-                $this->gameStatus->users[$botUserNum]->score += self::KEY_OPEN_POINTS;
-                $numKeysSolved++;
-                while ($this->gameStatus->desk->newSolvedKey($numCellsSolved)) {
-                    $this->gameStatus->users[$botUserNum]->score += self::KEY_OPEN_POINTS;
-                    $numKeysSolved++;
-                }
-            }
+            // todo SB-8
         }
 
-        if ($numCellsSolved) {
-            $this->gameStatus->users[$botUserNum]->score += $numCellsSolved * self::CELL_OPEN_POINTS;
-            foreach (T::SUPPORTED_LANGS as $lang) {
-                $this->addToLog(
-                    T::S(
-                        "[[Player]] opened [[number]] [[cell]]",
-                        [$botUserNum + 1, $numKeysSolved + $numCellsSolved, $numKeysSolved + $numCellsSolved],
-                        $lang
-                    )
-                    . ($numKeysSolved
-                        ? T::S(" (including [[number]] [[key]])", [$numKeysSolved, $numKeysSolved], $lang)
-                        : ''),
-                    $lang
-                );
-            }
-        } else {
-            foreach (T::SUPPORTED_LANGS as $lang) {
-                $this->addToLog(T::S('[[Player]] made a mistake', [$botUserNum + 1], $lang), $lang);
-            }
-
-            foreach (T::SUPPORTED_LANGS as $lang) {
-                $this->gameStatus->users[($botUserNum + 1) % 2]->addComment(
-                    T::S('Your opponent made a mistake', null, $lang),
-                    $lang
-                );
-            }
-        }
-
-        $numPointsObtained = $numKeysSolved * self::KEY_OPEN_POINTS + $numCellsSolved * self::CELL_OPEN_POINTS;
-
-        if ($numPointsObtained) {
-            foreach (T::SUPPORTED_LANGS as $lang) {
-                $this->addToLog(
-                    T::S(
-                        '[[Player]] gets [[number]] [[point]]',
-                        [$botUserNum + 1, $numPointsObtained, $numPointsObtained],
-                        $lang
-                    ),
-                    $lang
-                );
-            }
-
-
-            foreach (T::SUPPORTED_LANGS as $lang) {
-                $this->gameStatus->users[($botUserNum + 1) % 2]->addComment(
-                    T::S('Your opponent got [[number]] [[point]]', [$numPointsObtained, $numPointsObtained], $lang),
-                    $lang
-                );
-            }
-        }
-
-        if ($this->gameStatus->users[$botUserNum]->score >= $this->gameStatus->gameGoal) {
-            $this->storeGameResults($this->gameStatus->users[$botUserNum]->ID);
-        } elseif ($this->gameStatus->desk->hasUnopenedCells()) {
-            $this->nextTurn();
-        } else // Больше не осталось закрытых клеток - определяем победителя по очкам
-        {
-            if ($this->gameStatus->users[$botUserNum]->score >= $this->gameStatus->users[($botUserNum + 1) % 2]->score) {
-                $winner = $this->gameStatus->users[$botUserNum]->ID;
-            } else {
-                $winner = $this->User;
-            }
-
-            $this->storeGameResults($winner);
-        }
+        $this->nextTurn();
     }
 
     /**
@@ -263,9 +189,11 @@ class GameSkipbo extends Game
         // Число очков для победы - количество карт в стеке (30)
         $this->gameStatus->gameGoal = self::DEFAULT_STACK_LEN;
 
-        foreach($this->gameStatus->users as $userNum => $user) {
+        foreach ($this->gameStatus->users as $userNum => $user) {
             $this->gameStatus->playersCards[$userNum] = new PlayerCards();
-            $this->gameStatus->playersCards[$userNum]->stack = $this->gameStatus->desk->getCardsFromKoloda($this->gameStatus->gameGoal);
+            $this->gameStatus->playersCards[$userNum]->stack = $this->gameStatus->desk->getCardsFromKoloda(
+                $this->gameStatus->gameGoal
+            );
             $this->gameStatus->playersCards[$userNum]->hand = $this->gameStatus->desk->getCardsFromKoloda(5);
         }
 

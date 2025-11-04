@@ -2,7 +2,7 @@
 function (time, delta) {
 
     let dateGetTime = (new Date()).getTime();
-    if ( false && // todo SB-3 remove
+    if (
         isUserBlockActive
         && requestSended
         && !hiddenRequestSended
@@ -16,20 +16,19 @@ function (time, delta) {
     } else {
         noNetworkImg.visible = false;
     }
-    // noNetworkImg.visible = false; // todo SB-3 remove
+    // noNetworkImg.visible = false;
     if (gameState === CHOOSE_GAME_STATE && (queryNumber > 0)) {
         return;
     }
 
     let flor = Math.floor(time / 1000);
 
-    if (false && (// todo SB-3 убрать
+    if (
         (
             (flor > lastQueryTime)
             && ((flor % gameStates[gameState]['refresh']) === 0)
         )
         || (queryNumber === 0)
-    )
     ) {
         if ((isYandexAppGlobal() && uniqID) || !isYandexAppGlobal() || isYandexFakeGlobal()) {
             if (requestToServerEnabled) {
@@ -59,14 +58,9 @@ function (time, delta) {
 
     if (gameState === MY_TURN_STATE) {
         if ((vremiaMinutes === 0) && (vremiaSeconds <= 10) && buttons.submitButton.svgObject.input.enabled) {
+            // todo SB-8 мигание кнопки Отпарвитть
             if ((flor % 2) === 0) {
-                buttons.submitButton.svgObject
-                    .bringToTop(buttons.submitButton.svgObject
-                        .getByName('submitButton' + ALARM_MODE));
             } else {
-                buttons.submitButton.svgObject
-                    .bringToTop(buttons.submitButton.svgObject
-                        .getByName('submitButton' + OTJAT_MODE));
             }
         }
     }
@@ -78,11 +72,9 @@ function (time, delta) {
         if ((flor % 2) === 0) {
             buttonSetModeGlobal(players, activeUserBlockName, ALARM_MODE);
             timerContainer.getByName(timerState.mode + '_' + 'dvoetoch').setVisible(true);
-            blinkRightGlobal();
         } else {
             buttonSetModeGlobal(players, activeUserBlockName, OTJAT_MODE);
             timerContainer.getByName(timerState.mode + '_' + 'dvoetoch').setVisible(false);
-            blinkLeftGlobal();
         }
     }
 

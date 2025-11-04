@@ -4,6 +4,7 @@ namespace classes;
 
 class QueueSkipbo extends Queue
 {
+    protected static $GAME_STATUS_CLASS = GameStatusSkipbo::class;
     const QUEUES = [
         'rating_waiters' => GameSkipbo::GAME_NAME . parent::QUEUES['rating_waiters'],
         '2players_waiters' => GameSkipbo::GAME_NAME . parent::QUEUES['2players_waiters'],
