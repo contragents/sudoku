@@ -615,7 +615,7 @@ label.file-label:active:before {
     bottom: 5px;
     left: 2px;
     right: 3px;
-    /*background: #1e2d59;*/
+    background: #003300;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     z-index: 0;
@@ -1272,10 +1272,6 @@ label.file-label:active:before {
 
 .modal-settings.modal-stats .modal-content {
     background-position: top center;
-}
-
-.modal-settings .nav-item::after {
-    /*background: #1d2c59;*/
 }
 
 .modal-settings .player-info .invisible {
