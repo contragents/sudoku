@@ -27,6 +27,7 @@ class BaseController
         'index' . 'Action',
     ];
 
+    const CSS_FILE = 'choose_css_new_10.css';
     const MAX_UPLOAD_SIZE = 2 * 1024 * 1024;
     const GAME_STATE_PARAM = 'gameState';
     const MESSAGE_PARAM = 'messageText';

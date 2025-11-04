@@ -138,7 +138,7 @@ function () {
             continue;
         }
 
-        players[k].svgObject = getSVGBlockGlobal(players[k]['x'], players[k]['y'], k, this, players[k].scalable, 'numbers' in players[k]);
+        players[k].svgObject = getSVGBlockGlobal(players[k].x, players[k].y, k, this, players[k].scalable, 'numbers' in players[k]);
         players[k].svgObject.bringToTop(players[k].svgObject.getByName(k + OTJAT_MODE));
         players[k].svgObject.getByName(k + ALARM_MODE).setVisible(false);
     }

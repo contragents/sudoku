@@ -7,6 +7,8 @@ use classes\StateMachine;
 
 class SkipboController extends BaseController
 {
+
+    const CSS_FILE = 'choose_css_new_10_skipbo.css';
     const VIEW_PATH = parent::VIEW_PATH . 'Skipbo/';
     const TITLE = 'Skip-Bo';
 

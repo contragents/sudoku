@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="200"
+   height="200"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="avatar_frame1.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <filter
+       inkscape:label="Inset"
+       inkscape:menu="Shadows and Glows"
+       inkscape:menu-tooltip="Shadowy outer bevel"
+       style="color-interpolation-filters:sRGB;"
+       id="filter3"
+       x="-0.073966014"
+       y="-0.073966002"
+       width="1.147932"
+       height="1.147932">
+      <feMorphology
+         result="result1"
+         in="SourceAlpha"
+         operator="dilate"
+         radius="3.6"
+         id="feMorphology2" />
+      <feGaussianBlur
+         stdDeviation="3.6"
+         in="result1"
+         result="result0"
+         id="feGaussianBlur2" />
+      <feDiffuseLighting
+         surfaceScale="-5"
+         id="feDiffuseLighting2">
+        <feDistantLight
+           elevation="45"
+           azimuth="225"
+           id="feDistantLight2" />
+      </feDiffuseLighting>
+      <feComposite
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite2" />
+      <feComposite
+         in="SourceGraphic"
+         in2="result91"
+         id="feComposite3" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="3.34"
+     inkscape:cx="100"
+     inkscape:cy="99.850299"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <rect
+     x="5.2237501"
+     y="5.2237501"
+     width="189.55257"
+     height="189.55254"
+     fill="none"
+     stroke="#12684d"
+     stroke-width="19.0312"
+     rx="25"
+     ry="25"
+     id="rect1"
+     style="display:inline;stroke-width:10.4475;stroke-dasharray:none" />
+  <rect
+     x="7.1195002"
+     y="7.1195002"
+     width="185.76099"
+     height="185.76102"
+     fill="none"
+     stroke="#12684d"
+     stroke-width="19.0312"
+     rx="25"
+     ry="25"
+     id="rect1-8"
+     style="display:inline;stroke:#12684d;stroke-width:3;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter3)" />
+</svg>

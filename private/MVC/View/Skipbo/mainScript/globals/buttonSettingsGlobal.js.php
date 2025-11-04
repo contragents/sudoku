@@ -288,12 +288,21 @@ var cards = {
         width: cardWidth,
         svgObject: false,
     },
+    goalArea: {
+        imgName: 'card_back',
+        x: card1CommonBlockXCenter + 3 * (cardStep + cardWidth) + 5 * cardStep + cardWidth,
+        y: cardCommonBlockYCenter - cardStep,
+        width: cardWidth,
+        svgObject: false,
+    },
     goalCard: {
         imgName: 'card_10',
         x: card1CommonBlockXCenter + 3 * (cardStep + cardWidth) + 5 * cardStep + cardWidth,
         y: cardCommonBlockYCenter - cardStep,
         width: cardWidth,
         svgObject: false,
+        dragStartFunction: () => handCardDragStart('goalCard'),
+        props: {entity: 'goalCard', cardValue: 10},
     },
     playerCenterBackplate: {
         imgName: 'back_player',

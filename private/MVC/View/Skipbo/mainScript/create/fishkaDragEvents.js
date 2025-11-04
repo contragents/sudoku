@@ -3,7 +3,7 @@ this.input.on('dragstart', function (pointer, gameObject) {
     dragBegin = {x: gameObject.x, y: gameObject.y};
 
     switchOnYouBankFrames(getAvailableBankPlaces(gameObject));
-    switchOnCommonFrames(getAvailablePlaces(gameObject.cardValue));
+    switchOnCommonFrames(getAvailableCommonPlaces(gameObject.cardValue));
 
     if ('entity' in gameObject && gameObject.entity in cards) {
         parentObject = cards[gameObject.entity];
@@ -23,7 +23,7 @@ this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
 this.input.on('dragend', function (pointer, gameObject) {
     if (isDragPointInCommonCardsArea(gameObject.x, gameObject.y)) {
         let position = choosePlaceInCommonCardsArea(gameObject.x, gameObject.y);
-        if (getAvailablePlaces(gameObject.cardValue).includes(position)) {
+        if (getAvailableCommonPlaces(gameObject.cardValue).includes(position)) {
             moveCardToCommonArea(gameObject, position);
         } else {
             gameObject.x = dragBegin.x;
@@ -91,7 +91,7 @@ function getAvailableBankPlaces(gameObject) {
     return res;
 }
 
-function getAvailablePlaces(cardNum) {
+function getAvailableCommonPlaces(cardNum) {
     let res = [];
 
     for (let i = 1; i <= 4; i++) {
@@ -162,6 +162,10 @@ function isDragPointInYouBankArea(x, y) {
     return false;
 }
 
+function isGoalCard(gameObject) {
+    return gameObject.entity.indexOf('goalCard') === 0;
+}
+
 function isBankCard(gameObject) {
     return gameObject.entity.indexOf('bankCard') === 0;
 }
@@ -182,6 +186,8 @@ function moveCardToCommonArea(gameObject, position) {
         cards[cardObject].svgObject.pop();
     } else if (isHandCard(gameObject)) {
         cards[cardObject].svgObject = false;
+    } else if (isGoalCard(gameObject)) {
+        getNewGoalCard();
     }
 
     gameObject.entity = 'commonCard' + position;
@@ -220,6 +226,21 @@ function moveCardToPosition(gameObject, coordinates = {x: 0, y: 0}) {
     gameObject.y = coordinates.y;
 }
 
+function getNewGoalCard() {
+    let newCard = SKIPBO_CARDS[Math.floor(Math.random() * SKIPBO_CARDS.length)];
+    cards.goalCard.imgName = 'card_' + (newCard < SKIPBO ? newCard : 'skipbo');
+
+    cards.goalCard.svgObject = getSVGCardBlockGlobal(
+        cards.goalCard.x,
+        cards.goalCard.y,
+        'goalCard',
+        faserObject,
+        false,
+        {entity: 'goalCard', cardValue: newCard},
+        true
+    );
+}
+
 function giveHandCards() {
     for (let i = 1; i <= HAND_CARDS_NUM; i++) {
         if (cards['handCard' + i].svgObject === false) {
@@ -229,8 +250,8 @@ function giveHandCards() {
             cards['handCard' + i].imgName = 'card_' + (newCard < SKIPBO ? newCard : 'skipbo');
 
             cards['handCard' + i].svgObject = getSVGCardBlockGlobal(
-                cards['handCard' + i]['x'],
-                cards['handCard' + i]['y'],
+                cards['handCard' + i].x,
+                cards['handCard' + i].y,
                 'handCard' + i,
                 faserObject,
                 false,

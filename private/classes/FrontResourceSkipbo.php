@@ -28,7 +28,7 @@ class FrontResourceSkipbo extends FrontResource
             + [
                 'avatar_frame_you' => [
                     'type' => 'svg',
-                    'url' => 'img/avatar_frame5.svg',
+                    'url' => 'img/avatar_frame7.svg',
                     'options' => "{'width': 240, 'height': 240}"
                 ],
                 'card_skipbo' => [
@@ -49,7 +49,7 @@ class FrontResourceSkipbo extends FrontResource
                 ],
                 'back_player' => [
                     'type' => 'svg',
-                    'url' => 'img/skipbo/back_player_v3.svg',
+                    'url' => 'img/skipbo/back_player_blue.svg',
                 ],
             ]
             + parent::getImgsPreload();
