@@ -244,7 +244,7 @@ function chatButtonFunction() {
         isSelectedPlaced = true;
     }
 
-    for (k in ochki_arr) {
+    for (let k in ochki_arr) {
         if (k != myUserNum) {
             radioButtons += '<div style="font-size: 70%;" class="form-check form-check-inline"><input class="form-check-input" type="radio" id="to_' + (k == 0 ? '0' : k) + '" name="chatTo" value="' + (k == 0 ? '0' : k) + '" ' + (isSelectedPlaced ? '' : ' checked ') + '> <label class="form-check-label" for="to_' + (k == 0 ? '0' : k) + '"><?= T::S(
                 'To Player'
@@ -252,10 +252,6 @@ function chatButtonFunction() {
             isSelectedPlaced = true;
         }
     }
-
-    // radioButtons += '<div style="font-size: 70%;" class="form-check form-check-inline"><input class="form-check-input" type="radio" id="to_words" name="chatTo" value="words" ' + (isSelectedPlaced ? '' : ' checked ') + '> <label class="form-check-label" for="to_words"><?= T::S(
-    'Word matching'
-) ?></label></div>';
 
     let textInput = '<div class="input-group input-group-lg">  <div class="input-group-prepend"></div>  <input type="text" id="chattext" class="form-control" name="messageText"></div>';
 

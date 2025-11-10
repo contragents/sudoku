@@ -638,7 +638,7 @@ var players = {
     },
     bankBlock: {
         modes: [OTJAT_MODE],
-        filename: 'bank_500_RU',
+        filename: 'bank_',
         x: bankGoalBlockXCenter,
         y: bankGoalBlockYCenter - buttonHeight / 3,
         width: buttonWidth,

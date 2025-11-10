@@ -182,7 +182,6 @@ class Game
                 return $this;
             }
 
-
             //Забрали статус игры из кэша
             $this->gameStatus = $this->getGameStatus();
 

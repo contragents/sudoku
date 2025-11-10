@@ -199,3 +199,44 @@ var timerDigitHeight = () => buttonHeight * 0.5 / (buttonHeightKoef < 1 ? 0.8 : 
 var timerDigitWidth = () => buttonHeight * 0.4 * 0.5 / (buttonHeightKoef < 1 ? 0.8 : 1);
 var dvoetochWidth = () => buttonHeight * 0.15 * 0.5 / (buttonHeightKoef < 1 ? 0.8 : 1);
 var timerDigitStep = () => dvoetochWidth() / 2;
+
+var lotokCells = [];
+
+var stepX = 0;
+var stepY = 0;
+
+var gameScene = 0;
+
+var submitButton = false;
+
+var dialog = false;
+var dialogResponse = false;
+
+var ochki = false;
+var ochki_arr = false;
+var myUserNum = false;
+
+var canOpenDialog = true;
+var canCloseDialog = true;
+
+var data = [];
+var responseData = [];
+var lastflor = 0;
+var gameLog = [];
+var chatLog = [];
+var hasIncomingMessages = false;
+var intervalId = 0;
+var vremiaMinutes = false;
+var vremiaSeconds = false;
+var lastTimeCorrection = 0;
+
+var gWLimit = false;
+
+var pageActive = 'visible';
+var fullImgID = false;
+var fullImgWidth = 0;
+
+var soundPlayed = false;
+var lastSoundPlayedTimestamp = 0;
+const SOUND_TIMEOUT = 10000;
+var instruction = '';

@@ -1316,9 +1316,9 @@ function commonCallback(data) {
         gameBank = data.bank;
         gameBankString = data.bank_string;
 
-            while (players.bankBlock.svgObject.length) {
-                players.bankBlock.svgObject.pop().setVisible(false).destroy();
-            }
+        while (players.bankBlock.svgObject.length) {
+            players.bankBlock.svgObject.pop().setVisible(false).destroy();
+        }
 
         players.bankBlock.svgObject = [];
 
@@ -1399,24 +1399,11 @@ function userScores(data) {
                 let youBlock = players.youBlock.svgObject;
 
                 if (!isUserBlockActive) {
-                    let changeBlock = players['player' + (+k + 1) + 'Block'].svgObject;
-                    if (changeBlock.visible) {
-                        changeBlock.setVisible(false);
-                    }
-
-                    youBlock.x = changeBlock.x;
-                    youBlock.y = changeBlock.y;
                     youBlock.setVisible(true);
                     youBlock.setAlpha(1);
                     players.timerBlock.svgObject.setAlpha(1);
 
                     isUserBlockActive = true;
-
-                    noNetworkImg.setScale(youBlock.height / 232 / 4);
-                    noNetworkImg.x = youBlock.x + youBlock.width / 2 + noNetworkImg.displayWidth / 2;
-                    noNetworkImg.y = youBlock.y;
-                    noNetworkImg.setDepth(10000);
-                    noNetworkImg.visible = false;
                 }
 
                 displayScoreGlobal(data['score_arr'][k], 'youBlock', true);
@@ -1430,7 +1417,7 @@ function userScores(data) {
                 }
 
                 displayScoreGlobal(data['score_arr'][k], playerBlockName, false);
-                buttonSetModeGlobal(players, playerBlockName, k == data['activeUser'] ? ALARM_MODE : OTJAT_MODE);
+                buttonSetModeGlobal(players, playerBlockName, +k === +data['activeUser'] ? ALARM_MODE : OTJAT_MODE);
 
                 if (opponentBlock.alpha < 1) {
                     opponentBlock.setAlpha(1);
@@ -1442,23 +1429,15 @@ function userScores(data) {
 
                 if (!isOpponentBlockActive && (+k < 2)) {
                     isOpponentBlockActive = true;
-
-                    /*
-                    noNetworkImgOpponent.setScale(opponentBlock.height / 232 / 4);
-                    noNetworkImgOpponent.x = opponentBlock.x + opponentBlock.width / 2 + noNetworkImgOpponent.displayWidth / 2;
-                    noNetworkImgOpponent.y = opponentBlock.y;
-                    noNetworkImgOpponent.setDepth(10000);
-                    noNetworkImgOpponent.visible = false;
-                    */
                 }
             }
         }
+    }
 
-        if (ochki_arr === false) {
-            ochki_arr = [];
-            for (let k in data['score_arr']) {
-                ochki_arr[k] = data['score_arr'][k];
-            }
+    if (ochki_arr === false) {
+        ochki_arr = [];
+        for (let k in data['score_arr']) {
+            ochki_arr[k] = 'nothing';
         }
     }
 }

@@ -14,7 +14,7 @@ class GameSkipbo extends Game
     const NUM_RATING_PLAYERS_KEY = self::GAME_NAME . parent::NUM_RATING_PLAYERS_KEY; // Список игроков онлайн
     const NUM_COINS_PLAYERS_KEY = self::GAME_NAME . '.num_coins_players';
 
-    const RESPONSE_PARAMS = parent::RESPONSE_PARAMS + [];
+    const RESPONSE_PARAMS = ['desk' => ['gameStatus' => 'openDesk']] + parent::RESPONSE_PARAMS;
 
     const DEFAUTL_TURN_TIME = 120;
 
