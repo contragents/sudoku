@@ -56,15 +56,6 @@ function (time, delta) {
         }
     }
 
-    if (gameState === MY_TURN_STATE) {
-        if ((vremiaMinutes === 0) && (vremiaSeconds <= 10) && buttons.submitButton.svgObject.input.enabled) {
-            // todo SB-8 мигание кнопки Отпарвитть
-            if ((flor % 2) === 0) {
-            } else {
-            }
-        }
-    }
-
     if ([MY_TURN_STATE, PRE_MY_TURN_STATE, OTHER_TURN_STATE].indexOf(gameState) >= 0) {
         let activeUserBlockName = (gameState === MY_TURN_STATE) ? 'youBlock' : ('player' + (+activeUser + 1) + 'Block');
         let timerContainer = players.timerBlock.svgObject;

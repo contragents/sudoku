@@ -4,15 +4,15 @@
 namespace classes;
 
 
+use BaseController as BC;
+
 /**
- * @inheritDoc
- * @property int $stackLen Сколько карт в стеке (карт, которые нужно пристроить на столе - 30)
  * @property PlayerCards[] $playersCards массив карт игроков (карты на руках, стек, банк 4 кучки)
  */
+
 class GameStatusSkipbo extends GameStatus
 {
-    public ?int $stackLen = null;
-
+    /** @var PlayerCards[] $playersCards массив карт игроков (карты на руках, стек, банк 4 кучки) */
     public array $playersCards = [];
 
     public function openDesk(): array
@@ -28,6 +28,9 @@ class GameStatusSkipbo extends GameStatus
 
         // Add common cards
         $res['common_cards'] = $this->desk->desk;
+
+        // Add cards on hand for current player
+        $res['you_hand_cards'] = $this->playersCards[BC::$instance->Game->numUser]->hand;
 
         return $res;
     }

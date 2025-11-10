@@ -748,8 +748,6 @@ var gameStates = {
         refresh: 5,
         action: function (data) {
             gameStates.gameResults.action(data, false);
-            setCheckButtonState();
-            buttons.submitButton.setDisabled();
         },
         from_inviteGame: function (data) {
             gameStates.startGame.from_initGame();
@@ -787,8 +785,6 @@ var gameStates = {
             gameStates.gameResults.action(data);
 
             gameStates.myTurn.from_noGame(data);
-            buttons.submitButton.setDisabled();
-            setCheckButtonState();
         },
         from_inviteGame: function (data) {
             gameStates.startGame.from_initGame();
@@ -1086,8 +1082,8 @@ function commonCallback(data) {
 
     console.log(gameOldState + '->' + gameState);
 
-    if ((gameOldState != gameState) || (gameOldSubState != gameSubState)) {
-        if ('active_users' in data && data.active_users == 0) {
+    if ((gameOldState !== gameState) || (gameOldSubState !== gameSubState)) {
+        if ('active_users' in data && +data.active_users === 0) {
             clearTimeout(requestToServerEnabledTimeout);
             requestToServerEnabled = false;
         }
@@ -1203,8 +1199,8 @@ function commonCallback(data) {
                         var cancelLabel = '<?= T::S('Close in 5 seconds') ?>';
 
                         let comments = ('comments' in data && (data.comments !== null))
-                            ? data.comments// + ('message' in gameStates[gameState] ? ('<br>' + gameStates[gameState]['message']) : '')
-                            : lastComment;// ? (lastComment + ('message' in gameStates[gameState] ? ('<br>' + gameStates[gameState]['message']) : '')) : false;
+                            ? data.comments
+                            : lastComment;
                         if (comments) {
                             lastComment = false;
                             comments += ('message' in gameStates[gameState] ? ('<br>' + gameStates[gameState]['message']) : '');
@@ -1216,19 +1212,6 @@ function commonCallback(data) {
                                 ? gameStates[gameState].message
                                 : '&nbsp;';
                         }
-
-                        // todo add hint if present in data
-
-                        /*if ('comments' in data && (data['comments'] !== null)) {
-
-                            if ('messageFunction' in gameStates[gameState]) {
-                                message = gameStates[gameState]['messageFunction'](data['comments']);
-                            } else {
-                                message = data['comments'];
-                            }
-                        } else if ('message' in gameStates[gameState]) {
-                            message = gameStates[gameState]['message'];
-                        }*/
 
                         if (turnAutocloseDialog) {
                             if (timeToCloseDilog === 5) {
@@ -1353,6 +1336,12 @@ function commonCallback(data) {
 
             playerBlockModes = [OTJAT_MODE, ALARM_MODE];
         });
+    }
+
+    if('desk' in data) {
+        if('you_hand_cards' in data.desk) {
+            checkHandCards(data.desk.you_hand_cards);
+        }
     }
 
     logChatProcess(data);

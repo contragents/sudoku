@@ -191,10 +191,9 @@ class GameSkipbo extends Game
 
         foreach ($this->gameStatus->users as $userNum => $user) {
             $this->gameStatus->playersCards[$userNum] = new PlayerCards();
-            $this->gameStatus->playersCards[$userNum]->stack = $this->gameStatus->desk->getCardsFromKoloda(
-                $this->gameStatus->gameGoal
-            );
-            $this->gameStatus->playersCards[$userNum]->hand = $this->gameStatus->desk->getCardsFromKoloda(5);
+            $this->gameStatus->playersCards[$userNum]->stack =
+                $this->gameStatus->desk->getCardsFromKoloda($this->gameStatus->gameGoal);
+            $this->gameStatus->playersCards[$userNum]->hand = $this->gameStatus->desk->getCardsFromKoloda(5, $this->gameStatus->playersCards[$userNum]->hand);
         }
 
         // Добавляем в лог стартовый коммент без рейтинга
