@@ -1269,6 +1269,12 @@ function commonCallback(data) {
             }
         }
 
+        if('desk' in data) {
+            if('you_hand_cards' in data.desk) {
+                checkHandCards(data.desk.you_hand_cards);
+            }
+        }
+
         enableButtons();
 
         if ('isInviteGame' in data && data.isInviteGame && isInviteGameWaiting) {
@@ -1336,12 +1342,6 @@ function commonCallback(data) {
 
             playerBlockModes = [OTJAT_MODE, ALARM_MODE];
         });
-    }
-
-    if('desk' in data) {
-        if('you_hand_cards' in data.desk) {
-            checkHandCards(data.desk.you_hand_cards);
-        }
     }
 
     logChatProcess(data);

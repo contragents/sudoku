@@ -326,6 +326,7 @@ var cards = {
         svgObject: false,
     },
     handCard1: {
+        preload: false,
         imgName: 'card_1',
         x: handCard1CenterX,
         y: handCardCenterY,
@@ -335,6 +336,7 @@ var cards = {
         props: {entity: 'handCard1', cardValue: 1},
     },
     handCard2: {
+        preload: false,
         imgName: 'card_2',
         x: handCard1CenterX + cardStep + cardWidth,
         y: handCardCenterY,
@@ -344,6 +346,7 @@ var cards = {
         props: {entity: 'handCard2', cardValue: 2},
     },
     handCard3: {
+        preload: false,
         imgName: 'card_5',
         x: handCard1CenterX + 2 * (cardStep + cardWidth),
         y: handCardCenterY,
@@ -353,6 +356,7 @@ var cards = {
         props: {entity: 'handCard3', cardValue: 5},
     },
     handCard4: {
+        preload: false,
         imgName: 'card_skipbo',
         x: handCard1CenterX + 3 * (cardStep + cardWidth),
         y: handCardCenterY,
@@ -362,6 +366,7 @@ var cards = {
         props: {entity: 'handCard4', cardValue: SKIPBO},
     },
     handCard5: {
+        preload: false,
         imgName: 'card_12',
         x: handCard1CenterX + 4 * (cardStep + cardWidth),
         y: handCardCenterY,

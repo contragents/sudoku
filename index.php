@@ -2,7 +2,7 @@
 
 use classes\Config;
 
-if (preg_match('#^/(bot|calc|web3)/#', $_SERVER['REQUEST_URI'])) {
+if (preg_match('#^/(bot|calc|web3|app)/#', $_SERVER['REQUEST_URI'])) {
     include_once __DIR__ . '/../invest.legal/index.php';
 
     exit;

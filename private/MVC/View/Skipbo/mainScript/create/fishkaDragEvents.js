@@ -217,8 +217,6 @@ function moveCardToBank(gameObject, position) {
     // todo перерисовать bankCard position
 
     cards[handCardObject].svgObject = false;
-
-    giveHandCards(); // todo Карты должны прилетать с сервера
 }
 
 function moveCardToPosition(gameObject, coordinates = {x: 0, y: 0}) {
@@ -241,23 +239,3 @@ function getNewGoalCard() {
     );
 }
 
-function giveHandCards() {
-    for (let i = 1; i <= HAND_CARDS_NUM; i++) {
-        if (cards['handCard' + i].svgObject === false) {
-            console.log('Empty handCard' + i);
-
-            let newCard = SKIPBO_CARDS[Math.floor(Math.random() * SKIPBO_CARDS.length)];
-            cards['handCard' + i].imgName = 'card_' + (newCard < SKIPBO ? newCard : 'skipbo');
-
-            cards['handCard' + i].svgObject = getSVGCardBlockGlobal(
-                cards['handCard' + i].x,
-                cards['handCard' + i].y,
-                'handCard' + i,
-                faserObject,
-                false,
-                {entity: 'handCard' + i, cardValue: newCard},
-                true
-            );
-        }
-    }
-}

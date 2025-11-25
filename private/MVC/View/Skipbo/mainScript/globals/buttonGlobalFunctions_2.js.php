@@ -542,24 +542,23 @@ function claimIncome() {
         });
 }
 
-function checkHandCards(cardsArr) {
+function checkHandCards(cardsObj) {
     let excludedCards = {};
     let handCardsCount = 0;
 
-    for (let k in cardsArr) {
-        for (let i = 1; i <= 5; i++) {
-            let currentCard = cards['handCard' + i].svgObject;
-            if (currentCard) {
-                handCardsCount++;
-
-                if (currentCard.cardValue === cardsArr[k] && !(i in excludedCards)) {
+    for (let i = 1; i <= 5; i++) {
+        let currentCard = cards['handCard' + i].svgObject;
+        if (currentCard) {
+            handCardsCount++;
+            for (let k in cardsObj) {
+                if (currentCard.cardValue === cardsObj[k] && !(i in excludedCards)) {
                     excludedCards[i] = currentCard.cardValue; // Карта проверена
                 }
             }
         }
     }
 
-    if (cardsArr.length === handCardsCount === excludedCards.length) {
+    if (Object.keys(cardsObj).length === handCardsCount && handCardsCount === Object.keys(excludedCards).length) {
         // Все карты соответствуют - ничего не делаем
         return;
     }
@@ -567,20 +566,19 @@ function checkHandCards(cardsArr) {
     for (let i = 1; i <= 5; i++) {
         let currentCard = cards['handCard' + i].svgObject;
         if (currentCard) {
-            currentCard.visible = false;
-            currentCard.destroy();
+            currentCard.setVisible(false).destroy()
             currentCard = false;
         }
 
-        if (i in cardsArr) {
-            cards['handCard' + i].imgName = 'card_' + (cardsArr[i] < SKIPBO ? cardsArr[i] : 'skipbo');
-            currentCard = getSVGCardBlockGlobal(
+        if (i in cardsObj) {
+            cards['handCard' + i].imgName = 'card_' + (cardsObj[i] < SKIPBO ? cardsObj[i] : 'skipbo');
+            cards['handCard' + i].svgObject = getSVGCardBlockGlobal(
                 cards['handCard' + i].x,
                 cards['handCard' + i].y,
                 'handCard' + i,
                 faserObject,
                 false,
-                {entity: 'handCard' + i, cardValue: cardsArr[i]},
+                {entity: 'handCard' + i, cardValue: cardsObj[i]},
                 true
             );
         }
