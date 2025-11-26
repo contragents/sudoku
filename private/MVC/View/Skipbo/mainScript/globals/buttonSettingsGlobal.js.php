@@ -239,28 +239,28 @@ var cards = {
         svgObject: false,
         preload: false,
     },
-    areaCommon1: {
+    commonArea1: {
         imgName: 'card_area',
         x: card1CommonBlockXCenter,
         y: cardCommonBlockYCenter,
         width: cardWidth,
         svgObject: false,
     },
-    areaCommon2: {
+    commonArea2: {
         imgName: 'card_area',
         x: card1CommonBlockXCenter + cardStep + cardWidth,
         y: cardCommonBlockYCenter,
         width: cardWidth,
         svgObject: false,
     },
-    areaCommon3: {
+    commonArea3: {
         imgName: 'card_area',
         x: card1CommonBlockXCenter + 2 * (cardStep + cardWidth),
         y: cardCommonBlockYCenter,
         width: cardWidth,
         svgObject: false,
     },
-    areaCommon4: {
+    commonArea4: {
         imgName: 'card_area',
         x: card1CommonBlockXCenter + 3 * (cardStep + cardWidth),
         y: cardCommonBlockYCenter,

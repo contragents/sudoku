@@ -172,10 +172,10 @@ function () {
         );
     }
 
-    coordinates.areaCommon1 = {x: cards.areaCommon1.svgObject.x, y: cards.areaCommon1.svgObject.y};
-    coordinates.areaCommon2 = {x: cards.areaCommon2.svgObject.x, y: cards.areaCommon2.svgObject.y};
-    coordinates.areaCommon3 = {x: cards.areaCommon3.svgObject.x, y: cards.areaCommon3.svgObject.y};
-    coordinates.areaCommon4 = {x: cards.areaCommon4.svgObject.x, y: cards.areaCommon4.svgObject.y};
+    coordinates.commonArea1 = {x: cards.commonArea1.svgObject.x, y: cards.commonArea1.svgObject.y};
+    coordinates.commonArea2 = {x: cards.commonArea2.svgObject.x, y: cards.commonArea2.svgObject.y};
+    coordinates.commonArea3 = {x: cards.commonArea3.svgObject.x, y: cards.commonArea3.svgObject.y};
+    coordinates.commonArea4 = {x: cards.commonArea4.svgObject.x, y: cards.commonArea4.svgObject.y};
     coordinates.kolodaCard = {x: cards.kolodaCard3.svgObject.x, y: cards.kolodaCard3.svgObject.y};
 
     coordinates.you = {};

@@ -97,7 +97,7 @@ function getAvailableCommonPlaces(cardNum) {
     for (let i = 1; i <= 4; i++) {
         let currentCard = cards['cardCommon' + i].svgObject;
 
-        // todo учесть SKIPBO + номер карты - такая ситуация исключена
+        // Учитываем SKIPBO + номер карты для карты в commonArea
         if (currentCard) {
             if (cardNum === SKIPBO && currentCard.cardValue < SKIPBO) {
                 res.push(i);
@@ -117,7 +117,7 @@ function choosePlaceInCommonCardsArea(x, y) {
     let position = false;
 
     for (let i = 1; i <= 4; i++) {
-        let quad = (x - coordinates['areaCommon' + i].x) ** 2 + (y - coordinates['areaCommon' + i].y) ** 2;
+        let quad = (x - coordinates['commonArea' + i].x) ** 2 + (y - coordinates['commonArea' + i].y) ** 2;
         if (quad < minQuad) {
             minQuad = quad;
             position = i;
@@ -143,8 +143,8 @@ function choosePlaceInYouBankArea(x, y) {
 }
 
 function isDragPointInCommonCardsArea(x, y) {
-    if (x >= (coordinates.areaCommon1.x - cardWidth / 2) && x <= (coordinates.areaCommon4.x + cardWidth / 2)) {
-        if (y >= (coordinates.areaCommon1.y - cardWidth / 2 * cardSideFactor) && y <= (coordinates.areaCommon1.y + cardWidth / 2 * cardSideFactor)) {
+    if (x >= (coordinates.commonArea1.x - cardWidth / 2) && x <= (coordinates.commonArea4.x + cardWidth / 2)) {
+        if (y >= (coordinates.commonArea1.y - cardWidth / 2 * cardSideFactor) && y <= (coordinates.commonArea1.y + cardWidth / 2 * cardSideFactor)) {
             return true
         }
     }
@@ -199,7 +199,7 @@ function moveCardToCommonArea(gameObject, position) {
     if (nextCardValue < 12 || (nextCardValue > SKIPBO && nextCardValue < (SKIPBO + 12))) {
         cards['cardCommon' + position].svgObject = gameObject;
         cards['cardCommon' + position].svgObject.cardValue = nextCardValue;
-        moveCardToPosition(gameObject, coordinates['areaCommon' + position]);
+        moveCardToPosition(gameObject, coordinates['commonArea' + position]);
         gameObject.disableInteractive();
     } else {
         gameObject.visible = false;

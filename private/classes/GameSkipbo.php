@@ -18,6 +18,9 @@ class GameSkipbo extends Game
 
     const DEFAUTL_TURN_TIME = 120;
 
+    /** @var GameStatusSkipbo|null */
+    public ?GameStatus $gameStatus = null;
+
     public function __construct()
     {
         parent::__construct(QueueSkipbo::class);
@@ -34,99 +37,15 @@ class GameSkipbo extends Game
             return parent::submitTurn();
         }
 
-        $numCellsSolved = 0;
-        $numKeysSolved = 0;
-
-        /** @var DeskSudoku $desk */
-        if ($this->gameStatus->desk->checkNewDesc(BC::$Request[BC::CELLS_PARAM])) {
-            $turnRes = $this->gameStatus->desk->checkNewDigit($numCellsSolved);
-
-            if ($turnRes === $this->gameStatus->desk::KEY_SOLVED_RESPONSE) {
-                $this->gameStatus->users[$this->numUser]->score += self::KEY_OPEN_POINTS;
-                $numKeysSolved++;
-                while ($this->gameStatus->desk->newSolvedKey($numCellsSolved)) {
-                    $this->gameStatus->users[$this->numUser]->score += self::KEY_OPEN_POINTS;
-                    $numKeysSolved++;
-                }
-            }
-        }
-
-        if ($numCellsSolved) {
-            $this->gameStatus->users[$this->numUser]->score += $numCellsSolved * self::CELL_OPEN_POINTS;
-            foreach (T::SUPPORTED_LANGS as $lang) {
-                $this->addToLog(
-                    T::S(
-                        "[[Player]] opened [[number]] [[cell]]",
-                        [$this->numUser + 1, $numKeysSolved + $numCellsSolved, $numKeysSolved + $numCellsSolved],
-                        $lang
-                    )
-                    . ($numKeysSolved
-                        ? T::S(" (including [[number]] [[key]])", [$numKeysSolved, $numKeysSolved], $lang)
-                        : ''),
-                    $lang
-                );
-            }
-        } else {
-            foreach (T::SUPPORTED_LANGS as $lang) {
-                $this->addToLog(
-                    t::S('[[Player]] made a mistake', [$this->numUser + 1], $lang),
-                    $lang
-                );
-            }
-
-            foreach (T::SUPPORTED_LANGS as $lang) {
-                $this->gameStatus->users[$this->numUser]->addComment(T::S('You made a mistake!', null, $lang), $lang);
-                $this->gameStatus->users[($this->numUser + 1) % 2]->addComment(
-                    T::S('Your opponent made a mistake', null, $lang),
-                    $lang
-                );
-            }
-        }
-
-        $numPointsObtained = $numKeysSolved * self::KEY_OPEN_POINTS + $numCellsSolved * self::CELL_OPEN_POINTS;
-
-        if ($numPointsObtained) {
-            foreach (T::SUPPORTED_LANGS as $lang) {
-                $this->addToLog(
-                    t::S(
-                        '[[Player]] gets [[number]] [[point]]',
-                        [$this->numUser + 1, $numPointsObtained, $numPointsObtained],
-                        $lang
-                    ),
-                    $lang
-                );
-            }
-
-            foreach (T::SUPPORTED_LANGS as $lang) {
-                $this->gameStatus->users[$this->numUser]->addComment(
-                    T::S('You got [[number]] [[point]]', [$numPointsObtained, $numPointsObtained], $lang),
-                    $lang
-                );
-                $this->gameStatus->users[($this->numUser + 1) % 2]->addComment(
-                    T::S('Your opponent got [[number]] [[point]]', [$numPointsObtained, $numPointsObtained], $lang),
-                    $lang
-                );
-            }
-        }
-
-        if ($this->gameStatus->users[$this->numUser]->score >= $this->gameStatus->gameGoal) {
-            $this->storeGameResults($this->User);
-        } elseif ($this->gameStatus->desk->hasUnopenedCells()) {
-            $this->nextTurn();
-        } else // Больше не осталось закрытых клеток - определяем победителя по очкам
-        {
-            if ($this->gameStatus->users[$this->numUser]->score >= $this->gameStatus->users[($this->numUser + 1) % 2]->score) {
-                $winner = $this->User;
-            } else {
-                $winner = $this->gameStatus->users[($this->numUser + 1) % 2]->ID;
-            }
-
-            $this->storeGameResults($winner);
+        $turn = new TurnSkipbo(BC::$Request[TurnSkipbo::TURN_DATA_PARAM]);
+        if ($this->gameStatus->validateTurn($turn)) {
+            // todo вернуть ОК клиенту вместе с новым состоянием открытой данному игроку клиенту доски
         }
 
         return parent::submitTurn();
     }
 
+    // todo fully refactor
     public function makeBotTurn(int $botUserNum)
     {
         //Обновили время активности бота
@@ -193,7 +112,7 @@ class GameSkipbo extends Game
             $this->gameStatus->playersCards[$userNum] = new PlayerCards();
             $this->gameStatus->playersCards[$userNum]->stack =
                 $this->gameStatus->desk->getCardsFromKoloda($this->gameStatus->gameGoal);
-            $this->gameStatus->playersCards[$userNum]->hand = $this->gameStatus->desk->getCardsFromKoloda(5, $this->gameStatus->playersCards[$userNum]->hand);
+            $this->gameStatus->fillHand($userNum);
         }
 
         // Добавляем в лог стартовый коммент без рейтинга

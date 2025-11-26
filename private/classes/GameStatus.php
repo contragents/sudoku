@@ -27,7 +27,6 @@ namespace classes;
  * @property bool $isInviteGame = null;
  * @property ?string $gameName Название игры
  */
-
 class GameStatus
 {
     public array $users;

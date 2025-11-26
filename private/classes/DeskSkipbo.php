@@ -14,7 +14,8 @@ class DeskSkipbo extends Desk
     /** @var int NUM_KOLODA Количество колод карт 1-12 в игре */
     public const NUM_KOLODA = 12;
 
-    public array $desk = [0 => [], 1 => [], 2 => [], 3 => []]; // Кучки карт №№1..4 (карты от 1 до 12)
+    /** @var array[] $desk Кучки карт №№1..4 - карты от 1 до 12, SKIPBO (1001-1012) */
+    public array $desk = [1 => [], 2 => [], 3 => [], 4 => []];
     public array $koloda = []; // Колода из 168 карт с учетом розданных карт и карт, добавляемых при сборе кучек карт №№1..4
 
     public function checkNewDesc(array $newDesk): bool
@@ -30,7 +31,7 @@ class DeskSkipbo extends Desk
 
         // Объединяем все массивы в один
         $this->koloda = array_merge(
-            array_fill(0, self::NUM_SKIPBO, self::SKIPBO_CARD), // SKIP-BO карты
+               array_fill(0, self::NUM_SKIPBO, self::SKIPBO_CARD), // SKIP-BO карты
             ...$arrayOfArrays // Карты 1..12
         );
 
@@ -42,18 +43,8 @@ class DeskSkipbo extends Desk
      * @param int $cardNum
      * @return array
      */
-    public function getCardsFromKoloda(int $cardNum, ?array $indices = null): array
+    public function getCardsFromKoloda(int $cardNum): array
     {
-        $cardSet = array_splice($this->koloda, 0, $cardNum);
-
-        if(!isset($indices)) {
-            return $cardSet;
-        }
-        $res = [];
-        foreach($indices as $key => $nothing) {
-            $res[$key] = array_pop($cardSet);
-        }
-
-        return $res;
+        return array_splice($this->koloda, 0, $cardNum);
     }
 }
