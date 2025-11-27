@@ -11,6 +11,8 @@ use BaseController as BC;
  */
 class GameStatusSkipbo extends GameStatus
 {
+    /** @var DeskSkipbo|null */
+    public ?Desk $desk = null;
     const HAND_CARD = 'handCard';
     const BANK_CARD = 'bankCard';
     const GOAL_CARD = 'goalCard';
@@ -214,7 +216,7 @@ class GameStatusSkipbo extends GameStatus
     {
         foreach ($this->playersCards[$numUser]->hand as &$cardValue) {
             if ($cardValue === false) {
-                [$cardValue] = [$this->desk->getCardsFromKoloda(1)];
+                [$cardValue] = $this->desk->getCardsFromKoloda(1);
             }
         }
     }

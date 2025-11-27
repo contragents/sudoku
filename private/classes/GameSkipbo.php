@@ -33,16 +33,24 @@ class GameSkipbo extends Game
 
     public function submitTurn(): array
     {
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+
         if (!$this->checkIsMyTurnAndLog()) {
             return parent::submitTurn();
         }
 
-        $turn = new TurnSkipbo(BC::$Request[TurnSkipbo::TURN_DATA_PARAM]);
+
+
+        $turn = new TurnSkipbo((json_decode(BC::$Request[TurnSkipbo::TURN_DATA_PARAM], true) ?: []) ?? []);
         if ($this->gameStatus->validateTurn($turn)) {
+            $res = ['turn_response' => ['result' => TurnSkipbo::TURN_RESPONSE_OK]];
             // todo вернуть ОК клиенту вместе с новым состоянием открытой данному игроку клиенту доски
+        } else {
+            $res = ['turn_response' => ['result' => TurnSkipbo::TURN_RESPONSE_ERROR]];
         }
 
-        return parent::submitTurn();
+        return $res + parent::submitTurn();
     }
 
     // todo fully refactor
@@ -110,7 +118,7 @@ class GameSkipbo extends Game
 
         foreach ($this->gameStatus->users as $userNum => $user) {
             $this->gameStatus->playersCards[$userNum] = new PlayerCards();
-            $this->gameStatus->playersCards[$userNum]->stack =
+            $this->gameStatus->playersCards[$userNum]->goalStack =
                 $this->gameStatus->desk->getCardsFromKoloda($this->gameStatus->gameGoal);
             $this->gameStatus->fillHand($userNum);
         }

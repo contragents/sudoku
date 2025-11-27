@@ -312,7 +312,7 @@ function () {
 
     switchOffFrames();
 
-//    <?php include('create/fishkaDragEvents.js')?>
+//    <?php include('create/fishkaDragEvents.js.php')?>
 
 //    <?php include(ROOT_DIR . '/js/common_functions/getSVGButtonFunction.js')?>
 

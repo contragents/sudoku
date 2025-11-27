@@ -14,6 +14,9 @@ class TurnSkipbo
 {
     const TURN_DATA_PARAM = 'turn_data';
 
+    const TURN_RESPONSE_OK = 'ok';
+    const TURN_RESPONSE_ERROR = 'error';
+
     public ?string $entityName = null;
     public ?int $entityNum = null;
     public ?int $entityValue = null;

@@ -30,6 +30,23 @@ playerScores = {
 };
 var coordinates = {}; // Координаты объектов в текущей партии
 
+var turnSubmitObject = {
+    isProcessing: false,
+    isSentToServer: false,
+    isResponseReceived: false,
+    isResponseOK: false,
+    cardMoveParams: {
+        entity: '', // type of card - handCard
+        entity_num: '', // card position - 1
+        entity_value: '', // card value
+        new_position: '', // new position type - commonArea
+        new_position_num: '', // new card position - 2
+    },
+    oldX: false,
+    oldY: false,
+    gameObject: false,
+};
+
 if (windowInnerWidth > windowInnerHeight) {
     screenOrient = HOR;
 

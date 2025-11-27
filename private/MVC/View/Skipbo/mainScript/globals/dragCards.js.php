@@ -1,54 +1,48 @@
 //
-this.input.on('dragstart', function (pointer, gameObject) {
-    dragBegin = {x: gameObject.x, y: gameObject.y};
+function moveCardToCommonArea(gameObject, position) {
+    let cardObject = gameObject.entity;
+    let nextCardValue =
+        (cards['cardCommon' + position].svgObject && 'cardValue' in cards['cardCommon' + position].svgObject)
+            ? (cards['cardCommon' + position].svgObject.cardValue % SKIPBO) + 1
+            : 1;
+    nextCardValue += (gameObject.cardValue === SKIPBO ? SKIPBO : 0); // Признак SKIPBO
 
-    switchOnYouBankFrames(getAvailableBankPlaces(gameObject));
-    switchOnCommonFrames(getAvailableCommonPlaces(gameObject.cardValue));
-
-    if ('entity' in gameObject && gameObject.entity in cards) {
-        parentObject = cards[gameObject.entity];
-        if ('dragStartFunction' in parentObject) {
-            parentObject.dragStartFunction();
-        }
+    if (isBankCard(gameObject)) {
+        cards[cardObject].svgObject.pop();
+    } else if (isHandCard(gameObject)) {
+        cards[cardObject].svgObject = false;
+    } else if (isGoalCard(gameObject)) {
+        getNewGoalCard();
     }
 
-    gameObject.depth = 100;
-});
+    gameObject.entity = 'commonCard' + position;
+    if (cards['cardCommon' + position].svgObject) {
+        cards['cardCommon' + position].svgObject.destroy();
+        cards['cardCommon' + position].svgObject = false;
+    }
 
-this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
-    gameObject.x = dragX;
-    gameObject.y = dragY;
-});
-
-this.input.on('dragend', function (pointer, gameObject) {
-    if (isDragPointInCommonCardsArea(gameObject.x, gameObject.y)) {
-        let position = choosePlaceInCommonCardsArea(gameObject.x, gameObject.y);
-        if (getAvailableCommonPlaces(gameObject.cardValue).includes(position)) {
-            moveCardToCommonArea(gameObject, position);
-        } else {
-            gameObject.x = dragBegin.x;
-            gameObject.y = dragBegin.y;
-        }
-    } else if (isDragPointInYouBankArea(gameObject.x, gameObject.y)) {
-
-        let position = choosePlaceInYouBankArea(gameObject.x, gameObject.y);
-        if (getAvailableBankPlaces(gameObject).includes(position)) {
-            moveCardToBank(gameObject, position);
-        } else {
-            gameObject.x = dragBegin.x;
-            gameObject.y = dragBegin.y;
-        }
+    if (nextCardValue < 12 || (nextCardValue > SKIPBO && nextCardValue < (SKIPBO + 12))) {
+        cards['cardCommon' + position].svgObject = gameObject;
+        cards['cardCommon' + position].svgObject.cardValue = nextCardValue;
+        moveCardToPosition(gameObject, coordinates['commonArea' + position]);
+        gameObject.disableInteractive();
     } else {
-        gameObject.x = dragBegin.x;
-        gameObject.y = dragBegin.y;
+        gameObject.visible = false;
+        gameObject.disableInteractive();
     }
+}
 
-    dragBegin = false;
+function moveCardToBank(gameObject, position) {
+    let handCardObject = gameObject.entity;
+    gameObject.entity = 'bankCard' + position;
 
-    gameObject.depth = 1;
+    moveCardToPosition(gameObject, coordinates.you['bankCard' + position]);
 
-    switchOffFrames();
-});
+    cards['bankCard' + position].svgObject.push(gameObject);
+    // todo перерисовать bankCard position
+
+    cards[handCardObject].svgObject = false;
+}
 
 function switchOffFrames() {
     for (let i = 1; i <= 4; i++) {
@@ -96,7 +90,7 @@ function getAvailableCommonPlaces(cardNum) {
 
     for (let i = 1; i <= 4; i++) {
         let currentCard = cards['cardCommon' + i].svgObject;
-
+        console.log(currentCard);
         // Учитываем SKIPBO + номер карты для карты в commonArea
         if (currentCard) {
             if (cardNum === SKIPBO && currentCard.cardValue < SKIPBO) {
@@ -108,7 +102,7 @@ function getAvailableCommonPlaces(cardNum) {
             res.push(i);
         }
     }
-
+    console.log(res, cardNum);
     return res;
 }
 
@@ -174,51 +168,6 @@ function isHandCard(gameObject) {
     return gameObject.entity.indexOf('handCard') === 0;
 }
 
-function moveCardToCommonArea(gameObject, position) {
-    let cardObject = gameObject.entity;
-    let nextCardValue =
-        (cards['cardCommon' + position].svgObject && 'cardValue' in cards['cardCommon' + position].svgObject)
-            ? (cards['cardCommon' + position].svgObject.cardValue % SKIPBO) + 1
-            : 1;
-    nextCardValue += (gameObject.cardValue === SKIPBO ? SKIPBO : 0); // Признак SKIPBO
-
-    if (isBankCard(gameObject)) {
-        cards[cardObject].svgObject.pop();
-    } else if (isHandCard(gameObject)) {
-        cards[cardObject].svgObject = false;
-    } else if (isGoalCard(gameObject)) {
-        getNewGoalCard();
-    }
-
-    gameObject.entity = 'commonCard' + position;
-    if (cards['cardCommon' + position].svgObject) {
-        cards['cardCommon' + position].svgObject.destroy();
-        cards['cardCommon' + position].svgObject = false;
-    }
-
-    if (nextCardValue < 12 || (nextCardValue > SKIPBO && nextCardValue < (SKIPBO + 12))) {
-        cards['cardCommon' + position].svgObject = gameObject;
-        cards['cardCommon' + position].svgObject.cardValue = nextCardValue;
-        moveCardToPosition(gameObject, coordinates['commonArea' + position]);
-        gameObject.disableInteractive();
-    } else {
-        gameObject.visible = false;
-        gameObject.disableInteractive();
-    }
-}
-
-function moveCardToBank(gameObject, position) {
-    let handCardObject = gameObject.entity;
-    gameObject.entity = 'bankCard' + position;
-
-    moveCardToPosition(gameObject, coordinates.you['bankCard' + position]);
-
-    cards['bankCard' + position].svgObject.push(gameObject);
-    // todo перерисовать bankCard position
-
-    cards[handCardObject].svgObject = false;
-}
-
 function moveCardToPosition(gameObject, coordinates = {x: 0, y: 0}) {
     gameObject.x = coordinates.x;
     gameObject.y = coordinates.y;
@@ -238,4 +187,3 @@ function getNewGoalCard() {
         true
     );
 }
-

@@ -662,6 +662,7 @@ function clearContainerVarsGlobal() {
 //<?php include(ROOT_DIR . '/js/common_functions/ajaxGetGlobalFunction.js.php')?>
 //<?php include('globals/parseDeskGlobalFunction.js.php')?>
 //<?php include('globals/initCellsGlobalFunction.js')?>
+//<?php include('globals/dragCards.js.php')?>
 //<?php include(ROOT_DIR . '/js/common_functions/bootBoxIsOpenedGlobalFunction.js.php')?>
 //<?php include(ROOT_DIR . '/js/common_functions/gadgetTypeFunctions.js.php')?>
 

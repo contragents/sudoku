@@ -3,6 +3,7 @@
 use classes\Cookie;
 use classes\Game;
 use classes\T;
+use classes\TurnSkipbo;
 ?>
 
 var gameStates = {
@@ -1269,8 +1270,8 @@ function commonCallback(data) {
             }
         }
 
-        if('desk' in data) {
-            if('you_hand_cards' in data.desk) {
+        if ('desk' in data) {
+            if ('you_hand_cards' in data.desk) {
                 checkHandCards(data.desk.you_hand_cards);
             }
         }
@@ -1298,6 +1299,32 @@ function commonCallback(data) {
         vremiaSeconds = data['secondsLeft'];
 
         displayTimeGlobal(+vremiaMinutes * 100 + +vremiaSeconds, true);
+    }
+
+    console.log(gameState, 'turn_response' in data, turnSubmitObject.isProcessing, turnSubmitObject.isSentToServer, !turnSubmitObject.isResponseReceived);
+    if (
+        gameState === MY_TURN_STATE
+        && 'turn_response' in data
+        && turnSubmitObject.isProcessing
+        && turnSubmitObject.isSentToServer
+        && !turnSubmitObject.isResponseReceived
+    ) {
+        turnSubmitObject.isResponseReceived = true;
+        turnSubmitObject.isResponseOK = data.turn_response.result === '<?= TurnSkipbo::TURN_RESPONSE_OK ?>';
+        if (turnSubmitObject.isResponseOK) {
+            moveCardToCommonArea(turnSubmitObject.gameObject, turnSubmitObject.cardMoveParams.new_position_num);
+        } else {
+            // todo Ошибка в посланной карте - нужно перерисовать все видимые игроку карты
+            // Пока просто откатываем карту на старое место
+            turnSubmitObject.gameObject.x = turnSubmitObject.oldX;
+            turnSubmitObject.gameObject.y = turnSubmitObject.oldY;
+        }
+
+        // Разблокируем объект сабмита для новых драгов
+        turnSubmitObject.isProcessing = false;
+        turnSubmitObject.isSentToServer = false;
+        turnSubmitObject.isResponseReceived = false;
+        turnSubmitObject.isResponseOK = false;
     }
 
     if ('bid' in data && gameBid === false) {
