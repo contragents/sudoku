@@ -18,7 +18,9 @@ class FrontResourceSkipbo extends FrontResource
                 'url' => "img/skipbo/card_$card.svg",
             ];
 
-            $imgArr["card_skipbo_{$card}"] = [
+            // Картинка в системе Phaser называется card_1001 для совместимости
+            $cardSkipbo = $card + DeskSkipbo::SKIPBO_CARD;
+            $imgArr["card_{$cardSkipbo}"] = [
                 'type' => 'svg',
                 'url' => "img/skipbo/card_skipbo_$card.svg",
             ];

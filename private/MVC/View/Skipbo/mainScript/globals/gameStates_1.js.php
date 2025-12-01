@@ -2,6 +2,7 @@
 <?php
 use classes\Cookie;
 use classes\Game;
+use classes\GameStatusSkipbo;
 use classes\T;
 use classes\TurnSkipbo;
 ?>
@@ -1174,7 +1175,7 @@ function commonCallback(data) {
                         }, 1000);
                     });
 
-            } else if (gameState == 'gameResults') {
+            } else if (gameState === GAME_RESULTS_STATE) {
                 if ('inviteStatus' in data) {
                     if (data.inviteStatus == 'newGameStarting') {
                         // document.location.reload(true); // Do nothing
@@ -1274,6 +1275,24 @@ function commonCallback(data) {
             if ('you_hand_cards' in data.desk) {
                 checkHandCards(data.desk.you_hand_cards);
             }
+            if ('common_cards' in data.desk) {
+                checkCommonCards(data.desk.common_cards);
+            }
+
+            if (myUserNum in data.desk) {
+                if('bank' in data.desk[myUserNum]) {
+                    checkBankCards(data.desk[myUserNum].bank);
+                }
+
+                // todo check this
+                if('goal' in data.desk[myUserNum]) {
+                    checkGoalCard(data.desk[myUserNum].goal);
+
+                    // goalCard counter processing
+                    displayCardCounter(data.desk[myUserNum].goal_count);
+                }
+
+            }
         }
 
         enableButtons();
@@ -1302,7 +1321,9 @@ function commonCallback(data) {
     }
 
     console.log(gameState, 'turn_response' in data, turnSubmitObject.isProcessing, turnSubmitObject.isSentToServer, !turnSubmitObject.isResponseReceived);
-    if (
+    if (gameState !== MY_TURN_STATE && turnSubmitObject.isProcessing) {
+        freeTurnSubmitObject();
+    } else if (
         gameState === MY_TURN_STATE
         && 'turn_response' in data
         && turnSubmitObject.isProcessing
@@ -1312,7 +1333,29 @@ function commonCallback(data) {
         turnSubmitObject.isResponseReceived = true;
         turnSubmitObject.isResponseOK = data.turn_response.result === '<?= TurnSkipbo::TURN_RESPONSE_OK ?>';
         if (turnSubmitObject.isResponseOK) {
-            moveCardToCommonArea(turnSubmitObject.gameObject, turnSubmitObject.cardMoveParams.new_position_num);
+            if (turnSubmitObject.cardMoveParams.new_position === '<?= GameStatusSkipbo::COMMON_AREA ?>') {
+                moveCardToCommonArea(turnSubmitObject.gameObject, turnSubmitObject.cardMoveParams.new_position_num);
+            } else {
+                moveCardToBank(turnSubmitObject.gameObject, turnSubmitObject.cardMoveParams.new_position_num);
+            }
+
+            // Need to make top bankCard draggable if we have one on that position
+            if (turnSubmitObject.cardMoveParams.entity === '<?= GameStatusSkipbo::BANK_CARD ?>') {
+                let currentBankCardArr = cards['bankCard' + turnSubmitObject.cardMoveParams.entity_num].svgObject;
+
+                if (currentBankCardArr.length) {
+                    currentBankCardArr[currentBankCardArr.length - 1].setInteractive();
+                    faserObject.input.setDraggable(currentBankCardArr[currentBankCardArr.length - 1]);
+                }
+            }
+
+            // Need to draw new goal card
+            // todo Need to draw new goal card count
+            // todo Ned to refresh player score
+            if (turnSubmitObject.cardMoveParams.entity === '<?= GameStatusSkipbo::GOAL_CARD ?>') {
+                checkGoalCard(data.desk[myUserNum].goal);
+                displayCardCounter(data.desk[myUserNum].goal_count);
+            }
         } else {
             // todo Ошибка в посланной карте - нужно перерисовать все видимые игроку карты
             // Пока просто откатываем карту на старое место
@@ -1321,10 +1364,7 @@ function commonCallback(data) {
         }
 
         // Разблокируем объект сабмита для новых драгов
-        turnSubmitObject.isProcessing = false;
-        turnSubmitObject.isSentToServer = false;
-        turnSubmitObject.isResponseReceived = false;
-        turnSubmitObject.isResponseOK = false;
+        freeTurnSubmitObject();
     }
 
     if ('bid' in data && gameBid === false) {
@@ -1559,4 +1599,11 @@ function getFormData(object) {
     const formData = new FormData();
     Object.keys(object).forEach(key => formData.append(key, object[key]));
     return formData;
+}
+
+function freeTurnSubmitObject() {
+    turnSubmitObject.isProcessing = false;
+    turnSubmitObject.isSentToServer = false;
+    turnSubmitObject.isResponseReceived = false;
+    turnSubmitObject.isResponseOK = false;
 }

@@ -101,9 +101,10 @@ class GameStatusSkipbo extends GameStatus
                         array_push($this->playersCards[$numUser]->bank[$turn->newPositionNum], $turn->entityValue);
                         // Убираем карту с руки игрока..
                         $this->delHandCard($turn->entityNum, $numUser);
+                        // Дораздать карты до 5ти
+                        $this->fillHand($numUser);
 
-                        if ($this->playersCards[$numUser]->hand === [false, false, false, false, false]) {
-                        }
+                        // todo nextTurn() - делаем в GameSkipbo->submitTurn()
 
                         return true;
                     }
@@ -112,10 +113,15 @@ class GameStatusSkipbo extends GameStatus
                     {
                         if (self::checkCardOnCard($turn->entityValue, end($this->desk->desk[$turn->newPositionNum]))) {
                             // Добавлем карту на общую ячейку
-                            array_push($this->desk->desk[$turn->newPositionNum], $turn->entityValue);
+                            $this->pushCardToCommonArea($turn->entityValue, $turn->newPositionNum);
 
                             // Убираем карту с руки игрока
                             $this->delHandCard($turn->entityNum, $numUser);
+                            // Проверим, вдруг все карты с руки потрачены - нужно дораздать 5 карт и продолжить ход
+                            if (array_values($this->playersCards[$numUser]->hand) === array_values([false, false, false, false, false])) {
+                                $this->fillHand($numUser);
+                                // todo Добавить время на ход?
+                            }
 
                             return true;
                         } else {
@@ -168,11 +174,12 @@ class GameStatusSkipbo extends GameStatus
                     {
                         if (self::checkCardOnCard($turn->entityValue, end($this->desk->desk[$turn->newPositionNum]))) {
                             // Добавлем карту на общую ячейку
-                            array_push($this->desk->desk[$turn->newPositionNum], $turn->entityValue);
+                            $this->pushCardToCommonArea($turn->entityValue, $turn->newPositionNum);
 
                             // Убираем карту сверху из колоды goalCard игрока
                             $this->delGoalCard($numUser);
                             $this->users[$numUser]->score++;
+                            // todo добавить в лог, что игрок увеличил счет
 
                             return true;
                         } else {
@@ -219,5 +226,13 @@ class GameStatusSkipbo extends GameStatus
                 [$cardValue] = $this->desk->getCardsFromKoloda(1);
             }
         }
+    }
+
+    private function pushCardToCommonArea(int $cardValue, int $commonPositionNum)
+    {
+        $this->desk->desk[$commonPositionNum][] =
+            $cardValue  === DeskSkipbo::SKIPBO_CARD
+            ? (end($this->desk->desk[$commonPositionNum]) ?: 0) + 1 + DeskSkipbo::SKIPBO_CARD
+            : $cardValue;
     }
 }

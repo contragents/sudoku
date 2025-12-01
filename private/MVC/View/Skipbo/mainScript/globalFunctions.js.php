@@ -455,18 +455,33 @@ function enableButtons() {
     }
 }
 
-function getContainerFromSVG(X, Y, blockName, _this, param = '', props = false) {
-    function myCallback(X, Y, resourceName, blockName, props) {
-        let element = _this.add.image(0, 0, resourceName);
-        let elements = [element];
+/**
+ * Lazy avatar loading
+ * @param X
+ * @param Y
+ * @param avatarBlockName
+ * @param avatarUrl
+ * @returns Phaser gameobject
+ */
+function loadAvatarContainer(X, Y, avatarBlockName, avatarUrl = '') {
+    function myCallback(X, Y, resourceName, blockName) {
+        let elements = [];
+        let element = faserObject.add.image(0, 0, resourceName);
 
-        if (props && 'isAvatar' in props && props.isAvatar) {
-            let frame = faserObject.add.image(0, 0, 'avatar_frame_you');
-            frame.setScale(element.width / frame.width, element.height / frame.height);
-            elements.push(frame);
-        }
+        // Подклыдываем подложку под аватар
+        let frameBack = faserObject.add.image(0, 0, 'back_player');
+        frameBack.setScale(element.width / frameBack.width * 1.05, element.height / frameBack.height * 1.05);
+        elements.push(frameBack);
 
-        let container = _this.add.container(X, Y, elements);
+        elements.push(element);
+
+        // Накладываем рамку на аватар
+        let frame = faserObject.add.image(0, 0, 'avatar_frame_you');
+
+        frame.setScale(element.width / frame.width * 1.05, element.height / frame.height * 1.05);
+        elements.push(frame);
+
+        let container = faserObject.add.container(X, Y, elements);
 
         if ('width' in entities[blockName]) {
             container.setScale(entities[blockName].width / element.displayWidth, entities[blockName].width / element.displayWidth);
@@ -475,8 +490,69 @@ function getContainerFromSVG(X, Y, blockName, _this, param = '', props = false) 
         }
 
         // Проверка по высоте - аватар не должен быть выше height
-        if (props && 'isAvatar' in props && props.isAvatar && 'height' in entities[blockName] && container.first.displayHeight > container.first.displayWidth) {
+        if ('height' in entities[blockName] && container.first.displayHeight > container.first.displayWidth) {
             container.setScale(entities[blockName].height / element.displayHeight, entities[blockName].height / element.displayHeight);
+        }
+
+        // Destroying old Avatar
+        if (entities[blockName].svgObject) {
+            entities[blockName].svgObject.setVisible(false).destroy();
+            entities[blockName].svgObject = false;
+        }
+
+        entities[blockName].svgObject = container;
+    }
+
+    let resourceName = avatarBlockName + avatarUrl + Date.now();
+    let url = entities[avatarBlockName].filename + encodeURIComponent(avatarUrl);
+    if (
+        url.indexOf('.svg') >= 1
+        ||
+        url.indexOf(SVG_RESOURCE_MASK) >= 1
+    ) {
+        preloaderObject.load.svg(resourceName, url,
+            {
+                ...('width' in entities[avatarBlockName] && {
+                    'width': entities[avatarBlockName].width,
+                })
+            }
+        );
+    } else {
+        preloaderObject.load.image(resourceName, url,
+            {
+                ...('width' in entities[avatarBlockName] && {
+                    'width': entities[avatarBlockName].width,
+                }),
+            }
+        );
+    }
+
+    preloaderObject.load.start();
+
+    preloaderObject.load.on('complete', () => myCallback(X, Y, resourceName, avatarBlockName));
+}
+
+/**
+ * Универсальный загрузчик ресурсов entities[blockName]
+ * @param X
+ * @param Y
+ * @param blockName
+ * @param urlModifier
+ * @param props
+ */
+function getContainerFromSVG(X, Y, blockName, urlModifier = '', props = false) {
+    function myCallback(X, Y, resourceName, blockName, props) {
+        let elements = [];
+        let element = faserObject.add.image(0, 0, resourceName);
+
+        elements.push(element);
+
+        let container = faserObject.add.container(X, Y, elements);
+
+        if ('width' in entities[blockName]) {
+            container.setScale(entities[blockName].width / element.displayWidth, entities[blockName].width / element.displayWidth);
+        } else {
+            container.setSize(element.displayWidth, element.displayHeight);
         }
 
         if (props) {
@@ -485,22 +561,23 @@ function getContainerFromSVG(X, Y, blockName, _this, param = '', props = false) 
             }
         }
 
-        if (entities[blockName].svgObject === false) {
-            entities[blockName].svgObject = [];
+        // Destroying old Avatar
+        if (entities[blockName].svgObject) {
+            entities[blockName].svgObject.setVisible(false).destroy();
+            entities[blockName].svgObject = false;
         }
 
-        entities[blockName].svgObject.push(container);
+        entities[blockName].svgObject = container;
     }
 
-
     if ('preloaded' in entities[blockName] && entities[blockName].preloaded) {
-        myCallback(X, Y, param ? param : entities[blockName].filename, blockName, props);
+        myCallback(X, Y, urlModifier ? urlModifier : entities[blockName].filename, blockName, props);
 
         return;
     }
 
-    let resourceName = blockName + param + Date.now();
-    let url = entities[blockName].filename + encodeURIComponent(param);
+    let resourceName = blockName + urlModifier + Date.now();
+    let url = entities[blockName].filename + encodeURIComponent(urlModifier);
     if (
         url.indexOf('.svg') >= 1
         ||
@@ -528,8 +605,8 @@ function getContainerFromSVG(X, Y, blockName, _this, param = '', props = false) 
     preloaderObject.load.on('complete', () => myCallback(X, Y, resourceName, blockName, props));
 }
 
-function getSVGCardBlockGlobal(X, Y, buttonName, _this, scalable = false, props = false, draggable = false) {
-    let element = _this.add.image(0, 0, cards[buttonName].imgName)
+function getSVGCardBlockGlobal(X, Y, buttonName, _this, scalable = false, props = false, draggable = false, imgName = false) {
+    let element = _this.add.image(0, 0, imgName ? imgName : cards[buttonName].imgName)
         .setName(buttonName);
     if (scalable) {
         element.setScale(1, buttonHeightKoef);

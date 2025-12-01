@@ -179,7 +179,8 @@ function () {
     coordinates.kolodaCard = {x: cards.kolodaCard3.svgObject.x, y: cards.kolodaCard3.svgObject.y};
 
     coordinates.you = {};
-    coordinates.you.goalCard = {x: cards.goalCard.svgObject.x, y: cards.goalCard.svgObject.y};
+    coordinates.you.goalCard = {x: cards.goalCard.x, y: cards.goalCard.y};
+    coordinates.you.cardCounterYou = {x: coordinates.you.goalCard.x, y: coordinates.you.goalCard.y - cardWidth * cardSideFactor / 2 - 70 / 90 * entities.cardCounterYou.width / 2};
 
     coordinates.you.handCard1 = {x: cards.handCard1.svgObject.x, y: cards.handCard1.svgObject.y};
     coordinates.you.handCard2 = {x: cards.handCard2.svgObject.x, y: cards.handCard2.svgObject.y};
@@ -198,30 +199,32 @@ function () {
     }
 
     // Выводим счетчик карт над целевой картой Игрока
+    /*
     getContainerFromSVG(
-        cards.goalCard.x,
-        cards.goalCard.y - cardWidth * cardSideFactor / 2 - 70 / 90 * entities.cardCounter.width / 2,
-        'cardCounter',
-        this,
+        coordinates.you.cardCounterYou.x,
+        coordinates.you.cardCounterYou.y,
+        'cardCounterYou',
         winScore - (playerScores['youBlock'].digit2 * 10 + playerScores['youBlock'].digit3)
     );
+    */
 
     // сгенерим URL случайных аватаров
     let avatars = [];
+    // Аатар последнего игрока (вертикальный для теста)
     avatars.push('https://xn--d1aiwkc2d.club/img/upload/3f8dd6efb0492cd1394ac4e0f85e10a5.jpg?ver=1741674943');
-    //avatars.push('https://sudoku.box' + '<?= AvatarModel::find([])->where([AvatarModel::NOT_LOADED_FIELD => false])->order('rand()')->limit(1)->one()->_mini_url ?>');
-    avatars.push('https://sudoku.box' + '<?= AvatarModel::find([])->where([AvatarModel::NOT_LOADED_FIELD => false])->order('rand()')->limit(1)->one()->_mini_url ?>');
-    avatars.push('https://sudoku.box' + '<?= AvatarModel::find([])->where([AvatarModel::NOT_LOADED_FIELD => false])->order('rand()')->limit(1)->one()->_mini_url ?>');
-    avatars.push('https://sudoku.box' + '<?= AvatarModel::find([])->where([AvatarModel::NOT_LOADED_FIELD => false])->order('rand()')->limit(1)->one()->_mini_url ?>');
+    avatars.push('https://sudoku.box' + '<?= AvatarModel::find([])->where([AvatarModel::NOT_LOADED_FIELD => false]
+    )->order('rand()')->limit(1)->one()->_mini_url ?>');
+    avatars.push('https://sudoku.box' + '<?= AvatarModel::find([])->where([AvatarModel::NOT_LOADED_FIELD => false]
+    )->order('rand()')->limit(1)->one()->_mini_url ?>');
+    // Аватар текущего игрока
+    avatars.push('https://sudoku.box/img/sudoku-coin.png');
 
     // Выводим аватар Игрока
-    getContainerFromSVG(
+    loadAvatarContainer(
         entities.avatarYou.x,
         entities.avatarYou.y,
         'avatarYou',
-        this,
         avatars.pop(),
-        {isAvatar: true}
     );
 
     // Расставляем соперников по плашкам
@@ -241,19 +244,16 @@ function () {
             getContainerFromSVG(
                 backplateContainer.x - backplateContainer.displayWidth / 2 + playerContainer.width / 2 + cardStep,
                 backplateContainer.y - backplateContainer.displayHeight / 2 + playerContainer.displayHeight / 4 + cardStep,
-                'nicknameBlock',
-                this,
+                'nicknameBlockPlayer' + player,
                 'Nick' + player + '🙃'
             );
 
             // Выводим аватар соперника
-            getContainerFromSVG(
+            loadAvatarContainer(
                 backplateContainer.x - backplateContainer.displayWidth / 2 + playerContainer.width / 2 + cardStep,
                 backplateContainer.y - backplateContainer.displayHeight / 6 - smallCardWidth * cardSideFactor / 2 + entities['avatarPlayer' + player].height / 2,
                 'avatarPlayer' + player,
-                this,
                 avatars.pop(),
-                {isAvatar: true}// ANONYM_AVATAR_URL
             );
 
             coordinates[player] = {};
@@ -267,8 +267,7 @@ function () {
                 getContainerFromSVG(
                     coordinates[player]['bankCard' + i].x,
                     coordinates[player]['bankCard' + i].y,
-                    'bankAreaMedium',
-                    this
+                    'bankAreaMediumPlayer' + player + 'Pos' + i,
                 );
             }
 
@@ -280,17 +279,15 @@ function () {
             getContainerFromSVG(
                 coordinates[player].goalCard.x,
                 coordinates[player].goalCard.y,
-                'goalCard',
-                this,
-                'card_' + (player * 2),
+                'goalCardPlayer' + player,
+                getCardImgName(player * 2),
                 {cardValue: player * 2}
             );
             // Выводим счетчик карт над целевой картой противника
             getContainerFromSVG(
                 coordinates[player].goalCard.x,
-                backplateContainer.y + backplateContainer.displayHeight / 2 - cardWidth - mediumCardWidth * cardSideFactor + 70 / 90 * entities.cardCounter.width / 2,
-                'cardCounter',
-                this,
+                backplateContainer.y + backplateContainer.displayHeight / 2 - cardWidth - mediumCardWidth * cardSideFactor + 70 / 90 * entities['cardCounterPlayer' + player].width / 2,
+                'cardCounterPlayer' + player,
                 winScore - (playerScores['player' + player + 'Block'].digit2 * 10 + playerScores['player' + player + 'Block'].digit3)
             );
 
@@ -303,8 +300,7 @@ function () {
                 getContainerFromSVG(
                     coordinates[player]['handCard' + i].x,
                     coordinates[player]['handCard' + i].y,
-                    'handCard',
-                    this
+                    'handCardPlayer' + player + 'Pos' + i,
                 );
             }
         }

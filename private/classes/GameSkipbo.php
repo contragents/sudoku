@@ -45,12 +45,26 @@ class GameSkipbo extends Game
         $turn = new TurnSkipbo((json_decode(BC::$Request[TurnSkipbo::TURN_DATA_PARAM], true) ?: []) ?? []);
         if ($this->gameStatus->validateTurn($turn)) {
             $res = ['turn_response' => ['result' => TurnSkipbo::TURN_RESPONSE_OK]];
-            // todo вернуть ОК клиенту вместе с новым состоянием открытой данному игроку клиенту доски
+
+            // Если игрок положил карту в банк, то это конец его хода
+            if($turn->newPositionName === GameStatusSkipbo::BANK_AREA) {
+                $this->nextTurn();
+            }
         } else {
             $res = ['turn_response' => ['result' => TurnSkipbo::TURN_RESPONSE_ERROR]];
         }
 
         return $res + parent::submitTurn();
+    }
+
+    protected function nextTurn(): void
+    {
+        // Дораздали карты всем игрокам. На всякий случай
+        foreach($this->gameStatus->users as $num => $nothing) {
+            $this->gameStatus->fillHand($num);
+        }
+
+        parent::nextTurn();
     }
 
     // todo fully refactor

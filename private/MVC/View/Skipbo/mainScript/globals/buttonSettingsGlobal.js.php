@@ -207,7 +207,7 @@ function handCardDragStart(handCardObject) {
 }
 
 var cards = {
-    cardCommon1: { // Общая открытая карта на столе №1
+    commonCard1: { // Общая открытая карта на столе №1
         imgName: false,
         x: card1CommonBlockXCenter,
         y: cardCommonBlockYCenter,
@@ -215,7 +215,7 @@ var cards = {
         svgObject: false,
         preload: false,
     },
-    cardCommon2: {
+    commonCard2: {
         imgName: false,
         x: card1CommonBlockXCenter + cardStep + cardWidth,
         y: cardCommonBlockYCenter,
@@ -223,7 +223,7 @@ var cards = {
         svgObject: false,
         preload: false,
     },
-    cardCommon3: {
+    commonCard3: {
         imgName: false,
         x: card1CommonBlockXCenter + 2 * (cardStep + cardWidth),
         y: cardCommonBlockYCenter,
@@ -231,7 +231,7 @@ var cards = {
         svgObject: false,
         preload: false,
     },
-    cardCommon4: {
+    commonCard4: {
         imgName: false,
         x: card1CommonBlockXCenter + 3 * (cardStep + cardWidth),
         y: cardCommonBlockYCenter,
@@ -296,13 +296,14 @@ var cards = {
         svgObject: false,
     },
     goalCard: {
-        imgName: 'card_10',
+        preload: false,
+        imgName: 'card_',
         x: card1CommonBlockXCenter + 3 * (cardStep + cardWidth) + 5 * cardStep + cardWidth,
         y: cardCommonBlockYCenter - cardStep,
         width: cardWidth,
         svgObject: false,
         dragStartFunction: () => handCardDragStart('goalCard'),
-        props: {entity: 'goalCard', cardValue: 10},
+        props: {entity: 'goalCard', cardValue: 0},
     },
     playerCenterBackplate: {
         imgName: 'back_player',
@@ -496,7 +497,7 @@ var cards = {
 var entities = {
     avatarYou: {
         preloaded: false, // загружать каждый раз с сервера
-        filename: AVATAR_IMPORT_SCRIPT,//'https://sudoku.box/img/sudoku-coin.png',
+        filename: AVATAR_IMPORT_SCRIPT, // 'https://sudoku.box/img/sudoku-coin.png',
         x: gameWidth / 2,
         y: handCardCenterY,
         width: cardWidth * 2,
@@ -544,7 +545,7 @@ var entities = {
         svgObject: false,
         preload: false, // Не обрабатывать массово
     },
-    cardCounter: {
+    cardCounterYou: {
         preloaded: false, // загружать каждый раз с сервера
         filename: CARD_COUNTER_SVG,
         x: 1,
@@ -553,7 +554,43 @@ var entities = {
         svgObject: false, // массив счетчиков, удалять через pop().destroy();
         preload: false, // Не обрабатывать массово
     },
-    handCard: {
+    cardCounterPlayer1: {
+        preloaded: false, // загружать каждый раз с сервера
+        filename: CARD_COUNTER_SVG,
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false, // массив счетчиков, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    cardCounterPlayer2: {
+        preloaded: false, // загружать каждый раз с сервера
+        filename: CARD_COUNTER_SVG,
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false, // массив счетчиков, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    cardCounterPlayer3: {
+        preloaded: false, // загружать каждый раз с сервера
+        filename: CARD_COUNTER_SVG,
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false, // массив счетчиков, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    cardCounterPlayer4: {
+        preloaded: false, // загружать каждый раз с сервера
+        filename: CARD_COUNTER_SVG,
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false, // массив счетчиков, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    handCardPlayer1Pos1: {
         preloaded: true, // изображения загружены
         filename: 'card_back',
         x: 1,
@@ -562,31 +599,400 @@ var entities = {
         svgObject: false, // массив карточек, удалять через pop().destroy();
         preload: false, // Не обрабатывать массово
     },
-    goalCard: {
+    handCardPlayer1Pos2: {
+        preloaded: true, // изображения загружены
+        filename: 'card_back',
+        x: 1,
+        y: 1,
+        width: smallCardWidth,
+        svgObject: false, // массив карточек, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    handCardPlayer1Pos3: {
+        preloaded: true, // изображения загружены
+        filename: 'card_back',
+        x: 1,
+        y: 1,
+        width: smallCardWidth,
+        svgObject: false, // массив карточек, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    handCardPlayer1Pos4: {
+        preloaded: true, // изображения загружены
+        filename: 'card_back',
+        x: 1,
+        y: 1,
+        width: smallCardWidth,
+        svgObject: false, // массив карточек, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    handCardPlayer1Pos5: {
+        preloaded: true, // изображения загружены
+        filename: 'card_back',
+        x: 1,
+        y: 1,
+        width: smallCardWidth,
+        svgObject: false, // массив карточек, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    handCardPlayer2Pos1: {
+        preloaded: true, // изображения загружены
+        filename: 'card_back',
+        x: 1,
+        y: 1,
+        width: smallCardWidth,
+        svgObject: false, // массив карточек, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    handCardPlayer2Pos2: {
+        preloaded: true, // изображения загружены
+        filename: 'card_back',
+        x: 1,
+        y: 1,
+        width: smallCardWidth,
+        svgObject: false, // массив карточек, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    handCardPlayer2Pos3: {
+        preloaded: true, // изображения загружены
+        filename: 'card_back',
+        x: 1,
+        y: 1,
+        width: smallCardWidth,
+        svgObject: false, // массив карточек, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    handCardPlayer2Pos4: {
+        preloaded: true, // изображения загружены
+        filename: 'card_back',
+        x: 1,
+        y: 1,
+        width: smallCardWidth,
+        svgObject: false, // массив карточек, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    handCardPlayer2Pos5: {
+        preloaded: true, // изображения загружены
+        filename: 'card_back',
+        x: 1,
+        y: 1,
+        width: smallCardWidth,
+        svgObject: false, // массив карточек, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    handCardPlayer3Pos1: {
+        preloaded: true, // изображения загружены
+        filename: 'card_back',
+        x: 1,
+        y: 1,
+        width: smallCardWidth,
+        svgObject: false, // массив карточек, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    handCardPlayer3Pos2: {
+        preloaded: true, // изображения загружены
+        filename: 'card_back',
+        x: 1,
+        y: 1,
+        width: smallCardWidth,
+        svgObject: false, // массив карточек, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    handCardPlayer3Pos3: {
+        preloaded: true, // изображения загружены
+        filename: 'card_back',
+        x: 1,
+        y: 1,
+        width: smallCardWidth,
+        svgObject: false, // массив карточек, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    handCardPlayer3Pos4: {
+        preloaded: true, // изображения загружены
+        filename: 'card_back',
+        x: 1,
+        y: 1,
+        width: smallCardWidth,
+        svgObject: false, // массив карточек, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    handCardPlayer3Pos5: {
+        preloaded: true, // изображения загружены
+        filename: 'card_back',
+        x: 1,
+        y: 1,
+        width: smallCardWidth,
+        svgObject: false, // массив карточек, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    handCardPlayer4Pos1: {
+        preloaded: true, // изображения загружены
+        filename: 'card_back',
+        x: 1,
+        y: 1,
+        width: smallCardWidth,
+        svgObject: false, // массив карточек, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    handCardPlayer4Pos2: {
+        preloaded: true, // изображения загружены
+        filename: 'card_back',
+        x: 1,
+        y: 1,
+        width: smallCardWidth,
+        svgObject: false, // массив карточек, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    handCardPlayer4Pos3: {
+        preloaded: true, // изображения загружены
+        filename: 'card_back',
+        x: 1,
+        y: 1,
+        width: smallCardWidth,
+        svgObject: false, // массив карточек, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    handCardPlayer4Pos4: {
+        preloaded: true, // изображения загружены
+        filename: 'card_back',
+        x: 1,
+        y: 1,
+        width: smallCardWidth,
+        svgObject: false, // массив карточек, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    handCardPlayer4Pos5: {
+        preloaded: true, // изображения загружены
+        filename: 'card_back',
+        x: 1,
+        y: 1,
+        width: smallCardWidth,
+        svgObject: false, // массив карточек, удалять через pop().destroy();
+        preload: false, // Не обрабатывать массово
+    },
+    goalCardPlayer1: {
         preloaded: true, // изображения загружены
         filename: 'card_10',
         x: 1,
         y: 1,
         width: mediumCardWidth,
-        svgObject: false, // массив карточек, удалять через pop().destroy();
+        svgObject: false,
         preload: false, // Не обрабатывать массово
     },
-    bankAreaMedium: {
+    goalCardPlayer2: {
+        preloaded: true, // изображения загружены
+        filename: 'card_10',
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    goalCardPlayer3: {
+        preloaded: true, // изображения загружены
+        filename: 'card_10',
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    goalCardPlayer4: {
+        preloaded: true, // изображения загружены
+        filename: 'card_10',
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    bankAreaMediumPlayer1Pos1: {
         preloaded: true, // изображение загружено
         filename: 'card_area',
         x: 1,
         y: 1,
         width: mediumCardWidth,
-        svgObject: false, // массив карточек, удалять через pop().destroy();
+        svgObject: false,
         preload: false, // Не обрабатывать массово
     },
-    nicknameBlock: {
+    bankAreaMediumPlayer1Pos2: {
+        preloaded: true, // изображение загружено
+        filename: 'card_area',
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    bankAreaMediumPlayer1Pos3: {
+        preloaded: true, // изображение загружено
+        filename: 'card_area',
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    bankAreaMediumPlayer1Pos4: {
+        preloaded: true, // изображение загружено
+        filename: 'card_area',
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    bankAreaMediumPlayer2Pos1: {
+        preloaded: true, // изображение загружено
+        filename: 'card_area',
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    bankAreaMediumPlayer2Pos2: {
+        preloaded: true, // изображение загружено
+        filename: 'card_area',
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    bankAreaMediumPlayer2Pos3: {
+        preloaded: true, // изображение загружено
+        filename: 'card_area',
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    bankAreaMediumPlayer2Pos4: {
+        preloaded: true, // изображение загружено
+        filename: 'card_area',
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    bankAreaMediumPlayer3Pos1: {
+        preloaded: true, // изображение загружено
+        filename: 'card_area',
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    bankAreaMediumPlayer3Pos2: {
+        preloaded: true, // изображение загружено
+        filename: 'card_area',
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    bankAreaMediumPlayer3Pos3: {
+        preloaded: true, // изображение загружено
+        filename: 'card_area',
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    bankAreaMediumPlayer3Pos4: {
+        preloaded: true, // изображение загружено
+        filename: 'card_area',
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    bankAreaMediumPlayer4Pos1: {
+        preloaded: true, // изображение загружено
+        filename: 'card_area',
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    bankAreaMediumPlayer4Pos2: {
+        preloaded: true, // изображение загружено
+        filename: 'card_area',
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    bankAreaMediumPlayer4Pos3: {
+        preloaded: true, // изображение загружено
+        filename: 'card_area',
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    bankAreaMediumPlayer4Pos4: {
+        preloaded: true, // изображение загружено
+        filename: 'card_area',
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    nicknameBlockYou: {
         preloaded: false, // загружать каждый раз с сервера
         filename: NICKNAME_SVG,
         x: 1,
         y: 1,
         width: buttonWidth,
-        svgObject: false, // массив никнеймов, удалять через pop().destroy();
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    nicknameBlockPlayer1: {
+        preloaded: false, // загружать каждый раз с сервера
+        filename: NICKNAME_SVG,
+        x: 1,
+        y: 1,
+        width: buttonWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    nicknameBlockPlayer2: {
+        preloaded: false, // загружать каждый раз с сервера
+        filename: NICKNAME_SVG,
+        x: 1,
+        y: 1,
+        width: buttonWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    nicknameBlockPlayer3: {
+        preloaded: false, // загружать каждый раз с сервера
+        filename: NICKNAME_SVG,
+        x: 1,
+        y: 1,
+        width: buttonWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    nicknameBlockPlayer4: {
+        preloaded: false, // загружать каждый раз с сервера
+        filename: NICKNAME_SVG,
+        x: 1,
+        y: 1,
+        width: buttonWidth,
+        svgObject: false,
         preload: false, // Не обрабатывать массово
     },
 }

@@ -2,8 +2,8 @@
 function moveCardToCommonArea(gameObject, position) {
     let cardObject = gameObject.entity;
     let nextCardValue =
-        (cards['cardCommon' + position].svgObject && 'cardValue' in cards['cardCommon' + position].svgObject)
-            ? (cards['cardCommon' + position].svgObject.cardValue % SKIPBO) + 1
+        (cards['commonCard' + position].svgObject && 'cardValue' in cards['commonCard' + position].svgObject)
+            ? (cards['commonCard' + position].svgObject.cardValue % SKIPBO) + 1
             : 1;
     nextCardValue += (gameObject.cardValue === SKIPBO ? SKIPBO : 0); // Признак SKIPBO
 
@@ -12,23 +12,41 @@ function moveCardToCommonArea(gameObject, position) {
     } else if (isHandCard(gameObject)) {
         cards[cardObject].svgObject = false;
     } else if (isGoalCard(gameObject)) {
-        getNewGoalCard();
+        cards.goalCard.svgObject = false;
     }
 
     gameObject.entity = 'commonCard' + position;
-    if (cards['cardCommon' + position].svgObject) {
-        cards['cardCommon' + position].svgObject.destroy();
-        cards['cardCommon' + position].svgObject = false;
+    if (cards['commonCard' + position].svgObject) {
+        cards['commonCard' + position].svgObject.setVisible(false).destroy();
+        cards['commonCard' + position].svgObject = false;
     }
 
     if (nextCardValue < 12 || (nextCardValue > SKIPBO && nextCardValue < (SKIPBO + 12))) {
-        cards['cardCommon' + position].svgObject = gameObject;
-        cards['cardCommon' + position].svgObject.cardValue = nextCardValue;
+
+        // Need to replace card image if it was SKIPBO
+        if(gameObject.cardValue === SKIPBO) {
+            let gameObjectNew = getSVGCardBlockGlobal(
+                gameObject.x,
+                gameObject.y,
+                cardObject,
+                faserObject,
+                false,
+                {entity: cardObject, cardValue: nextCardValue},
+                false, // Not draggable
+                getCardImgName(nextCardValue)
+            );
+
+            gameObject.disableInteractive().setVisible(false).destroy();
+            gameObject = gameObjectNew;
+        }
+
+        cards['commonCard' + position].svgObject = gameObject;
+        cards['commonCard' + position].svgObject.cardValue = nextCardValue;
         moveCardToPosition(gameObject, coordinates['commonArea' + position]);
         gameObject.disableInteractive();
     } else {
         gameObject.visible = false;
-        gameObject.disableInteractive();
+        gameObject.disableInteractive().setVisible(false).destroy();
     }
 }
 
@@ -89,7 +107,7 @@ function getAvailableCommonPlaces(cardNum) {
     let res = [];
 
     for (let i = 1; i <= 4; i++) {
-        let currentCard = cards['cardCommon' + i].svgObject;
+        let currentCard = cards['commonCard' + i].svgObject;
         console.log(currentCard);
         // Учитываем SKIPBO + номер карты для карты в commonArea
         if (currentCard) {
@@ -171,19 +189,4 @@ function isHandCard(gameObject) {
 function moveCardToPosition(gameObject, coordinates = {x: 0, y: 0}) {
     gameObject.x = coordinates.x;
     gameObject.y = coordinates.y;
-}
-
-function getNewGoalCard() {
-    let newCard = SKIPBO_CARDS[Math.floor(Math.random() * SKIPBO_CARDS.length)];
-    cards.goalCard.imgName = 'card_' + (newCard < SKIPBO ? newCard : 'skipbo');
-
-    cards.goalCard.svgObject = getSVGCardBlockGlobal(
-        cards.goalCard.x,
-        cards.goalCard.y,
-        'goalCard',
-        faserObject,
-        false,
-        {entity: 'goalCard', cardValue: newCard},
-        true
-    );
 }

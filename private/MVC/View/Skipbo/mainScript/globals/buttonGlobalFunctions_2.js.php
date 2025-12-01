@@ -542,7 +542,110 @@ function claimIncome() {
         });
 }
 
+function checkCommonCards(commonCardsObj) {
+    for (let pos in commonCardsObj) {
+        // Deleting existing cards
+        if (cards['commonCard' + pos].svgObject) {
+            cards['commonCard' + pos].svgObject.setVisible(false).destroy();
+            cards['commonCard' + pos].svgObject = false;
+        }
+
+        // Show cards
+        if (commonCardsObj[pos].length) {
+            // Take only last common card to display
+            let currentCardValue = commonCardsObj[pos].pop();
+
+            cards['commonCard' + pos].svgObject = getSVGCardBlockGlobal(
+                coordinates['commonArea' + pos].x,
+                coordinates['commonArea' + pos].y,
+                'commonCard' + pos,
+                faserObject,
+                false,
+                {entity: 'commonCard' + pos, cardValue: currentCardValue},
+                false, // not draggable
+                getCardImgName(currentCardValue)
+            );
+        }
+    }
+}
+
+function displayCardCounter(count = false, player = 'You') {
+    let counterBlockName = 'cardCounter';
+    let playerBlockName = 'Block';
+    if (player === 'You') {
+        counterBlockName += 'You';
+        playerBlockName = 'You' + playerBlockName;
+    } else {
+        counterBlockName += 'Player' + player;
+        playerBlockName = 'player' + player + playerBlockName;
+    }
+
+    getContainerFromSVG(
+        coordinates.you.cardCounterYou.x,
+        coordinates.you.cardCounterYou.y,
+        counterBlockName,
+        count
+            ? count
+            : (winScore - (playerScores[playerBlockName].digit2 * 10 + playerScores[playerBlockName].digit3))
+    );
+}
+
+function checkGoalCard(goalCardValue) {
+    console.log(goalCardValue);
+    if (cards.goalCard.svgObject && +cards.goalCard.svgObject.cardValue !== goalCardValue) {
+        console.log('cards.goalCard.svgObject && +cards.goalCard.svgObject.cardValue !== goalCardValue', cards.goalCard.svgObject.cardValue, goalCardValue)
+        cards.goalCard.svgObject.setVisible(false).destroy();
+        cards.goalCard.svgObject = false;
+    }
+
+    if (!cards.goalCard.svgObject) {
+        console.log('!cards.goalCard.svgObject', coordinates.you.goalCard.x, coordinates.you.goalCard.y);
+        cards.goalCard.svgObject = getSVGCardBlockGlobal(
+            coordinates.you.goalCard.x,
+            coordinates.you.goalCard.y,
+            'goalCard',
+            faserObject,
+            false,
+            {entity: 'goalCard', cardValue: goalCardValue},
+            true, // Draggable
+            getCardImgName(goalCardValue)
+        );
+    }
+}
+
+function checkBankCards(bankObj) {
+    for (let pos in bankObj) {
+        // Deleting existing cards
+        while (cards['bankCard' + pos].svgObject.length) {
+            cards['bankCard' + pos].svgObject.pop().destroy();
+        }
+
+        while (bankObj[pos].length) {
+            let currentCardValue = bankObj[pos].shift();
+            console.log(currentCardValue, pos, cards['bankCard' + pos].svgObject);
+            cards['bankCard' + pos].svgObject.push(
+                getSVGCardBlockGlobal(
+                    coordinates.you['bankCard' + pos].x,
+                    coordinates.you['bankCard' + pos].y,
+                    'bankCard' + pos,
+                    faserObject,
+                    false,
+                    {entity: 'bankCard' + pos, cardValue: currentCardValue},
+                    !bankObj[pos].length, // draggable last card only
+                    getCardImgName(currentCardValue)
+                )
+            );
+        }
+
+    }
+}
+
+function getCardImgName(cardValue) {
+    return 'card_' + (cardValue != SKIPBO ? cardValue : 'skipbo')
+}
+
 function checkHandCards(cardsObj) {
+    /*
     let excludedCards = {};
     let handCardsCount = 0;
 
@@ -562,23 +665,23 @@ function checkHandCards(cardsObj) {
         // Все карты соответствуют - ничего не делаем
         return;
     }
+    */
 
-    for (let i = 1; i <= 5; i++) {
-        let currentCard = cards['handCard' + i].svgObject;
-        if (currentCard) {
-            currentCard.setVisible(false).destroy()
-            currentCard = false;
+    for (let pos = 1; pos <= 5; pos++) {
+        if (cards['handCard' + pos].svgObject) {
+            cards['handCard' + pos].svgObject.setVisible(false).destroy();
+            cards['handCard' + pos].svgObject = false;
         }
 
-        if (i in cardsObj) {
-            cards['handCard' + i].imgName = 'card_' + (cardsObj[i] < SKIPBO ? cardsObj[i] : 'skipbo');
-            cards['handCard' + i].svgObject = getSVGCardBlockGlobal(
-                cards['handCard' + i].x,
-                cards['handCard' + i].y,
-                'handCard' + i,
+        if (pos in cardsObj && cardsObj[pos]) {
+            cards['handCard' + pos].imgName = getCardImgName(cardsObj[pos]);
+            cards['handCard' + pos].svgObject = getSVGCardBlockGlobal(
+                cards['handCard' + pos].x,
+                cards['handCard' + pos].y,
+                'handCard' + pos,
                 faserObject,
                 false,
-                {entity: 'handCard' + i, cardValue: cardsObj[i]},
+                {entity: 'handCard' + pos, cardValue: cardsObj[pos]},
                 true
             );
         }
