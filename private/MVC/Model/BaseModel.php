@@ -137,7 +137,7 @@ class BaseModel implements Iterator
         return (int)$value;
     }
 
-    private function from_array(bool $value): string
+    private function from_array(array $value): string
     {
         return json_encode($value, JSON_UNESCAPED_UNICODE);
     }
