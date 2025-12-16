@@ -580,13 +580,23 @@ function displayCardCounter(count = false, player = 'You') {
         playerBlockName = 'player' + player + playerBlockName;
     }
 
-    getContainerFromSVG(
+    if (entities[counterBlockName].svgObject && 'count' in entities[counterBlockName].svgObject && entities[counterBlockName].svgObject.count === count) {
+        return;
+    }
+
+    if(entities[counterBlockName].svgObject) {
+        entities[counterBlockName].svgObject.setVisible(false).destroy();
+        entities[counterBlockName].svgObject = false;
+    }
+
+    entities[counterBlockName].svgObject = getContainerFromSVG(
         coordinates.you.cardCounterYou.x,
         coordinates.you.cardCounterYou.y,
         counterBlockName,
         count
             ? count
-            : (winScore - (playerScores[playerBlockName].digit2 * 10 + playerScores[playerBlockName].digit3))
+            : (winScore - (playerScores[playerBlockName].digit2 * 10 + playerScores[playerBlockName].digit3)),
+        {count: count}
     );
 }
 

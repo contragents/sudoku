@@ -780,7 +780,8 @@ class BaseModel implements Iterator
      * @param bool $ignoreDeleted
      * @return static|null
      */
-    public static function getOneNextO(int $id, bool $ignoreDeleted = true): ?self {
+    public static function getOneNextO(int $id, bool $ignoreDeleted = true): ?self
+    {
         $row = self::getOneNext($id, $ignoreDeleted ? '' : '');
 
         if (!empty($row)) {
@@ -907,7 +908,17 @@ class BaseModel implements Iterator
 
                     /** @var BaseModel $modelClass */
                     // Получаем записи из ссылающейся модели
-                    $this->relations[$attr] = $modelClass::getCustomO($selfIdField, '=', $this->_id, true);
+
+                    // Вдруг в модели нет поля is_deleted?
+                    $iSDeletedPropertyName = '_' . static::IS_DELETED_FIELD;
+                    $whereConditions = [$selfIdField => $this->_id,]
+                        + (
+                        isset($this->{$iSDeletedPropertyName})
+                            ? [static::IS_DELETED_FIELD => false]
+                            : []
+                        );
+
+                    $this->relations[$attr] = $modelClass::find()->where($whereConditions)->all();
 
                     return $this->relations[$attr];
                 }

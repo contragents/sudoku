@@ -25,10 +25,10 @@ class GameStatusSkipbo extends GameStatus
 
     /**
      * @param int $cardNumUp 1-12, 1000
-     * @param bool|int $cardNumDown false, 1-12, 1000, 1001-1012
+     * @param false|int $cardNumDown false, 1-12, 1000, 1001-1012
      * @return bool
      */
-    private static function checkCardOnCard(int $cardNumUp, bool|int $cardNumDown): bool
+    private static function checkCardOnCard(int $cardNumUp, $cardNumDown): bool
     {
         // Учитываем SKIPBO + номер карты для карты в commonArea
         if ($cardNumDown) {
@@ -88,7 +88,7 @@ class GameStatusSkipbo extends GameStatus
             $numUser = BC::$instance->Game->numUser;
         }
         switch ($turn->entityName) {
-            case self::HAND_CARD :
+            case self::HAND_CARD:
             {
                 if ((int)$turn->entityValue !== $this->playersCards[$numUser]->hand[$turn->entityNum]) {
                     return false;
@@ -133,7 +133,7 @@ class GameStatusSkipbo extends GameStatus
                 break;
             }
 
-            case self::BANK_CARD :
+            case self::BANK_CARD:
             {
                 // Проверяем присланную карту банка на значение на сервере
                 if ((int)$turn->entityValue !== end($this->playersCards[$numUser]->bank[$turn->entityNum])) {
@@ -161,7 +161,7 @@ class GameStatusSkipbo extends GameStatus
                 break;
             }
 
-            case self::GOAL_CARD :
+            case self::GOAL_CARD:
             {
                 // Проверяем присланную карту goalCard на значение на сервере
                 if ((int)$turn->entityValue !== end($this->playersCards[$numUser]->goalStack)) {
@@ -228,11 +228,17 @@ class GameStatusSkipbo extends GameStatus
         }
     }
 
-    private function pushCardToCommonArea(int $cardValue, int $commonPositionNum)
+    private function pushCardToCommonArea(int $cardValue, int $commonPositionNum): void
     {
         $this->desk->desk[$commonPositionNum][] =
             $cardValue  === DeskSkipbo::SKIPBO_CARD
             ? (end($this->desk->desk[$commonPositionNum]) ?: 0) + 1 + DeskSkipbo::SKIPBO_CARD
             : $cardValue;
+
+        // Проверяем, что последняя карта 12 - убираем кучку во временную колоду
+        if(end($this->desk->desk[$commonPositionNum]) % DeskSkipbo::SKIPBO_CARD === 12) {
+            $this->desk->pushCardsToTmpKoloda($this->desk->desk[$commonPositionNum]);
+            $this->desk->desk[$commonPositionNum] = [];
+        }
     }
 }

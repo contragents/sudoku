@@ -283,7 +283,7 @@ class T
             ],
             GameSkipbo::GAME_NAME => [
                 self::EN_LANG => 'Skip-Bo is loading...',
-                self::RU_LANG => 'Загружаем Скип-Бо (Skip-Bo)...',
+                self::RU_LANG => 'Загружаем Скип-Бо...',
             ],
             self::EN_LANG => 'The Game is loading...',
             self::RU_LANG => 'Загружаем Игру...',

@@ -17,6 +17,7 @@ class DeskSkipbo extends Desk
     /** @var array[] $desk Кучки карт №№1..4 - карты от 1 до 12, SKIPBO (1001-1012) */
     public array $desk = [1 => [], 2 => [], 3 => [], 4 => []];
     public array $koloda = []; // Колода из 168 карт с учетом розданных карт и карт, добавляемых при сборе кучек карт №№1..4
+    private array $tmpKoloda = []; // Временная колода из собранных кучек кард от 1 до 12ти с учетом SKIP-BO карт
 
     public function checkNewDesc(array $newDesk): bool
     {
@@ -31,7 +32,7 @@ class DeskSkipbo extends Desk
 
         // Объединяем все массивы в один
         $this->koloda = array_merge(
-               array_fill(0, self::NUM_SKIPBO, self::SKIPBO_CARD), // SKIP-BO карты
+            array_fill(0, self::NUM_SKIPBO, self::SKIPBO_CARD), // SKIP-BO карты
             ...$arrayOfArrays // Карты 1..12
         );
 
@@ -46,5 +47,13 @@ class DeskSkipbo extends Desk
     public function getCardsFromKoloda(int $cardNum): array
     {
         return array_splice($this->koloda, 0, $cardNum);
+    }
+
+    public function pushCardsToTmpKoloda(array $cardsToPush): void
+    {
+        $this->tmpKoloda[] = array_map(
+            fn($cardValue) => min($cardValue, self::SKIPBO_CARD),
+            $cardsToPush
+        );
     }
 }

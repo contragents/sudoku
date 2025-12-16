@@ -26,9 +26,22 @@ class GameSkipbo extends Game
         parent::__construct(QueueSkipbo::class);
     }
 
-    private function makeBotMove(): array
+    private function makeBotMove(int $numUser): TurnSkipbo
     {
-        return $this->gameStatus->desk->desk;
+        $turn = new TurnSkipbo();
+
+        // Пока только сбрасываем рандомную карту с руки в банк
+        foreach($this->gameStatus->playersCards[$numUser]->hand as $pos => $card) {
+            if($card) {
+                $turn->entityName = GameStatusSkipbo::HAND_CARD;
+                $turn->entityNum = $pos;
+                $turn->entityValue = $card;
+                $turn->newPositionName = GameStatusSkipbo::BANK_AREA;
+                $turn->newPositionNum = mt_rand(1, count($this->gameStatus->playersCards[$numUser]->bank));
+            }
+        }
+
+        return $turn;
     }
 
     public function submitTurn(): array
@@ -39,8 +52,6 @@ class GameSkipbo extends Game
         if (!$this->checkIsMyTurnAndLog()) {
             return parent::submitTurn();
         }
-
-
 
         $turn = new TurnSkipbo((json_decode(BC::$Request[TurnSkipbo::TURN_DATA_PARAM], true) ?: []) ?? []);
         if ($this->gameStatus->validateTurn($turn)) {
@@ -68,16 +79,22 @@ class GameSkipbo extends Game
     }
 
     // todo fully refactor
-    public function makeBotTurn(int $botUserNum)
+    public function makeBotTurn(int $botUserNum): void
     {
         //Обновили время активности бота
         $this->gameStatus->users[$botUserNum]->lastActiveTime = date('U');
         $this->gameStatus->users[$botUserNum]->inactiveTurn = 1000;
 
-        $newDesk = $this->makeBotMove();
+        $turn = $this->makeBotMove($botUserNum);
+        if ($this->gameStatus->validateTurn($turn, $botUserNum)) {
+            // Если игрок положил карту в банк, то это конец его хода
+            if($turn->newPositionName === GameStatusSkipbo::BANK_AREA) {
+                $this->nextTurn();
 
-        if ($this->gameStatus->desk->checkNewDesc($newDesk)) {
-            // todo SB-8
+                return;
+            }
+        } else {
+            // todo что делать,если ошибка в ходе бота?
         }
 
         $this->nextTurn();

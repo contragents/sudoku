@@ -44,7 +44,6 @@ class GameSudoku extends Game
             $nums7 = [];
             $keyPresent = false;
             $cellToPick = [];
-            $cellsToPick = [];
 
             foreach ($row as $j => $cell) {
                 if ($cell[1] > 0) {
@@ -452,7 +451,6 @@ class GameSudoku extends Game
                     $lang
                 );
             }
-
 
             foreach (T::SUPPORTED_LANGS as $lang) {
                 $this->gameStatus->users[($botUserNum + 1) % 2]->addComment(
