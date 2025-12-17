@@ -267,6 +267,7 @@ var cards = {
         width: cardWidth,
         svgObject: false,
     },
+    // Карты из общей колоды - 3 карты одна надо другой со смещением вниз
     kolodaCard1: {
         imgName: 'card_back',
         x: card1CommonBlockXCenter - 5 * cardStep - cardWidth,
@@ -491,6 +492,134 @@ var cards = {
         width: cardWidth,
         svgObject: false,
         preload: false,
+    },
+    bankCard1Player1: {
+        preloaded: true, // изображение загружено
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: [],
+        preload: false, // Не обрабатывать массово
+    },
+    bankCard2Player1: {
+        preloaded: true, // изображение загружено
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: [],
+        preload: false, // Не обрабатывать массово
+    },
+    bankCard3Player1: {
+        preloaded: true, // изображение загружено
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: [],
+        preload: false, // Не обрабатывать массово
+    },
+    bankCard4Player1: {
+        preloaded: true, // изображение загружено
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: [],
+        preload: false, // Не обрабатывать массово
+    },
+    bankCard1Player2: {
+        preloaded: true, // изображение загружено
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: [],
+        preload: false, // Не обрабатывать массово
+    },
+    bankCard2Player2: {
+        preloaded: true, // изображение загружено
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: [],
+        preload: false, // Не обрабатывать массово
+    },
+    bankCard3Player2: {
+        preloaded: true, // изображение загружено
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: [],
+        preload: false, // Не обрабатывать массово
+    },
+    bankCard4Player2: {
+        preloaded: true, // изображение загружено
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: [],
+        preload: false, // Не обрабатывать массово
+    },
+    bankCard1Player3: {
+        preloaded: true, // изображение загружено
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: [],
+        preload: false, // Не обрабатывать массово
+    },
+    bankCard2Player3: {
+        preloaded: true, // изображение загружено
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: [],
+        preload: false, // Не обрабатывать массово
+    },
+    bankCard3Player3: {
+        preloaded: true, // изображение загружено
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: [],
+        preload: false, // Не обрабатывать массово
+    },
+    bankCard4Player3: {
+        preloaded: true, // изображение загружено
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: [],
+        preload: false, // Не обрабатывать массово
+    },
+    bankCard1Player4: {
+        preloaded: true, // изображение загружено
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: [],
+        preload: false, // Не обрабатывать массово
+    },
+    bankCard2Player4: {
+        preloaded: true, // изображение загружено
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: [],
+        preload: false, // Не обрабатывать массово
+    },
+    bankCard3Player4: {
+        preloaded: true, // изображение загружено
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: [],
+        preload: false, // Не обрабатывать массово
+    },
+    bankCard4Player4: {
+        preloaded: true, // изображение загружено
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: [],
+        preload: false, // Не обрабатывать массово
     },
 }
 

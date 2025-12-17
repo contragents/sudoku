@@ -584,7 +584,7 @@ function displayCardCounter(count = false, player = 'You') {
         return;
     }
 
-    if(entities[counterBlockName].svgObject) {
+    if (entities[counterBlockName].svgObject) {
         entities[counterBlockName].svgObject.setVisible(false).destroy();
         entities[counterBlockName].svgObject = false;
     }
@@ -600,7 +600,7 @@ function displayCardCounter(count = false, player = 'You') {
     );
 }
 
-function checkGoalCard(goalCardValue) {
+function checkYouGoalCard(goalCardValue) {
     console.log(goalCardValue);
     if (cards.goalCard.svgObject && +cards.goalCard.svgObject.cardValue !== goalCardValue) {
         console.log('cards.goalCard.svgObject && +cards.goalCard.svgObject.cardValue !== goalCardValue', cards.goalCard.svgObject.cardValue, goalCardValue)
@@ -623,7 +623,34 @@ function checkGoalCard(goalCardValue) {
     }
 }
 
-function checkBankCards(bankObj) {
+function checkPlayerBankCards(bankObj, player) {
+    for (let pos in bankObj) {
+        console.log('bankCard' + pos + 'Player' + player);
+        // Deleting existing cards
+        while (cards['bankCard' + pos + 'Player' + player].svgObject.length) {
+            cards['bankCard' + pos + 'Player' + player].svgObject.pop().destroy();
+        }
+
+        while (bankObj[pos].length) {
+            let currentCardValue = bankObj[pos].shift();
+
+            cards['bankCard' + pos + 'Player' + player].svgObject.push(
+                getSVGCardBlockGlobal(
+                    coordinates[player]['bankCard' + pos].x,
+                    coordinates[player]['bankCard' + pos].y,
+                    'bankCard' + pos + 'Player' + player,
+                    faserObject,
+                    false,
+                    {entity: 'bankCard' + pos, cardValue: currentCardValue},
+                    false, // draggable last card only
+                    getCardImgName(currentCardValue)
+                )
+            );
+        }
+    }
+}
+
+function checkYouBankCards(bankObj) {
     for (let pos in bankObj) {
         // Deleting existing cards
         while (cards['bankCard' + pos].svgObject.length) {
@@ -646,7 +673,6 @@ function checkBankCards(bankObj) {
                 )
             );
         }
-
     }
 }
 

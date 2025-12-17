@@ -1280,18 +1280,39 @@ function commonCallback(data) {
             }
 
             if (myUserNum in data.desk) {
-                if('bank' in data.desk[myUserNum]) {
-                    checkBankCards(data.desk[myUserNum].bank);
+                if ('bank' in data.desk[myUserNum]) {
+                    checkYouBankCards(data.desk[myUserNum].bank);
                 }
 
-                // todo check this
-                if('goal' in data.desk[myUserNum]) {
-                    checkGoalCard(data.desk[myUserNum].goal);
+                if ('goal' in data.desk[myUserNum]) {
+                    checkYouGoalCard(data.desk[myUserNum].goal);
+                }
 
-                    // goalCard counter processing
+                // goalCard counter processing
+                if ('goal_count' in data.desk[myUserNum]) {
                     displayCardCounter(data.desk[myUserNum].goal_count);
                 }
+            }
 
+            // process players' cards
+            for (let numPlayer in data.desk) {
+                if (numPlayer === myUserNum) {
+                    continue;
+                }
+
+                if ('bank' in data.desk[numPlayer]) {
+                    checkPlayerBankCards(data.desk[numPlayer].bank, +numPlayer + 1);
+                }
+                /*
+                if ('goal' in data.desk[numPlayer]) {
+                    checkPlayerGoalCard(data.desk[numPlayer].goal, +numPlayer + 1);
+                }
+
+                // goalCard counter processing
+                if ('goal_count' in data.desk[numPlayer]) {
+                    displayCardCounter(data.desk[numPlayer].goal_count, +numPlayer + 1);
+                }
+                */
             }
         }
 
@@ -1353,7 +1374,7 @@ function commonCallback(data) {
             // todo Need to draw new goal card count
             // todo Ned to refresh player score
             if (turnSubmitObject.cardMoveParams.entity === '<?= GameStatusSkipbo::GOAL_CARD ?>') {
-                checkGoalCard(data.desk[myUserNum].goal);
+                checkYouGoalCard(data.desk[myUserNum].goal);
                 displayCardCounter(data.desk[myUserNum].goal_count);
             }
         } else {
