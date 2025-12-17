@@ -103,6 +103,8 @@ class Game
     const NUM_COINS_PLAYERS_KEY = '.num_coins_players';
     const TIME_VARIANTS = [60 => 0, 90 => 0, 120 => 0];
     const DEFAUTL_TURN_TIME = 120;
+    const NUM_SKIP_TURNS_TO_LOOSE = 3;
+
     public static array $players = []; // онлайн игроки
 
     public ?string $User;
@@ -808,7 +810,7 @@ class Game
         }
 
         foreach ($this->gameStatus->users as $num => $user) {
-            if (($maxres <= $user->score) && $user->isActive && !($pass && $num == $numLostUser)) {
+            if (($maxres <= $user->score) && $user->isActive && !($pass && $num === $numLostUser)) {
                 $maxres = $user->score;
                 $userWinner = $num;
             }
@@ -1065,7 +1067,7 @@ class Game
 
         //Поставим коррекцию времени начала хода для учета периодичности запросов пользователей
         if (
-            $this->SM::getPlayerStatus($this->User) == $this->SM::STATE_MY_TURN
+            $this->SM::getPlayerStatus($this->User) === $this->SM::STATE_MY_TURN
             &&
             !$this->gameStatus->aquiringTimes[$this->gameStatus->turnNumber]
         ) {
@@ -1081,6 +1083,8 @@ class Game
         } elseif (
             (date('U') - $this->gameStatus->turnBeginTime) > ($this->gameStatus->turnTime + static::TURN_DELTA_TIME)
         ) {
+            $this->finishTurn($this->gameStatus->activeUser);
+
             foreach (T::SUPPORTED_LANGS as $lang) {
                 $this->addToLog(
                     t::S('Time for the turn ran out', null, $lang),
@@ -1114,7 +1118,7 @@ class Game
             unset($this->gameStatus->users[$this->gameStatus->activeUser]->lastActiveTime);
             //Помечаем игрока неактивным
 
-            if ($this->gameStatus->users[$this->gameStatus->activeUser]->lostTurns >= 3) {
+            if ($this->gameStatus->users[$this->gameStatus->activeUser]->lostTurns >= static::NUM_SKIP_TURNS_TO_LOOSE) {
                 $this->storeGameResults($this->lost3TurnsWinner($this->gameStatus->activeUser));
 
                 if (isset($this->gameStatus->results['winner'])) {
@@ -1128,6 +1132,17 @@ class Game
         $userStatus = $this->SM::getPlayerStatus($this->User);
 
         return Response::state($userStatus);
+    }
+
+    /**
+     * Заготовка под метод принудительного завершения хода
+     * Для тех игр, где это предусмотрено
+     * @param int $numUser
+     * @return void
+     */
+    public function finishTurn(int $numUser): void
+    {
+        return;
     }
 
     public function submitTurn(): array

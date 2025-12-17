@@ -9,6 +9,8 @@ class GameSkipbo extends Game
 {
     public const GAME_NAME = 'skipbo';
 
+    const NUM_SKIP_TURNS_TO_LOOSE = 5;
+
     const DEFAULT_STACK_LEN = 30; // сколько карт в стеке
 
     const NUM_RATING_PLAYERS_KEY = self::GAME_NAME . parent::NUM_RATING_PLAYERS_KEY; // Список игроков онлайн
@@ -42,6 +44,24 @@ class GameSkipbo extends Game
         }
 
         return $turn;
+    }
+
+    public function finishTurn(int $numUser): void
+    {
+        $turn = new TurnSkipbo();
+
+        // Пока только сбрасываем рандомную карту с руки в банк
+        foreach($this->gameStatus->playersCards[$numUser]->hand as $pos => $card) {
+            if($card) {
+                $turn->entityName = GameStatusSkipbo::HAND_CARD;
+                $turn->entityNum = $pos;
+                $turn->entityValue = $card;
+                $turn->newPositionName = GameStatusSkipbo::BANK_AREA;
+                $turn->newPositionNum = mt_rand(1, count($this->gameStatus->playersCards[$numUser]->bank));
+            }
+        }
+
+        $this->gameStatus->validateTurn($turn, $numUser);
     }
 
     public function submitTurn(): array
