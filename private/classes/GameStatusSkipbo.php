@@ -28,7 +28,7 @@ class GameStatusSkipbo extends GameStatus
      * @param false|int $cardNumDown false, 1-12, 1000, 1001-1012
      * @return bool
      */
-    private static function checkCardOnCard(int $cardNumUp, $cardNumDown): bool
+    public static function checkCardOnCard(int $cardNumUp, $cardNumDown): bool
     {
         // Учитываем SKIPBO + номер карты для карты в commonArea
         if ($cardNumDown) {
@@ -103,8 +103,6 @@ class GameStatusSkipbo extends GameStatus
                         $this->delHandCard($turn->entityNum, $numUser);
                         // Дораздать карты до 5ти
                         $this->fillHand($numUser);
-
-                        // todo nextTurn() - делаем в GameSkipbo->submitTurn()
 
                         return true;
                     }
@@ -237,16 +235,8 @@ class GameStatusSkipbo extends GameStatus
                 ? (end($this->desk->desk[$commonPositionNum]) ?: 0) + 1 + DeskSkipbo::SKIPBO_CARD
                 : $cardValue;
 
-        Cache::rpush(
-            'common_last_card_' . $commonPositionNum,
-            [
-                'value' => end($this->desk->desk[$commonPositionNum]),
-                '% 1000' => end($this->desk->desk[$commonPositionNum]) % DeskSkipbo::SKIPBO_CARD
-            ]
-        );
         // Проверяем, что последняя карта 12 - убираем кучку во временную колоду
         if (end($this->desk->desk[$commonPositionNum]) % DeskSkipbo::SKIPBO_CARD === 12) {
-            Cache::rpush('common_last_card_' . $commonPositionNum, 'pushCardsToTmpKoloda');
             $this->desk->pushCardsToTmpKoloda($this->desk->desk[$commonPositionNum]);
             $this->desk->desk[$commonPositionNum] = [];
         }

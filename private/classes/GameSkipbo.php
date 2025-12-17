@@ -19,6 +19,7 @@ class GameSkipbo extends Game
     const RESPONSE_PARAMS = ['desk' => ['gameStatus' => 'openDesk']] + parent::RESPONSE_PARAMS;
 
     const DEFAUTL_TURN_TIME = 120;
+    const MAX_BOT_CYCLES = 50; // Максивальное число циклов на обдумывание хода ботом
 
     /** @var GameStatusSkipbo|null */
     public ?GameStatus $gameStatus = null;
@@ -30,20 +31,96 @@ class GameSkipbo extends Game
 
     private function makeBotMove(int $numUser): TurnSkipbo
     {
-        $turn = new TurnSkipbo();
+        $continue = true;
+        $numCyclesToGo = static::MAX_BOT_CYCLES;
+        // Работаем в цикле, обходя карты (целевую, на руках, банк)
+        while ($continue && $numCyclesToGo) {
+            $continue = false;
+            $numCyclesToGo--;
 
-        // Пока только сбрасываем рандомную карту с руки в банк
-        foreach($this->gameStatus->playersCards[$numUser]->hand as $pos => $card) {
-            if($card) {
-                $turn->entityName = GameStatusSkipbo::HAND_CARD;
-                $turn->entityNum = $pos;
-                $turn->entityValue = $card;
-                $turn->newPositionName = GameStatusSkipbo::BANK_AREA;
-                $turn->newPositionNum = mt_rand(1, count($this->gameStatus->playersCards[$numUser]->bank));
+            // Проверяем, можно ли сыграть целевой картой
+            $goalCard = end($this->gameStatus->playersCards[$numUser]->goalStack);
+            foreach ($this->gameStatus->desk->desk as $pos => &$cardsArr) {
+                if ($this->gameStatus->checkCardOnCard($goalCard, end($cardsArr))) {
+                    // Нашли место для целевой карты
+                    $goalCardTurnObject = new TurnSkipbo();
+                    $goalCardTurnObject->entityName = GameStatusSkipbo::GOAL_CARD;
+                    $goalCardTurnObject->entityValue = $goalCard;
+                    $goalCardTurnObject->entityNum = 1;
+                    $goalCardTurnObject->newPositionName = GameStatusSkipbo::COMMON_AREA;
+                    $goalCardTurnObject->newPositionNum = $pos;
+
+                    // todo validateTurn должен гдето вести учет набранных очков за ход и добавлять комментарий о наборе очков за ход
+                    if ($this->gameStatus->validateTurn($goalCardTurnObject, $numUser)) {
+                        // Ставим флаг продолжения цикла
+                        $continue = true;
+
+                        continue 2; // Повторяем while
+                    }
+                }
+            }
+
+            // Проверяем, можно ли поставить карту с руки в commonArea
+            foreach ($this->gameStatus->playersCards[$numUser]->hand as $handPos => $handCard) {
+                if(!$handCard) {
+                    continue;
+                }
+
+                foreach ($this->gameStatus->desk->desk as $commonPos => &$cardsArr) {
+                    if ($this->gameStatus->checkCardOnCard($handCard, end($cardsArr))) {
+                        $goalCardTurnObject = new TurnSkipbo();
+                        $goalCardTurnObject->entityName = GameStatusSkipbo::HAND_CARD;
+                        $goalCardTurnObject->entityValue = $handCard;
+                        $goalCardTurnObject->entityNum = $handPos;
+                        $goalCardTurnObject->newPositionName = GameStatusSkipbo::COMMON_AREA;
+                        $goalCardTurnObject->newPositionNum = $commonPos;
+
+                        if ($this->gameStatus->validateTurn($goalCardTurnObject, $numUser)) {
+                            // Ставим флаг продолжения цикла
+                            $continue = true;
+
+                            continue 3; // Повторяем while
+                        }
+                    }
+                }
+            }
+
+            // Проверяем, можно ли сыграть картой из банка
+            foreach ($this->gameStatus->playersCards[$numUser]->bank as $bankPos => &$bankCardsArr) {
+                foreach ($this->gameStatus->desk->desk as $commonPos => &$cardsArr) {
+                    $bankCard = end($bankCardsArr);
+                    if ($bankCard && $this->gameStatus->checkCardOnCard($bankCard, end($cardsArr))) {
+                        $goalCardTurnObject = new TurnSkipbo();
+                        $goalCardTurnObject->entityName = GameStatusSkipbo::BANK_CARD;
+                        $goalCardTurnObject->entityValue = $bankCard;
+                        $goalCardTurnObject->entityNum = $bankPos;
+                        $goalCardTurnObject->newPositionName = GameStatusSkipbo::COMMON_AREA;
+                        $goalCardTurnObject->newPositionNum = $commonPos;
+
+                        if ($this->gameStatus->validateTurn($goalCardTurnObject, $numUser)) {
+                            // Ставим флаг продолжения цикла
+                            $continue = true;
+
+                            continue 3; // Повторяем while
+                        }
+                    }
+                }
             }
         }
 
-        return $turn;
+        // Завершаем ход - сбрасываем рандомную карту с руки в банк
+        $turnEnd = new TurnSkipbo();
+        foreach ($this->gameStatus->playersCards[$numUser]->hand as $pos => $card) {
+            if ($card) {
+                $turnEnd->entityName = GameStatusSkipbo::HAND_CARD;
+                $turnEnd->entityNum = $pos;
+                $turnEnd->entityValue = $card;
+                $turnEnd->newPositionName = GameStatusSkipbo::BANK_AREA;
+                $turnEnd->newPositionNum = mt_rand(1, count($this->gameStatus->playersCards[$numUser]->bank));
+            }
+        }
+
+        return $turnEnd;
     }
 
     public function finishTurn(int $numUser): void
@@ -51,8 +128,8 @@ class GameSkipbo extends Game
         $turn = new TurnSkipbo();
 
         // Пока только сбрасываем рандомную карту с руки в банк
-        foreach($this->gameStatus->playersCards[$numUser]->hand as $pos => $card) {
-            if($card) {
+        foreach ($this->gameStatus->playersCards[$numUser]->hand as $pos => $card) {
+            if ($card) {
                 $turn->entityName = GameStatusSkipbo::HAND_CARD;
                 $turn->entityNum = $pos;
                 $turn->entityValue = $card;
@@ -78,7 +155,7 @@ class GameSkipbo extends Game
             $res = ['turn_response' => ['result' => TurnSkipbo::TURN_RESPONSE_OK]];
 
             // Если игрок положил карту в банк, то это конец его хода
-            if($turn->newPositionName === GameStatusSkipbo::BANK_AREA) {
+            if ($turn->newPositionName === GameStatusSkipbo::BANK_AREA) {
                 $this->nextTurn();
             }
         } else {
@@ -91,7 +168,7 @@ class GameSkipbo extends Game
     protected function nextTurn(): void
     {
         // Дораздали карты всем игрокам. На всякий случай
-        foreach($this->gameStatus->users as $num => $nothing) {
+        foreach ($this->gameStatus->users as $num => $nothing) {
             $this->gameStatus->fillHand($num);
         }
 
@@ -101,6 +178,8 @@ class GameSkipbo extends Game
     // todo fully refactor
     public function makeBotTurn(int $botUserNum): void
     {
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
         //Обновили время активности бота
         $this->gameStatus->users[$botUserNum]->lastActiveTime = date('U');
         $this->gameStatus->users[$botUserNum]->inactiveTurn = 1000;
@@ -108,7 +187,7 @@ class GameSkipbo extends Game
         $turn = $this->makeBotMove($botUserNum);
         if ($this->gameStatus->validateTurn($turn, $botUserNum)) {
             // Если игрок положил карту в банк, то это конец его хода
-            if($turn->newPositionName === GameStatusSkipbo::BANK_AREA) {
+            if ($turn->newPositionName === GameStatusSkipbo::BANK_AREA) {
                 $this->nextTurn();
 
                 return;
