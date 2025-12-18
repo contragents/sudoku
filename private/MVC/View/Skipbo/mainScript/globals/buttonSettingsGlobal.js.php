@@ -621,6 +621,42 @@ var cards = {
         svgObject: [],
         preload: false, // Не обрабатывать массово
     },
+    goalCardPlayer1: {
+        preloaded: true, // изображения загружены
+        filename: 'card_back',
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    goalCardPlayer2: {
+        preloaded: true, // изображения загружены
+        filename: 'card_back',
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    goalCardPlayer3: {
+        preloaded: true, // изображения загружены
+        filename: 'card_back',
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
+    goalCardPlayer4: {
+        preloaded: true, // изображения загружены
+        filename: 'card_back',
+        x: 1,
+        y: 1,
+        width: mediumCardWidth,
+        svgObject: false,
+        preload: false, // Не обрабатывать массово
+    },
 }
 
 var entities = {
@@ -897,42 +933,6 @@ var entities = {
         y: 1,
         width: smallCardWidth,
         svgObject: false, // массив карточек, удалять через pop().destroy();
-        preload: false, // Не обрабатывать массово
-    },
-    goalCardPlayer1: {
-        preloaded: true, // изображения загружены
-        filename: 'card_10',
-        x: 1,
-        y: 1,
-        width: mediumCardWidth,
-        svgObject: false,
-        preload: false, // Не обрабатывать массово
-    },
-    goalCardPlayer2: {
-        preloaded: true, // изображения загружены
-        filename: 'card_10',
-        x: 1,
-        y: 1,
-        width: mediumCardWidth,
-        svgObject: false,
-        preload: false, // Не обрабатывать массово
-    },
-    goalCardPlayer3: {
-        preloaded: true, // изображения загружены
-        filename: 'card_10',
-        x: 1,
-        y: 1,
-        width: mediumCardWidth,
-        svgObject: false,
-        preload: false, // Не обрабатывать массово
-    },
-    goalCardPlayer4: {
-        preloaded: true, // изображения загружены
-        filename: 'card_10',
-        x: 1,
-        y: 1,
-        width: mediumCardWidth,
-        svgObject: false,
         preload: false, // Не обрабатывать массово
     },
     bankAreaMediumPlayer1Pos1: {

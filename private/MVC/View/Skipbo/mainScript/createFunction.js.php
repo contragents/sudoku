@@ -180,7 +180,10 @@ function () {
 
     coordinates.you = {};
     coordinates.you.goalCard = {x: cards.goalCard.x, y: cards.goalCard.y};
-    coordinates.you.cardCounterYou = {x: coordinates.you.goalCard.x, y: coordinates.you.goalCard.y - cardWidth * cardSideFactor / 2 - 70 / 90 * entities.cardCounterYou.width / 2};
+    coordinates.you.cardCounter = {
+        x: coordinates.you.goalCard.x,
+        y: coordinates.you.goalCard.y - cardWidth * cardSideFactor / 2 - 70 / 90 * entities.cardCounterYou.width / 2
+    };
 
     coordinates.you.handCard1 = {x: cards.handCard1.svgObject.x, y: cards.handCard1.svgObject.y};
     coordinates.you.handCard2 = {x: cards.handCard2.svgObject.x, y: cards.handCard2.svgObject.y};
@@ -201,8 +204,8 @@ function () {
     // Выводим счетчик карт над целевой картой Игрока
     /*
     getContainerFromSVG(
-        coordinates.you.cardCounterYou.x,
-        coordinates.you.cardCounterYou.y,
+        coordinates.you.cardCounter.x,
+        coordinates.you.cardCounter.y,
         'cardCounterYou',
         winScore - (playerScores['youBlock'].digit2 * 10 + playerScores['youBlock'].digit3)
     );
@@ -276,20 +279,28 @@ function () {
                 x: backplateContainer.x + backplateContainer.displayWidth / 2 - (mediumCardWidth / 2 + 2 * cardStep),
                 y: backplateContainer.y + backplateContainer.displayHeight / 2 - cardWidth
             };
-            getContainerFromSVG(
+            /*getContainerFromSVG(
                 coordinates[player].goalCard.x,
                 coordinates[player].goalCard.y,
                 'goalCardPlayer' + player,
                 getCardImgName(player * 2),
                 {cardValue: player * 2}
-            );
+            );*/
+
+            // Координаты счетчика карт над целевой картой противника
+            coordinates[player].cardCounter = {
+                x: coordinates[player].goalCard.x,
+                y: backplateContainer.y + backplateContainer.displayHeight / 2 - cardWidth - mediumCardWidth * cardSideFactor + 70 / 90 * entities['cardCounterPlayer' + player].width / 2
+            };
             // Выводим счетчик карт над целевой картой противника
+            /*
             getContainerFromSVG(
-                coordinates[player].goalCard.x,
-                backplateContainer.y + backplateContainer.displayHeight / 2 - cardWidth - mediumCardWidth * cardSideFactor + 70 / 90 * entities['cardCounterPlayer' + player].width / 2,
+                coordinates[player].cardCounter.x,
+                coordinates[player].cardCounter.y,
                 'cardCounterPlayer' + player,
                 winScore - (playerScores['player' + player + 'Block'].digit2 * 10 + playerScores['player' + player + 'Block'].digit3)
             );
+             */
 
             // Выводим карты на руках противника рубашкой кверху
             for (let i = 1; i <= HAND_CARDS_NUM; i++) {

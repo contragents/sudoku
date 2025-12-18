@@ -46,6 +46,12 @@ class DeskSkipbo extends Desk
      */
     public function getCardsFromKoloda(int $cardNum): array
     {
+        if(count($this->koloda) < $cardNum) {
+            shuffle($this->tmpKoloda);
+            $this->koloda[] = array_splice($this->tmpKoloda, 0);
+            // todo Добавить событие “Подмес карт из tmpKoloda в Koloda”
+        }
+
         return array_splice($this->koloda, 0, $cardNum);
     }
 

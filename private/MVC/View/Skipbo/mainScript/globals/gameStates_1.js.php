@@ -1290,20 +1290,20 @@ function commonCallback(data) {
 
                 // goalCard counter processing
                 if ('goal_count' in data.desk[myUserNum]) {
-                    displayCardCounter(data.desk[myUserNum].goal_count);
+                    displayCardCounter(data.desk[myUserNum].goal_count, YOU);
                 }
             }
 
             // process players' cards
             for (let numPlayer in data.desk) {
-                if (numPlayer === myUserNum) {
+                if (+numPlayer === myUserNum) {
                     continue;
                 }
 
                 if ('bank' in data.desk[numPlayer]) {
                     checkPlayerBankCards(data.desk[numPlayer].bank, +numPlayer + 1);
                 }
-                /*
+
                 if ('goal' in data.desk[numPlayer]) {
                     checkPlayerGoalCard(data.desk[numPlayer].goal, +numPlayer + 1);
                 }
@@ -1312,7 +1312,6 @@ function commonCallback(data) {
                 if ('goal_count' in data.desk[numPlayer]) {
                     displayCardCounter(data.desk[numPlayer].goal_count, +numPlayer + 1);
                 }
-                */
             }
         }
 
@@ -1375,7 +1374,7 @@ function commonCallback(data) {
             // todo Ned to refresh player score
             if (turnSubmitObject.cardMoveParams.entity === '<?= GameStatusSkipbo::GOAL_CARD ?>') {
                 checkYouGoalCard(data.desk[myUserNum].goal);
-                displayCardCounter(data.desk[myUserNum].goal_count);
+                displayCardCounter(data.desk[myUserNum].goal_count, YOU);
             }
         } else {
             // todo Ошибка в посланной карте - нужно перерисовать все видимые игроку карты

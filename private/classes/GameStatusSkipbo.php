@@ -19,6 +19,7 @@ class GameStatusSkipbo extends GameStatus
     const COMMON_AREA = 'commonArea';
     const BANK_AREA = 'bankArea';
 
+    private array $eventStack = []; // Стек событий с общими картами
 
     /** @var PlayerCards[] $playersCards массив карт игроков (карты на руках, стек, банк 4 кучки) */
     public array $playersCards = [];

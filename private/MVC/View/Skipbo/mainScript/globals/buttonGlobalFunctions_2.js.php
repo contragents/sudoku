@@ -569,10 +569,11 @@ function checkCommonCards(commonCardsObj) {
     }
 }
 
-function displayCardCounter(count = false, player = 'You') {
+function displayCardCounter(count, player) {
+    console.log(player);
     let counterBlockName = 'cardCounter';
     let playerBlockName = 'Block';
-    if (player === 'You') {
+    if (player === YOU) {
         counterBlockName += 'You';
         playerBlockName = 'You' + playerBlockName;
     } else {
@@ -590,8 +591,8 @@ function displayCardCounter(count = false, player = 'You') {
     }
 
     entities[counterBlockName].svgObject = getContainerFromSVG(
-        coordinates.you.cardCounterYou.x,
-        coordinates.you.cardCounterYou.y,
+        coordinates[player].cardCounter.x,
+        coordinates[player].cardCounter.y,
         counterBlockName,
         count
             ? count
@@ -600,16 +601,33 @@ function displayCardCounter(count = false, player = 'You') {
     );
 }
 
+function checkPlayerGoalCard(goalCardValue, player) {
+    if (cards['goalCardPlayer' + player].svgObject && +cards['goalCardPlayer' + player].svgObject.cardValue !== goalCardValue) {
+        cards['goalCardPlayer' + player].svgObject.setVisible(false).destroy();
+        cards['goalCardPlayer' + player].svgObject = false;
+    }
+
+    if (!cards['goalCardPlayer' + player].svgObject) {
+        cards['goalCardPlayer' + player].svgObject = getSVGCardBlockGlobal(
+            coordinates[player].goalCard.x,
+            coordinates[player].goalCard.y,
+            'goalCardPlayer' + player,
+            faserObject,
+            false,
+            {entity: 'goalCard', cardValue: goalCardValue},
+            false,
+            getCardImgName(goalCardValue),
+        );
+    }
+}
+
 function checkYouGoalCard(goalCardValue) {
-    console.log(goalCardValue);
     if (cards.goalCard.svgObject && +cards.goalCard.svgObject.cardValue !== goalCardValue) {
-        console.log('cards.goalCard.svgObject && +cards.goalCard.svgObject.cardValue !== goalCardValue', cards.goalCard.svgObject.cardValue, goalCardValue)
         cards.goalCard.svgObject.setVisible(false).destroy();
         cards.goalCard.svgObject = false;
     }
 
     if (!cards.goalCard.svgObject) {
-        console.log('!cards.goalCard.svgObject', coordinates.you.goalCard.x, coordinates.you.goalCard.y);
         cards.goalCard.svgObject = getSVGCardBlockGlobal(
             coordinates.you.goalCard.x,
             coordinates.you.goalCard.y,
