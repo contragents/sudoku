@@ -570,15 +570,15 @@ function checkCommonCards(commonCardsObj) {
 }
 
 function displayCardCounter(count, player) {
-    console.log(player);
-    let counterBlockName = 'cardCounter';
-    let playerBlockName = 'Block';
+    let counterBlockName = '';
+    let playerBlockName = '';
+
     if (player === YOU) {
-        counterBlockName += 'You';
-        playerBlockName = 'You' + playerBlockName;
+        counterBlockName = 'cardCounterYou';
+        playerBlockName = 'youBlock';
     } else {
-        counterBlockName += 'Player' + player;
-        playerBlockName = 'player' + player + playerBlockName;
+        counterBlockName = 'cardCounterPlayer' + player;
+        playerBlockName = 'player' + player + 'Block';
     }
 
     if (entities[counterBlockName].svgObject && 'count' in entities[counterBlockName].svgObject && entities[counterBlockName].svgObject.count === count) {
@@ -594,11 +594,11 @@ function displayCardCounter(count, player) {
         coordinates[player].cardCounter.x,
         coordinates[player].cardCounter.y,
         counterBlockName,
-        count
-            ? count
-            : (winScore - (playerScores[playerBlockName].digit2 * 10 + playerScores[playerBlockName].digit3)),
+        count,
         {count: count}
     );
+
+    displayScoreGlobal(winScore - count, playerBlockName, true);
 }
 
 function checkPlayerGoalCard(goalCardValue, player) {
@@ -643,7 +643,6 @@ function checkYouGoalCard(goalCardValue) {
 
 function checkPlayerBankCards(bankObj, player) {
     for (let pos in bankObj) {
-        console.log('bankCard' + pos + 'Player' + player);
         // Deleting existing cards
         while (cards['bankCard' + pos + 'Player' + player].svgObject.length) {
             cards['bankCard' + pos + 'Player' + player].svgObject.pop().destroy();

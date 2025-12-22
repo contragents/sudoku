@@ -1271,46 +1271,57 @@ function commonCallback(data) {
             }
         }
 
-        if ('desk' in data) {
-            if ('you_hand_cards' in data.desk) {
-                checkHandCards(data.desk.you_hand_cards);
-            }
-            if ('common_cards' in data.desk) {
-                checkCommonCards(data.desk.common_cards);
-            }
-
-            if (myUserNum in data.desk) {
-                if ('bank' in data.desk[myUserNum]) {
-                    checkYouBankCards(data.desk[myUserNum].bank);
-                }
-
-                if ('goal' in data.desk[myUserNum]) {
-                    checkYouGoalCard(data.desk[myUserNum].goal);
-                }
-
-                // goalCard counter processing
-                if ('goal_count' in data.desk[myUserNum]) {
-                    displayCardCounter(data.desk[myUserNum].goal_count, YOU);
-                }
+        // Проверяем, что это не ответ на посланный ход
+        if (!('turn_response' in data)) {
+            // Ответ на посланный ход еще не получен?
+            if (turnSubmitObject.isProcessing) {
+                // Пока просто откатываем карту на старое место
+                turnSubmitObject.gameObject.x = turnSubmitObject.oldX;
+                turnSubmitObject.gameObject.y = turnSubmitObject.oldY;
+                freeTurnSubmitObject();
             }
 
-            // process players' cards
-            for (let numPlayer in data.desk) {
-                if (+numPlayer === myUserNum) {
-                    continue;
+            if ('desk' in data) {
+                if ('you_hand_cards' in data.desk) {
+                    checkHandCards(data.desk.you_hand_cards);
+                }
+                if ('common_cards' in data.desk) {
+                    checkCommonCards(data.desk.common_cards);
                 }
 
-                if ('bank' in data.desk[numPlayer]) {
-                    checkPlayerBankCards(data.desk[numPlayer].bank, +numPlayer + 1);
+                if (myUserNum in data.desk) {
+                    if ('bank' in data.desk[myUserNum]) {
+                        checkYouBankCards(data.desk[myUserNum].bank);
+                    }
+
+                    if ('goal' in data.desk[myUserNum]) {
+                        checkYouGoalCard(data.desk[myUserNum].goal);
+                    }
+
+                    // goalCard counter processing
+                    if ('goal_count' in data.desk[myUserNum]) {
+                        displayCardCounter(data.desk[myUserNum].goal_count, YOU);
+                    }
                 }
 
-                if ('goal' in data.desk[numPlayer]) {
-                    checkPlayerGoalCard(data.desk[numPlayer].goal, +numPlayer + 1);
-                }
+                // process players' cards
+                for (let numPlayer in data.desk) {
+                    if (+numPlayer === myUserNum) {
+                        continue;
+                    }
 
-                // goalCard counter processing
-                if ('goal_count' in data.desk[numPlayer]) {
-                    displayCardCounter(data.desk[numPlayer].goal_count, +numPlayer + 1);
+                    if ('bank' in data.desk[numPlayer]) {
+                        checkPlayerBankCards(data.desk[numPlayer].bank, +numPlayer + 1);
+                    }
+
+                    if ('goal' in data.desk[numPlayer]) {
+                        checkPlayerGoalCard(data.desk[numPlayer].goal, +numPlayer + 1);
+                    }
+
+                    // goalCard counter processing
+                    if ('goal_count' in data.desk[numPlayer]) {
+                        displayCardCounter(data.desk[numPlayer].goal_count, +numPlayer + 1);
+                    }
                 }
             }
         }
@@ -1340,12 +1351,8 @@ function commonCallback(data) {
         displayTimeGlobal(+vremiaMinutes * 100 + +vremiaSeconds, true);
     }
 
-    console.log(gameState, 'turn_response' in data, turnSubmitObject.isProcessing, turnSubmitObject.isSentToServer, !turnSubmitObject.isResponseReceived);
-    if (gameState !== MY_TURN_STATE && turnSubmitObject.isProcessing) {
-        freeTurnSubmitObject();
-    } else if (
-        gameState === MY_TURN_STATE
-        && 'turn_response' in data
+    if (
+        'turn_response' in data
         && turnSubmitObject.isProcessing
         && turnSubmitObject.isSentToServer
         && !turnSubmitObject.isResponseReceived
@@ -1369,12 +1376,13 @@ function commonCallback(data) {
                 }
             }
 
-            // Need to draw new goal card
-            // todo Need to draw new goal card count
-            // todo Ned to refresh player score
             if (turnSubmitObject.cardMoveParams.entity === '<?= GameStatusSkipbo::GOAL_CARD ?>') {
                 checkYouGoalCard(data.desk[myUserNum].goal);
                 displayCardCounter(data.desk[myUserNum].goal_count, YOU);
+            }
+
+            if ('you_hand_cards' in data.desk) {
+                checkHandCards(data.desk.you_hand_cards);
             }
         } else {
             // todo Ошибка в посланной карте - нужно перерисовать все видимые игроку карты

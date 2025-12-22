@@ -48,7 +48,7 @@ class DeskSkipbo extends Desk
     {
         if(count($this->koloda) < $cardNum) {
             shuffle($this->tmpKoloda);
-            $this->koloda[] = array_splice($this->tmpKoloda, 0);
+            $this->koloda += array_splice($this->tmpKoloda, 0);
             // todo Добавить событие “Подмес карт из tmpKoloda в Koloda”
         }
 
@@ -57,7 +57,7 @@ class DeskSkipbo extends Desk
 
     public function pushCardsToTmpKoloda(array $cardsToPush): void
     {
-        $this->tmpKoloda[] = array_map(
+        $this->tmpKoloda += array_map(
             fn($cardValue) => min($cardValue, self::SKIPBO_CARD),
             $cardsToPush
         );

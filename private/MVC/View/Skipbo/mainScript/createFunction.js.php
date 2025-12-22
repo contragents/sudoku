@@ -241,7 +241,9 @@ function () {
             playerContainer.y = backplateContainer.y - backplateContainer.displayHeight / 2 + playerContainer.displayHeight / 4 + cardStep;
             playerContainer.setAlpha(1);
             faserObject.children.bringToTop(playerContainer); // Поднять созданный ранее контейнер
-            displayScoreGlobal(Math.round(Math.random() * 30), 'player' + player + 'Block', true);
+
+            // Всем ставим 0 очков счета
+            displayScoreGlobal(0, 'player' + player + 'Block', true);
 
             // Получаем никнеймы соперников
             getContainerFromSVG(
