@@ -676,7 +676,7 @@ function checkYouBankCards(bankObj) {
 
         while (bankObj[pos].length) {
             let currentCardValue = bankObj[pos].shift();
-            console.log(currentCardValue, pos, cards['bankCard' + pos].svgObject);
+
             cards['bankCard' + pos].svgObject.push(
                 getSVGCardBlockGlobal(
                     coordinates.you['bankCard' + pos].x,

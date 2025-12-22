@@ -116,10 +116,9 @@ class GameStatusSkipbo extends GameStatus
 
                             // Убираем карту с руки игрока
                             $this->delHandCard($turn->entityNum, $numUser);
+
                             // Проверим, вдруг все карты с руки потрачены - нужно дораздать 5 карт и продолжить ход
-                            if (array_values($this->playersCards[$numUser]->hand) === array_values(
-                                    [false, false, false, false, false]
-                                )) {
+                            if (empty(array_filter($this->playersCards[$numUser]->hand))) {
                                 $this->fillHand($numUser);
                                 // todo Добавить время на ход?
                             }
@@ -223,7 +222,7 @@ class GameStatusSkipbo extends GameStatus
     public function fillHand($numUser): void
     {
         foreach ($this->playersCards[$numUser]->hand as &$cardValue) {
-            if ($cardValue === false) {
+            if (!$cardValue) {
                 [$cardValue] = $this->desk->getCardsFromKoloda(1);
             }
         }

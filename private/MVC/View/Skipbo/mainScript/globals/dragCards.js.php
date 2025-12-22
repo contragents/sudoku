@@ -108,7 +108,7 @@ function getAvailableCommonPlaces(cardNum) {
 
     for (let i = 1; i <= 4; i++) {
         let currentCard = cards['commonCard' + i].svgObject;
-        console.log(currentCard);
+
         // Учитываем SKIPBO + номер карты для карты в commonArea
         if (currentCard) {
             if (cardNum === SKIPBO && currentCard.cardValue < SKIPBO) {
@@ -120,7 +120,7 @@ function getAvailableCommonPlaces(cardNum) {
             res.push(i);
         }
     }
-    console.log(res, cardNum);
+
     return res;
 }
 

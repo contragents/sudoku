@@ -1213,15 +1213,21 @@ function displayScoreGlobal(score, blockName, isActive = false) {
     let firstDigit = (score - secondDigit * 10 - thirdDigit) / 100;
 
     if (thirdDigit !== playerScores[blockName].digit3 || mode !== playerScores[blockName].mode) {
-        container.getByName(playerScores[blockName].mode + '_' + playerScores[blockName].digit3 + '_' + '3').setVisible(false);
+        if(container.getByName(playerScores[blockName].mode + '_' + playerScores[blockName].digit3 + '_' + '3')) {
+            container.getByName(playerScores[blockName].mode + '_' + playerScores[blockName].digit3 + '_' + '3').setVisible(false);
+        }
     }
 
     if (secondDigit !== playerScores[blockName].digit2 || mode !== playerScores[blockName].mode) {
-        container.getByName(playerScores[blockName].mode + '_' + playerScores[blockName].digit2 + '_' + '2').setVisible(false);
+        if(container.getByName(playerScores[blockName].mode + '_' + playerScores[blockName].digit2 + '_' + '2')) {
+            container.getByName(playerScores[blockName].mode + '_' + playerScores[blockName].digit2 + '_' + '2').setVisible(false);
+        }
     }
 
     if (firstDigit !== playerScores[blockName].digit1 || mode !== playerScores[blockName].mode) {
-        container.getByName(playerScores[blockName].mode + '_' + playerScores[blockName].digit1 + '_' + '1').setVisible(false);
+        if(container.getByName(playerScores[blockName].mode + '_' + playerScores[blockName].digit1 + '_' + '1')) {
+            container.getByName(playerScores[blockName].mode + '_' + playerScores[blockName].digit1 + '_' + '1').setVisible(false);
+        }
     }
 
     playerScores[blockName].mode = mode;
