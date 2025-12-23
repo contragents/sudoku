@@ -1082,8 +1082,6 @@ function commonCallback(data) {
         gameSubState = data.gameSubState;
     }
 
-    console.log(gameOldState + '->' + gameState);
-
     if ((gameOldState !== gameState) || (gameOldSubState !== gameSubState)) {
         if ('active_users' in data && +data.active_users === 0) {
             clearTimeout(requestToServerEnabledTimeout);
@@ -1294,13 +1292,14 @@ function commonCallback(data) {
                         checkYouBankCards(data.desk[myUserNum].bank);
                     }
 
-                    if ('goal' in data.desk[myUserNum]) {
-                        checkYouGoalCard(data.desk[myUserNum].goal);
-                    }
-
                     // goalCard counter processing
                     if ('goal_count' in data.desk[myUserNum]) {
                         displayCardCounter(data.desk[myUserNum].goal_count, YOU);
+
+                        // Обрабатываем goal-карту только если goal_count > 0
+                        if (data.desk[myUserNum].goal_count && 'goal' in data.desk[myUserNum]) {
+                            checkYouGoalCard(data.desk[myUserNum].goal);
+                        }
                     }
                 }
 
@@ -1314,13 +1313,14 @@ function commonCallback(data) {
                         checkPlayerBankCards(data.desk[numPlayer].bank, +numPlayer + 1);
                     }
 
-                    if ('goal' in data.desk[numPlayer]) {
-                        checkPlayerGoalCard(data.desk[numPlayer].goal, +numPlayer + 1);
-                    }
-
                     // goalCard counter processing
                     if ('goal_count' in data.desk[numPlayer]) {
                         displayCardCounter(data.desk[numPlayer].goal_count, +numPlayer + 1);
+
+                        // Обрабатываем goal-карту только если goal_count > 0
+                        if (data.desk[numPlayer].goal_count && 'goal' in data.desk[numPlayer]) {
+                            checkPlayerGoalCard(data.desk[numPlayer].goal, +numPlayer + 1);
+                        }
                     }
                 }
             }
@@ -1377,8 +1377,16 @@ function commonCallback(data) {
             }
 
             if (turnSubmitObject.cardMoveParams.entity === '<?= GameStatusSkipbo::GOAL_CARD ?>') {
-                checkYouGoalCard(data.desk[myUserNum].goal);
-                displayCardCounter(data.desk[myUserNum].goal_count, YOU);
+
+                if ('goal_count' in data.desk[myUserNum]) {
+                    // Обрабатываем goal-карту только если goal_count > 0
+                    if (data.desk[myUserNum].goal_count && 'goal' in data.desk[myUserNum]) {
+                        checkYouGoalCard(data.desk[myUserNum].goal);
+                    }
+
+                    displayCardCounter(data.desk[myUserNum].goal_count, YOU);
+                }
+
             }
 
             if ('you_hand_cards' in data.desk) {
@@ -1443,7 +1451,37 @@ function commonCallback(data) {
 
     if ('winScore' in data && winScore === false) {
         winScore = data.winScore;
-        // todo SB-8 adjust goalBLock
+        console.log(winScore);
+
+        while (players.goalBlock.svgObject.length) {
+            players.goalBlock.svgObject.pop().setVisible(false).destroy();
+        }
+
+        let resourceName = 'goalBlock_' + winScore + '_' + Date.now();
+
+        preloaderObject.load.svg(resourceName + OTJAT_MODE, BASE_URL + `img/otjat/${players.goalBlock.filename}${winScore}.svg`,
+            {
+                ...('width' in players.goalBlock && {
+                    'width': players.goalBlock.width,
+                }),
+                'height':
+                    'height' in players.goalBlock ? players.goalBlock.height : buttonHeight,
+            }
+        );
+
+        preloaderObject.load.start();
+
+        preloaderObject.load.on('complete', function () {
+            let playerTmpBlockModes = playerBlockModes;
+            playerBlockModes = [OTJAT_MODE];
+
+            while (players.goalBlock.svgObject.length) {
+                players.goalBlock.svgObject.pop().setVisible(false).destroy();
+            }
+            players.goalBlock.svgObject.push(getSVGBlockGlobal(players.goalBlock.x, players.goalBlock.y, resourceName, faserObject));
+
+            playerBlockModes = playerTmpBlockModes;
+        });
     }
 
     responseData = data;

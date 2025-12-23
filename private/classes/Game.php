@@ -541,23 +541,13 @@ class Game
         return $coinPlayers;
     }
 
-    public function saveGameUsers(int $currentGame, array $currentGameUsers)
+    public function saveGameUsers(int $currentGame, array $currentGameUsers): void
     {
         // Сохраняем список игроков в игре
         Cache::setex(
             self::getCacheKey(self::GAME_USERS_KEY . $currentGame),
             self::CACHE_TIMEOUT,
             $currentGameUsers
-        );
-    }
-
-    public function saveUserLastActivity(string $User)
-    {
-        // todo нигде не используется
-        Cache::setex(
-            self::getCacheKey(self::GAME_USERS_KEY . $User . '_last_activity'),
-            self::CACHE_TIMEOUT,
-            date('U')
         );
     }
 
@@ -612,8 +602,6 @@ class Game
 
             $this->storeGameStatus();
         }
-
-        $this->saveUserLastActivity($this->User);
     }
 
     protected function getCurrentGameNumber(): ?int
@@ -742,7 +730,7 @@ class Game
         return $log ?: null;
     }
 
-    public function addToLog($message, string $lang, ?int $numUser = null)
+    public function addToLog($message, string $lang, ?int $numUser = null): void
     {
         if (!isset($this->gameStatus->gameLog[$lang])) {
             $this->gameStatus->gameLog[$lang] = [];
@@ -779,20 +767,6 @@ class Game
     {
         return $this->Queue->doSomethingWithThisStuff();
     }
-
-    /*
-    protected function resultsResponse(): array
-    {
-        $desk = $this->gameStatus->desk;
-        return [
-            BC::GAME_STATE_PARAM => $this->SM::STATE_GAME_RESULTS,
-            'comments' => $this->gameStatus->results['winner'] == $this->User
-                ? "<strong style=\"color:green;\">Вы выиграли!</strong><br/>Начните новую игру"
-                : "<strong style=\"color:red;\">Вы проиграли!</strong><br/>Начните новую игру",
-            ($desk ? 'desk' : 'nothing') => $desk
-        ];
-    }
-    */
 
     /**
      * Один метод для пропустивших 3 хода и для сдавшихся.
@@ -1078,6 +1052,8 @@ class Game
             }
         }
 
+        // todo Сделать для Skip-Bo обработку хода за несколько запросов по 3-5 карт
+        // не ждем до 20 сек до конца хода
         if ($this->isActivePlayerBot() && date('U') - $this->gameStatus->turnBeginTime > 20) {
             $this->makeBotTurn($this->gameStatus->activeUser);
         } elseif (
@@ -1093,30 +1069,34 @@ class Game
                 );
             }
 
+            // Добавим коммент о пропуске хода всем игрокам
+            $activeUser = $this->gameStatus->users[$this->gameStatus->activeUser];
+            $msgKey = 'Time for the turn ran out';
+
+            // 1. Подготавливаем переводы заранее
+            $messages = [];
             foreach (T::SUPPORTED_LANGS as $lang) {
-                $this->gameStatus->users[$this->gameStatus->activeUser]->addComment(
-                    T::S('Time for the turn ran out', null, $lang),
-                    $lang
-                );
+                $translatedMsg = T::S($msgKey, null, $lang);
+                $messages[$lang] = [
+                    'active' => $translatedMsg,
+                    'others' => $activeUser->usernameLangArray[$lang] . ' - ' . $translatedMsg
+                ];
             }
 
-            // Добавили коммент о пропуске хода всем игрокам
+            // 2. Один цикл по всем юзерам
             foreach ($this->gameStatus->users as $numUser => $user) {
-                if ($numUser !== $this->gameStatus->activeUser) {
-                    foreach (T::SUPPORTED_LANGS as $lang) {
-                        $user->addComment(
-                            $this->gameStatus->users[$this->gameStatus->activeUser]->usernameLangArray[$lang]
-                            . ' - ' . T::S('Time for the turn ran out', null, $lang),
-                            $lang
-                        );
-                    }
+                $isActive = ($numUser === $this->gameStatus->activeUser);
+
+                foreach (T::SUPPORTED_LANGS as $lang) {
+                    $text = $isActive ? $messages[$lang]['active'] : $messages[$lang]['others'];
+                    $user->addComment($text, $lang);
                 }
             }
 
+            //Помечаем игрока неактивным
             $this->gameStatus->users[$this->gameStatus->activeUser]->lostTurns++;
             $this->gameStatus->users[$this->gameStatus->activeUser]->inactiveTurn = $this->gameStatus->turnNumber;
             unset($this->gameStatus->users[$this->gameStatus->activeUser]->lastActiveTime);
-            //Помечаем игрока неактивным
 
             if ($this->gameStatus->users[$this->gameStatus->activeUser]->lostTurns >= static::NUM_SKIP_TURNS_TO_LOOSE) {
                 $this->storeGameResults($this->lost3TurnsWinner($this->gameStatus->activeUser));
@@ -1483,6 +1463,7 @@ class Game
 
     public function getTimeLeft(): int
     {
+        // Какаято мутная логика с aquiringTimes - хз но работает
         if (@($this->gameStatus->aquiringTimes[$this->gameStatus->turnNumber] > 0)) {
             @($turnTimeLeft = ($this->gameStatus->aquiringTimes[$this->gameStatus->turnNumber] + $this->gameStatus->turnTime) - date(
                     'U'
@@ -1492,7 +1473,8 @@ class Game
         }
 
         $res = $turnTimeLeft ?? 0;
-        return $res >= 0 ? $res : 0;
+
+        return max($res, 0);
     }
 
     public function getCurrentPlayerCommonId(): ?int

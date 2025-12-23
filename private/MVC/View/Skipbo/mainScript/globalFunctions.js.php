@@ -639,7 +639,7 @@ function getSVGCardBlockGlobal(X, Y, buttonName, _this, scalable = false, props 
     return container;
 }
 
-function getSVGBlockGlobal(X, Y, buttonName, _this, scalable, hasDigits = false) {
+function getSVGBlockGlobal(X, Y, buttonName, _this, scalable = false, hasDigits = false) {
     let elements = [];
     let elementNumber = 0;
 

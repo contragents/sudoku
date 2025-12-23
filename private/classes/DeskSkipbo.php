@@ -40,7 +40,7 @@ class DeskSkipbo extends Desk
     }
 
     /**
-     * Получает $cardNum крт из колоды, уменьшая колоду
+     * Отдает массив $cardNum карт из колоды, уменьшая колоду
      * @param int $cardNum
      * @return array
      */

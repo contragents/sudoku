@@ -15,7 +15,7 @@ const BASE_URL = '<?= SkipboController::GAME_URL() ?>';
 
 //<?php include(ROOT_DIR . '/js/common_functions/globalVarsCommon.js.php'); ?>
 
-winScore = 30; // todo SB-3 убрать, только для теста
+// winScore = 30; // todo SB-3 убрать, только для теста
 const SKIPBO = 1000;
 const HAND_CARDS_NUM = 5;
 const SKIPBO_CARDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, SKIPBO];

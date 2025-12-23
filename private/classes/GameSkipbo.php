@@ -11,7 +11,7 @@ class GameSkipbo extends Game
 
     const NUM_SKIP_TURNS_TO_LOOSE = 5;
 
-    const DEFAULT_STACK_LEN = 30; // сколько карт в стеке
+    const DEFAULT_STACK_LEN = 10; // сколько карт в стеке
 
     const NUM_RATING_PLAYERS_KEY = self::GAME_NAME . parent::NUM_RATING_PLAYERS_KEY; // Список игроков онлайн
     const NUM_COINS_PLAYERS_KEY = self::GAME_NAME . '.num_coins_players';
@@ -62,7 +62,7 @@ class GameSkipbo extends Game
 
             // Проверяем, можно ли поставить карту с руки в commonArea
             foreach ($this->gameStatus->playersCards[$numUser]->hand as $handPos => $handCard) {
-                if(!$handCard) {
+                if (!$handCard) {
                     continue;
                 }
 
@@ -108,6 +108,9 @@ class GameSkipbo extends Game
             }
         }
 
+        // todo сбрысываем карту в банк только если не задано макс число карт для хода
+        // или если бот положил меньше карт чем макс число карт
+        // для имитации думанья в течение всего времени хода
         // Завершаем ход - сбрасываем рандомную карту с руки в банк
         $turnEnd = new TurnSkipbo();
         foreach ($this->gameStatus->playersCards[$numUser]->hand as $pos => $card) {
@@ -125,6 +128,11 @@ class GameSkipbo extends Game
 
     public function finishTurn(int $numUser): void
     {
+        // Проверяем, что на руке не пустая кучка карт
+        if ($this->gameStatus->isHandEmpty($numUser)) {
+            $this->gameStatus->fillHand($numUser);
+        }
+
         $turn = new TurnSkipbo();
 
         // Пока только сбрасываем рандомную карту с руки в банк
@@ -153,9 +161,11 @@ class GameSkipbo extends Game
         $turn = new TurnSkipbo((json_decode(BC::$Request[TurnSkipbo::TURN_DATA_PARAM], true) ?: []) ?? []);
         if ($this->gameStatus->validateTurn($turn)) {
             $res = ['turn_response' => ['result' => TurnSkipbo::TURN_RESPONSE_OK]];
-
-            // Если игрок положил карту в банк, то это конец его хода
-            if ($turn->newPositionName === GameStatusSkipbo::BANK_AREA) {
+            // Проверяем, вдруг игрок выиграл
+            if ($this->gameStatus->users[$this->numUser]->score >= $this->gameStatus->gameGoal) {
+                $this->storeGameResults($this->gameStatus->users[$this->numUser]->ID);
+            } elseif ($turn->newPositionName === GameStatusSkipbo::BANK_AREA) {
+                // Если игрок положил карту в банк, то это конец его хода
                 $this->nextTurn();
             }
         } else {
@@ -175,17 +185,26 @@ class GameSkipbo extends Game
         parent::nextTurn();
     }
 
-    // todo fully refactor
     public function makeBotTurn(int $botUserNum): void
     {
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
-        //Обновили время активности бота
+
+        //Обновляем время активности бота
         $this->gameStatus->users[$botUserNum]->lastActiveTime = date('U');
         $this->gameStatus->users[$botUserNum]->inactiveTurn = 1000;
 
+        // todo сделать makeBotMove() с параметром numCardsToPlay - сколько карт сыграть в этот заход, чтобы растянуть ход на несколько запросов
         $turn = $this->makeBotMove($botUserNum);
         if ($this->gameStatus->validateTurn($turn, $botUserNum)) {
+            // Проверяем, вдруг бот выиграл
+            if ($this->gameStatus->users[$botUserNum]->score >= $this->gameStatus->gameGoal) {
+                $this->storeGameResults($this->gameStatus->users[$botUserNum]->ID);
+
+                return;
+            }
+
+
             // Если игрок положил карту в банк, то это конец его хода
             if ($turn->newPositionName === GameStatusSkipbo::BANK_AREA) {
                 $this->nextTurn();

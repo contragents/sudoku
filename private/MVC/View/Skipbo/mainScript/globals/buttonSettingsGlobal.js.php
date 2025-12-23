@@ -1169,12 +1169,12 @@ var players = {
     },
     goalBlock: {
         modes: [OTJAT_MODE],
-        filename: 'goal_30',
+        filename: 'goal_',
         x: bankGoalBlockXCenter,
         y: bankGoalBlockYCenter + buttonHeight / 3,
         width: buttonWidth,
-        svgObject: false, // array of 1 object - needs to properly destroy
-        preload: true, // todo SB-3 need to be false - lazy loading
+        svgObject: [],
+        preload: false,
     },
     bankBlock: {
         modes: [OTJAT_MODE],

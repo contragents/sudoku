@@ -11,6 +11,9 @@ use BaseController as BC;
  */
 class GameStatusSkipbo extends GameStatus
 {
+    /** @var int Количество секунд, добавляемое к времени хода, если игрок смог потратить все 5 карт с руки */
+    const TURN_PLUS_TIME_FOR_FILL_HAND = 60;
+
     /** @var DeskSkipbo|null */
     public ?Desk $desk = null;
     const HAND_CARD = 'handCard';
@@ -99,7 +102,7 @@ class GameStatusSkipbo extends GameStatus
                     case self::BANK_AREA:
                     {
                         // Добавляем карту в банк
-                        array_push($this->playersCards[$numUser]->bank[$turn->newPositionNum], $turn->entityValue);
+                        $this->playersCards[$numUser]->bank[$turn->newPositionNum][] = $turn->entityValue;
                         // Убираем карту с руки игрока..
                         $this->delHandCard($turn->entityNum, $numUser);
                         // Дораздать карты до 5ти
@@ -118,9 +121,12 @@ class GameStatusSkipbo extends GameStatus
                             $this->delHandCard($turn->entityNum, $numUser);
 
                             // Проверим, вдруг все карты с руки потрачены - нужно дораздать 5 карт и продолжить ход
-                            if (empty(array_filter($this->playersCards[$numUser]->hand))) {
+                            if ($this->isHandEmpty($numUser)) {
                                 $this->fillHand($numUser);
-                                // todo Добавить время на ход?
+
+                                // Добавим время на ход
+                                $this->turnBeginTime += self::TURN_PLUS_TIME_FOR_FILL_HAND;
+                                $this->aquiringTimes[$this->turnNumber] = false;
                             }
 
                             return true;
@@ -198,6 +204,16 @@ class GameStatusSkipbo extends GameStatus
         return false;
     }
 
+    /**
+     * Проверяет, что массив карт игрока состоит из одних false ([false, false, false, false, false])
+     * @param int $numUser
+     * @return bool
+     */
+    public function isHandEmpty(int $numUser): bool
+    {
+        return empty(array_filter($this->playersCards[$numUser]->hand));
+    }
+
     public function delBankCard(mixed $entityNum, int $numUser)
     {
         array_pop($this->playersCards[$numUser]->bank[$entityNum]);
@@ -223,7 +239,13 @@ class GameStatusSkipbo extends GameStatus
     {
         foreach ($this->playersCards[$numUser]->hand as &$cardValue) {
             if (!$cardValue) {
-                [$cardValue] = $this->desk->getCardsFromKoloda(1);
+                $newCard = current($this->desk->getCardsFromKoloda(1));
+                if ($newCard) {
+                    $cardValue = $newCard;
+                } else {
+                    // В колоде нет карт - выходим
+                    return;
+                }
             }
         }
     }
