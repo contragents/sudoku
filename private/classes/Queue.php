@@ -699,9 +699,9 @@ class Queue
                     !BalanceModel::changeBalance(
                         BalanceModel::SYSTEM_ID,
                         $bid,
-                        $this->caller->gameStatus->users[$num]->common_id . ' started game',
+                        $this->caller->gameStatus->users[$num]->common_id . ' started game #' . $this->caller->currentGame,
                         BalanceHistoryModel::TYPE_IDS[BalanceHistoryModel::GAME_TYPE],
-                        $this->caller->currentGame
+                        null
                     )
                     ||
                     !BalanceModel::changeBalance(

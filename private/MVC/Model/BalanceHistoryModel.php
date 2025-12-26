@@ -21,6 +21,8 @@ class BalanceHistoryModel extends BaseModel
     const GREETING_DEPOSIT_TYPE = 'greeting';
     const CLAIM_INCOME_TYPE = 'claim';
 
+    const WINNER_REWARD_TYPE = 'Winner reward';
+
     const TYPE_IDS = [
         self::GAME_TYPE => 0,
         self::ACHIEVE_TYPE => 1,
@@ -29,6 +31,7 @@ class BalanceHistoryModel extends BaseModel
         self::MOTIVATION_TYPE => 4,
         self::GREETING_DEPOSIT_TYPE => 5,
         self::CLAIM_INCOME_TYPE => 6,
+        self::WINNER_REWARD_TYPE => 7,
     ];
 
     public static function addTransaction(
@@ -38,6 +41,11 @@ class BalanceHistoryModel extends BaseModel
         ?int $typeId = null,
         ?int $ref = null
     ): bool {
+        if (!$ref) {
+            // Ставим $ref равным - последний ID, чтобы соблюдать уникальность индекса
+            $ref = -1 * self::getLastID();
+        }
+
         return (bool)self::add(
             [
                 self::COMMON_ID_FIELD => $commonId,
@@ -57,7 +65,7 @@ class BalanceHistoryModel extends BaseModel
                 ),
             ]
             + ($typeId ? [self::TYPE_ID_FIELD => $typeId] : [])
-            + ($ref ? [self::REF_FIELD => $ref] : [])
+            + ([self::REF_FIELD => $ref])
         );
     }
 }
