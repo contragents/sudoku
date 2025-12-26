@@ -124,7 +124,6 @@ function () {
     }
 
     // Top-Right buttons positioning
-
     let numTopRightButtons = 0;
     let sumRightWidth = 0;
     for (let tbK in topRightButtons) {
@@ -150,11 +149,9 @@ function () {
         players[k].svgObject.getByName(k + ALARM_MODE).setVisible(false);
     }
 
-    // todo SB-3 this code for testing
     players.timerBlock.svgObject.setAlpha(1);
-    displayTimeGlobal(117, true);
     players.youBlock.svgObject.setAlpha(1);
-    displayScoreGlobal(25, 'youBlock', true);
+    players.kolodaCounterBlock.svgObject.setAlpha(1);
 
     for (let k in cards) {
         if ('preload' in cards[k] && cards[k].preload === false) {

@@ -1127,6 +1127,30 @@ var entities = {
 }
 
 var players = {
+    kolodaCounterBlock: {
+        //modes: [ALARM_MODE], // Почемуто глючит с одним режимом
+        filename: 'koloda_counter',
+        x: cards.kolodaCard3.x,
+        y: cards.kolodaCard3.y - cardWidth * cardSideFactor / 2 - buttonHeight / 2 / 2,
+        width: cardWidth,
+        svgObject: false,
+        numbers: true,
+        numbersX1: () => -35,
+        numbersX2: () => 0,
+        numbersX3: () => 35,
+        numbersY: () => 15,
+        adjustPosition: (score) => {
+            if (players.kolodaCounterBlock.svgObject) {
+                if (score < 100 && score >= 10) {
+                    players.kolodaCounterBlock.svgObject.x = players.kolodaCounterBlock.x + players.kolodaCounterBlock.numbersX1() / 2;
+                } else if (score < 10) {
+                    players.kolodaCounterBlock.svgObject.x = players.kolodaCounterBlock.x + players.kolodaCounterBlock.numbersX1() / 2 + players.kolodaCounterBlock.numbersX1() / 2;
+                } else {
+                    players.kolodaCounterBlock.svgObject.x = players.kolodaCounterBlock.x;
+                }
+            }
+        }
+    },
     youBlock: {
         filename: 'you' + ((lang !== 'EN' && lang in SUPPORTED_LANGS) ? ('_' + lang) : ''),
         x: youBlockXCenter,
@@ -1213,19 +1237,19 @@ function displayScoreGlobal(score, blockName, isActive = false) {
     let firstDigit = (score - secondDigit * 10 - thirdDigit) / 100;
 
     if (thirdDigit !== playerScores[blockName].digit3 || mode !== playerScores[blockName].mode) {
-        if(container.getByName(playerScores[blockName].mode + '_' + playerScores[blockName].digit3 + '_' + '3')) {
+        if (container.getByName(playerScores[blockName].mode + '_' + playerScores[blockName].digit3 + '_' + '3')) {
             container.getByName(playerScores[blockName].mode + '_' + playerScores[blockName].digit3 + '_' + '3').setVisible(false);
         }
     }
 
     if (secondDigit !== playerScores[blockName].digit2 || mode !== playerScores[blockName].mode) {
-        if(container.getByName(playerScores[blockName].mode + '_' + playerScores[blockName].digit2 + '_' + '2')) {
+        if (container.getByName(playerScores[blockName].mode + '_' + playerScores[blockName].digit2 + '_' + '2')) {
             container.getByName(playerScores[blockName].mode + '_' + playerScores[blockName].digit2 + '_' + '2').setVisible(false);
         }
     }
 
     if (firstDigit !== playerScores[blockName].digit1 || mode !== playerScores[blockName].mode) {
-        if(container.getByName(playerScores[blockName].mode + '_' + playerScores[blockName].digit1 + '_' + '1')) {
+        if (container.getByName(playerScores[blockName].mode + '_' + playerScores[blockName].digit1 + '_' + '1')) {
             container.getByName(playerScores[blockName].mode + '_' + playerScores[blockName].digit1 + '_' + '1').setVisible(false);
         }
     }
@@ -1234,7 +1258,6 @@ function displayScoreGlobal(score, blockName, isActive = false) {
     playerScores[blockName].digit3 = thirdDigit;
     playerScores[blockName].digit2 = secondDigit;
     playerScores[blockName].digit1 = firstDigit;
-
 
     container.getByName(mode + '_' + thirdDigit + '_3').setVisible(true);
 

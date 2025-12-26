@@ -74,6 +74,9 @@ class GameStatusSkipbo extends GameStatus
         // Add cards on hand for current player
         $res['you_hand_cards'] = $this->playersCards[BC::$instance->Game->numUser]->hand;
 
+        // Add koloda counter
+        $res['koloda_counter'] = count($this->desk->koloda);
+
         return $res;
     }
 

@@ -3,6 +3,17 @@
 use classes\T;
 ?>
 
+function initPlayerScores() {
+    return {
+        youBlock: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+        player1Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+        player2Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+        player3Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+        player4Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
+        kolodaCounterBlock: {mode: ALARM_MODE, digit3: 0, digit2: 0, digit1: 0},
+    };
+}
+
 async function copyTextToClipboard(text) {
     try {
         await navigator.clipboard.writeText(text);
@@ -31,13 +42,7 @@ function initNewGameVarsGlobal() {
     winScore = false;
     gameBid = false;
 
-    playerScores = {
-        youBlock: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
-        player1Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
-        player2Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
-        player3Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
-        player4Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
-    };
+    playerScores = initPlayerScores();
     initScoresGlobal();
 
     clearContainerVarsGlobal();
@@ -653,7 +658,7 @@ function getSVGBlockGlobal(X, Y, buttonName, _this, scalable = false, hasDigits 
     }
 
     if (hasDigits) {
-        let imgName = 'numbersX3' in players[buttonName] ? 'timer_' : 'player_';
+        let imgName = 'dvoetochX' in players[buttonName] ? 'timer_' : 'player_';
         let y = 'numbersY' in players[buttonName] ? players[buttonName].numbersY() : 0;
         let x3 = 'numbersX3' in players[buttonName] ? players[buttonName].numbersX3() : elements[0].displayWidth * 0.75 * 0.5;
         let x2 = 'numbersX2' in players[buttonName] ? players[buttonName].numbersX2() : elements[0].displayWidth * 0.6 * 0.5;
@@ -730,6 +735,8 @@ function getSVGBlockGlobal(X, Y, buttonName, _this, scalable = false, hasDigits 
 
 function clearContainerVarsGlobal() {
 }
+
+const isScalar = (val) => val !== Object(val);
 
 //<?php include('globals/getFishkaGlobalFunction.js')?>
 //<?php include('globals/buttonGlobalFunctions_2.js.php')?>

@@ -15,19 +15,13 @@ const BASE_URL = '<?= SkipboController::GAME_URL() ?>';
 
 //<?php include(ROOT_DIR . '/js/common_functions/globalVarsCommon.js.php'); ?>
 
-// winScore = 30; // todo SB-3 убрать, только для теста
 const SKIPBO = 1000;
 const HAND_CARDS_NUM = 5;
 const SKIPBO_CARDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, SKIPBO];
 
 var playersMap = {1: YOU, 2: 'playerLeftBackplate', 3: 'playerCenterBackplate', 4: 'playerRightBackplate'}; // todo SB-3 настраивается под каждую партию - номера соперников относительно Игрока
-playerScores = {
-    youBlock: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
-    player1Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
-    player2Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
-    player3Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
-    player4Block: {mode: OTJAT_MODE, digit3: 0, digit2: 0, digit1: 0},
-};
+playerScores = initPlayerScores();
+
 var coordinates = {}; // Координаты объектов в текущей партии
 
 var turnSubmitObject = {

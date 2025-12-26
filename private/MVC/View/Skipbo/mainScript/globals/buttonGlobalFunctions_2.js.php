@@ -598,7 +598,9 @@ function displayCardCounter(count, player) {
         {count: count}
     );
 
-    displayScoreGlobal(winScore - count, playerBlockName, true);
+    if(winScore) {
+        displayScoreGlobal(winScore - count, playerBlockName, true);
+    }
 }
 
 function checkPlayerGoalCard(goalCardValue, player) {

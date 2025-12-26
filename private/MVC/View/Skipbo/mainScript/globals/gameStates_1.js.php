@@ -1305,7 +1305,7 @@ function commonCallback(data) {
 
                 // process players' cards
                 for (let numPlayer in data.desk) {
-                    if (+numPlayer === myUserNum) {
+                    if (+numPlayer === myUserNum || isScalar(data.desk[numPlayer])) {
                         continue;
                     }
 
@@ -1322,6 +1322,12 @@ function commonCallback(data) {
                             checkPlayerGoalCard(data.desk[numPlayer].goal, +numPlayer + 1);
                         }
                     }
+                }
+
+                // Refresh koloda counter
+                if('koloda_counter' in data.desk) {
+                    displayScoreGlobal(data.desk.koloda_counter, 'kolodaCounterBlock');
+                    players.kolodaCounterBlock.adjustPosition(data.desk.koloda_counter);
                 }
             }
         }
@@ -1391,6 +1397,12 @@ function commonCallback(data) {
 
             if ('you_hand_cards' in data.desk) {
                 checkHandCards(data.desk.you_hand_cards);
+            }
+
+            // Refresh koloda counter
+            if('koloda_counter' in data.desk) {
+                displayScoreGlobal(data.desk.koloda_counter, 'kolodaCounterBlock');
+                players.kolodaCounterBlock.adjustPosition(data.desk.koloda_counter);
             }
         } else {
             // todo Ошибка в посланной карте - нужно перерисовать все видимые игроку карты
