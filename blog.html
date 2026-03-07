@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блог Судоку | Космические Хроники</title>
+    <style>
+        :root {
+            --bg-color: #0b132b;
+            --card-bg: rgba(28, 37, 65, 0.7);
+            --accent-blue: #3a506b;
+            --neon-cyan: #5bc0be;
+            --neon-yellow: #f9d423;
+            --text-color: #ffffff;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #1c2541 0%, #0b132b 100%);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--accent-blue);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px var(--neon-cyan);
+            color: var(--neon-cyan);
+        }
+
+        /* Сетка блога */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        /* Карточка статьи */
+        .post-card {
+            background: var(--card-bg);
+            border: 1px solid var(--accent-blue);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(91, 192, 190, 0.3);
+            border-color: var(--neon-cyan);
+        }
+
+        .post-image {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(45deg, #1c2541, #3a506b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        .post-content {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .post-tag {
+            color: var(--neon-yellow);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .post-title {
+            font-size: 1.4rem;
+            margin: 0 0 15px 0;
+            color: #fff;
+        }
+
+        .post-excerpt {
+            font-size: 0.9rem;
+            color: #bdc3c7;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .read-more {
+            display: inline-block;
+            padding: 10px 20px;
+            background: transparent;
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        .read-more:hover {
+            background: var(--neon-cyan);
+            color: var(--bg-color);
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        /* Футер/Пагинация */
+        .pagination {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .page-link {
+            color: var(--text-color);
+            padding: 10px 15px;
+            text-decoration: none;
+            border: 1px solid var(--accent-blue);
+            margin: 0 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>БАЗА ЗНАНИЙ СУДОКУ</h1>
+        <p>Секреты мастеров, стратегии и новости галактики чисел</p>
+    </header>
+
+    <div class="blog-grid">
+        <!-- Статья 1 -->
+        <article class="post-card">
+            <div class="post-image">🧩</div>
+            <div class="post-content">
+                <span class="post-tag">Стратегии</span>
+                <h3 class="post-title">Метод "X-Wing": как щелкать сложные уровни</h3>
+                <p class="post-excerpt">Разбираем одну из самых мощных продвинутых техник, которая поможет вам очистить поле, когда простые методы бессильны.</p>
+                <a href="#" class="read-more">Изучить модуль</a>
+            </div>
+        </article>
+
+        <!-- Статья 2 -->
+        <article class="post-card">
+            <div class="post-image">🚀</div>
+            <div class="post-content">
+                <span class="post-tag">Обновления</span>
+                <h3 class="post-title">Новый рейтинг 1700: что изменилось?</h3>
+                <p class="post-excerpt">В последнем патче мы обновили систему начисления очков. Узнайте, как теперь рассчитывается ваш личный прогресс.</p>
+                <a href="#" class="read-more">Читать лог</a>
+            </div>
+        </article>
+
+        <!-- Статья 3 -->
+        <article class="post-card">
+            <div class="post-image">🧠</div>
+            <div class="post-content">
+                <span class="post-tag">Польза</span>
+                <h3 class="post-title">Судоку и нейропластичность мозга</h3>
+                <p class="post-excerpt">Научное обоснование того, почему ежедневное решение головоломок замедляет старение мозга на 10 лет.</p>
+                <a href="#" class="read-more">Открыть архив</a>
+            </div>
+        </article>
+    </div>
+
+    <div class="pagination">
+        <a href="#" class="page-link">« Назад</a>
+        <a href="#" class="page-link" style="border-color: var(--neon-cyan)">1</a>
+        <a href="#" class="page-link">2</a>
+        <a href="#" class="page-link">Вперед »</a>
+    </div>
+</div>
+
+</body>
+</html>

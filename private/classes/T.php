@@ -1506,4 +1506,9 @@ class T
     {
         return (string)$number;
     }
+
+    protected static function valuePlural($value): string
+    {
+        return (string)$value;
+    }
 }
