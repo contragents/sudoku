@@ -27,6 +27,9 @@ class GameStatusSkipbo extends GameStatus
     /** @var PlayerCards[] $playersCards массив карт игроков (карты на руках, стек, банк 4 кучки) */
     public array $playersCards = [];
 
+    /** @var CardMove[][] Стек перемещений карт для каждого игрока */
+    public array $cardMoveStackUsers = [];
+
     /**
      * @param int $cardNumUp 1-12, 1000
      * @param false|int $cardNumDown false, 1-12, 1000, 1001-1012
@@ -50,6 +53,14 @@ class GameStatusSkipbo extends GameStatus
         }
 
         return false;
+    }
+
+    public function cardMove(): array
+    {
+        return array_map(
+            fn($obj) => (array)$obj,
+            array_splice($this->cardMoveStackUsers[BC::$instance->Game->numUser], 0)
+        );
     }
 
     /**
@@ -108,6 +119,20 @@ class GameStatusSkipbo extends GameStatus
                         $this->playersCards[$numUser]->bank[$turn->newPositionNum][] = $turn->entityValue;
                         // Убираем карту с руки игрока..
                         $this->delHandCard($turn->entityNum, $numUser);
+
+                        // Заполняем стек перемещений карт для всех игроков
+						// todo сделать для других вариантов перемещений карт
+                        foreach ($this->cardMoveStackUsers as $num => &$cardStack) {
+                            $cardStack[] = new CardMove(
+                                $numUser,
+                                self::HAND_CARD,
+                                $turn->entityNum,
+                                self::BANK_CARD,
+                                $turn->newPositionNum,
+                                $turn->entityValue
+                            );
+                        }
+
                         // Дораздать карты до 5ти
                         $this->fillHand($numUser);
 

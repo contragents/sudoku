@@ -17,10 +17,19 @@ class TurnSkipbo
     const TURN_RESPONSE_OK = 'ok';
     const TURN_RESPONSE_ERROR = 'error';
 
+    /** Тип карты начало */
     public ?string $entityName = null;
+
+    /** Номер позиции начало */
     public ?int $entityNum = null;
+
+    /** Достоинство карты */
     public ?int $entityValue = null;
+
+    /** Тип карты новый */
     public ?string $newPositionName = null;
+
+    /** Номер позиции новый */
     public ?int $newPositionNum = null;
 
     /**

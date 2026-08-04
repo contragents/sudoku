@@ -747,6 +747,7 @@ const isScalar = (val) => val !== Object(val);
 //<?php include('globals/parseDeskGlobalFunction.js.php')?>
 //<?php include('globals/initCellsGlobalFunction.js')?>
 //<?php include('globals/dragCards.js.php')?>
+//<?php include('globals/animateMoveCards.js.php')?>
 //<?php include(ROOT_DIR . '/js/common_functions/bootBoxIsOpenedGlobalFunction.js.php')?>
 //<?php include(ROOT_DIR . '/js/common_functions/gadgetTypeFunctions.js.php')?>
 

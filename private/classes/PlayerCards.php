@@ -16,4 +16,5 @@ class PlayerCards
     public array $hand = [1 => false, 2 => false, 3 => false, 4 => false, 5 => false];
     /** @var array $bank Банк (1-4 кучки) последний элемент - верхний, использовать end(), pop, push */
     public array $bank = [1 => [], 2 => [], 3 => [], 4 => []];
+
 }

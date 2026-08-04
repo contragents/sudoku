@@ -592,12 +592,6 @@ class Game
     public function __destruct()
     {
         if ($this->currentGame && $this->doSaveGameState) {
-            if (isset($this->gameStatus->results['winner']) && !$this->gameStatus->isGameEndedSaved) {
-                Cache::rpush(static::GAMES_ENDED_KEY, $this->gameStatus);
-                //Сохраняем результаты игры в список завершенных
-                $this->gameStatus->isGameEndedSaved = true;
-            }
-
             $this->gameStatus->users[$this->numUser]->lastRequestNum = BC::$Request[BC::QUERY_NUMBER_PARAM] ?? 1000;
 
             $this->storeGameStatus();

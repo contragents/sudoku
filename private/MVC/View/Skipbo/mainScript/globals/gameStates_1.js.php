@@ -1005,6 +1005,15 @@ var lastQueryTime = 0;
 var gameOldState = '';
 
 function commonCallback(data) {
+    if('card_move_stack' in data) {
+        // Превращаем в массив объектов класса CardMove одной строкой:
+        const moves = CardMove.fromArray(data.card_move_stack);
+
+        // todo сделать анимацию
+        moves.forEach(move => {
+            console.log(move); // Ваш код обработки каждого хода
+        });
+    }
     if (('gameState' in data) && !(data.gameState in gameStates)) {
         return;
     }
@@ -1020,13 +1029,6 @@ function commonCallback(data) {
             return;
         }
     }
-
-    /* todo нужно анализировать активность каждого оппонента
-    if (noNetworkImgOpponent !== false && 'is_opponent_active' in data && !data.is_opponent_active) {
-        noNetworkImgOpponent.visible = true;
-    } else {
-        noNetworkImgOpponent.visible = false;
-    }*/
 
     gameOldState = gameState;
     gameOldSubState = gameSubState;
