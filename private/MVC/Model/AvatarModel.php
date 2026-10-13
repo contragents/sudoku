@@ -46,7 +46,7 @@ class AvatarModel extends BaseModel
         $imgId = $commonId % $maxImgId;
 
         $siteField = in_array(Config::DOMAIN(), Steam::PROD_DOMAINS)
-            ? "'https://" . Config::DOMAIN() . "'"
+            ? "'https://" . SudokuController::GAME_URL() . "'"
             : self::SITE_FIELD;
 
         $miniUrl = self::MINI_IMG_URL_FIELD;
