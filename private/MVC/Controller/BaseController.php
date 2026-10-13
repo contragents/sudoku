@@ -275,9 +275,9 @@ class BaseController
         }
 
         if (!isset($_COOKIE[Cookie::COOKIE_NAME])) {
-            $_COOKIE = Cookie::setGetCook(null, Cookie::COOKIE_NAME);
+            $_COOKIE = Cookie::setGetCook(Cookie::COOKIE_NAME, null);
         } elseif (rand(1, 100) <= 2) {
-            $_COOKIE = Cookie::setGetCook($_COOKIE[Cookie::COOKIE_NAME], Cookie::COOKIE_NAME);
+            $_COOKIE = Cookie::setGetCook(Cookie::COOKIE_NAME, $_COOKIE[Cookie::COOKIE_NAME]);
         }
 
         if (($_COOKIE[Cookie::COOKIE_NAME] ?? null) && isset(self::$Request[self::COMMON_ID_PARAM]) && isset(self::$Request[self::COMMON_ID_HASH_PARAM])) {

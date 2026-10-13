@@ -72,7 +72,7 @@ class Cookie
         return true;
     }
 
-    public static function setGetCook(?string $cook = null, string $cookieKey): array
+    public static function setGetCook(string $cookieKey, ?string $cook = null): array
     {
         if (!$cook) {
             $cook = md5(microtime(true) . mt_rand(1, 100000));
