@@ -220,7 +220,7 @@ function () {
     avatars.push(BASE_IMG_URL + '<?= AvatarModel::find([])->where([AvatarModel::NOT_LOADED_FIELD => false]
     )->order('rand()')->limit(1)->one()?->_mini_url ?? '' ?>');
     // Аватар текущего игрока
-    avatars.push(BASE_IMG_URL . '/img/sudoku-coin.png');
+    avatars.push(BASE_IMG_URL + '/img/sudoku-coin.png');
 
     // Выводим аватар Игрока
     loadAvatarContainer(
