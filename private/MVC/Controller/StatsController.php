@@ -26,7 +26,7 @@ class StatsController extends BaseSubController
     const ANONYM_AVATAR_FILEPATH = 'img/avatar/1/avatarko_anonim.jpg';
 
     public static function ANONYM_AVATAR_URL(): string {
-        SudokuController::GAME_URL() . self::ANONYM_AVATAR_FILEPATH;
+        return SudokuController::GAME_URL() . self::ANONYM_AVATAR_FILEPATH;
     }
 
     public static function addTranslationsToAchieves(array &$achieves): void
