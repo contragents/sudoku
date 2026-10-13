@@ -662,7 +662,7 @@ var cards = {
 var entities = {
     avatarYou: {
         preloaded: false, // загружать каждый раз с сервера
-        filename: AVATAR_IMPORT_SCRIPT, // 'https://sudoku.box/img/sudoku-coin.png',
+        filename: AVATAR_IMPORT_SCRIPT,
         x: gameWidth / 2,
         y: handCardCenterY,
         width: cardWidth * 2,

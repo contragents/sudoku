@@ -4,11 +4,9 @@ namespace classes;
 
 class Config
 {
-    const DOMAIN_ERUDIT = 'xn--d1aiwkc2d.club';
-    const DOMAIN_5_5_SU = '5-5.su';
-    const DOMAIN_SUDOKU_BOX = 'sudoku.box';
-    const DOMAIN_SUDOKU_5_5_SU = 'sudoku.5-5.su';
-    const DOMAIN_SKIPBO_ETH_BOX = 'skipbo.eth.box';
+    const DOMAIN_ERUDIT = 'xn--d1aiwkc2d.club'; // todo Implement through self methods
+    const DOMAIN_5_5_SU = '5-5.su'; // Domain for DEV|Russia players
+    const DOMAIN_SUDOKU_5_5_SU = 'sudoku.5-5.su'; // Domain for Steam|World players
 
     public static array $config = []; // основной конфиг
     private static array $envConfig = []; // временный конфиг

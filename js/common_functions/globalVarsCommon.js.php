@@ -13,7 +13,8 @@ const GAME_BOT_URL = '<?= T::S('game_bot_url') ?>';
 const LOADING_TEXT = '<?= T::S('loading_text') ?>';
 const errorServerMessage = '<?= T::S('Server connecting error. Please try again')?>';
 const STATS_GET_ERROR = '<?= T::S('Stats getting error')?>';
-const ANONYM_AVATAR_URL = '<?= StatsController::ANONYM_AVATAR_URL ?>';
+const ANONYM_AVATAR_URL = '<?= StatsController::ANONYM_AVATAR_URL() ?>';
+const BASE_IMG_URL = '<?= SudokuController::GAME_URL() ?>';
 
 const YOU = 'you';
 

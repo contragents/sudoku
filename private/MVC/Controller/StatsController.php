@@ -24,7 +24,10 @@ class StatsController extends BaseSubController
     const COIN_POSITION_FROM_PARAM = 'coin_position_from';
     const COIN_POSITION_TO_PARAM = 'coin_position_to';
     const ANONYM_AVATAR_FILEPATH = 'img/avatar/1/avatarko_anonim.jpg';
-    const ANONYM_AVATAR_URL = 'https://sudoku.box/' . self::ANONYM_AVATAR_FILEPATH;
+
+    public static function ANONYM_AVATAR_URL(): string {
+        SudokuController::GAME_URL() . self::ANONYM_AVATAR_FILEPATH;
+    }
 
     public static function addTranslationsToAchieves(array &$achieves): void
     {
@@ -256,7 +259,7 @@ class StatsController extends BaseSubController
                         $userModel = UserModel::getOneO($balanceModel->_id);
                         $result[self::COIN_PARAM][$top][] = [
                             'avatar_url' => ($userModel->_is_balance_hidden ?? false)
-                                ? self::ANONYM_AVATAR_URL
+                                ? self::ANONYM_AVATAR_URL()
                                 : PlayerModel::getAvatarUrl($balanceModel->_id),
                             'card_type' => AchievesModel::TOP_TYPES[$top] ?? '',
                             self::COIN_PARAM => $balanceModel->_sudoku,

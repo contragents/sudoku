@@ -13,13 +13,7 @@ class Yandex
         Config::DOMAIN_5_5_SU => [
             GameSudoku::GAME_NAME => '102483438', // Счетчик для игры Судоку
         ],
-        Config::DOMAIN_SUDOKU_BOX => [
-            GameSudoku::GAME_NAME => '103668291'
-        ],
         Config::DOMAIN_SUDOKU_5_5_SU => [
-            GameSudoku::GAME_NAME => '103668291'
-        ],
-        Config::DOMAIN_SKIPBO_ETH_BOX => [
             GameSudoku::GAME_NAME => '103668291'
         ],
     ];

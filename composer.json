@@ -4,7 +4,7 @@
     "type": "project",
     "minimum-stability": "stable",
     "require": {
-        "php": "^7.4||^8.0",
+        "php": "^8.0",
         "ext-redis": "*",
       "ext-json": "*",
         "deeplcom/deepl-php": "^1.12",

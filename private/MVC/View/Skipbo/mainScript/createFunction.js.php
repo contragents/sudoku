@@ -1,3 +1,6 @@
+<?php
+use classes\Config;
+?>
 //
 function () {
     faserObject = this;
@@ -212,12 +215,12 @@ function () {
     let avatars = [];
     // Аатар последнего игрока (вертикальный для теста)
     avatars.push('https://xn--d1aiwkc2d.club/img/upload/3f8dd6efb0492cd1394ac4e0f85e10a5.jpg?ver=1741674943');
-    avatars.push('https://sudoku.box' + '<?= AvatarModel::find([])->where([AvatarModel::NOT_LOADED_FIELD => false]
-    )->order('rand()')->limit(1)->one()->_mini_url ?>');
-    avatars.push('https://sudoku.box' + '<?= AvatarModel::find([])->where([AvatarModel::NOT_LOADED_FIELD => false]
-    )->order('rand()')->limit(1)->one()->_mini_url ?>');
+    avatars.push(BASE_IMG_URL + '<?= AvatarModel::find([])->where([AvatarModel::NOT_LOADED_FIELD => false]
+    )->order('rand()')->limit(1)->one()?->_mini_url ?? '' ?>');
+    avatars.push(BASE_IMG_URL + '<?= AvatarModel::find([])->where([AvatarModel::NOT_LOADED_FIELD => false]
+    )->order('rand()')->limit(1)->one()?->_mini_url ?? '' ?>');
     // Аватар текущего игрока
-    avatars.push('https://sudoku.box/img/sudoku-coin.png');
+    avatars.push(BASE_IMG_URL . '/img/sudoku-coin.png');
 
     // Выводим аватар Игрока
     loadAvatarContainer(

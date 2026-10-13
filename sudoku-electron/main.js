@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-var DOMAINS = process.env.DOMAIN.split(';'); // '5-5.su' для локальной разработки, 'sudoku.box' - для PROD
+var DOMAINS = process.env.DOMAIN.split(';'); // '5-5.su' для локальной разработки, 'sudoku.5-5.su' - для PROD
 var DOMAIN = false;
 var isOnline = null;
 var isSteam = true;
