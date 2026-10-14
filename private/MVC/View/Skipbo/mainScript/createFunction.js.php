@@ -1,5 +1,5 @@
 <?php
-use classes\Config;
+use classes\Cache;use classes\Config;
 ?>
 //
 function () {
@@ -217,7 +217,7 @@ function () {
     avatars.push('https://xn--d1aiwkc2d.club/img/upload/3f8dd6efb0492cd1394ac4e0f85e10a5.jpg?ver=1741674943');
     <?php $maxAvatarId = BaseModel::getMaxId(); ?>
     avatars.push(BASE_IMG_URL + '<?=
-            AvatarModel::find([])
+            AvatarModel::find()
                 ->where([AvatarModel::NOT_LOADED_FIELD => false])
                 ->where([[AvatarModel::ID_FIELD, '>=', mt_rand(1, $maxAvatarId), true]])
                 ->limit(1)
@@ -225,13 +225,19 @@ function () {
                 ?->_mini_url ?? ''
         ?>');
     avatars.push(BASE_IMG_URL + '<?=
-            AvatarModel::find([])
+            AvatarModel::find()
                 ->where([AvatarModel::NOT_LOADED_FIELD => false])
                 ->where([[AvatarModel::ID_FIELD, '>=', mt_rand(1, $maxAvatarId), true]])
                 ->limit(1)
                 ->one()
                 ?->_mini_url ?? ''
         ?>');
+    <?php $query = AvatarModel::find()
+    ->where([AvatarModel::NOT_LOADED_FIELD => false])
+    ->where([[AvatarModel::ID_FIELD, '>=', mt_rand(1, $maxAvatarId), true]])
+    ->limit(1)
+    ->one()->getQuery();
+    Cache::set('test_query', $query); ?>
     // Аватар текущего игрока 123
     avatars.push(BASE_IMG_URL + '/img/sudoku-coin.png');
 
