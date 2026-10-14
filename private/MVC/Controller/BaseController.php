@@ -193,7 +193,7 @@ class BaseController
         }
 
         // Response получен в процессе Game->__construct() - выводим сразу без Action
-        if ($this->Game->Response !== null && !in_array($this->Action, static::FORCE_ACTIONS)) {
+        if ($this->Game && $this->Game->Response !== null && !in_array($this->Action, static::FORCE_ACTIONS)) {
             return Response::jsonResp($this->Game->Response);
         }
 
