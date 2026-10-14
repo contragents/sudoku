@@ -58,7 +58,7 @@ class BaseController
     const STEAM_APP_ID_PARAM = 'app_id';
 
     public static ?BaseController $instance = null;
-    public Game $Game;
+    public ?Game $Game = null;
     public static StateMachine $SM;
     public static FrontResource $FR;
 
@@ -193,7 +193,7 @@ class BaseController
         }
 
         // Response получен в процессе Game->__construct() - выводим сразу без Action
-        if ($this->Game && $this->Game->Response !== null && !in_array($this->Action, static::FORCE_ACTIONS)) {
+        if ($this->Game?->Response !== null && !in_array($this->Action, static::FORCE_ACTIONS)) {
             return Response::jsonResp($this->Game->Response);
         }
 
