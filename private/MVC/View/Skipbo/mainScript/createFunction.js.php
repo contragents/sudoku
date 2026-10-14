@@ -236,7 +236,7 @@ function () {
     ->where([AvatarModel::NOT_LOADED_FIELD => false])
     ->where([[AvatarModel::ID_FIELD, '>=', mt_rand(1, $maxAvatarId), true]])
     ->limit(1)
-    ->one()->getQuery();
+    ->getQuery();
     Cache::set('test_query', $query); ?>
     // Аватар текущего игрока 123
     avatars.push(BASE_IMG_URL + '/img/sudoku-coin.png');
