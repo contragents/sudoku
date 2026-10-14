@@ -59,4 +59,5 @@ class AvatarModel extends BaseModel
 
         return DB::queryValue($query) ?: '';
     }
+
 }

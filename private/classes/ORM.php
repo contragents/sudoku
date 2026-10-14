@@ -5,11 +5,15 @@ namespace classes;
 /** Класс ORM для работы с MariaDB */
 class ORM
 {
+    public $rawExpression;
+
     const COUNT = 'COUNT';
     const MAX = 'MAX';
     const MIN = 'MIN';
     const ANY_VALUE = 'ANY_VALUE';
-    public $rawExpression;
+    const AVG = 'AVG';
+    const DATE = 'DATE';
+    const AGG_FUNCTIONS = [self::COUNT, self::MAX, self::MIN, self::ANY_VALUE, self::AVG, self::DATE];
 
     public function __construct($expression)
     {
@@ -23,7 +27,9 @@ class ORM
      */
     public static function update($tblName)
     {
-        return "UPDATE `$tblName` ";
+        if (!str_contains($tblName, '.')) {
+            return "UPDATE `$tblName` ";
+        } else return "UPDATE $tblName ";
     }
 
     /**
@@ -37,9 +43,10 @@ class ORM
                 . (
                 $fieldsvals['value'] instanceof ORM
                     ? $fieldsvals['value']->rawExpression
-                    : ($fieldsvals['raw'] ?? false
-                        ? $fieldsvals['value']
-                        : "'{$fieldsvals['value']}'")
+                    : (($fieldsvals['raw'] ?? false)
+                    ? $fieldsvals['value']
+                    : ("'" . DB::escapeString($fieldsvals['value']) . "'")
+                )
                 )
                 . ' ';
         }
@@ -51,9 +58,10 @@ class ORM
                     . (
                     $fv['value'] instanceof ORM
                         ? $fv['value']->rawExpression
-                        : ($fv['raw'] ?? false
-                            ? $fv['value']
-                            : "'{$fv['value']}'")
+                        : (($fv['raw'] ?? false)
+                        ? $fv['value']
+                        : ("'" . DB::escapeString($fv['value']) . "'")
+                    )
                     )
                     . ' ';
             }
@@ -61,31 +69,17 @@ class ORM
             return ' SET ' . implode(',', $fields);
         }
 
-        return ' SET ' . implode(',', array_map(fn($field, $value) => " $field = '$value' ", array_keys($fieldsvals), $fieldsvals));
-    }
-
-    public static function whereIn(string $fieldName, array $values): string
-    {
-        return " WHERE $fieldName IN (" . implode(', ', $values) . ') ';
-    }
-
-    public static function andWhereIn(string $fieldName, array $values): string
-    {
-        return " AND $fieldName IN (" . implode(',', $values) . ') ';
+        return ' SET ' . implode(',', array_map(fn($field, $value) => " $field = " . ("'" . DB::escapeString($value) . "'"), array_keys($fieldsvals), $fieldsvals));
     }
 
     public static function where($fieldName, $cond, $value, $isRaw = false)
     {
-        return ' WHERE ' . self::getWhereCondition($fieldName, $cond, $value, $isRaw);
+        return " WHERE ($fieldName $cond " . ($value instanceof ORM ? $value->rawExpression : ($isRaw ? $value : "'$value'")) . ') ';
     }
 
     public static function andWhere($fieldName, $cond, $value, $isRaw = false)
     {
-        return ' AND ' . self::getWhereCondition($fieldName, $cond, $value, $isRaw);
-    }
-
-    public static function getWhereCondition($fieldName, $cond, $value, $isRaw = false): string {
-        return " ($fieldName $cond " . ($value instanceof ORM ? $value->rawExpression : ($isRaw ? $value : "'$value'")) . ') ';
+        return " AND ($fieldName $cond " . ($value instanceof ORM ? $value->rawExpression : ($isRaw ? $value : "'$value'")) . ') ';
     }
 
     public static function orBegin($odin = '')
@@ -103,17 +97,27 @@ class ORM
         return " ) ";
     }
 
-    public static function insert($tblName, $ignore = '')
+    public static function insert($tblName, $ignore = ''): string
     {
-        return "INSERT $ignore INTO `$tblName` ";
+        if (!str_contains($tblName, '.')) {
+            return "INSERT $ignore INTO `$tblName` ";
+        } else {
+            return "INSERT $ignore INTO $tblName ";
+        }
     }
 
-    public static function insertFields(array $fields)
+    public static function insertFieldsRawValues(array $fieldsVarsArr): string
     {
-        return " (`" . implode('`, `', $fields) . "`) ";
+        return self::insertFields(array_keys($fieldsVarsArr))
+            . self::rawValues($fieldsVarsArr);
     }
 
-    public static function rawValues(array $values)
+    public static function insertFields(array $fields): string
+    {
+        return " (" . implode(', ', $fields) . ") ";
+    }
+
+    public static function rawValues(array $values): string
     {
         return " VALUES (" . implode(", ", $values) . ") ";
     }
@@ -146,11 +150,7 @@ class ORM
 
     public static function select(array $fieldArr, string $tableName): string
     {
-        if ($fieldArr == []) {
-            $fieldArr = ['*'];
-        }
-
-        return " SELECT " . implode(',', $fieldArr) . " FROM $tableName ";
+        return " SELECT " . implode(',', $fieldArr ?: ['*']) . " FROM $tableName ";
     }
 
     public static function limit(int $count, $offset = 0): string
@@ -188,28 +188,36 @@ class ORM
         return ' GROUP BY ' . implode(', ', $conditions) . ' ';
     }
 
-    public static function orWhere(string $field, string $condition, $value, bool $isRaw = false): string
+    public static function andWhereIn(string $fieldName, array $values)
     {
-        return " OR $field $condition " . ($isRaw ? $value : "'$value'") . ' ';
+        return " AND $fieldName IN (" . implode(',', $values) . ') ';
+    }
+
+    public static function whereIn($fieldName, array $values)
+    {
+        return " WHERE $fieldName IN (" . implode(',', $values) . ') ';
     }
 
     /**
      * @param string $function
      * @param string $field
-     * @param string $as
+     * @param ?string $as if NULL - no 'as...' alias will folow
      * @return string
+     * @throws \Exception
      */
-    public static function agg(string $function, string $field, string $as = ''): string
+    public static function agg(string $function, string $field, ?string $as = ''): string
     {
+        if (!in_array($function, self::AGG_FUNCTIONS)) {
+            throw new \Exception("$function is not a valid function");
+        }
+
         return ' '
             . $function
             . '('
             . $field
             . ') '
-            . ($as
-                ? ($as . ' ')
-                : ''
-            );
+            . (is_null($as) ? '' : ($as ?: $field))
+            . ' ';
     }
 
     public static function andNot($fieldName, $cond, $value, $isRaw = false): string
@@ -221,4 +229,5 @@ class ORM
     {
         return ' ( ' . $expression . ' ) ';
     }
+
 }

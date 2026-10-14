@@ -80,6 +80,11 @@ class BaseModel implements Iterator
         return static::getCustomO(static::IS_DELETED_FIELD, '=', 0, true);
     }
 
+    public static function getMaxId(): int
+    {
+        return DB::queryValue(BaseModel::select([ORM::agg(ORM::MAX, BaseModel::ID_FIELD, null)]));
+    }
+
     /**
      * SOFT deletion of model
      * @return bool
