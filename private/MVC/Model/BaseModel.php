@@ -82,7 +82,7 @@ class BaseModel implements Iterator
 
     public static function getMaxId(): int
     {
-        return DB::queryValue(static::select([ORM::agg(ORM::MAX, BaseModel::ID_FIELD, null)]));
+        return DB::queryValue(static::select([ORM::agg(ORM::MAX, static::ID_FIELD, null)]));
     }
 
     /**
