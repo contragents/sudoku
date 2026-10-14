@@ -215,7 +215,7 @@ function () {
     let avatars = [];
     // Аатар последнего игрока (вертикальный для теста)
     avatars.push('https://xn--d1aiwkc2d.club/img/upload/3f8dd6efb0492cd1394ac4e0f85e10a5.jpg?ver=1741674943');
-    <?php $maxAvatarId = BaseModel::getMaxId(); ?>
+    <?php $maxAvatarId = AvatarModel::getMaxId(); ?>
     avatars.push(BASE_IMG_URL + '<?=
             AvatarModel::find()
                 ->where([AvatarModel::NOT_LOADED_FIELD => false])
