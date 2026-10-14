@@ -9,11 +9,18 @@ use ReflectionProperty;
 use Throwable;
 
 
+/**
+ * @template T of \BaseModel
+ * @mixin \Iterator
+ */
 trait QueryTrait
 {
     protected ?QueryParts $queryParts = null;
 
     private ?string $model = null;
+
+    /** @var static[] */
+    protected array $union = [];
 
     /**
      * @var static|null the value for the current iteration
@@ -31,16 +38,17 @@ trait QueryTrait
      * @var int the current iteration
      */
     private int $Iteration = 0;
+
     /**
      * @var bool|null if current element is valid
      */
-    private ?bool $isValid = false;
+    private ?bool $isValid = null;
 
     /**
      * @param string[] $fields
      * @return static
      */
-    public static function find(array $fields = ['*']): self
+    public static function find(array $fields = ['*']): static
     {
         $model = new static(['model' => get_called_class()]);
         $model->queryParts = new QueryParts();
@@ -50,12 +58,39 @@ trait QueryTrait
     }
 
     /**
+     * Добавляет к выборке условие "неудаленные записи"
+     *
+     * @return static
+     */
+    public function active(): static
+    {
+        return $this->where([static::IS_DELETED_FIELD => 0]);
+    }
+
+    /**
+     * @param string|array $field
+     * @return static
+     */
+    public function groupBy(string|array $field): static
+    {
+        $fieldsToAdd = is_array($field) ? $field : [$field];
+
+        // Распаковываем оба массива в один общий и сразу уникализируем
+        $this->queryParts->groupBy = array_unique([
+            ...$this->queryParts->groupBy,
+            ...$fieldsToAdd
+        ]);
+
+        return $this;
+    }
+
+    /**
      * @param array $conditions [field1=>value1, f2=>v2] or [['field_name' => fn1, 'condition' => c1, 'value' => v1, 'raw' => r1],...]
      * @return static
      */
-    public function where(array $conditions): self
+    public function where(array $conditions): static
     {
-        foreach ($conditions as $num => $condition) {
+        foreach ($conditions as $numOrField => $condition) {
             if (is_array($condition)) {
                 $value = $condition['value'] ?? ($condition[2] ?? null);
                 if ($value === true || $value === false) {
@@ -70,9 +105,9 @@ trait QueryTrait
                         'condition' => $condition['condition'] ?? ($condition[1] ?? '='),
                         'value' => $value,
                         'raw' => $condition['raw'] ?? ($condition[3] ?? in_array(
-                                    $this->model::getType($fieldName),
-                                    self::NUMERIC_TYPES
-                                )),
+                                $this->model::getType($fieldName),
+                                self::NUMERIC_TYPES
+                            )),
                     ];
                 }
             } else {
@@ -83,11 +118,11 @@ trait QueryTrait
 
                 $this->queryParts->where[] =
                     [
-                        'field_name' => (is_numeric($num) ? static::ID_FIELD : $num),
+                        'field_name' => (is_numeric($numOrField) ? static::ID_FIELD : $numOrField),
                         // если ключ - число, то поле - это id - добавить проверку
                         'condition' => '=',
                         'value' => $value,
-                        'raw' => in_array(self::getType($num), self::NUMERIC_TYPES),
+                        'raw' => in_array(self::getType($numOrField), self::NUMERIC_TYPES),
                     ];
             }
         }
@@ -100,7 +135,7 @@ trait QueryTrait
      * @param bool $asc true for ascending, false for descending
      * @return static
      */
-    public function order(string $orderField, bool $asc = true): self
+    public function order(string $orderField, bool $asc = true): static
     {
         $this->queryParts->order = [$orderField, $asc];
 
@@ -112,7 +147,7 @@ trait QueryTrait
      * @param int $offset
      * @return static
      */
-    public function limit(int $limit, int $offset = 0): self
+    public function limit(int $limit, int $offset = 0): static
     {
         $this->queryParts->limit = $offset
             ? [$limit, $offset]
@@ -124,7 +159,7 @@ trait QueryTrait
     /**
      * @return static|null
      */
-    public function one(): ?self
+    public function one(): ?static
     {
         $limit = $this->queryParts->limit;
         $this->limit(1, $this->queryParts->limit[1] ?? 0);
@@ -151,10 +186,23 @@ trait QueryTrait
             );
         }
 
+        if ($this->union) {
+            $query = $this->getQuery();
+
+            $result = [];
+            $rows = DB::queryArray($query) ?: []; // todo сделать метод :array и провести рефакторинг
+
+            foreach ($rows as $row) {
+                $result[] = self::arrayToObject($row);
+            }
+
+            return $result;
+        }
+
         return self::selectO(
             $this->queryParts->fields,
             $where,
-            $this->getOrder() . $this->getLimit()
+            $this->getGroupBy() . $this->getOrder() . $this->getLimit()
         );
     }
 
@@ -169,6 +217,17 @@ trait QueryTrait
         } catch (Throwable $e) {
             return 'null';
         }
+    }
+
+    private function getGroupBy(): string
+    {
+        // Если секция groupBy пуста, возвращаем пустую строку
+        if (!$this->queryParts->groupBy) {
+            return '';
+        }
+
+        // Передаем массив полей напрямую. Статический метод ORM сам склеит их через запятую.
+        return ORM::groupBy($this->queryParts->groupBy);
     }
 
     private function getOrder(): string
@@ -200,18 +259,22 @@ trait QueryTrait
     }
 
     /**
-     * @return static[]
+     * @return static&Iterator<int, static>
      */
     public function each(): Iterator
     {
-        return new static(
+        /** @var static&Iterator $iterator */
+        $iterator = new static(
             [
                 'model' => get_called_class(),
                 'queryParts' => $this->queryParts,
                 'Limit' => $this->queryParts->limit[0] ?? $this->queryParts->limit,
                 'Offset' => $this->queryParts->limit[1] ?? 0,
+                'union' => $this->union,
             ]
         );
+
+        return $iterator;
     }
 
     /**
@@ -221,7 +284,7 @@ trait QueryTrait
      */
     public function current(): ?self
     {
-        if($this->valid()) {
+        if ($this->valid()) {
             return $this->Value ?? null;
         } else {
             return null;
@@ -241,7 +304,7 @@ trait QueryTrait
         }
 
         $this->Iteration++;
-        if(isset($this->Limit) && $this->Iteration >= $this->Limit){
+        if (isset($this->Limit) && $this->Iteration >= $this->Limit) {
             $this->isValid = false;
 
             return;
@@ -256,10 +319,9 @@ trait QueryTrait
     /**
      * Return the key of the current element
      * @link https://php.net/manual/en/iterator.key.php
-     * @return string|float|int|bool|null scalar on success, or null on failure.
+     * @return int|null scalar on success, or null on failure.
      */
-    #[\ReturnTypeWillChange]
-    public function key()
+    public function key(): mixed
     {
         return $this->valid() ? $this->Iteration : null;
     }
@@ -289,5 +351,51 @@ trait QueryTrait
         $this->Value = $this->one();
 
         $this->isValid = (bool)$this->Value;
+    }
+
+    public function getQuery(): string
+    {
+        $where = $this->buildWhere();
+
+        return ORM::select(
+                $this->queryParts->fields,
+                $this->union
+                    ? (' ( (' . implode(
+                        ') UNION (',
+                        array_map(fn(self $query) => $query->getQuery(), $this->union)
+                    ) . ') ) as ' . static::TABLE_NAME . '_union ')
+                    : static::TABLE_NAME
+            )
+            . $where
+            . $this->getGroupBy()
+            . $this->getOrder()
+            . $this->getLimit();
+    }
+
+    private function buildWhere(): string
+    {
+        $where = '';
+
+        foreach ($this->queryParts->where as $partWhere) {
+            $where .= (
+            empty($where)
+                ? ORM::where(...array_values($partWhere))
+                : ORM::andWhere(...array_values($partWhere))
+            );
+        }
+
+        return $where;
+    }
+
+    /**
+     * Добавляет в union запросы из массива
+     * @param static[] $queries
+     * @return QueryTrait|BaseModel
+     */
+    public function union(array $queries): self
+    {
+        $this->union = array_merge($this->union, $queries);
+
+        return $this;
     }
 }
