@@ -37,7 +37,10 @@ class SkipboController extends BaseController
 
     public function Run()
     {
-        $this->Game = new GameSkipbo();
+        // Load Game only for main Actions
+        if(!self::$Request[self::SUB_ACTION_PARAM]) {
+            $this->Game = new GameSkipbo();
+        }
 
         return parent::Run();
     }

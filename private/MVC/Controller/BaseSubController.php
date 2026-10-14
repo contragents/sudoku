@@ -27,6 +27,7 @@ class BaseSubController
     {
         if (is_callable([$this, $this->Action])) {
             $res = $this->{$this->Action}();
+
             return  is_array($res) ? Response::jsonResp($res) : (string)$res;
 
         } else {

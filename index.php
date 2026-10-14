@@ -21,7 +21,8 @@ if (strpos($pathParts[1], 'ndex.php')) {
 
     print_r($pathParts);
     echo 'Access denied - index.php';
-    exit();
+
+    exit;
 }
 
 $controller = ($pathParts[1] ?? false)

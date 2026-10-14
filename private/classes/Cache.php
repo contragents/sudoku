@@ -198,8 +198,6 @@ class Cache
             return true;
         }
 
-        /** @var string $gamePrefix */
-
         if (self::$_instance->redis->incr(BaseController::$SM::$gamePrefix . self::LOCKS_KEY . $lockKey) == 1) {
             self::$_instance->redis->setex(BaseController::$SM::$gamePrefix . self::LOCKS_KEY . $lockKey, floor(self::LOCK_RETRY_TIME / 1000000 * self::LOCK_TRIES), 1);
             self::$locks[$lockKey] = true;
